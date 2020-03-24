@@ -16,6 +16,7 @@ public class Worker {
     public Worker(GlobalVariables.IdWorker id, Player owner){
         this.id = id;
         this.owner = owner;
+        cellPosition = null;
     }
 
     /**
@@ -27,7 +28,7 @@ public class Worker {
     }
 
     /**
-     *
+     * This method doesn't notify the movement to the cell
      * @param cellPosition set the cell where the worker is
      */
     public void setCellPosition(Cell cellPosition) {
@@ -48,5 +49,18 @@ public class Worker {
      */
     public Player getOwner() {
         return owner;
+    }
+
+    /**
+     * This method will update the cell making it aware that the player is now on it and
+     * it will also make the previous cell allowed that the player is'not on it.
+     * @param cellNewPosition set the cell where the worker is
+     */
+    public void moveWorker(Cell cellNewPosition) {
+        if (cellPosition != null)
+            cellPosition.setIdWorkerIn(null);
+        if (cellNewPosition != null)
+            cellNewPosition.setIdWorkerIn(this);
+        cellPosition = cellNewPosition;
     }
 }
