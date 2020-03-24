@@ -10,4 +10,8 @@ public class CircularListIterator<T> {
     public void nextNode(){
         node = node.nextNode;
     }
+
+    public Node<T> getNode() {
+        return node;
+    }
 }

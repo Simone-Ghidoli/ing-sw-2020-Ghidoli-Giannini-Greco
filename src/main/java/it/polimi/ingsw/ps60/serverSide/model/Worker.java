@@ -28,14 +28,6 @@ public class Worker {
     }
 
     /**
-     * This method doesn't notify the movement to the cell
-     * @param cellPosition set the cell where the worker is
-     */
-    public void setCellPosition(Cell cellPosition) {
-        this.cellPosition = cellPosition;
-    }
-
-    /**
      *
      * @return return the cell where the worker is
      */

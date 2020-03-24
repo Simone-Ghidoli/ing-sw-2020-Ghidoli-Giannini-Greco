@@ -18,7 +18,6 @@ public class Player {
      * @param idPlayer the enumeration of the player
      * @param idWorker1 the enumeration of the first worker of the player
      * @param idWorker2 the enumeration of the second worker of the player
-//     * @param birthday set the birthday of the player
      * @param nickname set the nickname of the player
      */
     public Player(GlobalVariables.IdPlayer idPlayer,

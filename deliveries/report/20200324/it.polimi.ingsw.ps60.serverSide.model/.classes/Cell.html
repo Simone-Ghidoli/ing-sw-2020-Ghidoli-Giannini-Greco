@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Cell</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Cell (it.polimi.ingsw.ps60.serverSide.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Cell</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;public class Cell {
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;    private int[] position;
+<i>6</i>&nbsp;    private int buildingLevel;
+<i>7</i>&nbsp;    private Worker workerIn;
+<i>8</i>&nbsp;    private boolean dome;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    /**
+<i>11</i>&nbsp;     * This will be a single cell of the 5 x 5 board of the game.
+<i>12</i>&nbsp;     * This cell will be created with nothing built on it (building level = 0)
+<i>13</i>&nbsp;     * and it will not be with a dome on it (domed = false)
+<i>14</i>&nbsp;     * @param position associate to the cell a position in the board
+<i>15</i>&nbsp;     */
+<b class="nc"><i>16</i>&nbsp;    public Cell(int[] position){</b>
+<b class="nc"><i>17</i>&nbsp;        this.position = position;</b>
+<b class="nc"><i>18</i>&nbsp;        buildingLevel = 0;</b>
+<b class="nc"><i>19</i>&nbsp;        dome = false;</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     *
+<i>24</i>&nbsp;     * @return return if the cell have a player on it
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    public boolean isFree(){
+<b class="nc"><i>27</i>&nbsp;        return workerIn == null;</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * This method will increase the building level.
+<i>32</i>&nbsp;     * Can be build up to 3 levels
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    public void incrementBuildingLevel(){
+<b class="nc"><i>35</i>&nbsp;        buildingLevel++;</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    /**
+<i>39</i>&nbsp;     *
+<i>40</i>&nbsp;     * @return return the number of buildings on the cell
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    public int getBuildingLevel() {
+<b class="nc"><i>43</i>&nbsp;        return buildingLevel;</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    /**
+<i>47</i>&nbsp;     *
+<i>48</i>&nbsp;     * @return return if there is a dome built on the cell
+<i>49</i>&nbsp;     */
+<i>50</i>&nbsp;    public boolean isDomed(){
+<b class="nc"><i>51</i>&nbsp;        return dome;</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    /**
+<i>55</i>&nbsp;     * This method will build a dome on the cell
+<i>56</i>&nbsp;     */
+<i>57</i>&nbsp;    public void buildDome(){
+<b class="nc"><i>58</i>&nbsp;        dome = true;</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    /**
+<i>62</i>&nbsp;     * This method will remove the dome of the cell
+<i>63</i>&nbsp;     */
+<i>64</i>&nbsp;    public void removeDome(){
+<b class="nc"><i>65</i>&nbsp;        dome = false;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     *
+<i>70</i>&nbsp;     * @return return the position of the cell in the 5 x 5 board
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    public int[] getPosition() {
+<b class="nc"><i>73</i>&nbsp;        return position;</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    /**
+<i>77</i>&nbsp;     *
+<i>78</i>&nbsp;     * @param workerIn set the worker present on the cell, null if there is no one
+<i>79</i>&nbsp;     */
+<i>80</i>&nbsp;    public void setIdWorkerIn(Worker workerIn) {
+<b class="nc"><i>81</i>&nbsp;        this.workerIn = workerIn;</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    /**
+<i>85</i>&nbsp;     *
+<i>86</i>&nbsp;     * @return return the worker present on the cell, null if there is no one
+<i>87</i>&nbsp;     */
+<i>88</i>&nbsp;    public Worker getWorkerIn() {
+<b class="nc"><i>89</i>&nbsp;        return workerIn;</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-03-24 14:46</div>
+</div>
+</body>
+</html>

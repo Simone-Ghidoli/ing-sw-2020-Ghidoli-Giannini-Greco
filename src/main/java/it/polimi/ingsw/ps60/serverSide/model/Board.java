@@ -27,6 +27,7 @@ public class Board {
         this.playersNumber = playersNumber;
         cellMatrix = new Cell[25][25];
         playerMatrix = new Player[playersNumber];
+        playerList = new CircularLinkedList<>();
 
         //This will create a 5 x 5 array of cells
         for (int i = 0; i < 5; i++){
@@ -44,10 +45,11 @@ public class Board {
             playerMatrix[2] = new Player(GlobalVariables.IdPlayer.PLAYER3, GlobalVariables.IdWorker.WORKER5,
                     GlobalVariables.IdWorker.WORKER6, nicknameP3);
 
-        playerList = new CircularLinkedList<>();
+
         playerList.addNode(playerMatrix[0]);
         playerList.addNode(playerMatrix[1]);
-        playerList.addNode(playerMatrix[2]);
+        if (playersNumber == 3)
+            playerList.addNode(playerMatrix[2]);
 
         playerInGame = new CircularListIterator<>(playerList);
     }
@@ -95,8 +97,9 @@ public class Board {
      *
      * @return return only the player in game
      */
-    public CircularListIterator<Player> getPlayerInGame() {
-        return playerInGame;
+    public Player getPlayerInGame() {
+
+        return playerInGame.getNode().getValue();
     }
 
     /**
