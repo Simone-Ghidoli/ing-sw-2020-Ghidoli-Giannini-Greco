@@ -25,7 +25,7 @@ public class Board {
      */
     public Board(int playersNumber, String nicknameP1, String nicknameP2, String nicknameP3){
         this.playersNumber = playersNumber;
-        cellMatrix = new Cell[25][25];
+        cellMatrix = new Cell[5][5];
         playerMatrix = new Player[playersNumber];
         playerList = new CircularLinkedList<>();
 
