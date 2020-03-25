@@ -6,12 +6,9 @@ public class Player {
 
     private GlobalVariables.IdPlayer id;
     private String nickname;
-//    private Date birthday;
     private GlobalVariables.DivinityCard divinityCard;
     private Worker worker1, worker2;
     private GlobalVariables.Colour colour;
-//    private Player nextPlayer;
-//    private int turnNumber;
 
     /**
      *
@@ -21,10 +18,8 @@ public class Player {
      * @param nickname set the nickname of the player
      */
     public Player(GlobalVariables.IdPlayer idPlayer,
-                  GlobalVariables.IdWorker idWorker1, GlobalVariables.IdWorker idWorker2,
-                  /*Date birthday,*/ String nickname){
+                  GlobalVariables.IdWorker idWorker1, GlobalVariables.IdWorker idWorker2, String nickname){
         this.id = idPlayer;
-//        this.birthday = birthday;
         this.nickname = nickname;
         worker1 = new Worker(idWorker1, this);
         worker2 = new Worker(idWorker2, this);
@@ -37,14 +32,6 @@ public class Player {
     public GlobalVariables.IdPlayer getId() {
         return id;
     }
-
-//    /**
-//     *
-//     * @return return the birthday of the player
-//     */
-//    public Date getBirthday() {
-//        return birthday;
-//    }
 
     /**
      *

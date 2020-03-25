@@ -1,8 +1,8 @@
 package it.polimi.ingsw.ps60.serverSide.model;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.utils.CircularLinkedList;
-import it.polimi.ingsw.ps60.utils.CircularListIterator;
+import it.polimi.ingsw.ps60.utils.circularList.CircularLinkedList;
+import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
 import org.jetbrains.annotations.NotNull;
 
 public class Board {
@@ -88,7 +88,7 @@ public class Board {
         switch (idPlayer){
             case PLAYER1: return playerMatrix[0];
             case PLAYER2: return playerMatrix[1];
-            case PLAYER3: return playerMatrix[3];
+            case PLAYER3: return playerMatrix[2];
             default: return null;
         }
     }

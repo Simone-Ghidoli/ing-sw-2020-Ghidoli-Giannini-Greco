@@ -77,7 +77,7 @@ public class Cell {
      *
      * @param workerIn set the worker present on the cell, null if there is no one
      */
-    public void setIdWorkerIn(Worker workerIn) {
+    public void setWorkerIn(Worker workerIn) {
         this.workerIn = workerIn;
     }
 

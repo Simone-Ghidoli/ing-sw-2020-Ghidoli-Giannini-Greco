@@ -50,9 +50,9 @@ public class Worker {
      */
     public void moveWorker(Cell cellNewPosition) {
         if (cellPosition != null)
-            cellPosition.setIdWorkerIn(null);
+            cellPosition.setWorkerIn(null);
         if (cellNewPosition != null)
-            cellNewPosition.setIdWorkerIn(this);
+            cellNewPosition.setWorkerIn(this);
         cellPosition = cellNewPosition;
     }
 }

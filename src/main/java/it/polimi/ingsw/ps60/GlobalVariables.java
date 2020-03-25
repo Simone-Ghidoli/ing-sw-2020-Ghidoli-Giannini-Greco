@@ -9,9 +9,7 @@ public class GlobalVariables {
         WORKER5, WORKER6}
 
     public enum DivinityCard {APOLLO, ARTEMIS, ATHENA,
-        ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS,
-    APHRODITE, ARES, BIA, CHAOS, CHARON, CHRONUS, CIRCE, DIONYSUS,
-    EROS, HERA, HESTIA, HYPNUS, LIMUS, MEDUSA, MORPHEUS}
+        ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS}
 
-    public enum Colour {}
+    public enum Colour {RED, BLUE, GREEN}
 }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps60.utils;
+package it.polimi.ingsw.ps60.utils.circularList;
 
 public class CircularLinkedList<T> {
     private Node<T> head;
