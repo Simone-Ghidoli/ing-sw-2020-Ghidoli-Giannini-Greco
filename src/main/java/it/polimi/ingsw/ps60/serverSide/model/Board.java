@@ -126,4 +126,15 @@ public class Board {
         //Not implemented yet
     }
 
+    /**
+     * This method will verify the existence of a cell in the matrix
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return 1 if the cell exist, 0 if the cell doesn't exist.
+     */
+    public int CellExistance(int x,int y){
+        if ((x >= 0) && (x <= 4) && y >= 0 && y <= 4)
+            return 1;
+        return 0;
+    }
 }
