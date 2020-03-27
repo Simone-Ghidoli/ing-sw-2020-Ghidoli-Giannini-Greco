@@ -28,6 +28,10 @@ public class CircularLinkedList<T> {
     public void removeNode(T nodeToRemove){
         Node<T> node = head;
         if (node.value == nodeToRemove){
+            if (head == tail){
+                head = tail = null;
+                return;
+            }
             head = node.nextNode;
             tail.nextNode = head;
             return;
