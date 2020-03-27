@@ -8,8 +8,26 @@ public class GlobalVariables {
         WORKER3, WORKER4,
         WORKER5, WORKER6}
 
-    public enum DivinityCard {APOLLO, ARTEMIS, ATHENA,
-        ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS}
+    public enum DivinityCard {
+        APOLLO, ARTEMIS, ATHENA(false),
+        ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS;
+
+        private boolean bitException;
+
+        private DivinityCard(boolean bitException) {
+            this.bitException = bitException;
+        }
+
+        private DivinityCard() {}
+
+        public boolean isBitException() {
+            return bitException;
+        }
+
+        public void setBitException(boolean bitException) {
+            this.bitException = bitException;
+        }
+    }
 
     public enum Colour {RED, BLUE, GREEN}
 }
