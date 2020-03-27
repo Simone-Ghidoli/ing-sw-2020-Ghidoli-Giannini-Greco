@@ -9,6 +9,7 @@ public class Player {
     private GlobalVariables.DivinityCard divinityCard;
     private Worker worker1, worker2;
     private GlobalVariables.Colour colour;
+    private Worker workerMoved;
 
     /**
      *
@@ -87,5 +88,13 @@ public class Player {
      */
     public Worker getWorker2() {
         return worker2;
+    }
+
+    public Worker getWorkerMoved() {
+        return workerMoved;
+    }
+
+    public void setWorkerMoved(Worker workerMoved) {
+        this.workerMoved = workerMoved;
     }
 }

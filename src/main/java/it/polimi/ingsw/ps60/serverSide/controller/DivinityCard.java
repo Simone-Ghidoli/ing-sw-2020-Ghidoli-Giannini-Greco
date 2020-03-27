@@ -5,5 +5,5 @@ import java.util.List;
 public interface DivinityCard {
     public List<int[]>[] baseMovement();
 
-    public List<int[]>[] baseBuilding();
+    public List<int[]> baseBuilding();
 }

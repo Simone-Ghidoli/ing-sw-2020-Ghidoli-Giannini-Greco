@@ -24,22 +24,22 @@ public class TurnStrategy implements DivinityCard {
         Board game = GlobalVariables.game;
         Player playerInGame = game.getPlayerInGame();
         Cell[] cellWorker = {playerInGame.getWorker1().getCellPosition(), playerInGame.getWorker2().getCellPosition()};
-
-//        int[][][] positions = new int[2][8][8];
         List<int[]>[] positions = new ArrayList[2];
 
         int[] positionWorker;
+
+        Cell cell;
 
         for (int k = 0; k < 2; k++) {
             positionWorker = cellWorker[k].getPosition();
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
-                    if (game.CellExistance(i, j) == 1) {
-                        if (game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j}).isFree()) {//controllo posizione libera
+                    if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null) {
+                        if (cell.isFree()) {//controllo posizione libera
                             //Controllo Livello della costruzione
-                            if (game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j}).getBuildingLevel() <= cellWorker[k].getBuildingLevel() + 1) {
+                            if (cell.getBuildingLevel() <= cellWorker[k].getBuildingLevel() + 1) {
                                 //Controllo presenza cupola
-                                if (!game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j}).isDomed()) {
+                                if (!cell.isDomed()) {
                                     positions[k].add(new int[]{positionWorker[0] + i, positionWorker[1] + j});
                                 }
                             }
@@ -57,24 +57,22 @@ public class TurnStrategy implements DivinityCard {
      *
      * @return returns a list of all possible available cell to build
      */
-    public List<int[]>[] baseBuilding() {
-        Board game = GlobalVariables.game;
-        Player playerInGame = game.getPlayerInGame();
-        Cell[] cellWorker = {playerInGame.getWorker1().getCellPosition(), playerInGame.getWorker2().getCellPosition()};
-        List<int[]>[] positions = new ArrayList[2];
-        int[] positionWorker;
-        for (int k = 0; k < 2; k++) {
-            positionWorker = cellWorker[k].getPosition();
-            for (int i = -1; i < 2; i++) {//x
-                for (int j = -1; j < 2; j++) {//y
-                    if (game.CellExistance(i, j) == 1) {
-                        if (game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j}).isFree()) {
-                            //check cell status
-                            if (!game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j}).isDomed()) {//check cupola
-                                positions[k].add(new int[]{positionWorker[0] + i, positionWorker[1] + j});
-                            }
-                        }
+    public List<int[]> baseBuilding() {
 
+        Board game = GlobalVariables.game;
+        List<int[]> positions = new ArrayList<>();
+        int[] positionWorker = game.getPlayerInGame().getWorkerMoved().getCellPosition().getPosition();;
+
+        Cell cell;
+
+        for (int i = -1; i < 2; i++) {//x
+            for (int j = -1; j < 2; j++) {//y
+                if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null) {
+                    if (cell.isFree()) {
+                        //check cell status
+                        if (!cell.isDomed()) {//check cupola
+                            positions.add(new int[]{positionWorker[0] + i, positionWorker[1] + j});
+                        }
                     }
                 }
             }
