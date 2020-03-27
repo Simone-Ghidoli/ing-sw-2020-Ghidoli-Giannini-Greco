@@ -75,7 +75,7 @@ public class Board {
      * @param position represents the position of the cell in the 5 x 5 board
      * @return the cell in the position
      */
-    public Cell getCellByPosition(@NotNull int[] position) {
+    public Cell getCellByPosition(int[] position) {
         return cellMatrix[position[0]][position[1]];
     }
 

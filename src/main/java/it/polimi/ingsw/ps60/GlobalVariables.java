@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps60;
 
+import it.polimi.ingsw.ps60.serverSide.model.Board;
+
 public class GlobalVariables {
 
     public enum IdPlayer {PLAYER1, PLAYER2, PLAYER3}
@@ -30,4 +32,6 @@ public class GlobalVariables {
     }
 
     public enum Colour {RED, BLUE, GREEN}
+
+    public static Board game;
 }
