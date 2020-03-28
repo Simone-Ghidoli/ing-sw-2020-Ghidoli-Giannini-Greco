@@ -14,18 +14,21 @@ public class Turn {
     }
 
 
-    public void build(int[][] build){
-        Cell cell = game.getCellByPosition(build[1]);
+    public void build(int[] build){
+        Cell cell = game.getCellByPosition(build);
         if (cell.getBuildingLevel() == 3)
             cell.buildDome();
         else
             cell.incrementBuildingLevel();
+        game.getPlayerInGame().getNode().getValue().setBuildByWorker(true);
     }
 
     public void endTurn(){
         Player player = game.getPlayerInGame().getNode().getValue();
-        if (player.getWorkerMoved()!= null)
+        if (player.getWorkerMoved()!= null && player.isBuildByWorker()) {
             player.setWorkerMoved(null);
+            player.setBuildByWorker(false);
+        }
         else
             game.lose(player);
         game.changeTurn();

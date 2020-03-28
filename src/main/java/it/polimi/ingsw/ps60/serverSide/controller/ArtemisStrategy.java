@@ -39,6 +39,6 @@ public class ArtemisStrategy extends TurnStrategy {
             }
             positions[k].remove(cellWorker[k].getPosition());
         }
-        return positions;
+        return disturbByDivinity(positions);
     }
 }

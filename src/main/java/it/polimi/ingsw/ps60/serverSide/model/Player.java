@@ -10,6 +10,7 @@ public class Player {
     private Worker[] workers;
     private GlobalVariables.Colour colour;
     private Worker workerMoved;
+    private boolean buildByWorker;
 
     /**
      *
@@ -23,6 +24,7 @@ public class Player {
         for (int x = 0; x < 2; x++) {
             workers[x] = new Worker(idPlayer.getIdWorkers()[x], this);
         }
+        buildByWorker = false;
     }
 
     /**
@@ -89,4 +91,11 @@ public class Player {
         this.workerMoved = workerMoved;
     }
 
+    public boolean isBuildByWorker() {
+        return buildByWorker;
+    }
+
+    public void setBuildByWorker(boolean i){
+        buildByWorker = i;
+    }
 }
