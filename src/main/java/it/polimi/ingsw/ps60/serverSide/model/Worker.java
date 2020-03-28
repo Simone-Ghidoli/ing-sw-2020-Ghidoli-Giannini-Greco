@@ -7,6 +7,7 @@ public class Worker {
     private GlobalVariables.IdWorker id;
     private Cell cellPosition;
     private Player owner;
+    private Cell OldCell;
 
     /**
      *
@@ -49,10 +50,23 @@ public class Worker {
      * @param cellNewPosition set the cell where the worker is
      */
     public void moveWorker(Cell cellNewPosition) {
-        if (cellPosition != null)
+        if (cellPosition != null) {
             cellPosition.setWorkerIn(null);
+            OldCell = cellPosition;
+        }
         if (cellNewPosition != null)
             cellNewPosition.setWorkerIn(this);
         cellPosition = cellNewPosition;
+        }
+    }
+
+    /**
+     * Method to verify if a worker level up last turn
+     * @return True if it happened, false otherwise
+     */
+    public boolean levelup(){
+        if(OldCell.getBuildingLevel()<cellPosition.getBuildingLevel())
+            return true;
+        return false;
     }
 }

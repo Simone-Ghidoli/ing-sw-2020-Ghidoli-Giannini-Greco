@@ -1,0 +1,16 @@
+package it.polimi.ingsw.ps60.serverSide.controller;
+
+import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.serverSide.model.Board;
+import it.polimi.ingsw.ps60.serverSide.model.Cell;
+
+import java.
+import java.util.List;
+
+public class AthenaStrategy extends TurnStrategy {
+
+    public List<int[]> BaseMovement(){
+        GlobalVariables.DivinityCard.ATHENA.setBitException(false);
+
+    }
+}
