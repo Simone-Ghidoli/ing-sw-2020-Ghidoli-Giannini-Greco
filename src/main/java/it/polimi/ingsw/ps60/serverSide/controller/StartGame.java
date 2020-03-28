@@ -3,44 +3,29 @@ package it.polimi.ingsw.ps60.serverSide.controller;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
-import it.polimi.ingsw.ps60.serverSide.model.Player;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class StartGame {
-    public StartGame( String[] nicknames){
 
-        startBoard(nicknames);
-        giveDivinityCard();
-        selectDivinityCard();
-        posizionamentoPedine();
-
+    public void startBoard(String[] nickname) {
+        game = new Board(nickname);
     }
 
-    public void checkFirstPlayer(){
-
+    public GlobalVariables.DivinityCard[] getDivinityCard() {
+        return GlobalVariables.DivinityCard.values();
     }
-    public void createNickname(){
 
+    public void selectDivinityCard(GlobalVariables.DivinityCard[] divinityCards) {
+        for (int j = 0; j < divinityCards.length; j++)
+            game.getPlayerById(GlobalVariables.IdPlayer.getPlayerByInt(j)).setDivinityCard(divinityCards[j]);
     }
-    public void startBoard(String[] nickname){
-        Board board = new Board(nickname);
-        GlobalVariables.game=board;
-    }
-    public void giveDivinityCard(){
 
-
-
-
-
-    }
-    public void selectDivinityCard(){
-        for(int j=0; j<GlobalVariables.game.getPlayersNumber(); j++)
-            GlobalVariables.game.getPlayerById(GlobalVariables.IdPlayer.getPlayerByInt(j)).setDivinityCard( );
-
-
-    }
-    public void posizionamentoPedine() {
-
-
-
+    public void posizionamentoPedine(int[][][] positions) {
+        for (int j = 0; j < positions.length; j++) {
+            for (int i = 0; i < 2; i++) {
+                game.getPlayerById(GlobalVariables.IdPlayer.getPlayerByInt(j)).getWorker(i).moveWorker(game.getCellByPosition(positions[j][i]));
+            }
+        }
     }
 }

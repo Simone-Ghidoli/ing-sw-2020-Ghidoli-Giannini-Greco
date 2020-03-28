@@ -88,4 +88,5 @@ public class Player {
     public void setWorkerMoved(Worker workerMoved) {
         this.workerMoved = workerMoved;
     }
+
 }
