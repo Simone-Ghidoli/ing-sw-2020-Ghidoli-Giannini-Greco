@@ -99,9 +99,9 @@ public class Board {
      *
      * @return return only the player in game
      */
-    public Player getPlayerInGame() {
+    public CircularListIterator<Player> getPlayerInGame() {
 
-        return playerInGame.getNode().getValue();
+        return playerInGame;
     }
 
     /**

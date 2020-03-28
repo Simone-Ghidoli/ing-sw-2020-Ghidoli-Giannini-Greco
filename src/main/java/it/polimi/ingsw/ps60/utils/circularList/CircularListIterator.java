@@ -1,10 +1,12 @@
 package it.polimi.ingsw.ps60.utils.circularList;
 
 public class CircularListIterator<T> {
-    public Node<T> node;
+    private Node<T> node;
+    private CircularLinkedList<T> list;
 
     public CircularListIterator(CircularLinkedList<T> list){
         node = list.getHead();
+        this.list=list;
     }
 
     public void nextNode(){
@@ -13,5 +15,9 @@ public class CircularListIterator<T> {
 
     public Node<T> getNode() {
         return node;
+    }
+
+    public CircularLinkedList<T> getList() {
+        return list;
     }
 }

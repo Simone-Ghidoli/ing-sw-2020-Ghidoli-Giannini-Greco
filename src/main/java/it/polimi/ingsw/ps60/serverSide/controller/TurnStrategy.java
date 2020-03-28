@@ -22,7 +22,7 @@ public class TurnStrategy implements DivinityCard {
      */
     public List<int[]>[] baseMovement() {
         Board game = GlobalVariables.game;
-        Player playerInGame = game.getPlayerInGame();
+        Player playerInGame = game.getPlayerInGame().getNode().getValue();
         Cell[] cellWorker = {playerInGame.getWorker1().getCellPosition(), playerInGame.getWorker2().getCellPosition()};
         List<int[]>[] positions = new ArrayList[2];
 
@@ -34,7 +34,7 @@ public class TurnStrategy implements DivinityCard {
             positionWorker = cellWorker[k].getPosition();
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
-                    if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null) {
+                    if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null && (i == 0 && j == 0)) {
                         if (cell.isFree()) {//controllo posizione libera
                             //Controllo Livello della costruzione
                             if (cell.getBuildingLevel() <= cellWorker[k].getBuildingLevel() + 1) {
@@ -61,13 +61,13 @@ public class TurnStrategy implements DivinityCard {
 
         Board game = GlobalVariables.game;
         List<int[]> positions = new ArrayList<>();
-        int[] positionWorker = game.getPlayerInGame().getWorkerMoved().getCellPosition().getPosition();;
+        int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();;
 
         Cell cell;
 
         for (int i = -1; i < 2; i++) {//x
             for (int j = -1; j < 2; j++) {//y
-                if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null) {
+                if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null && (i == 0 && j == 0)) {
                     if (cell.isFree()) {
                         //check cell status
                         if (!cell.isDomed()) {//check cupola
