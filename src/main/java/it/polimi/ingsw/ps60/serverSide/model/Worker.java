@@ -10,18 +10,16 @@ public class Worker {
     private Cell OldCell;
 
     /**
-     *
-     * @param id associate an univocal id to the worker
+     * @param id    associate an univocal id to the worker
      * @param owner associate to the worker his player
      */
-    public Worker(GlobalVariables.IdWorker id, Player owner){
+    public Worker(GlobalVariables.IdWorker id, Player owner) {
         this.id = id;
         this.owner = owner;
         cellPosition = null;
     }
 
     /**
-     *
      * @return return the id associated to the worker
      */
     public GlobalVariables.IdWorker getId() {
@@ -29,7 +27,6 @@ public class Worker {
     }
 
     /**
-     *
      * @return return the cell where the worker is
      */
     public Cell getCellPosition() {
@@ -37,7 +34,6 @@ public class Worker {
     }
 
     /**
-     *
      * @return return the owner of the worker
      */
     public Player getOwner() {
@@ -46,7 +42,9 @@ public class Worker {
 
     /**
      * This method will update the cell making it aware that the player is now on it and
-     * it will also make the previous cell allowed that the player is'not on it.
+     * it will also make the previous cell aware that the player is'not on it,
+     * but it will conserve his pointer in OldCell
+     *
      * @param cellNewPosition set the cell where the worker is
      */
     public void moveWorker(Cell cellNewPosition) {
@@ -57,15 +55,15 @@ public class Worker {
         if (cellNewPosition != null)
             cellNewPosition.setWorkerIn(this);
         cellPosition = cellNewPosition;
-        }
     }
 
     /**
      * Method to verify if a worker level up last turn
+     *
      * @return True if it happened, false otherwise
      */
-    public boolean levelup(){
-        if(OldCell.getBuildingLevel()<cellPosition.getBuildingLevel())
+    public boolean isLeveledUp() {
+        if (OldCell.getBuildingLevel() < cellPosition.getBuildingLevel())
             return true;
         return false;
     }

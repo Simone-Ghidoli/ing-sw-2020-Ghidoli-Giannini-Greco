@@ -16,8 +16,8 @@ public class ArtemisStrategy extends TurnStrategy {
         List<int[]>[] positions = super.baseMovement();
         int[] positionWorker;
         Cell cell;
-        Cell[] cellWorker = {game.getPlayerInGame().getNode().getValue().getWorker1().getCellPosition(),
-                game.getPlayerInGame().getNode().getValue().getWorker2().getCellPosition()};
+        Cell[] cellWorker = {game.getPlayerInGame().getNode().getValue().getWorkers()[0].getCellPosition(),
+                game.getPlayerInGame().getNode().getValue().getWorkers()[1].getCellPosition()};
 
         for (int k = 0; k < 2; k++) {
             for (int l = 0; l < positions.length; l++) {

@@ -4,7 +4,33 @@ import it.polimi.ingsw.ps60.serverSide.model.Board;
 
 public class GlobalVariables {
 
-    public enum IdPlayer {PLAYER1, PLAYER2, PLAYER3}
+    public enum IdPlayer {
+        PLAYER1(new IdWorker[] {IdWorker.WORKER1, IdWorker.WORKER2}),
+        PLAYER2(new IdWorker[] {IdWorker.WORKER3, IdWorker.WORKER4}),
+        PLAYER3(new IdWorker[] {IdWorker.WORKER5, IdWorker.WORKER6});
+
+        private IdWorker[] idWorkers;
+
+        IdPlayer(IdWorker[] idWorkers) {
+            this.idWorkers = idWorkers;
+        }
+
+        public IdWorker[] getIdWorkers() {
+            return idWorkers;
+        }
+
+        public static IdPlayer getPlayerByInt(int i){
+            switch(i){
+                case 0: return PLAYER1;
+                case 1: return PLAYER2;
+                case 2: return PLAYER3;
+                default: return null;
+            }
+        }
+
+
+    }
+
 
     public enum IdWorker {WORKER1, WORKER2,
         WORKER3, WORKER4,
@@ -16,11 +42,11 @@ public class GlobalVariables {
 
         private boolean bitException;
 
-        private DivinityCard(boolean bitException) {
+        DivinityCard(boolean bitException) {
             this.bitException = bitException;
         }
 
-        private DivinityCard() {}
+        DivinityCard() {}
 
         public boolean isBitException() {
             return bitException;

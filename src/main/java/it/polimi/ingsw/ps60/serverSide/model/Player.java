@@ -7,23 +7,22 @@ public class Player {
     private GlobalVariables.IdPlayer id;
     private String nickname;
     private GlobalVariables.DivinityCard divinityCard;
-    private Worker worker1, worker2;
+    private Worker[] workers;
     private GlobalVariables.Colour colour;
     private Worker workerMoved;
 
     /**
      *
-     * @param idPlayer the enumeration of the player
-     * @param idWorker1 the enumeration of the first worker of the player
-     * @param idWorker2 the enumeration of the second worker of the player
-     * @param nickname set the nickname of the player
+     * @param idPlayer the enumeration of the id of the player
+     * @param nickname the nickname of the player
      */
-    public Player(GlobalVariables.IdPlayer idPlayer,
-                  GlobalVariables.IdWorker idWorker1, GlobalVariables.IdWorker idWorker2, String nickname){
+    public Player(GlobalVariables.IdPlayer idPlayer, String nickname){
         this.id = idPlayer;
         this.nickname = nickname;
-        worker1 = new Worker(idWorker1, this);
-        worker2 = new Worker(idWorker2, this);
+        workers = new Worker[2];
+        for (int x = 0; x < 2; x++) {
+            workers[x] = new Worker(idPlayer.getIdWorkers()[x], this);
+        }
     }
 
     /**
@@ -74,20 +73,12 @@ public class Player {
         return colour;
     }
 
-    /**
-     *
-     * @return return the first worker of the player
-     */
-    public Worker getWorker1() {
-        return worker1;
+    public Worker[] getWorkers() {
+        return workers;
     }
 
-    /**
-     *
-     * @return return the second worker of the player
-     */
-    public Worker getWorker2() {
-        return worker2;
+    public Worker getWorker(int i){
+        return workers[i];
     }
 
     public Worker getWorkerMoved() {
