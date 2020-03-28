@@ -67,4 +67,8 @@ public class Worker {
             return true;
         return false;
     }
+
+    public Cell getOldCell() {
+        return OldCell;
+    }
 }

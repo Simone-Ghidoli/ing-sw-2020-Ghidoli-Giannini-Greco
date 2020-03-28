@@ -76,11 +76,27 @@ public class TurnStrategy implements DivinityCard {
         return positions;
     }
 
-    public List<int[]>[] disturbByDivinity(List<int[]>[] positions){
-//        if (sta atena)
-//            ///
-//            else if (sta l'altro')
-//                ///
+    /**
+     * This method removes some possible moves from the list if required by other player's cards.
+     * @param positions Initial list of possible moves
+     * @return The final list of possible moves
+     */
+    public List<int[]>[] disturbByDivinity(List<int[]>[] positions) {
+        if (GlobalVariables.DivinityCard.ATHENA.isBitException()) {
+            int k=0;
+            Cell[] attuali=new Cell[2];//Celle in cui si trovano ora i workers
+            Cell Papabili;//Per scorrere le celle in positions
+            attuali[0] = GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(0).getCellPosition();
+            attuali[1] = GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(1).getCellPosition();
+            for (int i = 0; i < 2; i++) {
+                while (positions[i].get(k)!=null) {
+                    Papabili=GlobalVariables.game.getCellByPosition(positions[i].get(k));
+                    k++;
+                    if(attuali[i].getBuildingLevel()<Papabili.getBuildingLevel())
+                        positions[i].remove(k);
+                }
+            }
+        }
         return positions;
     }
 }

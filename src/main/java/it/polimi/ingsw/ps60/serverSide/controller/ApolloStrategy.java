@@ -10,6 +10,12 @@ import java.util.List;
 
 public class ApolloStrategy extends TurnStrategy {
 
+    /**
+     * A player can move his worker into an opponent's space forcing opponent's worker to the space the first one
+     * just vacated.
+     * Standard build phase
+     * @return A list containing all the possible moves
+     */
     @Override
     public List<int[]>[] baseMovement() {
         Board game = GlobalVariables.game;
