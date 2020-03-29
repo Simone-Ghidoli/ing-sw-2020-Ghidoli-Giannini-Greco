@@ -1,11 +1,10 @@
-package it.polimi.ingsw.ps60.serverSide.controller;
+package it.polimi.ingsw.ps60.serverSide.controller.turnStrategy;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 
 import java.util.List;
-import java.util.ListIterator;
 
 public class ArtemisStrategy extends TurnStrategy {
 

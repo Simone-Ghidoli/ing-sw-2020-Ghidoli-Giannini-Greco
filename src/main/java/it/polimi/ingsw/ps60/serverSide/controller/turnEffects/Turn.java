@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps60.serverSide.controller;
+package it.polimi.ingsw.ps60.serverSide.controller.turnEffects;
 
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
@@ -28,9 +28,24 @@ public class Turn {
         if (player.getWorkerMoved()!= null && player.isBuildByWorker()) {
             player.setWorkerMoved(null);
             player.setBuildByWorker(false);
+            winConditions();
         }
-        else
+        else {
             game.lose(player);
+            if (game.getPlayersNumber() == 1) {
+                game.changeTurn();
+                game.win(game.getPlayerInGame().getNode().getValue());
+                return;
+            }
+        }
         game.changeTurn();
     }
+
+    public void winConditions(){
+        Player player = game.getPlayerInGame().getNode().getValue();
+        if (player.getWorkerMoved().isLeveledUp() && player.getWorkerMoved().getCellPosition().getBuildingLevel() == 3)
+            game.win(player);
+    }
+
+
 }

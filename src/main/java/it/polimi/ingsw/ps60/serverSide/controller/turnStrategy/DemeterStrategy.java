@@ -1,18 +1,18 @@
-package it.polimi.ingsw.ps60.serverSide.controller;
+package it.polimi.ingsw.ps60.serverSide.controller.turnStrategy;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class DemeterStrategy extends TurnStrategy {
-    public List<int[]> buildingAgain(int [] oldBuild) {
 
+    public List<int[]> buildingAgain(int[] oldBuild) {
         Board game = GlobalVariables.game;
         List<int[]> positions = new ArrayList<>();
-        int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();;
+        int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();
+        ;
         Cell cell;
         for (int i = -1; i < 2; i++) {//x
             for (int j = -1; j < 2; j++) {//y
@@ -29,6 +29,4 @@ public class DemeterStrategy extends TurnStrategy {
 
         return positions;
     }
-
-
 }

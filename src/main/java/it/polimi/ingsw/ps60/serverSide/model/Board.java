@@ -91,12 +91,13 @@ public class Board {
      */
     public void lose(Player player){
         playerList.removeNode(player);
+        playersNumber = playerList.getSize();
 
         for (int i = 0; i < 2; i++)
             player.getWorkers()[i].moveWorker(null);
     }
 
-    public void win(){
+    public void win(Player player){
         /**
          * Manda un messaggio in output a tutti i client informandoli di quale giocatore ha vinto e che la partita è finita.
          * Questo metodo viene chiamato anche nel momento in cui un giocatore fa Last Man Standing
