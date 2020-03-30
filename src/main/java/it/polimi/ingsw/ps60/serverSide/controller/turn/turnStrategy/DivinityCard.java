@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps60.serverSide.controller.turnStrategy;
+package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps60.serverSide.controller.turnEffects;
+package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
@@ -16,10 +16,8 @@ public class Turn {
 
     public void build(int[] build){
         Cell cell = game.getCellByPosition(build);
-        if (cell.getBuildingLevel() == 3) {
+        if (cell.getBuildingLevel() == 3)
             cell.buildDome();
-            game.increaseCompleteTower();
-        }
         else
             cell.incrementBuildingLevel();
         game.getPlayerInGame().getNode().getValue().setBuildByWorker(true);
