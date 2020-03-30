@@ -46,7 +46,7 @@ public class ServerThread extends Thread {
     }
 
 
-    public int NumeroGiocatori() {//Viene chiamata solo per il primo giocatore che si connette
+    public int numeroGiocatori() {//Viene chiamata solo per il primo giocatore che si connette
         int number=-1;
         try{
             writer.println("2 or 3 players?");
