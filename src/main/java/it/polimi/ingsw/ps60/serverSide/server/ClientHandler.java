@@ -8,6 +8,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+//todo Questa classe è inutile. Mi serve solo per usare correttamente le chiamate dei metodi. VERRÀ ELIMINATA
+
+
 class ClientHandler extends Thread
 {
     DateFormat fordate = new SimpleDateFormat("yyyy/MM/dd");
