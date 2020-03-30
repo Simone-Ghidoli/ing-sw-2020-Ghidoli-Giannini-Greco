@@ -8,7 +8,6 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 public class AtlasEffect extends Turn {
 
     @Override
-
     public void build(int[] build){ //Ci devono essere 3 elementi nel vettore (da 0 a 2)
         Cell cell=game.getCellByPosition(build);
         if(cell.getBuildingLevel()==3){

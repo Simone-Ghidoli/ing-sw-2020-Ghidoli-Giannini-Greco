@@ -6,6 +6,7 @@ public class Cell {
     private int buildingLevel;
     private Worker workerIn;
     private boolean dome;
+    private Board board;
 
     /**
      * This will be a single cell of the 5 x 5 board of the game.
@@ -13,10 +14,11 @@ public class Cell {
      * and it will not be with a dome on it (domed = false)
      * @param position associate to the cell a position in the board
      */
-    public Cell(int[] position){
+    public Cell(int[] position, Board board){
         this.position = position;
         buildingLevel = 0;
         dome = false;
+        this.board = board;
     }
 
     /**
@@ -56,6 +58,8 @@ public class Cell {
      */
     public void buildDome(){
         dome = true;
+        if (buildingLevel == 3)
+            board.increaseCompleteTower();
     }
 
     /**

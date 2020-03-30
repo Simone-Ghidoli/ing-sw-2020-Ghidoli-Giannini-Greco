@@ -26,6 +26,7 @@ public class Turn {
     public void endTurn(){
         Player player = game.getPlayerInGame().getNode().getValue();
         if (player.getWorkerMoved()!= null && player.isBuildByWorker()) {
+            player.getWorkerMoved().setOldCell(null);
             player.setWorkerMoved(null);
             player.setBuildByWorker(false);
             winConditions();

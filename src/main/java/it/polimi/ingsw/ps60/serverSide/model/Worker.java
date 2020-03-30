@@ -71,4 +71,8 @@ public class Worker {
     public Cell getOldCell() {
         return OldCell;
     }
+
+    public void setOldCell(Cell oldCell) {
+        OldCell = oldCell;
+    }
 }

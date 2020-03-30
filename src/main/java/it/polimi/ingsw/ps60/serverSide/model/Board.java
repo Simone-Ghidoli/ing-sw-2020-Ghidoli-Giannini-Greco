@@ -28,7 +28,7 @@ public class Board {
         //This will create a 5 x 5 array of cells
         for (int i = 0; i < 5; i++){
             for (int j = 0; j < 5; j++){
-                cellMatrix[i][j] = new Cell(new int[]{i, j});
+                cellMatrix[i][j] = new Cell(new int[]{i, j}, this);
             }
         }
 
