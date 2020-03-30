@@ -85,4 +85,7 @@ public class ServerThread extends Thread {
             }
         }
     }
+    private void disconnect(){
+        //disconnesione del client per qualsiasi motivo
+    }
 }

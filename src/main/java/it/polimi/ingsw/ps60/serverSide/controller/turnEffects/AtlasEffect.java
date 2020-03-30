@@ -12,6 +12,7 @@ public class AtlasEffect extends Turn {
         Cell cell=game.getCellByPosition(build);
         if(cell.getBuildingLevel()==3){
             cell.buildDome();
+            game.increaseCompleteTower();
         }
         else if(build[2]==1){//0->normal build     1->dome
             cell.buildDome();

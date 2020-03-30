@@ -16,8 +16,10 @@ public class Turn {
 
     public void build(int[] build){
         Cell cell = game.getCellByPosition(build);
-        if (cell.getBuildingLevel() == 3)
+        if (cell.getBuildingLevel() == 3) {
             cell.buildDome();
+            game.increaseCompleteTower();
+        }
         else
             cell.incrementBuildingLevel();
         game.getPlayerInGame().getNode().getValue().setBuildByWorker(true);
