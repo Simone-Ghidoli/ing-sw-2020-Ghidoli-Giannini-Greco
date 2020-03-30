@@ -27,8 +27,6 @@ public class GlobalVariables {
                 default: return null;
             }
         }
-
-
     }
 
 

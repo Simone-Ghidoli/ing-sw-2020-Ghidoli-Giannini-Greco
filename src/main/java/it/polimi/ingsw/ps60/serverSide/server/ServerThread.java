@@ -75,6 +75,7 @@ public class ServerThread extends Thread {
         }
         return message;
     }
+
     public void printmatrix(){
         //Questo stamperà il matrix a video.
         Cell[][] matrix=GlobalVariables.game.getCellMatrix();

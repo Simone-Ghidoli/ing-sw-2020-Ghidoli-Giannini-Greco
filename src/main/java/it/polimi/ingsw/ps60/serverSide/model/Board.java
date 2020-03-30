@@ -10,6 +10,7 @@ public class Board {
     Cell[][] cellMatrix;
     Player[] playerMatrix;
     CircularLinkedList<Player> playerList;
+    int completeTower;
 
     /**
      * The board is the memory of the game.
@@ -37,6 +38,7 @@ public class Board {
         }
 
         playerInGame = new CircularListIterator<>(playerList);
+        completeTower = 0;
     }
 
     /**
@@ -117,5 +119,13 @@ public class Board {
             case PLAYER3: return playerMatrix[2];
             default: return null;
         }
+    }
+
+    public int getCompleteTower() {
+        return completeTower;
+    }
+
+    public void increaseCompleteTower(){
+        completeTower++;
     }
 }
