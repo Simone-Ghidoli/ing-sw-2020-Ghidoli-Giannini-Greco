@@ -5,10 +5,15 @@ import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import java.util.ArrayList;
 import java.util.List;
-
 public class DemeterStrategy extends TurnStrategy {
 
-    public List<int[]> buildingAgain(int[] oldBuild) {
+    /**
+     *in the same turn you can build again but not in the same position
+     * @param oldBuild  contains the position of the cell where it was previously build
+     * @return A list containing all the possible cell where can build
+     */
+
+    public List <int[]> buildingAgain(int[] oldBuild) {
         Board game = GlobalVariables.game;
         List<int[]> positions = new ArrayList<>();
         int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();

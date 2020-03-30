@@ -10,7 +10,7 @@ import java.util.List;
 public class MinotaurStrategy extends TurnStrategy {
 
     @Override
-    public List<int[]>[] baseMovement() {
+    public List <int[]>[] baseMovement() {
         Player playerInGame = game.getPlayerInGame().getNode().getValue();
         Cell[] cellWorker = {playerInGame.getWorkers()[0].getCellPosition(), playerInGame.getWorkers()[1].getCellPosition()};
         List<int[]>[] positions = new ArrayList[2];
