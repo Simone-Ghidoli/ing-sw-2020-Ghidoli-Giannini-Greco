@@ -58,6 +58,10 @@ public class ServerThread extends Thread {
         }
         return number;
     }
+    
+    public void directMessage(String chiamante){
+        writer.println(chiamante);
+    }
 
     public String anything(String chiamante){ //chiamante è una stringa che viene inserita dal chiamante. Contiene il messaggio da mandare sul client
         String message=null;
