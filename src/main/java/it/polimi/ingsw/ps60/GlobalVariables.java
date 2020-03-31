@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps60;
 
 import it.polimi.ingsw.ps60.serverSide.model.Board;
+import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
 public class GlobalVariables {
 
@@ -10,6 +11,7 @@ public class GlobalVariables {
         PLAYER3(new IdWorker[] {IdWorker.WORKER5, IdWorker.WORKER6});
 
         private IdWorker[] idWorkers;
+        private ServerThread serverThread;
 
         IdPlayer(IdWorker[] idWorkers) {
             this.idWorkers = idWorkers;
@@ -27,6 +29,10 @@ public class GlobalVariables {
                 default: return null;
             }
         }
+
+        public void setServerThread(ServerThread serverThread) {
+            this.serverThread = serverThread;
+        }
     }
 
 
@@ -36,7 +42,8 @@ public class GlobalVariables {
 
     public enum DivinityCard {
         APOLLO, ARTEMIS, ATHENA(false),
-        ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS;
+        ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS,
+        ZEUS, TRITON, LIMUS(false), CHRONUS;
 
         private boolean bitException;
 

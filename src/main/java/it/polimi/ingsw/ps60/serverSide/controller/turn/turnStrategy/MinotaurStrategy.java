@@ -38,6 +38,6 @@ public class MinotaurStrategy extends TurnStrategy {
             }
         }
 
-        return disturbByDivinity(positions);
+        return disturbMovementByDivinity(positions);
     }
 }

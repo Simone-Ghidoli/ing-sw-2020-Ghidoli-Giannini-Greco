@@ -18,6 +18,7 @@ public class TurnStrategy implements DivinityCard {
 
     /**
      * This method look for all the possible move that both player's worker can do
+     *
      * @return returns a list containing the coordinates of all possible reachable cell.
      */
     public List<int[]>[] baseMovement() {
@@ -46,18 +47,20 @@ public class TurnStrategy implements DivinityCard {
             }
         }
 
-        return disturbByDivinity(positions);
+        return disturbMovementByDivinity(positions);
     }
 
     /**
      * This method provide all the possible cells in witch the previously moved player can build
+     *
      * @return returns a list of all possible available cell to build
      */
     public List<int[]> baseBuilding() {
 
         Board game = GlobalVariables.game;
         List<int[]> positions = new ArrayList<>();
-        int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();;
+        int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();
+        ;
 
         Cell cell;
 
@@ -78,20 +81,22 @@ public class TurnStrategy implements DivinityCard {
 
     /**
      * This method removes some possible moves from the list if required by other player's divinity cards.
+     *
      * @param positions Initial list of possible moves
      * @return The final list of possible moves
      */
-    public List<int[]>[] disturbByDivinity(List<int[]>[] positions) {
-        if (GlobalVariables.DivinityCard.ATHENA.isBitException()) {
+    public List<int[]>[] disturbMovementByDivinity(List<int[]>[] positions) {
+        if (GlobalVariables.DivinityCard.ATHENA.isBitException() && //da controllare mi pare che non si faccia cosi'
+                game.getPlayerInGame().getNode().getValue().getDivinityCard() != GlobalVariables.DivinityCard.ATHENA) {
             int j;
             Cell cell;
 
-            int high[] = {game.getPlayerInGame().getNode().getValue().getWorker(0).getCellPosition().getBuildingLevel(),
+            int[] high = {game.getPlayerInGame().getNode().getValue().getWorker(0).getCellPosition().getBuildingLevel(),
                     game.getPlayerInGame().getNode().getValue().getWorker(1).getCellPosition().getBuildingLevel()};
 
-            for (int i = 0; i < 2; i++){
+            for (int i = 0; i < 2; i++) {
                 j = 0;
-                while (positions[i].get(j) != null){
+                while (positions[i].get(j) != null) {
                     cell = game.getCellByPosition(positions[i].get(j));
                     if (cell.getBuildingLevel() > high[i])
                         positions[i].remove(j);
@@ -99,6 +104,14 @@ public class TurnStrategy implements DivinityCard {
                         j++;
                 }
             }
+        }
+        return positions;
+    }
+
+    public List<int[]> disturbBuildingByDivinity(List<int[]> positions) {
+        if (GlobalVariables.DivinityCard.LIMUS.isBitException() && //da controllare
+                game.getPlayerInGame().getNode().getValue().getDivinityCard() != GlobalVariables.DivinityCard.LIMUS) {
+            //////finire
         }
         return positions;
     }

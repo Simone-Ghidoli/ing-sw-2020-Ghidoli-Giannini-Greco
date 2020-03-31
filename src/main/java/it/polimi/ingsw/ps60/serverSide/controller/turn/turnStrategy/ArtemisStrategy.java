@@ -39,6 +39,6 @@ public class ArtemisStrategy extends TurnStrategy {
                 }
             }
         }
-        return disturbByDivinity(positions);
+        return disturbMovementByDivinity(positions);
     }
 }
