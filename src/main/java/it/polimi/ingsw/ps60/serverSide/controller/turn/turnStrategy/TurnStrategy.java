@@ -108,11 +108,4 @@ public class TurnStrategy implements DivinityCard {
         return positions;
     }
 
-    public List<int[]> disturbBuildingByDivinity(List<int[]> positions) {
-        if (GlobalVariables.DivinityCard.LIMUS.isBitException() && //da controllare
-                game.getPlayerInGame().getNode().getValue().getDivinityCard() != GlobalVariables.DivinityCard.LIMUS) {
-            //////finire
-        }
-        return positions;
-    }
 }
