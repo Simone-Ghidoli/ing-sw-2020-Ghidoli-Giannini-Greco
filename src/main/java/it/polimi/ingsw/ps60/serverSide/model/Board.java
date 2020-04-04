@@ -64,8 +64,10 @@ public class Board {
      */
     public Cell getCellByPosition(int[] position) {
         if ((position[0] >= 0) && (position[0] <= 4) && position[1] >= 0 && position[1] <= 4)
-            return null;
-        return cellMatrix[position[0]][position[1]];
+            return cellMatrix[position[0]][position[1]];
+
+        return null;
+
     }
 
 
