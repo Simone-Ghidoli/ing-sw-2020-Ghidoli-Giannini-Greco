@@ -27,9 +27,6 @@ public class ServerThread extends Thread {
         this.socket = soc;
         this.list = lista;
         writer = new PrintWriter(socket.getOutputStream(), true);
-        in = socket.getInputStream();
-        buffer = new BufferedReader(new InputStreamReader(in));
-        out= new DataOutputStream(socket.getOutputStream());
     }
 
     public String getPlayerbound(){return this.Playerbound;}
