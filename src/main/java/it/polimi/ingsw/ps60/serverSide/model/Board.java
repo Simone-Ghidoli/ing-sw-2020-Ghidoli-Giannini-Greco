@@ -67,7 +67,6 @@ public class Board {
             return cellMatrix[position[0]][position[1]];
 
         return null;
-
     }
 
 
@@ -102,7 +101,7 @@ public class Board {
     }
 
     public void win(Player player){
-        /**
+        /*
          * Manda un messaggio in output a tutti i client informandoli di quale giocatore ha vinto e che la partita è finita.
          * Questo metodo viene chiamato anche nel momento in cui un giocatore fa Last Man Standing
          */
