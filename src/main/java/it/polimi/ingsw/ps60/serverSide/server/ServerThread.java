@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps60.serverSide.server;
 
         import it.polimi.ingsw.ps60.GlobalVariables;
         import it.polimi.ingsw.ps60.serverSide.model.Cell;
+        import it.polimi.ingsw.ps60.serverSide.model.Player;
 
         import java.io.*;
         import java.net.Socket;
@@ -11,7 +12,7 @@ package it.polimi.ingsw.ps60.serverSide.server;
 /**
  * This class contains some methods to communicate between server and client.
  */
-
+//todo Va sistemata ancora
 public class ServerThread extends Thread {
     private String Playerbound;
     protected Socket socket;
@@ -21,13 +22,11 @@ public class ServerThread extends Thread {
     private PrintWriter writer;
     private DataOutputStream out;
 
-    public ServerThread(Socket soc, ArrayList<ServerThread> lista) throws IOException {
+    public ServerThread(Socket soc, ArrayList<ServerThread> lista,String s) throws IOException {
+        Playerbound=s;
         this.socket = soc;
         this.list = lista;
         writer = new PrintWriter(socket.getOutputStream(), true);
-        in = socket.getInputStream();
-        buffer = new BufferedReader(new InputStreamReader(in));
-        out= new DataOutputStream(socket.getOutputStream());
     }
 
     public String getPlayerbound(){return this.Playerbound;}
