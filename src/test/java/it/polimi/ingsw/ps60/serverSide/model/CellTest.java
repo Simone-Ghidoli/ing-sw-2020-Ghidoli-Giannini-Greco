@@ -84,7 +84,8 @@ public class CellTest {
     }
     @Test
     public void getPosition_correctOutput(){
-        assertEquals(cell1.getPosition(),coord1);
+        assertSame(cell1.getPosition()[0],coord1[0]);
+        assertSame(cell1.getPosition()[1],coord1[1]);
     }
 
     @Test
