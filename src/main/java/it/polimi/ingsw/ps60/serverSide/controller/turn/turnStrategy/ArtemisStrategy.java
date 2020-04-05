@@ -6,7 +6,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Cell;
 
 import java.util.List;
 
-public class ArtemisStrategy extends TurnStrategy {
+public class  ArtemisStrategy extends TurnStrategy {
 
     @Override
     public List<int[]>[] baseMovement() {
