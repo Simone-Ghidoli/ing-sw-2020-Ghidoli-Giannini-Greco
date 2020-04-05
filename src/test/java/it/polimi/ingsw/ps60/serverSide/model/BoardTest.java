@@ -32,6 +32,7 @@ public class BoardTest {
 
 
     }
+
     @Test
     public void playersNumber_correctOutput(){
         assertEquals(board.getPlayersNumber(), 3);
@@ -43,11 +44,10 @@ public class BoardTest {
     }
     @Test
     public void getPlayerInGame_correctOutput() {
-        assertSame(board.getPlayerInGame(), board.playerList);
+        assertSame(board.getPlayerInGame(), board.playerInGame);
     }
     @Test
     public void getPlayerById_correctInput_correctOutput(){
         assertSame(board.getPlayerById(GlobalVariables.IdPlayer.PLAYER1),board.playerMatrix[0]);
     }
 }
-

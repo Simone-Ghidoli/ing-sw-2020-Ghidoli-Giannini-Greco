@@ -73,6 +73,7 @@ public class CellTest {
         assertEquals(cell4.getBuildingLevel(),1);
         assertEquals(cell5.getBuildingLevel(),2);
     }
+
     @Test
     public void isDomed_correctOutput(){
         assertFalse(cell1.isDomed());
@@ -83,12 +84,14 @@ public class CellTest {
     }
     @Test
     public void getPosition_correctOutput(){
-        assertSame(cell1.getPosition(),coord1);
+        assertEquals(cell1.getPosition(),coord1);
     }
+
     @Test
     public void getWorkerIn_correctOutput(){
         assertSame(cell4.getWorkerIn(),board.playerMatrix[0].getWorker(0));
     }
+
     @Test
     public void numberCompleteBuild(){
         assertEquals(board.completeTower,1);
