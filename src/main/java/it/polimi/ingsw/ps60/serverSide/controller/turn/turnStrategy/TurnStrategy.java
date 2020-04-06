@@ -107,5 +107,4 @@ public class TurnStrategy implements DivinityCard {
         }
         return positions;
     }
-
 }
