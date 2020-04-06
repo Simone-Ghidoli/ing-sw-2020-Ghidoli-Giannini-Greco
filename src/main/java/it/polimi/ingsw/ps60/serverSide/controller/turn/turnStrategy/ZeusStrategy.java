@@ -13,7 +13,6 @@ public class ZeusStrategy extends TurnStrategy {
         Board game = GlobalVariables.game;
         List<int[]> positions = new ArrayList<>();
         int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();
-        ;
 
         Cell cell;
 

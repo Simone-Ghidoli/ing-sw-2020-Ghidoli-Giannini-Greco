@@ -26,6 +26,7 @@ public class ApolloStrategy extends TurnStrategy {
         Cell cell;
 
         for (int k = 0; k < 2; k++) {
+            positions[k] = new ArrayList<int[]>();
             positionWorker = cellWorker[k].getPosition();
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {

@@ -27,12 +27,9 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
 
     @Before
     public void setupGame() {
-        nicknames = new String[3];
-        nicknames[0] = "Nico";
-        nicknames[1] = "Vinz";
-        nicknames[2] = "Simo";
-        coord1[0] = 3;
-        coord1[1] = 4;
+
+        nicknames = new String[]{"Nico", "Vinz", "Simo"};
+        coord1 = new int[]{3, 4};
         coord2[0] = 1;
         coord2[1] = 2;
         coord3[0] = 3;
@@ -46,37 +43,41 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
         posPlayer1 = new int[][]{coord1, coord2};
         posPlayer2 = new int[][]{coord3, coord4};
         posPlayer3 = new int[][]{coord5, coord6};
-        player1 = new Player(GlobalVariables.IdPlayer.PLAYER1, nicknames[0]);
-        player2 = new Player(GlobalVariables.IdPlayer.PLAYER2, nicknames[1]);
-        player3 = new Player(GlobalVariables.IdPlayer.PLAYER3, nicknames[2]);
-        player1.setDivinityCard(GlobalVariables.DivinityCard.APOLLO);
-        player2.setDivinityCard(GlobalVariables.DivinityCard.ATHENA);
-        player3.setDivinityCard(GlobalVariables.DivinityCard.ATLAS);
         newgame = new StartGame();
         newgame.startBoard(nicknames);
         newgame.setWorkersPositions(new int[][][]{posPlayer1, posPlayer2, posPlayer3});
 
-        DivinityController divinityController1 = new DivinityController(GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityCard());
+        player1 = GlobalVariables.game.getPlayerById(GlobalVariables.IdPlayer.PLAYER1);
+        player2 = GlobalVariables.game.getPlayerById(GlobalVariables.IdPlayer.PLAYER2);
+        player3 =  GlobalVariables.game.getPlayerById(GlobalVariables.IdPlayer.PLAYER3);
+
+        player1.setDivinityCard(GlobalVariables.DivinityCard.APOLLO);
+        player2.setDivinityCard(GlobalVariables.DivinityCard.ATHENA);
+        player3.setDivinityCard(GlobalVariables.DivinityCard.ATLAS);
+
+        DivinityController divinityController1 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
         List<int[]>[] possibeMoves1 = divinityController1.getTurnStrategyMovement();
-        List<int[]> possibleBuild1 = divinityController1.getTurnStrategyBuilding();
+
 
         int[][] mossa1 = new int[2][2];
 
-        if (possibeMoves1[0].contains(coord6)) {
+        if (possibeMoves1[0].equals(coord6)) {
             mossa1[0][0] = 0; //muovo il worker 1
             mossa1[0][1] = 0; //default 0 poi cambia per ogni carta divinità
             mossa1[1] = coord6;
             divinityController1.setMovemet(mossa1);
 
         }
+
+        List<int[]> possibleBuild1 = divinityController1.getTurnStrategyBuilding();
         if (possibleBuild1.contains(new int[]{2, 2}))
             divinityController1.setBuilding(new int[]{2, 2});
 
 
         divinityController1.setEndTurn();
-        DivinityController divinityController2 = new DivinityController(GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityCard());
+        DivinityController divinityController2 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
         List<int[]>[] possibeMoves2 = divinityController2.getTurnStrategyMovement();
-        List<int[]> possibleBuild2 = divinityController2.getTurnStrategyBuilding();
+
         int[][] mossa2 = new int[2][2];
         if (possibeMoves2[0].contains(new int[]{2, 2})) {
             mossa2[0][0] = 0; //muovo il worker 1
@@ -84,15 +85,15 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
             mossa2[1] = new int[]{2, 2};
             divinityController1.setMovemet(mossa2);
 
-
         }
+
+        List<int[]> possibleBuild2 = divinityController2.getTurnStrategyBuilding();
         if (possibleBuild2.contains(new int[]{2, 3}))
             divinityController2.setBuilding(new int[]{2, 3});
         divinityController2.setEndTurn();
 
-        DivinityController divinityController3 = new DivinityController(GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityCard());
+        DivinityController divinityController3 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
         List<int[]>[] possibeMoves3 = divinityController3.getTurnStrategyMovement();
-        List<int[]> possibleBuild3 = divinityController3.getTurnStrategyBuilding();
         int[][] mossa3 = new int[2][2];
         if(possibeMoves3[0].contains(new int[]{2,3})){
             mossa3[0][0]=0;
@@ -106,6 +107,9 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
             mossa3[1]=new int[]{2,4};
             divinityController3.setMovemet(mossa3);
         }
+
+        List<int[]> possibleBuild3 = divinityController3.getTurnStrategyBuilding();
+
         if (possibleBuild3.contains(new int[]{1,4})){
             divinityController3.setBuilding(new int[]{1,4,1});
         }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps60.serverSide.model;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityController;
 
 public class Player {
 
@@ -11,6 +12,7 @@ public class Player {
     private GlobalVariables.Colour colour;
     private Worker workerMoved;
     private boolean buildByWorker;
+    private DivinityController divinityController;
 
 
     /**
@@ -49,9 +51,8 @@ public class Player {
      * @param divinityCard set the divinity card identified by his enumeration
      */
     public void setDivinityCard(GlobalVariables.DivinityCard divinityCard) {
-
         this.divinityCard = divinityCard;
-
+        divinityController = new DivinityController(divinityCard);
     }
 
     /**
@@ -101,5 +102,9 @@ public class Player {
 
     public void setBuildByWorker(boolean i){
         buildByWorker = i;
+    }
+
+    public DivinityController getDivinityController() {
+        return divinityController;
     }
 }

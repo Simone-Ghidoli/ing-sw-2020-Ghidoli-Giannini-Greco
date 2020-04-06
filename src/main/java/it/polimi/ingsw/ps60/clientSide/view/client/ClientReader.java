@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps60.clientSide.view.client;
 
-
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;

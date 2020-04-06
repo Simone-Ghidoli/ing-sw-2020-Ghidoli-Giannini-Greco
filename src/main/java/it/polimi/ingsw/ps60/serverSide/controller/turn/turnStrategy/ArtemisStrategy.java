@@ -4,6 +4,7 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class  ArtemisStrategy extends TurnStrategy {
@@ -20,6 +21,7 @@ public class  ArtemisStrategy extends TurnStrategy {
                 game.getPlayerInGame().getNode().getValue().getWorkers()[1].getCellPosition()};
 
         for (int k = 0; k < 2; k++) {
+            positions[k] = new ArrayList<int[]>();
             numberOfIterations = positions[k].size();
             for (int l = 0; l < numberOfIterations; l++) {
                 positionWorker = positions[k].get(l);
