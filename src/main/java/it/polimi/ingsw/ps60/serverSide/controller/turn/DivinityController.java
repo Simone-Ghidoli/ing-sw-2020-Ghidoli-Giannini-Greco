@@ -75,8 +75,8 @@ public class DivinityController {
         return strategy.baseMovement();
     }
 
-    public void setMovemet(int[][] movemet){
-        effect.move(movemet);
+    public void setMovemet(int[][] movement){
+        effect.move(movement);
     }
 
     public void setBuilding(int[] building){

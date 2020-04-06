@@ -12,6 +12,7 @@ public class Player {
     private Worker workerMoved;
     private boolean buildByWorker;
 
+
     /**
      *
      * @param idPlayer the enumeration of the id of the player
@@ -60,6 +61,7 @@ public class Player {
     public GlobalVariables.DivinityCard getDivinityCard() {
         return divinityCard;
     }
+
 
     /**
      *
