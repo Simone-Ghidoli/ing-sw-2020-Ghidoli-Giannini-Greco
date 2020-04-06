@@ -14,7 +14,8 @@ public class ClientReader extends Thread {
     InputStream in;
     PrintWriter pr;
 
-    public ClientReader(Socket sock){
+    public ClientReader(Socket sock,List<String> messages){
+        messagesFromServer=messages;
         socket=sock;
         messagesFromServer=new ArrayList<>();
     }
@@ -24,7 +25,7 @@ public class ClientReader extends Thread {
             while(true) {
                 br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 serverSays = br.readLine();
-                synchronized (messagesFromServer) {
+                synchronized (messagesFromServer){
                     messagesFromServer.add(serverSays);
                 }
             }
@@ -32,5 +33,8 @@ public class ClientReader extends Thread {
         catch(IOException e){
             //todo chiamo la disconnessione e la chiusura della partita
         }
+    }
+    public List<String> getMessagesFromServer(){
+        return messagesFromServer;
     }
 }

@@ -15,7 +15,6 @@
             private int port;
             List<ServerThread> threadslist;
             private ArrayList<ServerThread> clientlist=new ArrayList<>();
-            private static ExecutorService pool = Executors.newFixedThreadPool(3);
             private ServerSocket Santorini;
             private Socket socket;
             private int numberOfPlayers;
@@ -28,7 +27,7 @@
             /**
              * Open connections between clinets and server. Get players' nicknames and the number of players.
              */
-            public List<String> AvvioServer() throws IOException {
+            public List<String> AvvioServer() throws IOException { //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
                 String s=null; //stringa di comodo per salvare i nomi dal metodo
                 List<String> names=new ArrayList<>();
                 while(Santorini.isClosed()) {
@@ -51,7 +50,6 @@
                         names.add(s);
                         ServerThread nuovo = new ServerThread(socket, clientlist,s);
                         clientlist.add(nuovo); //primo thread aggiunto alla lista
-                        pool.execute(nuovo); //Esecuzione primo Thread
                     }
                 }
                     while (clientlist.size() < numberOfPlayers) {//Collega i socket fino a quando si arriva al numero corretto di giocatori
@@ -66,7 +64,6 @@
                             ServerThread nuovoThread = new ServerThread(socket, clientlist,s);
                             names.add(s);//aggiungo il nome alla lista dei nomi
                             clientlist.add(nuovoThread);
-                            pool.execute(nuovoThread);
                         }
                     }
                     return names;

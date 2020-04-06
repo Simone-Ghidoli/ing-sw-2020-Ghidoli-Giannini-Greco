@@ -1,9 +1,6 @@
 package it.polimi.ingsw.ps60.serverSide.server;
 
-        import it.polimi.ingsw.ps60.GlobalVariables;
-        import it.polimi.ingsw.ps60.serverSide.model.Cell;
-        import it.polimi.ingsw.ps60.serverSide.model.Player;
-
+        import it.polimi.ingsw.ps60.serverSide.controller.turn.SerializedInteger;
         import java.io.*;
         import java.net.Socket;
         import java.util.ArrayList;
@@ -12,7 +9,7 @@ package it.polimi.ingsw.ps60.serverSide.server;
 /**
  * This class contains some methods to communicate between server and client.
  */
-//todo Va sistemata ancora
+
 public class ServerThread extends Thread {
     private String Playerbound;
     protected Socket socket;
@@ -21,70 +18,69 @@ public class ServerThread extends Thread {
     private BufferedReader buffer;
     private PrintWriter writer;
     private DataOutputStream out;
+    private ObjectOutputStream obj;
 
-    public ServerThread(Socket soc, ArrayList<ServerThread> lista,String s) throws IOException {
-        Playerbound=s;
+    public ServerThread(Socket soc, ArrayList<ServerThread> lista, String s) throws IOException {
+        Playerbound = s;
         this.socket = soc;
         this.list = lista;
-        writer = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public String getPlayerbound(){return this.Playerbound;}
+    public int[] moveMessage(List<SerializedInteger>[] possible_choice) {//Comunica con l'utente per decidere quale muratore muovere e dove
+        int[] choice = new int[]{-1,-1};
+        sendString("move");
+        choice[0]=receiveInteger(); // Quale muratore si intende muovere
+        sendPositions(possible_choice[choice[0]]);//Invio solo la parte delle mosse che mi serve(ovvero quelle associate al worker da muovere)
+        choice[1]=receiveInteger();// Quale mossa si è scelto di fare
+        return choice;//Restituisce il numero inserito dall'utente (quindi la posizione del vettore con la casella in cui costruire)
+    }
+    public int buildMessage(List<SerializedInteger> possible_choice){//Comunica con l`utente per decidere dove costruire
+        int choice=-1;
+        sendString("build");
+        sendPositions(possible_choice);
+        choice=receiveInteger();
+        return choice;//Restituisce il numero inserito dall`utente (Quindi la posizione del vettore con la casella in cui costruire)
+    }
+    public void printBoard(){
 
-    public String names(){//Per recuperare gli username dei player
-        String name=null;
-        try{
-            name=buffer.readLine();
-        }
-        catch(IOException error){
-            System.out.println("Communication error");
-            error.printStackTrace();
-        }
-        this.Playerbound=name;
-        return name;
+    }
+    public int[] divinity_card_ingame(){//Farebbe comodo avere una vettore con le corrispondenti carte divinità
+        int[] cards=new int[3];
+        writer.println("divinity3");//Vengono comuniate le 3 carte scelte come 3 interi. Si recupera la carta corrispondente grazie ad una lista.
+        cards[0]=receiveInteger();
+        cards[1]=receiveInteger();
+        cards[2]=receiveInteger();
+        return cards;//ritorna le 3 carte scelte
     }
 
-
-    public int numeroGiocatori() {//Viene chiamata solo per il primo giocatore che si connette
-        int number=-1;
-        try{
-            writer.println("2 or 3 players?");
-            number=in.read();
-        }
-        catch(IOException error){
-            System.out.println("Communication error");
-            error.printStackTrace();
-        }
-        return number;
-    }
-    
-    public void directMessage(String chiamante){
-        writer.println(chiamante);
-    }
-
-    public String anything(String chiamante){ //chiamante è una stringa che viene inserita dal chiamante. Contiene il messaggio da mandare sul client
-        String message=null;
+    public int receiveInteger(){
+        int n=-1;
         try {
-            writer.println(chiamante);
-            message=buffer.readLine();
+            n = socket.getInputStream().read();
         }
-        catch(IOException error){
-            System.out.println("Communication error");
-            error.printStackTrace();
+        catch(IOException e){
+            //todo chiama la disconnessione
         }
-        return message;
+        return n;
     }
 
-    public void printmatrix(){
-        //Questo stamperà il matrix a video.
-        Cell[][] matrix=GlobalVariables.game.getCellMatrix();
-        for(int i=0;i<5;i++){
-            for(int k=0;k<5;k++){
-                //Varie condizioni logiche per la stampa
-            }
+    public void sendString(String message){
+        try {
+            writer=new PrintWriter(socket.getOutputStream(),true);
+            writer.println(message);
+        }
+        catch(IOException e){
+            //todo chiama la disconnessione
         }
     }
-    private void disconnect(){
-        //disconnesione del client per qualsiasi motivo
+
+    public void sendPositions(List<SerializedInteger> list){
+        try{
+            obj=new ObjectOutputStream(socket.getOutputStream());
+            obj.writeObject(list);
+        }
+        catch(IOException e){
+            //todo chiama la disconnessione
+        }
     }
 }

@@ -1,0 +1,11 @@
+package it.polimi.ingsw.ps60.serverSide.controller.turn;
+
+import java.io.Serializable;
+
+public class SerializedInteger implements Serializable {
+        public final int[] serialized;
+
+    public SerializedInteger(int[] vector) {
+        this.serialized = vector;
+    }
+}
