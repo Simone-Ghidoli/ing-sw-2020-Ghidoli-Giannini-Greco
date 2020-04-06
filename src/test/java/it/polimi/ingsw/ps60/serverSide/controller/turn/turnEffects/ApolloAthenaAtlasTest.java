@@ -2,13 +2,10 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.controller.StartGame;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityObject;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
 import org.junit.Before;
-
-import java.util.List;
 
 public class ApolloAthenaAtlasTest {
     private Board board=null;
@@ -35,12 +32,12 @@ public class ApolloAthenaAtlasTest {
         coord3[0] = 3;
         coord3[1] = 2;
         coord4[0] = 4;
-        coord4[1] = 2;
+        coord4[1] = 3;
         coord5[0] = 1;
         coord5[1] = 1;
         coord6[0] = 3;
         coord6[1] = 3;
-        posPlayer1= new int[][]{coord1, coord2};
+        posPlayer1=new int[][]{coord1,coord2};
         posPlayer2=new int[][]{coord3,coord4};
         posPlayer3=new int[][]{coord5,coord6};
         player1=new Player(GlobalVariables.IdPlayer.PLAYER1, nicknames[0]);
@@ -52,20 +49,9 @@ public class ApolloAthenaAtlasTest {
         newgame=new StartGame();
         newgame.startBoard(nicknames);
         newgame.setWorkersPositions(new int[][][]{posPlayer1,posPlayer2,posPlayer3});
-
-        DivinityObject divinityObject = new DivinityObject(GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityCard());
-        List<int[]>[] possibeMoves = divinityObject.getTurnStrategyMovement();
-
-        int[][] mossa = new int[2][2];
-
-        mossa[0][0] = 0; //muovo il worker 1
-        
-        mossa[0][1] = 0; //default 0 poi cambia per ogni carta divinità
-        
-        mossa[1] = possibeMoves[0].get(0);
+ 
 
 
 
-        divinityObject.setMovemet(mossa);
     }
 }

@@ -48,7 +48,9 @@ public class Player {
      * @param divinityCard set the divinity card identified by his enumeration
      */
     public void setDivinityCard(GlobalVariables.DivinityCard divinityCard) {
+
         this.divinityCard = divinityCard;
+
     }
 
     /**
