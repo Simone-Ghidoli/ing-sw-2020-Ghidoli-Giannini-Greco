@@ -2,15 +2,14 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.controller.StartGame;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityObject;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityController;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
-import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
 import org.junit.Before;
 
 import java.util.List;
 
-public class ApolloAthenaAtlasTest {
+public class ApolloEffectAthenaEffectAtlasEffectTest {
     private Board board=null;
     private StartGame newgame;
     private String[] nicknames;
@@ -53,8 +52,8 @@ public class ApolloAthenaAtlasTest {
         newgame.startBoard(nicknames);
         newgame.setWorkersPositions(new int[][][]{posPlayer1,posPlayer2,posPlayer3});
 
-        DivinityObject divinityObject = new DivinityObject(GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityCard());
-        List<int[]>[] possibeMoves = divinityObject.getTurnStrategyMovement();
+        DivinityController divinityController = new DivinityController(GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityCard());
+        List<int[]>[] possibeMoves = divinityController.getTurnStrategyMovement();
 
         int[][] mossa = new int[2][2];
 
@@ -66,6 +65,6 @@ public class ApolloAthenaAtlasTest {
 
 
 
-        divinityObject.setMovemet(mossa);
+        divinityController.setMovemet(mossa);
     }
 }

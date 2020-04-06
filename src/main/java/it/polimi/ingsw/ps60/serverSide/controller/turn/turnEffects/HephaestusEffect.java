@@ -4,7 +4,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Cell;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class HephaestusEffect extends Turn {
+public class HephaestusEffect extends TurnEffect {
     @Override
     public void build(int[] build) {
         super.build(build);

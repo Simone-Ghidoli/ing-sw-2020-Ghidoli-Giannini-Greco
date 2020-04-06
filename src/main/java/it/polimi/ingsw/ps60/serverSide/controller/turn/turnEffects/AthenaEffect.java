@@ -5,7 +5,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Worker;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class AthenaEffect extends Turn {
+public class AthenaEffect extends TurnEffect {
 
     @Override
     public void move(int[][] move) {

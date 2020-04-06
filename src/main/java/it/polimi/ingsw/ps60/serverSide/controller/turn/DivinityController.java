@@ -7,12 +7,12 @@ import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.*;
 import java.util.List;
 
 
-public class DivinityObject {
+public class DivinityController {
 
-    private DivinityCard strategy;
-    private TurnEffect effect;
+    private Strategy strategy;
+    private Turn effect;
 
-    public DivinityObject(GlobalVariables.DivinityCard divinityCard){
+    public DivinityController(GlobalVariables.DivinityCard divinityCard){
         switch (divinityCard) {
             case APOLLO:
                 strategy = new ApolloStrategy();
@@ -62,7 +62,7 @@ public class DivinityObject {
                 effect = new PanEffect();
                 break;
             default:
-                effect = new Turn();
+                effect = new TurnEffect();
                 break;
         }
     }

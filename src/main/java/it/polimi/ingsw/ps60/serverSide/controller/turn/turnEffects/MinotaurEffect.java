@@ -5,7 +5,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Worker;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class MinotaurEffect extends Turn {
+public class MinotaurEffect extends TurnEffect {
     @Override
     public void move(int[][] move) {
         Player player = game.getPlayerInGame().getNode().getValue();
