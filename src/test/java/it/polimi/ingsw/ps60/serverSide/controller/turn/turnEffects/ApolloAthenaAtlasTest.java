@@ -2,10 +2,13 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.controller.StartGame;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityObject;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
 import org.junit.Before;
+
+import java.util.List;
 
 public class ApolloAthenaAtlasTest {
     private Board board=null;
@@ -49,7 +52,20 @@ public class ApolloAthenaAtlasTest {
         newgame=new StartGame();
         newgame.startBoard(nicknames);
         newgame.setWorkersPositions(new int[][][]{posPlayer1,posPlayer2,posPlayer3});
-        player1.getWorker(0).moveWorker(GlobalVariables.game.getCellByPosition(coord6));
 
+        DivinityObject divinityObject = new DivinityObject(GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityCard());
+        List<int[]>[] possibeMoves = divinityObject.getTurnStrategyMovement();
+
+        int[][] mossa = new int[2][2];
+
+        mossa[0][0] = 0; //muovo il worker 1
+        
+        mossa[0][1] = 0; //default 0 poi cambia per ogni carta divinità
+        
+        mossa[1] = possibeMoves[0].get(0);
+
+
+
+        divinityObject.setMovemet(mossa);
     }
 }

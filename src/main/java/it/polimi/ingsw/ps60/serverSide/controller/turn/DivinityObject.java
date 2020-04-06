@@ -1,107 +1,89 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.*;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.*;
-import it.polimi.ingsw.ps60.serverSide.model.Player;
-
-import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 import java.util.List;
 
 
 public class DivinityObject {
 
-    private DivinityCard card;
-
-    public DivinityObject(){
-        switch (game.getPlayerInGame().getNode().getValue().getDivinityCard()) {
-            case APOLLO:
-                card = new ApolloStrategy();
-                break;
-            case ARTEMIS:
-                card = new ArtemisStrategy();
-                break;
-            case HEPHAESTUS:
-                card = new HephaestusStrategy();
-                break;
-            case MINOTAUR:
-                card = new MinotaurStrategy();
-                break;
-            case PROMETHEUS:
-                card = new PrometheusStrategy();
-                break;
-            case TRITON:
-                card = new TritonStrategy();
-                break;
-            case ZEUS:
-                card = new ZeusStrategy();
-                break;
-            default:
-                card = new TurnStrategy();
-        }
-    }
+    private DivinityCard strategy;
+    private TurnEffect effect;
 
     public DivinityObject(GlobalVariables.DivinityCard divinityCard){
         switch (divinityCard) {
             case APOLLO:
-                card = new ApolloStrategy();
+                strategy = new ApolloStrategy();
                 break;
             case ARTEMIS:
-                card = new ArtemisStrategy();
+                strategy = new ArtemisStrategy();
                 break;
             case HEPHAESTUS:
-                card = new HephaestusStrategy();
+                strategy = new HephaestusStrategy();
                 break;
             case MINOTAUR:
-                card = new MinotaurStrategy();
+                strategy = new MinotaurStrategy();
                 break;
             case PROMETHEUS:
-                card = new PrometheusStrategy();
+                strategy = new PrometheusStrategy();
                 break;
             case TRITON:
-                card = new TritonStrategy();
+                strategy = new TritonStrategy();
                 break;
             case ZEUS:
-                card = new ZeusStrategy();
+                strategy = new ZeusStrategy();
                 break;
             default:
-                card = new TurnStrategy();
+                strategy = new TurnStrategy();
         }
-    }
 
-    public DivinityObject(Player player){
-        switch (player.getDivinityCard()) {
+        switch (divinityCard){
             case APOLLO:
-                card = new ApolloStrategy();
+                effect = new ApolloEffect();
                 break;
-            case ARTEMIS:
-                card = new ArtemisStrategy();
+            case ATHENA:
+                effect = new AthenaEffect();
+                break;
+            case ATLAS:
+                effect = new AtlasEffect();
+                break;
+            case CHRONUS:
+                effect = new ChronusEffect();
                 break;
             case HEPHAESTUS:
-                card = new HephaestusStrategy();
+                effect = new HephaestusEffect();
                 break;
             case MINOTAUR:
-                card = new MinotaurStrategy();
+                effect = new MinotaurEffect();
                 break;
-            case PROMETHEUS:
-                card = new PrometheusStrategy();
-                break;
-            case TRITON:
-                card = new TritonStrategy();
-                break;
-            case ZEUS:
-                card = new ZeusStrategy();
+            case PAN:
+                effect = new PanEffect();
                 break;
             default:
-                card = new TurnStrategy();
+                effect = new Turn();
+                break;
         }
     }
 
     public List<int[]> getTurnStrategyBuilding() {
-        return card.baseBuilding();
+        return strategy.baseBuilding();
     }
 
     public List<int[]>[] getTurnStrategyMovement() {
-        return card.baseMovement();
+        return strategy.baseMovement();
+    }
+
+    public void setMovemet(int[][] movemet){
+        effect.move(movemet);
+    }
+
+    public void setBuilding(int[] building){
+        effect.build(building);
+    }
+
+    public void setEndTurn(){
+        effect.endTurn();
     }
 }
