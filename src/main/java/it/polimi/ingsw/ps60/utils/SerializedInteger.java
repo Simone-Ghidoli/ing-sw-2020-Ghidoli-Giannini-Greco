@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps60.serverSide.controller.turn;
+package it.polimi.ingsw.ps60.utils;
 
 import java.io.Serializable;
 

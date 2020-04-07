@@ -89,4 +89,31 @@ public class GlobalVariables {
     }
 
     public static Board game;
+
+    public enum StringPatterns{
+        IPv4("(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9])+\\.{3}+([25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9])"),
+
+        PortNumber("(4915[2-9]|491[6-9][0-9]|49[2-9][0-9][0-9]|5[0-9][0-9][0-9][0-9]|6[0-4][0-9][0-9][0-9]|" +
+                "65[0-4][0-9][0-9]|655[0-2][0-9]|6553[0-5])"),
+
+        Nickname("[a-z|A-Z|0-9]{3-10}"),
+
+        /**
+         * Trenta giorni ha novembre
+         * con april, giugno e settembre.
+         * Di ventotto ce n'è uno,
+         * tutti gli altri ne han trentuno
+         */
+        Date("(19[0-9][0-9]|20[0-1][0-9]|2020])+\\/(((1|3|5|7|8|10|12)+\\/([1-9]|[1-2][0-9]|3[0-1]))|((4|6|9|11)+\\/([1-9]|[1-2][0-9]|30))|((2)+\\/([1-9]|1[0-9]|2[0-9])))");
+
+        private final String pattern;
+
+        StringPatterns(String pattern){
+            this.pattern = pattern;
+        }
+
+        public String getPattern() {
+            return pattern;
+        }
+    }
 }

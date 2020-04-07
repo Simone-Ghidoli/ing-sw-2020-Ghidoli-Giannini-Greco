@@ -1,11 +1,12 @@
 package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 import java.util.List;
 import java.util.Scanner;
 
-import static it.polimi.ingsw.ps60.utils.flushInput.FlushInput.flushInput;
+import static it.polimi.ingsw.ps60.utils.FlushInput.flushInput;
 
 public class CLIMethods implements ViewMethodSelection {
 
@@ -29,6 +30,7 @@ public class CLIMethods implements ViewMethodSelection {
     ?       2       3
     @       3       3
      */
+    @Override
     public void printBoard(char[] board) {
 
         System.out.println("Legend:");
@@ -59,12 +61,10 @@ public class CLIMethods implements ViewMethodSelection {
             }
             System.out.print(GlobalVariables.Colour.RESET.getString());
             System.out.print("  ");
-
-
         }
     }
 
-    public static int printPossibleMoves(List<int[]>[] moves, int[][]positionsWorkers){
+    public int printPossibleMoves(List<int[]>[] moves, int[][]positionsWorkers){
         int choice = 0;
 
         for (int i = 0; i < moves.length; i++){
@@ -80,6 +80,7 @@ public class CLIMethods implements ViewMethodSelection {
         return choice;
     }
 
+    @Override
     public int moveChoice(List<int[]>[] moves, int[][]positionsWorkers) {
         System.out.println("Select where to move");
         int i = printPossibleMoves(moves, positionsWorkers);
@@ -94,7 +95,7 @@ public class CLIMethods implements ViewMethodSelection {
         }
     }
 
-    public static int printPossibleBuilds(List<int[]> moves){
+    public int printPossibleBuilds(List<int[]> moves){
         int choice = 0;
 
         for (int i = 0; i < moves.size(); i++){
@@ -105,6 +106,7 @@ public class CLIMethods implements ViewMethodSelection {
         return choice;
     }
 
+    @Override
     public int buildChoice(List<int[]> moves){
         System.out.println("Select where to build");
         int i = printPossibleBuilds(moves);
@@ -121,27 +123,172 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public String[] ipPortChoices() {
-        return new String[0];
+        String ip = null;
+        String port = null;
+
+        System.out.println("Enter the IP address of server");
+        Scanner input = new Scanner(System.in);
+
+        while (ip == null){
+            ip = input.nextLine();
+            if (!new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip)) {
+                System.out.println("Wrong input");
+                ip = null;
+            }
+        }
+
+        System.out.println("Enter the port number");
+
+        while (port == null){
+            port = input.nextLine();
+            if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port)) {
+                System.out.println("Wrong input");
+                port = null;
+            }
+        }
+
+        return new String[]{ip, port};
     }
 
     @Override
     public String[] nicknameBirthdayChoice() {
-        return new String[0];
+        String nickname = null;
+        String birthday = null;
+
+        System.out.println("Enter your nickname");
+        Scanner input = new Scanner(System.in);
+
+        while (nickname == null){
+            nickname = input.nextLine();
+            if (!new StringRegexValidation(GlobalVariables.StringPatterns.Nickname.getPattern()).isValid(nickname)) {
+                System.out.println("Wrong input");
+                nickname = null;
+            }
+        }
+
+        System.out.println("Enter your birthday");
+
+        while (birthday == null){
+            birthday = input.nextLine();
+            if (!new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern()).isValid(birthday)) {
+                System.out.println("Wrong input");
+                birthday = null;
+            }
+        }
+
+        return new String[]{nickname, birthday};
     }
 
     @Override
-    public GlobalVariables.DivinityCard[] cardChoices(GlobalVariables.DivinityCard[] allCards) {
-        return new GlobalVariables.DivinityCard[0];
+    public GlobalVariables.DivinityCard[] cardChoices(int playerNumber) {
+
+        GlobalVariables.DivinityCard[] allCards = GlobalVariables.DivinityCard.values();
+        GlobalVariables.DivinityCard[] cards = new GlobalVariables.DivinityCard[playerNumber];
+        int choice = 0;
+        System.out.println("Select " + playerNumber + " cards between:");
+
+        for (int i = 0; i < allCards.length; i++){
+            System.out.println((i+1) + "- " + allCards[i].toString());
+        }
+
+        Scanner input = new Scanner(System.in);
+
+        for (int j = 0; j < playerNumber; j++) {
+            System.out.println("Enter card number " + (j+1));
+
+            while (choice == 0) {
+                choice = input.nextInt();
+                if (choice > allCards.length + 1 || choice < 1){
+                    choice = 0;
+                    System.out.println("Wrong input");
+                }
+            }
+            cards[j] = allCards[choice - 1];
+        }
+
+        return cards;
     }
 
     @Override
-    public GlobalVariables.DivinityCard[] divinitySelection(GlobalVariables.DivinityCard card) {
-        return new GlobalVariables.DivinityCard[0];
+    public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card) {
+        int choice = 0;
+        System.out.println("Select one card between:");
+
+        for (int i = 0; i < card.length; i++){
+            System.out.println((i+1) + "- " + card[i].toString());
+        }
+
+        Scanner input = new Scanner(System.in);
+
+        while (choice == 0) {
+            choice = input.nextInt();
+            if (choice > card.length + 1 || choice < 1){
+                choice = 0;
+                System.out.println("Wrong input");
+            }
+        }
+
+        return card[choice -1];
+
+
     }
 
     @Override
-    public int[][] fistSetWorkers(List<int[]> posiiblePositions) {
-        return new int[0][];
+    public int[][] fistSetWorkers(List<int[]> possiblePositions) {
+        int[][] choice = new int[2][2];
+        int[] buffer;
+
+        System.out.println("Legend:");
+        System.out.println("0 indicates a empty space, 1 indicates that there is already a worker in it");
+
+        System.out.println("\n    1  2  3  4  5");
+        System.out.print("    '  '  '  '  '");
+
+        for (int i = 0; i < 5; i++) {
+            System.out.print("\n\n" + (i + 1) + "-  ");
+
+            for (int j = 0; j < 5; j ++) {
+
+                if (possiblePositions.contains(new int[]{i, j})) {//todo conteins non fa sta cosa va fatto un metodo a parte
+                    System.out.print(0);
+                } else {
+                    System.out.println(1);
+                }
+                System.out.print("  ");
+            }
+        }
+
+        Scanner input = new Scanner(System.in);
+
+        for (int i = 0; i < 2; i++) {
+            while (choice[i] == null) {
+                System.out.println("Enter the position of the" + (i + 1) + "worker");
+                System.out.println("Enter the x coordinate");
+                buffer = new int[]{0, 0};
+
+                while (buffer[0] == 0) {
+                    buffer[0] = input.nextInt();
+                    if (buffer[0] > 5 || buffer[0] < 1) {
+                        System.out.println("Wrong input");
+                        buffer[0] = 0;
+                    }
+                }
+
+                System.out.println("Enter the y coordinate");
+                while (buffer[1] == 0) {
+                    buffer[1] = input.nextInt();
+                    if (buffer[1] > 5 || buffer[1] < 1) {
+                        System.out.println("Wrong input");
+                        buffer[1] = 0;
+                    }
+                }
+
+                if (possiblePositions.contains(buffer))//todo la stessa cosa di prima
+                    choice[i] = buffer;
+            }
+        }
+
+        return choice;
     }
 
     @Override

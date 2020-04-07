@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps60.utils.flushInput;
+package it.polimi.ingsw.ps60.utils;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps60.serverSide.server;
 
-        import it.polimi.ingsw.ps60.serverSide.controller.turn.SerializedInteger;
+        import it.polimi.ingsw.ps60.utils.SerializedInteger;
         import java.io.*;
         import java.net.Socket;
         import java.util.ArrayList;

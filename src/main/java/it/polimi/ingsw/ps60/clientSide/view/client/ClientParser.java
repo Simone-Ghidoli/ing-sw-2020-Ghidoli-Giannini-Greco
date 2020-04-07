@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 
-import it.polimi.ingsw.ps60.serverSide.controller.turn.SerializedInteger;
+import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
 public class ClientParser extends Thread{
     private List<String> messagesFromServer;
