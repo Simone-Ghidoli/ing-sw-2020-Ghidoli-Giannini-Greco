@@ -12,7 +12,7 @@ public class GlobalVariables {
 
         private IdWorker[] idWorkers;
         private Colour colour;
-        private ServerThread serverThread;
+        //private ServerThread serverThread;
 
         IdPlayer(IdWorker[] idWorkers, Colour colour) {
             this.idWorkers = idWorkers;
@@ -36,9 +36,9 @@ public class GlobalVariables {
             }
         }
 
-        public void setServerThread(ServerThread serverThread) {
-            this.serverThread = serverThread;
-        }
+        //public void setServerThread(ServerThread serverThread) {
+        //    this.serverThread = serverThread;
+        //}
 
         public Colour getColour() {
             return colour;
@@ -63,8 +63,7 @@ public class GlobalVariables {
             this.bitException = bitException;
         }
 
-        DivinityCard() {
-        }
+        DivinityCard(){}
 
         public boolean isBitException() {
             return bitException;

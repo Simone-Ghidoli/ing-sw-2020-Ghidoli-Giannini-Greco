@@ -1,11 +1,13 @@
-package it.polimi.ingsw.ps60.clientSide.view.cli;
+package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class CLIMethods {
+import static it.polimi.ingsw.ps60.utils.flushInput.FlushInput.flushInput;
+
+public class CLIMethods implements ViewMethodSelection {
 
     /* questi sono ascii da 48 a 64
     valore  altezza giocatore
@@ -27,7 +29,7 @@ public class CLIMethods {
     ?       2       3
     @       3       3
      */
-    public static void printBoard(char[] board) {
+    public void printBoard(char[] board) {
 
         System.out.println("Legend:");
         System.out.println("The number indicates the building level (4 is the dome), the colour indicates the player");
@@ -62,9 +64,11 @@ public class CLIMethods {
         }
     }
 
-    public static int printPossibleMoves(List<int[]>[] moves){
+    public static int printPossibleMoves(List<int[]>[] moves, int[][]positionsWorkers){
         int choice = 0;
+
         for (int i = 0; i < moves.length; i++){
+            System.out.println("Worker " + (i+1) + " is on " + positionsWorkers[i][0] + "; " + positionsWorkers[i][1]);
             System.out.println("Available choice for worker " + (i+1));
             for(int j = 0; j < moves[i].size(); j++){
                 System.out.println("Press " + (choice + 1) + " in order to move in the cell: " +
@@ -76,21 +80,17 @@ public class CLIMethods {
         return choice;
     }
 
-    public static int[] moveChoice(List<int[]>[] moves) {
+    public int moveChoice(List<int[]>[] moves, int[][]positionsWorkers) {
         System.out.println("Select where to move");
-        int i = printPossibleMoves(moves);
+        int i = printPossibleMoves(moves, positionsWorkers);
+        flushInput();
         int choice = new Scanner(System.in).nextInt();
 
         if (choice > i) {
             System.out.println("Wrong input");
-            return moveChoice(moves);
+            return moveChoice(moves, positionsWorkers);
         } else {
-            int j = 0;
-            while (moves[j].size() < choice) {
-                choice = choice - moves[j].size();
-                j++;
-            }
-            return moves[j].get(choice - 1);
+            return choice-1;
         }
     }
 
@@ -105,7 +105,7 @@ public class CLIMethods {
         return choice;
     }
 
-    public static int[] buildChoice(List<int[]> moves){
+    public int buildChoice(List<int[]> moves){
         System.out.println("Select where to build");
         int i = printPossibleBuilds(moves);
         int choice = new Scanner(System.in).nextInt();
@@ -115,7 +115,37 @@ public class CLIMethods {
             return buildChoice(moves);
         }
         else {
-            return moves.get(choice-1);
+            return choice-1;
         }
+    }
+
+    @Override
+    public String[] ipPortChoices() {
+        return new String[0];
+    }
+
+    @Override
+    public String[] nicknameBirthdayChoice() {
+        return new String[0];
+    }
+
+    @Override
+    public GlobalVariables.DivinityCard[] cardChoices(GlobalVariables.DivinityCard[] allCards) {
+        return new GlobalVariables.DivinityCard[0];
+    }
+
+    @Override
+    public GlobalVariables.DivinityCard[] divinitySelection(GlobalVariables.DivinityCard card) {
+        return new GlobalVariables.DivinityCard[0];
+    }
+
+    @Override
+    public int[][] fistSetWorkers(List<int[]> posiiblePositions) {
+        return new int[0][];
+    }
+
+    @Override
+    public int specialChoices() {
+        return 0;
     }
 }

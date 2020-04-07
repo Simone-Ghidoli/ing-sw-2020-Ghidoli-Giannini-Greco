@@ -10,17 +10,11 @@ import java.util.concurrent.TimeUnit;
 public class ClientStarter{
     private List<String> messagesFromServer;
     private static ExecutorService pool = Executors.newFixedThreadPool(2);
-    private int port;
-    private String ipAddress;
     private ClientReader reader;
     private ClientParser parser;
     Socket socket;
 
-    public ClientStarter(int porta,String ip){
-        port=porta;
-        ipAddress=ip;
-    }
-    public void avvioClient() throws InterruptedException {
+    public ClientStarter(int port,String ipAddress) throws InterruptedException {
         while (socket.isClosed()) {
             try {
                 socket = new Socket(ipAddress, port);
