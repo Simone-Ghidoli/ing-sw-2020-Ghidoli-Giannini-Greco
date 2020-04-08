@@ -31,13 +31,13 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public GlobalVariables.DivinityCard[] cardChoices(GlobalVariables.DivinityCard[] allCards) {
+    public GlobalVariables.DivinityCard[] cardChoices(int playerNumber) {
         return new GlobalVariables.DivinityCard[0];
     }
 
     @Override
-    public GlobalVariables.DivinityCard[] divinitySelection(GlobalVariables.DivinityCard card) {
-        return new GlobalVariables.DivinityCard[0];
+    public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card) {
+        return card[0];
     }
 
     @Override

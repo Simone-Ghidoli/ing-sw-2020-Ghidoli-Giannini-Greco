@@ -11,39 +11,39 @@ import it.polimi.ingsw.ps60.serverSide.ServerStarter;
 public class Launcher {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        firstSelection(args);
+        firstSelection();
     }
 
-    private static void firstSelection(String[] args) throws IOException, InterruptedException {
+    private static void firstSelection() throws IOException, InterruptedException {
 
         System.out.println("Enter 0 for server, 1 for client");
 
         switch (new Scanner(System.in).nextInt()) {
             case 0:
-                ServerStarter.main(args);
+                ServerStarter.start();
                 break;
             case 1:
-                clientSelection(args);
+                clientSelection();
                 break;
             default:
                 System.out.println("Wrong input");
-                firstSelection(args);
+                firstSelection();
         }
     }
 
-    private static void clientSelection(String[] args) throws InterruptedException {
+    private static void clientSelection() throws InterruptedException {
         System.out.println("Enter 0 for GUI, 1 for CLI");
 
         switch (new Scanner(System.in).nextInt()){
             case 0:
-                Starter.main(args, new GUIMethods());
+                Starter.start(new GUIMethods());
                 break;
             case 1:
-                Starter.main(args, new CLIMethods());
+                Starter.start(new CLIMethods());
                 break;
             default:
                 System.out.println("Wrong input");
-                clientSelection(args);
+                clientSelection();
         }
     }
 }

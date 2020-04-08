@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps60.clientSide.view.client;
 
+import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -12,8 +14,9 @@ public class ClientReader extends Thread {
     BufferedReader br;
     InputStream in;
     PrintWriter pr;
+    ViewMethodSelection viewMethodSelection;
 
-    public ClientReader(Socket sock,List<String> messages){
+    public ClientReader(Socket sock, List<String> messages){
         messagesFromServer=messages;
         socket=sock;
         messagesFromServer=new ArrayList<>();

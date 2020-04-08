@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.util.Scanner;
 
 public class ServerStarter {
-    public static void main(String[] args) throws IOException {
+    public static void start() throws IOException {
         System.out.println("Enter port number");
         Scanner input = new Scanner(System.in);
         int port=input.nextInt();

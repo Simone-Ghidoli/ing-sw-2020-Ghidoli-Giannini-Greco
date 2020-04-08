@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 
+import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
 public class ClientParser extends Thread{
@@ -14,10 +15,12 @@ public class ClientParser extends Thread{
     PrintWriter pr;
     ObjectInputStream obj;
     InputStream input;
+    ViewMethodSelection viewMethodSelection;
 
-    public ClientParser(Socket sock,List<String> messages){
+    public ClientParser(Socket sock,List<String> messages, ViewMethodSelection viewMethodSelection){
         socket=sock;
         messagesFromServer=messages;
+        this.viewMethodSelection = viewMethodSelection;
     }
 
     public void run() {//processa i messaggi

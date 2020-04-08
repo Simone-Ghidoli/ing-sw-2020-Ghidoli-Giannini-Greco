@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class StringRegexValidation {
 
-    Pattern regex;
+    private Pattern regex;
 
     public StringRegexValidation(String pattern){
         this.regex = Pattern.compile(pattern);

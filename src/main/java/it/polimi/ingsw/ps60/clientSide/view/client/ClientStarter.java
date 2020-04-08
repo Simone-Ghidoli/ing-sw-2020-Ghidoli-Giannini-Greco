@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps60.clientSide.view.client;
 
+import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
@@ -14,7 +16,7 @@ public class ClientStarter{
     private ClientParser parser;
     Socket socket;
 
-    public ClientStarter(int port,String ipAddress) throws InterruptedException {
+    public ClientStarter(int port, String ipAddress, ViewMethodSelection viewMethodSelection) throws InterruptedException {
         while (socket.isClosed()) {
             try {
                 socket = new Socket(ipAddress, port);
@@ -24,7 +26,7 @@ public class ClientStarter{
             }
             if(!socket.isClosed()) {
                 reader = new ClientReader(socket,messagesFromServer);
-                parser= new ClientParser(socket,messagesFromServer);
+                parser= new ClientParser(socket,messagesFromServer, viewMethodSelection);
                 pool.execute(reader);
                 pool.execute(parser);
             }
