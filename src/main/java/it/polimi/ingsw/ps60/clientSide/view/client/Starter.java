@@ -6,6 +6,6 @@ public class Starter {
 
     public static void start(ViewMethodSelection viewMethodSelection) throws InterruptedException {
         String[] strings = viewMethodSelection.ipPortChoices();
-        ClientStarter clientStarter = new ClientStarter(Integer.parseInt(strings[1]), strings[0], viewMethodSelection);
+        ClientStarter clientStarter = new ClientStarter(Integer.parseInt(strings[1]), strings[0],viewMethodSelection);
     }
 }

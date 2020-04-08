@@ -26,24 +26,26 @@ public class ServerThread extends Thread {
         this.list = lista;
     }
 
-    public int[] moveMessage(List<SerializedInteger>[] possible_choice) {//Comunica con l'utente per decidere quale muratore muovere e dove
-        int[] choice = new int[]{-1,-1};
+    public int moveMessage(List<SerializedInteger>[] possible_choice,SerializedInteger[] positionworkers) {//Comunica con l'utente per decidere quale muratore muovere e dove
+        int choice=-1;
         sendString("move");
-        choice[0]=receiveInteger(); // Quale muratore si intende muovere
-        sendPositions(possible_choice[choice[0]]);//Invio solo la parte delle mosse che mi serve(ovvero quelle associate al worker da muovere)
-        choice[1]=receiveInteger();// Quale mossa si è scelto di fare
+        sendPositionsArray(possible_choice);//Invio solo la parte delle mosse che mi serve(ovvero quelle associate al worker da muovere)
+        sendPositionWorkers(positionworkers);//PositionWorkers viene inserito in input quando viene chiamato il metodo.
+        choice=receiveInteger();
         return choice;//Restituisce il numero inserito dall'utente (quindi la posizione del vettore con la casella in cui costruire)
     }
     public int buildMessage(List<SerializedInteger> possible_choice){//Comunica con l`utente per decidere dove costruire
         int choice=-1;
         sendString("build");
-        sendPositions(possible_choice);
+        sendPositionsList(possible_choice);
         choice=receiveInteger();
         return choice;//Restituisce il numero inserito dall`utente (Quindi la posizione del vettore con la casella in cui costruire)
     }
+
     public void printBoard(){
 
     }
+
     public int[] divinity_card_ingame(){//Farebbe comodo avere una vettore con le corrispondenti carte divinità
         int[] cards=new int[3];
         writer.println("divinity3");//Vengono comuniate le 3 carte scelte come 3 interi. Si recupera la carta corrispondente grazie ad una lista.
@@ -74,7 +76,7 @@ public class ServerThread extends Thread {
         }
     }
 
-    public void sendPositions(List<SerializedInteger> list){
+    public void sendPositionsArray(List<SerializedInteger>[] list){
         try{
             obj=new ObjectOutputStream(socket.getOutputStream());
             obj.writeObject(list);
@@ -83,4 +85,25 @@ public class ServerThread extends Thread {
             //todo chiama la disconnessione
         }
     }
+
+    public void sendPositionsList(List<SerializedInteger> list){
+        try{
+            obj=new ObjectOutputStream(socket.getOutputStream());
+            obj.writeObject(list);
+        }
+        catch(IOException e){
+            //todo chiama la disconnessione
+        }
+    }//A differenza del primo manda una sola lista e non un vettore di liste
+
+    public void sendPositionWorkers(SerializedInteger[] positionworkers){
+        try{
+            obj=new ObjectOutputStream(socket.getOutputStream());
+            obj.writeObject(positionworkers);
+        }
+        catch(IOException e){
+            //todo chiama la disconnessione
+        }
+    }
+
 }

@@ -49,4 +49,7 @@ public class GUIMethods implements ViewMethodSelection {
     public boolean specialChoices(String string) {
         return true;
     }
+
+    @Override
+    public int numberOfPlayers(){return 0;}
 }

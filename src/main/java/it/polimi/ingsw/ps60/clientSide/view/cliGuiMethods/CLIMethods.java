@@ -303,4 +303,14 @@ public class CLIMethods implements ViewMethodSelection {
 
         return input.nextBoolean();
     }
+    @Override
+    public int numberOfPlayers(){
+        int numberOfPlayers;
+        flushInput();
+        do {
+            Scanner scanner = new Scanner(System.in);
+            numberOfPlayers = scanner.nextInt();
+        }while(numberOfPlayers!=2&&numberOfPlayers!=3);
+        return numberOfPlayers;
+    }
 }

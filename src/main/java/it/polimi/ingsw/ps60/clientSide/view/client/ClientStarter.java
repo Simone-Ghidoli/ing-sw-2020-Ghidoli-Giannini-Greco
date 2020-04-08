@@ -26,7 +26,7 @@ public class ClientStarter{
             }
             if(!socket.isClosed()) {
                 reader = new ClientReader(socket,messagesFromServer);
-                parser= new ClientParser(socket,messagesFromServer, viewMethodSelection);
+                parser= new ClientParser(socket,messagesFromServer,viewMethodSelection);
                 pool.execute(reader);
                 pool.execute(parser);
             }

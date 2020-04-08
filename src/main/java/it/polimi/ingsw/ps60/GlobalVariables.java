@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps60;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
+import java.io.Serializable;
+
 public class GlobalVariables {
 
     public enum IdPlayer {
@@ -52,7 +54,7 @@ public class GlobalVariables {
         WORKER5, WORKER6
     }
 
-    public enum DivinityCard {
+    public enum DivinityCard implements Serializable {//L'ho messa serializzabile per poterla mandare via socket.
         APOLLO, ARTEMIS, ATHENA(false),
         ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS,
         ZEUS, TRITON, CHRONUS;

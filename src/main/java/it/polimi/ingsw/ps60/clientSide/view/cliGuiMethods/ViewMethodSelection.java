@@ -22,4 +22,6 @@ public interface ViewMethodSelection {
     public int[][] firstSetWorkers(List<int[]> impossiblePositions); //posizionamento pedine prima di iniziare la partita
 
     public boolean specialChoices(String string);
+
+    public int numberOfPlayers();
 }

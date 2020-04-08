@@ -93,7 +93,7 @@
              * Chiede al giocatore di inserire il nome
              * La partita inizia con la stampa della board
              */
-            public String nicknameRequest(){
+            public String nicknameRequest(){ //todo oltre al nickname inserire anche la data di nascita
                 String name;
                 try {
                     PrintWriter pr = new PrintWriter(socket.getOutputStream(), true);
