@@ -19,7 +19,7 @@ public interface ViewMethodSelection {
 
     public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card); //scelta carta divinità singolo giocatore
 
-    public int[][] fistSetWorkers(List<int[]> possiblePositions); //posizionamento pedine prima di iniziare la partita
+    public int[][] firstSetWorkers(List<int[]> impossiblePositions); //posizionamento pedine prima di iniziare la partita
 
     public boolean specialChoices(String string);
 }

@@ -41,7 +41,7 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int[][] fistSetWorkers(List<int[]> posiiblePositions) {
+    public int[][] firstSetWorkers(List<int[]> posiiblePositions) {
         return new int[0][];
     }
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 import java.util.List;
@@ -236,9 +237,10 @@ public class CLIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int[][] fistSetWorkers(List<int[]> possiblePositions) {
+    public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
         int[][] choice = new int[2][2];
         int[] buffer;
+        ListContains listContains = new ListContains(impossiblePositions);
 
         System.out.println("Legend:");
         System.out.println("0 indicates a empty space, 1 indicates that there is already a worker in it");
@@ -251,10 +253,10 @@ public class CLIMethods implements ViewMethodSelection {
 
             for (int j = 0; j < 5; j ++) {
 
-                if (possiblePositions.contains(new int[]{i, j})) {//todo conteins non fa sta cosa va fatto un metodo a parte
-                    System.out.print(0);
+                if (listContains.isContained(new int[]{i, j})) {
+                    System.out.print(1);
                 } else {
-                    System.out.println(1);
+                    System.out.println(0);
                 }
                 System.out.print("  ");
             }
@@ -285,7 +287,7 @@ public class CLIMethods implements ViewMethodSelection {
                     }
                 }
 
-                if (possiblePositions.contains(buffer))//todo la stessa cosa di prima
+                if (!listContains.isContained(buffer))//todo la stessa cosa di prima
                     choice[i] = buffer;
             }
         }

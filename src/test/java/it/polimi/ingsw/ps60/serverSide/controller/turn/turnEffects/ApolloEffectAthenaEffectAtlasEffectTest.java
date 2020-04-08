@@ -5,6 +5,7 @@ import it.polimi.ingsw.ps60.serverSide.controller.StartGame;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityController;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
+import it.polimi.ingsw.ps60.utils.ListContains;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +31,7 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
 
         nicknames = new String[]{"Nico", "Vinz", "Simo"};
         coord1 = new int[]{3, 4};
+        ListContains contains;
         coord2[0] = 1;
         coord2[1] = 2;
         coord3[0] = 3;
@@ -61,7 +63,9 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
 
         int[][] mossa1 = new int[2][2];
 
-        if (possibeMoves1[0].equals(coord6)) {
+        contains = new ListContains(possibeMoves1[0]);
+
+        if (contains.isContained(coord6)) {
             mossa1[0][0] = 0; //muovo il worker 1
             mossa1[0][1] = 0; //default 0 poi cambia per ogni carta divinità
             mossa1[1] = coord6;
@@ -70,7 +74,10 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
         }
 
         List<int[]> possibleBuild1 = divinityController1.getTurnStrategyBuilding();
-        if (possibleBuild1.contains(new int[]{2, 2}))
+
+        contains = new ListContains(possibleBuild1);
+
+        if (contains.isContained(new int[]{2, 2}))
             divinityController1.setBuilding(new int[]{2, 2});
 
 
