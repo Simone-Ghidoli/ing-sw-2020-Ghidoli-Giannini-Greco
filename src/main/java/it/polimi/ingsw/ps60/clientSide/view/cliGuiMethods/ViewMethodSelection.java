@@ -5,7 +5,7 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import java.util.List;
 
 public interface ViewMethodSelection {
-    public void printBoard(char[] board);
+    public void printBoard(String board);
 
     public int moveChoice(List<int[]>[] moves, int[][] positionsWorkers);
 
@@ -21,5 +21,5 @@ public interface ViewMethodSelection {
 
     public int[][] fistSetWorkers(List<int[]> possiblePositions); //posizionamento pedine prima di iniziare la partita
 
-    public int specialChoices();
+    public boolean specialChoices(String string);
 }

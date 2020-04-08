@@ -12,7 +12,8 @@ public class StringRegexValidationTest {
 
     StringRegexValidation stringRegexValidation;
 
-    public void tearDown() throws Exception {
+    @After
+    public void tearDown(){
         stringRegexValidation = null;
     }
 
@@ -38,8 +39,9 @@ public class StringRegexValidationTest {
     public void isValidDate() {
         stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern());
 
-        assertTrue(stringRegexValidation.isValid("1998/8/27"));
-        assertFalse(stringRegexValidation.isValid("27/08/1998"));
-        
+        assertTrue(stringRegexValidation.isValid("1998/08/27"));
+        assertFalse(stringRegexValidation.isValid("1998/08/7"));
+        assertFalse(stringRegexValidation.isValid("27/8/1998"));
+
     }
 }

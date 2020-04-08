@@ -31,7 +31,9 @@ public class CLIMethods implements ViewMethodSelection {
     @       3       3
      */
     @Override
-    public void printBoard(char[] board) {
+    public void printBoard(String board) {
+
+        char[] boardToPrint = board.toCharArray();
 
         System.out.println("Legend:");
         System.out.println("The number indicates the building level (4 is the dome), the colour indicates the player");
@@ -47,17 +49,17 @@ public class CLIMethods implements ViewMethodSelection {
             if (i % 5 == 0)
                 System.out.print("\n\n" + ((i / 5)+1) + "-  ");
 
-            if (board[i] < 53) {
-                System.out.print(board[i]);
-            } else if (board[i] < 57) {
+            if (boardToPrint[i] < 53) {
+                System.out.print(boardToPrint[i]);
+            } else if (boardToPrint[i] < 57) {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER1.getColour().getString());
-                System.out.print((char)(board[i] - 5));
-            } else if (board[i] < 61) {
+                System.out.print((char)(boardToPrint[i] - 5));
+            } else if (boardToPrint[i] < 61) {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER2.getColour().getString());
-                System.out.print((char)(board[i] - 9));
+                System.out.print((char)(boardToPrint[i] - 9));
             } else {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER3.getColour().getString());
-                System.out.print((char)(board[i] - 13));
+                System.out.print((char)(boardToPrint[i] - 13));
             }
             System.out.print(GlobalVariables.Colour.RESET.getString());
             System.out.print("  ");
@@ -292,7 +294,11 @@ public class CLIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int specialChoices() {
-        return 0;
+    public boolean specialChoices(String string) {
+        System.out.println(string + "\n Enter 1 for yes or 0 for no");
+
+        Scanner input = new Scanner(System.in);
+
+        return input.nextBoolean();
     }
 }
