@@ -13,6 +13,5 @@ public class ApolloEffect extends TurnEffect {
         }
         player.getWorker(move[0][0]).moveWorker(game.getCellByPosition(move[1]));
         player.setWorkerMoved(player.getWorker(move[0][0]));
-
     }
 }

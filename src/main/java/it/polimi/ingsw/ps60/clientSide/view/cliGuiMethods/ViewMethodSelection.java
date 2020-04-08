@@ -5,23 +5,23 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import java.util.List;
 
 public interface ViewMethodSelection {
-    public void printBoard(String board);
+    void printBoard(String board);
 
-    public int moveChoice(List<int[]>[] moves, int[][] positionsWorkers);
+    int moveChoice(List<int[]>[] moves, int[][] positionsWorkers);
 
-    public int buildChoice(List<int[]> moves);
+    int buildChoice(List<int[]> moves);
 
-    public String[] ipPortChoices();
+    String[] ipPortChoices();
 
-    public String[] nicknameBirthdayChoice();
+    String[] nicknameBirthdayChoice();
 
-    public GlobalVariables.DivinityCard[] cardChoices(int playerNumber); //qui verranno date le carte divinità al 1 giocatore e ne sceglierà n = numero giocatori
+    GlobalVariables.DivinityCard[] cardChoices(int playerNumber); //qui verranno date le carte divinità al 1 giocatore e ne sceglierà n = numero giocatori
 
-    public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card); //scelta carta divinità singolo giocatore
+    GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card); //scelta carta divinità singolo giocatore
 
-    public int[][] firstSetWorkers(List<int[]> impossiblePositions); //posizionamento pedine prima di iniziare la partita
+    int[][] firstSetWorkers(List<int[]> impossiblePositions); //posizionamento pedine prima di iniziare la partita
 
-    public boolean specialChoices(String string);
+    boolean specialChoices(String string);
 
     public int numberOfPlayers();
 }

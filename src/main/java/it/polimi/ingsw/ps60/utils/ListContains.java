@@ -5,7 +5,7 @@ import java.util.List;
 public class ListContains {
     private List<int[]> list;
 
-    public ListContains(List list){
+    public ListContains(List<int[]> list){
         this.list = list;
     }
 

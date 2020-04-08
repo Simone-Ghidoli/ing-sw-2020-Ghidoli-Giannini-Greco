@@ -1,10 +1,10 @@
 package it.polimi.ingsw.ps60.serverSide.server;
 
-        import it.polimi.ingsw.ps60.utils.SerializedInteger;
-        import java.io.*;
-        import java.net.Socket;
-        import java.util.ArrayList;
-        import java.util.List;
+import it.polimi.ingsw.ps60.utils.SerializedInteger;
+import java.io.*;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class contains some methods to communicate between server and client.

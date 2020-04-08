@@ -26,10 +26,10 @@ public class TurnEffect implements Turn {
     public void endTurn(){
         Player player = game.getPlayerInGame().getNode().getValue();
         if (player.getWorkerMoved()!= null && player.isBuildByWorker()) {
+            winConditions();
             player.getWorkerMoved().setOldCell(null);
             player.setWorkerMoved(null);
             player.setBuildByWorker(false);
-            winConditions();
         }
         else {
             game.lose(player);
@@ -47,6 +47,4 @@ public class TurnEffect implements Turn {
         if (player.getWorkerMoved().isLeveledUp() && player.getWorkerMoved().getCellPosition().getBuildingLevel() == 3)
             game.win(player);
     }
-
-
 }

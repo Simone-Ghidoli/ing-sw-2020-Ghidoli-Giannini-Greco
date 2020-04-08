@@ -1,18 +1,17 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
 
-import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
+import it.polimi.ingsw.ps60.utils.ListContains;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class  ArtemisStrategy extends TurnStrategy {
 
     @Override
     public List<int[]>[] baseMovement() {
 
-        Board game = GlobalVariables.game;
         List<int[]>[] positions = super.baseMovement();
         int numberOfIterations;
         int[] positionWorker;
@@ -21,7 +20,6 @@ public class  ArtemisStrategy extends TurnStrategy {
                 game.getPlayerInGame().getNode().getValue().getWorkers()[1].getCellPosition()};
 
         for (int k = 0; k < 2; k++) {
-            positions[k] = new ArrayList<int[]>();
             numberOfIterations = positions[k].size();
             for (int l = 0; l < numberOfIterations; l++) {
                 positionWorker = positions[k].get(l);
@@ -31,7 +29,7 @@ public class  ArtemisStrategy extends TurnStrategy {
                             if (cell.isFree()) {
                                 if (cell.getBuildingLevel() <= game.getCellByPosition(positionWorker).getBuildingLevel() + 1) {
                                     if (!cell.isDomed()) {
-                                        if (!positions[k].contains(cell.getPosition()))
+                                        if (!new ListContains(positions[k]).isContained(cell.getPosition()))
                                         positions[k].add(cell.getPosition());
                                     }
                                 }
