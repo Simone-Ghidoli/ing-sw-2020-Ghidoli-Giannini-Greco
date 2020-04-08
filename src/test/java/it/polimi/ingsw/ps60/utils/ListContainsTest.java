@@ -13,11 +13,11 @@ import static org.junit.Assert.*;
 public class ListContainsTest {
 
     int[] a, b, c;
-    ListContains<int[]> listContains;
+    ListContains listContains;
 
     @Before
     public void setUp() throws Exception {
-        ArrayList<int[]> list = new ArrayList<>();
+        List<int[]> list = new ArrayList<>();
 
         a = new int[]{0, 1};
         b = new int[]{0, 1};
@@ -26,6 +26,7 @@ public class ListContainsTest {
         listContains = new ListContains(list);
         list.add(a);
     }
+
     @After
     public void tearDown() throws Exception {
     }

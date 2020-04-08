@@ -21,12 +21,6 @@ public class StringRegexValidationTest {
         stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern());
 
         assertTrue(stringRegexValidation.isValid("192.168.1.1"));
-    }
-
-    @Test
-    public void isNotValidIpv4Test() {
-        stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern());
-
         assertFalse(stringRegexValidation.isValid("192.1681.1.1"));
     }
 
@@ -38,5 +32,14 @@ public class StringRegexValidationTest {
         assertTrue(stringRegexValidation.isValid("Vincenzo22"));
         assertFalse(stringRegexValidation.isValid("VincenzoGreco"));
         assertTrue(stringRegexValidation.isValid("Vin22Gre22"));
+    }
+
+    @Test
+    public void isValidDate() {
+        stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern());
+
+        assertTrue(stringRegexValidation.isValid("1998/8/27"));
+        assertFalse(stringRegexValidation.isValid("27/08/1998"));
+        
     }
 }
