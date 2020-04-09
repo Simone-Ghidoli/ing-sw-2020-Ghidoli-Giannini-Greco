@@ -63,9 +63,7 @@ public class Worker {
      * @return True if it happened, false otherwise
      */
     public boolean isLeveledUp() {
-        if (OldCell.getBuildingLevel() < cellPosition.getBuildingLevel())
-            return true;
-        return false;
+        return OldCell.getBuildingLevel() < cellPosition.getBuildingLevel();
     }
 
     public Cell getOldCell() {

@@ -23,5 +23,5 @@ public interface ViewMethodSelection {
 
     boolean specialChoices(String string);
 
-    public int numberOfPlayers();
+    int numberOfPlayers();
 }

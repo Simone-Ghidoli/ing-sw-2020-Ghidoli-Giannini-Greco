@@ -91,7 +91,7 @@ public class ClientParser extends Thread{
     public void divinitySelection(){
         GlobalVariables.DivinityCard[] cards;
         cards=receiveCards();
-        GlobalVariables.DivinityCard choice[]=new GlobalVariables.DivinityCard[1];
+        GlobalVariables.DivinityCard[] choice =new GlobalVariables.DivinityCard[1];
         choice[0] = methodSelection.divinitySelection(cards);
         sendCards(choice);
     }

@@ -101,9 +101,9 @@ public class CLIMethods implements ViewMethodSelection {
     public int printPossibleBuilds(List<int[]> moves){
         int choice = 0;
 
-        for (int i = 0; i < moves.size(); i++){
+        for (int[] move : moves) {
             System.out.println("Press " + (choice + 1) + " in order to build on the cell: " +
-                    (moves.get(i)[0] + 1) + "; " + (moves.get(i)[1] + 1));
+                    (move[0] + 1) + "; " + (move[1] + 1));
             choice++;
         }
         return choice;

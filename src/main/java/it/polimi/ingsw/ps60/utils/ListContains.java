@@ -10,14 +10,15 @@ public class ListContains {
     }
 
     public boolean isContained(int[] nodeToCheck){
-        for (int i = 0; i < list.size(); i++){
-            if (nodeToCheck.length != list.get(i).length)
-                continue;
+        int length;
 
-            for (int j = 0; j < nodeToCheck.length; j++){
-                if (nodeToCheck[j] != list.get(i)[j])
+        for (int[] ints : list) {
+            length = Math.min(nodeToCheck.length, ints.length);
+
+            for (int j = 0; j < length; j++) {
+                if (nodeToCheck[j] != ints[j])
                     break;
-                if (j == nodeToCheck.length-1)
+                if (j == length - 1)
                     return true;
             }
         }
