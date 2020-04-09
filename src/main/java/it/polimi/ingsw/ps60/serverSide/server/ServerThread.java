@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps60.serverSide.server;
 
+import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
 import java.io.*;
 import java.net.Socket;
@@ -17,7 +18,7 @@ public class ServerThread extends Thread {
     private InputStream in;
     private BufferedReader buffer;
     private PrintWriter writer;
-    private DataOutputStream out;
+    private ObjectInputStream in_obj;
     private ObjectOutputStream obj;
 
     public ServerThread(Socket soc, ArrayList<ServerThread> lista, String s) throws IOException {
@@ -41,19 +42,47 @@ public class ServerThread extends Thread {
         choice=receiveInteger();
         return choice;//Restituisce il numero inserito dall`utente (Quindi la posizione del vettore con la casella in cui costruire)
     }
-
-    public void printBoard(){
-
+    public int specialchoice(String message){
+        int choice=-1;
+        sendString("spc-"+message);
+        choice=receiveInteger();
+        return choice;
+    }
+    public int numberOfPlayers(){
+        int n=-1;
+        sendString("nPlayers");
+        n=receiveInteger();
+        return n;
+    }
+    public String[] nickname_birthday(){
+        String[] nick_birth=new String[2];
+        sendString("nick_birth");
+        nick_birth[0]=receiveString();
+        nick_birth[1]=receiveString();
+        return nick_birth;
+    }
+    public int[][] setWorkers(){//Restituisce un vettore con le posizioni dei 2 workers
+        sendString("workset");
+        SerializedInteger[] appoggio=receivePositions();
+        return convertSerializedToInteger(appoggio);
+    }
+    public GlobalVariables.DivinityCard[] divinity_Choice(){
+        sendString("dv_choice");
+        sendInt(list.size());
+        GlobalVariables.DivinityCard[] appoggio=receiveCards();
+        return appoggio;
+    }
+    public GlobalVariables.DivinityCard[] divinity_Selection(GlobalVariables.DivinityCard[] ingame){
+        sendString("div_sel");
+        sendCards(ingame);
+        GlobalVariables.DivinityCard[] choice=receiveCards();
+        return choice;
     }
 
-    public int[] divinity_card_ingame(){//Farebbe comodo avere una vettore con le corrispondenti carte divinità
-        int[] cards=new int[3];
-        writer.println("divinity3");//Vengono comuniate le 3 carte scelte come 3 interi. Si recupera la carta corrispondente grazie ad una lista.
-        cards[0]=receiveInteger();
-        cards[1]=receiveInteger();
-        cards[2]=receiveInteger();
-        return cards;//ritorna le 3 carte scelte
+    public void buildPrintBoardStream(){
+        
     }
+
 
     public int receiveInteger(){
         int n=-1;
@@ -106,4 +135,69 @@ public class ServerThread extends Thread {
         }
     }
 
+    public String receiveString(){
+        String n=null;
+        try{
+            buffer=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            n=buffer.readLine();
+        }
+        catch(IOException e){
+            //todo chiama la disconnessione
+        }
+        return n;
+    }
+
+    public SerializedInteger[] receivePositions(){
+        SerializedInteger[] pos=null;
+        try{
+            in_obj=new ObjectInputStream(socket.getInputStream());
+            pos=(SerializedInteger[]) in_obj.readObject();
+        }
+        catch(IOException | ClassNotFoundException e) {
+            //todo chiama la disconnessione
+        }
+        return pos;
+    }
+
+    public int[][] convertSerializedToInteger(SerializedInteger[] seria){
+        int[][] appoggio=new int[2][2];
+        for(int i=0;i<seria.length;i++){
+            appoggio[i]=seria[i].serialized;
+        }
+        return appoggio;
+    }
+
+    public GlobalVariables.DivinityCard[] receiveCards(){
+        GlobalVariables.DivinityCard[] appoggio=null;
+        try {
+            in_obj = new ObjectInputStream(socket.getInputStream());
+            appoggio=(GlobalVariables.DivinityCard[]) in_obj.readObject();
+        }
+        catch(IOException | ClassNotFoundException e){
+            //todo chiama la disconnessione
+        }
+        return appoggio;
+    }
+
+    public void sendInt(int send){
+        try {
+            socket.getOutputStream().write(send);
+            socket.getOutputStream().flush();
+        }
+        catch(IOException e){
+            //todo chiama la disconnessione
+        }
+    }
+
+    public void sendCards(GlobalVariables.DivinityCard[] cards){
+        try {
+            obj = new ObjectOutputStream(socket.getOutputStream());
+            obj.writeObject(cards);
+        }
+        catch(IOException e){
+            //todo chiama la disconnessione
+        }
+    }
+
+    //todo Tutti sti metodi sono ripetuti uguali nel client. Tanto vale creare una classe unica in utils
 }

@@ -4,13 +4,11 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.*;
-
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
-
-public class ClientParser extends Thread{
+    public class ClientParser extends Thread{
     private List<String> messagesFromServer;
     private Socket socket;
     BufferedReader br;
@@ -30,11 +28,43 @@ public class ClientParser extends Thread{
         while (true) {
             synchronized (messagesFromServer) {
                 while (messagesFromServer.size() != 0) {
-                    //todo parsare le stringe con serie di if/else
+                    String message=messagesFromServer.get(0);
+                    if(message.equals("move")){
+                        movement();
+                    }
+                    else if(message.equals("build")){
+                        building();
+                    }
+                    else if(message.contains("spc-")){
+                        String s=message.replace("spc-","");
+                        specialChoice(s);
+                    }
+                    else if(message.equals("nPlayers")){
+                        number_of_players();
+                    }
+                    else if(message.equals("nick_birth")){
+                        nickname_birthday();
+                    }
+                    else if(message.equals("workset")){
+                        setworkers();
+                    }
+                    else if(message.contains("pr-")) {
+                        String s=message.replace("pr-","");
+                        specialChoice(s);
+                    }
+                    else if(message.equals("dv_choice")){
+                        divinityChoice();
+                    }
+                    else if(message.equals("div_sel")) {
+                        divinitySelection();
+                    }
+                    }
                 }
             }
         }
-    }
+
+
+
     public void movement(){//Interagisce con l'utente per fargli decidere la giocata
         List<SerializedInteger>[] stalin;
         stalin=recieveListArray();//recupero le posizioni
@@ -79,7 +109,7 @@ public class ClientParser extends Thread{
     public void setworkers(){
         List<SerializedInteger> takenPositions=recieveList();
         int[][] answer=methodSelection.firstSetWorkers(convertTypePositionBuild(takenPositions));
-
+        sendPositions(convertInteger_to_Serialized(answer));
     }
 
     public void divinityChoice(){
@@ -98,7 +128,7 @@ public class ClientParser extends Thread{
 
 
 
-    public void sendPositions(SerializedInteger positions){
+    public void sendPositions(SerializedInteger[] positions){
         try{
             out_obj=new ObjectOutputStream(socket.getOutputStream());
             out_obj.writeObject(positions);
@@ -147,7 +177,7 @@ public class ClientParser extends Thread{
     }
 
     public SerializedInteger[] convertInteger_to_Serialized(int[][] inte){
-        SerializedInteger[] appoggio=null;
+        SerializedInteger[] appoggio=new SerializedInteger[inte.length];
         for(int i=0;i<inte.length;i++){
             appoggio[i].serialized=inte[i];
         }
@@ -173,10 +203,10 @@ public class ClientParser extends Thread{
     }
 
     public List<int[]> convertTypePositionBuild(List<SerializedInteger> positions){//Restituisce position come Lista di interi e non SerializedInteger
-        List<int[]> appoggio= new ArrayList();
-            for(int k=0;k<positions.size();k++){
-                appoggio.add(positions.get(k).serialized);
-            }
+        List<int[]> appoggio= new ArrayList<>();
+        for (SerializedInteger position : positions) {
+            appoggio.add(position.serialized);
+        }
         return appoggio;
     }
 
