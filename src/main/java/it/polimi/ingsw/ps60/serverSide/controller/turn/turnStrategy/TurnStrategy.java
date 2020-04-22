@@ -94,7 +94,7 @@ public class TurnStrategy implements Strategy {
 
             for (int i = 0; i < 2; i++) {
                 j = 0;
-                while (positions[i].get(j) != null) {
+                while (positions[i].size() >j ) {
                     cell = game.getCellByPosition(positions[i].get(j));
                     if (cell.getBuildingLevel() > high[i])
                         positions[i].remove(j);

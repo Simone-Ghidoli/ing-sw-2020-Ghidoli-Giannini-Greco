@@ -43,7 +43,7 @@ public class TurnEffect implements Turn {
     }
 
     public void winConditions(){
-        Player player = game.getPlayerInGame().getNode().getValue();
+        Player player =game.getPlayerInGame().getNode().getValue();
         if (player.getWorkerMoved().isLeveledUp() && player.getWorkerMoved().getCellPosition().getBuildingLevel() == 3)
             game.win(player);
     }

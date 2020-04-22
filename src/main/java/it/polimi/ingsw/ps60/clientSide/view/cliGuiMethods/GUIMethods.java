@@ -7,7 +7,6 @@ import java.util.List;
 public class GUIMethods implements ViewMethodSelection {
     @Override
     public void printBoard(String board) {
-
     }
 
     @Override
