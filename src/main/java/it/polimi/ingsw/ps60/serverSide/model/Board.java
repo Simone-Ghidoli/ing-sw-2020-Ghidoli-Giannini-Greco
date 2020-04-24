@@ -11,6 +11,7 @@ public class Board {
     Player[] playerMatrix;
     CircularLinkedList<Player> playerList;
     int completeTower;
+    int winner;
 
     /**
      * The board is the memory of the game.
@@ -24,6 +25,7 @@ public class Board {
         cellMatrix = new Cell[5][5];
         playerMatrix = new Player[playersNumber];
         playerList = new CircularLinkedList<>();
+        winner=0;
 
         //This will create a 5 x 5 array of cells
         for (int i = 0; i < 5; i++){
@@ -100,11 +102,24 @@ public class Board {
             player.getWorkers()[i].moveWorker(null);
     }
 
+    /**
+     *
+     * @param player
+     */
     public void win(Player player){
+        winner=1;
         /*
          * Manda un messaggio in output a tutti i client informandoli di quale giocatore ha vinto e che la partita è finita.
          * Questo metodo viene chiamato anche nel momento in cui un giocatore fa Last Man Standing
          */
+    }
+
+    /**
+     *
+     * @return 1 if someone has won the game
+     */
+    public int getBitWinner(){
+        return this.winner;
     }
 
     //method not sure it will be used

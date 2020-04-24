@@ -1,17 +1,16 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.StartGame;
+
 import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityController;
-import it.polimi.ingsw.ps60.serverSide.model.Board;
-import it.polimi.ingsw.ps60.serverSide.model.Player;
+
 import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.SetupForTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ApolloEffectAthenaEffectAtlasEffectTest {
@@ -63,22 +62,73 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
         divinityController2.setEndTurn();
 
         DivinityController divinityController3 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
-        test.listContains=new ListContains(divinityController3.getTurnStrategyMovement()[0]);
-        int[][] mossa3 = new int[2][2];
 
-        mossa3[0][0] = 0;
+        int[][] mossa3 = new int[2][2];
+        test.listContains= new ListContains(divinityController3.getTurnStrategyMovement()[1]);
+        mossa3[0][0] = 1;
         mossa3[0][1] = 0;
-        mossa3[1] = new int[]{2, 4};
+        mossa3[1] = new int[]{2, 3};
         if(test.listContains.isContained(mossa3[1]))
             divinityController3.setMovemet(mossa3);
+        else {
+            test.listContains = new ListContains(divinityController3.getTurnStrategyMovement()[0]);
+            mossa3[0][0] = 0;
+            mossa3[0][1] = 0;
+            mossa3[1] = new int[]{2, 4};
+            if (test.listContains.isContained(mossa3[1]))
+                divinityController3.setMovemet(mossa3);
+        }
         test.listContains=new ListContains((divinityController3.getTurnStrategyBuilding()));
         if(test.listContains.isContained(new int[]{1, 4}))
             divinityController3.setBuilding(new int[]{1, 4, 1});
         divinityController3.setEndTurn();
+
+
+        test.listContains=new ListContains(divinityController1.getTurnStrategyMovement()[1]);
+        mossa1[0][0]=1;
+        mossa1[0][1]=0;
+        mossa1[1]=new int[]{2,3};
+        if(test.listContains.isContained(mossa1[1]))
+            divinityController1.setMovemet(mossa1);
+        else{
+            mossa1[1]=new int[]{2,1};
+            if (test.listContains.isContained(mossa1[1]))
+                divinityController1.setMovemet(mossa1);
+        }
+        test.listContains=new ListContains(divinityController1.getTurnStrategyBuilding());
+        if(test.listContains.isContained(new int[]{2,2}))
+            divinityController1.setBuilding(new int[]{2,2});
+        else if(test.listContains.isContained(new int[]{3,1}))
+            divinityController1.setBuilding(new int[]{3,1});
+        divinityController1.setEndTurn();
+
+        test.listContains= new ListContains(divinityController2.getTurnStrategyMovement()[1]);
+        mossa2[0][0]=1;
+        mossa2[0][1]=0;
+        mossa2[1]=new int[]{4,1};
+        if(test.listContains.isContained(mossa2[1]))
+            divinityController2.setMovemet(mossa2);
+        test.listContains=new ListContains(divinityController2.getTurnStrategyBuilding());
+        if(test.listContains.isContained(new int[]{4,2}))
+            divinityController2.setBuilding(new int[]{4,2});
+        divinityController2.setEndTurn();
+
+        test.listContains= new ListContains(divinityController3.getTurnStrategyMovement()[0]);
+        mossa3[0][0]=0;
+        mossa3[0][1]=0;
+        mossa3[1]=new int[]{2,3};
+        if(test.listContains.isContained(mossa3[1])) {
+            divinityController3.setMovemet(mossa3);
+        }
+        test.listContains=new ListContains((divinityController3.getTurnStrategyBuilding()));
+        if(test.listContains.isContained(new int[]{1,3}))
+            divinityController3.setBuilding(new int[]{1,3,0});
+
     }
 
     @After
     public void tearDown(){
+        test.board=null;
 
     }
     @Test
@@ -92,7 +142,8 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
 
     @Test
     public void checkAthenaPower(){
-        assertEquals(GlobalVariables.game.getCellByPosition(new int[]{2, 4}),test.player3.getWorker(0).getCellPosition());
+        assertEquals(GlobalVariables.game.getCellByPosition(new int[]{2, 3}),test.player3.getWorker(0).getCellPosition());
+        assertEquals(GlobalVariables.game.getCellByPosition(new int[]{3, 4}),test.player3.getWorker(1).getCellPosition());
     }
     @Test
     public void checkApolloPower(){
@@ -101,5 +152,6 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
     @Test
     public void checkAtlasPower(){
         assertTrue(GlobalVariables.game.getCellByPosition(new int[]{1, 4}).isDomed());
+        assertFalse(GlobalVariables.game.getCellByPosition(new int[]{1,3}).isDomed());
     }
 }
