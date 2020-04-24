@@ -75,13 +75,28 @@ public class ChronusHephaestusMinotaurEffectsTest {
         mossa3[0][0] = 0; //muovo il worker 1
         mossa3[0][1] = 0;
         mossa3[1] = new int[]{1, 2};
-        if (test.listContains.isContained(mossa2[1]))
-            divinityController3.setMovemet(mossa2);
+        if (test.listContains.isContained(mossa3[1]))
+            divinityController3.setMovemet(mossa3);
 
         test.listContains = new ListContains((divinityController3.getTurnStrategyBuilding()));
         if (test.listContains.isContained(new int[]{2, 3}))
             divinityController3.setBuilding(new int[]{2, 3});
         divinityController3.setEndTurn();
+
+        test.listContains= new ListContains(divinityController1.getTurnStrategyMovement()[0]);
+        mossa1[0][0] = 0;
+        mossa1[0][1] = 0;
+        mossa1[1] = new int[]{1, 4};
+        if (test.listContains.isContained(mossa1[1])) {
+            divinityController1.setMovemet(mossa1);
+        }
+
+        test.listContains = new ListContains((divinityController1.getTurnStrategyBuilding()));
+
+        if (test.listContains.isContained(new int[]{0, 4}))
+            divinityController1.setBuilding(new int[]{0, 4});
+        divinityController1.setEndTurn();
+
     }
     @After
     public void tearDown(){
@@ -102,5 +117,6 @@ public class ChronusHephaestusMinotaurEffectsTest {
     @Test
     public void checkMinotaurPower(){
         assertEquals(GlobalVariables.game.getCellByPosition(new int[]{1,1}),test.player1.getWorker(1).getCellPosition());
+        assertEquals(GlobalVariables.game.getCellByPosition(new int[]{1,2}),test.player3.getWorker(0).getCellPosition());
     }
 }
