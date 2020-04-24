@@ -313,4 +313,9 @@ public class CLIMethods implements ViewMethodSelection {
         }while(numberOfPlayers!=2 && numberOfPlayers!=3);
         return numberOfPlayers;
     }
+
+    @Override
+    public void alert(String string) {
+        System.out.println(string);
+    }
 }

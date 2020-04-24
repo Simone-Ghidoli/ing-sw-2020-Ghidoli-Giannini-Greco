@@ -21,7 +21,7 @@ public class ClientStarter{
             try {
                 socket = new Socket(ipAddress, port);
             } catch (IOException e1) {
-                System.out.println("Failed to connect to the server. I`m trying again");
+                viewMethodSelection.alert("Failed to connect to the server. I`m trying again");
                 TimeUnit.SECONDS.sleep(5);
             }
             if(!socket.isClosed()) {

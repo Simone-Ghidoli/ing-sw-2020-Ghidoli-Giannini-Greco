@@ -10,7 +10,7 @@ public class HephaestusEffect extends TurnEffect {
         super.build(build);
 
         Cell cell = game.getCellByPosition(build);
-        if (build[2] == 1 && game.getCellByPosition(build).getBuildingLevel()!=3)
+        if (build[2] == 1)
             cell.incrementBuildingLevel();
     }
 }

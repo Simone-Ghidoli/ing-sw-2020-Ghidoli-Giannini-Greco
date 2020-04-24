@@ -24,4 +24,6 @@ public interface ViewMethodSelection {
     boolean specialChoices(String string);
 
     int numberOfPlayers();
+
+    void alert(String string);
 }

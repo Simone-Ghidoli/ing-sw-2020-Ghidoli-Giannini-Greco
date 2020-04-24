@@ -51,4 +51,9 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public int numberOfPlayers(){return 0;}
+
+    @Override
+    public void alert(String string) {
+
+    }
 }
