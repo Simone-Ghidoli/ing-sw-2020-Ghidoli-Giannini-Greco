@@ -10,7 +10,7 @@ import java.util.List;
 public class MinotaurStrategy extends TurnStrategy {
 
     @Override
-    public List <int[]>[] baseMovement() {
+    public List<int[]>[] baseMovement() {
         Player playerInGame = game.getPlayerInGame().getNode().getValue();
         Cell[] cellWorker = {playerInGame.getWorkers()[0].getCellPosition(), playerInGame.getWorkers()[1].getCellPosition()};
         List<int[]>[] positions = new ArrayList[2];
@@ -28,17 +28,17 @@ public class MinotaurStrategy extends TurnStrategy {
                     if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null && !(i == 0 && j == 0)) {
                         if (!cell.isFree()) {
                             cellNext = game.getCellByPosition(new int[]{cell.getPosition()[0] + i, cell.getPosition()[1] + j});
-                            if (cellNext == null || !cellNext.isFree() || cellNext.isDomed()) {
+                            if (cellNext == null || !cellNext.isFree() || cellNext.isDomed())
                                 continue;
-                            }
-                            if (!cell.isDomed())
+                        }
+                        if (!cell.isDomed()) {
+                            if (!isDisturbedByDivinity(positionWorker, new int[]{positionWorker[0] + i, positionWorker[1] + j}))
                                 positions[k].add(new int[]{positionWorker[0] + i, positionWorker[1] + j});
                         }
                     }
                 }
             }
         }
-
-        return disturbMovementByDivinity(positions);
+        return positions;
     }
 }

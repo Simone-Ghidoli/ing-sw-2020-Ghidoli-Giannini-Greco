@@ -5,10 +5,16 @@ import java.util.List;
 public class ListContains {
     private List<int[]> list;
 
+
     public ListContains(List<int[]> list){
         this.list = list;
     }
 
+    /**
+     *
+     * @param nodeToCheck is the node that will be checked if it is in the list
+     * @return true if the node is present in the list, false otherwise.
+     */
     public boolean isContained(int[] nodeToCheck){
         int length;
 

@@ -25,12 +25,14 @@ public class  ArtemisStrategy extends TurnStrategy {
                 positionWorker = positions[k].get(l);
                 for (int i = -1; i < 2; i++) {
                     for (int j = -1; j < 2; j++) {
-                        if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null && !(i == 0 && j == 0)) {
+                        if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null
+                                && cell != cellWorker[k] && !(i == 0 && j == 0)) {
                             if (cell.isFree()) {
                                 if (cell.getBuildingLevel() <= game.getCellByPosition(positionWorker).getBuildingLevel() + 1) {
                                     if (!cell.isDomed()) {
-                                        if (!new ListContains(positions[k]).isContained(cell.getPosition()))
-                                        positions[k].add(cell.getPosition());
+                                        if (!isDisturbedByDivinity(cell.getPosition(), new int[]{positionWorker[0] + i, positionWorker[1] + j}))
+                                            if (!new ListContains(positions[k]).isContained(cell.getPosition()))
+                                                positions[k].add(cell.getPosition());
                                     }
                                 }
                             }
@@ -39,6 +41,6 @@ public class  ArtemisStrategy extends TurnStrategy {
                 }
             }
         }
-        return disturbMovementByDivinity(positions);
+        return positions;
     }
 }

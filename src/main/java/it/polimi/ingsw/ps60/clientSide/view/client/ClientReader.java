@@ -25,7 +25,6 @@ public class ClientReader extends Thread {
     public void run(){
         try {
             while(true) {
-                //
                 br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 serverSays = br.readLine();
                 synchronized (messagesFromServer){
