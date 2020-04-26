@@ -69,6 +69,7 @@ public class PanArtemisTritonEffectsTest {
             test.listContains=new ListContains(divinityController3.getTurnStrategyMovement()[0]);
             mossa3[0][0]=0;
             mossa3[0][1]=0;
+            
             mossa3[1] = new int[]{4, 1};
             if (test.listContains.isContained(mossa3[1]))
                 divinityController3.setMovemet(mossa3);
