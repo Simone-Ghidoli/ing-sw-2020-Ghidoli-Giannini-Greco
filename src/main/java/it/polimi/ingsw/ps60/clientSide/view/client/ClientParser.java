@@ -8,24 +8,53 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
+/**
+ * This class is the parser. Its function is to process server's commands and call the correct method to proceed in the game
+ */
+
     public class ClientParser extends Thread{
-    private List<String> messagesFromServer;
-    private Socket socket;
-    BufferedReader br;
+    private final List<String> messagesFromServer;
+    private final Socket socket;
+    InputStream input;
+    OutputStream output;
     PrintWriter pr;
     ObjectInputStream in_obj;
     ObjectOutputStream out_obj;
-    InputStream input;
     ViewMethodSelection methodSelection;
 
     public ClientParser(Socket sock,List<String> messages,ViewMethodSelection viewmethod){
         socket=sock;
         messagesFromServer=messages;
         methodSelection=viewmethod;
+        try{
+            input=socket.getInputStream();
+            output=socket.getOutputStream();
+            out_obj=new ObjectOutputStream(output);
+            in_obj=new ObjectInputStream(input);
+            pr=new PrintWriter(output,true);
+
+        }
+        catch(IOException e){
+            try{
+                socket.close();
+            }
+            catch(IOException e_0){
+                e.printStackTrace();
+            }
+            disconnection("Communication error, logging out");
+        }
     }
 
+    /**
+     * List of comparisons between server's messages and known commands
+     */
+
     public void run() {//processa i messaggi
-        while (true) {
+        while (true){
+            synchronized (socket){
+                if(socket.isClosed())
+                    return;
+            }
             synchronized (messagesFromServer) {
                 while (messagesFromServer.size() != 0) {
                     String message=messagesFromServer.get(0);
@@ -50,7 +79,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                     }
                     else if(message.contains("pr-")) {
                         String s=message.replace("pr-","");
-                        specialChoice(s);
+                        printBoard(s);
                     }
                     else if(message.equals("dv_choice")){
                         divinityChoice();
@@ -58,13 +87,20 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                     else if(message.equals("div_sel")) {
                         divinitySelection();
                     }
+                    else if(message.contains("disc-")){
+                        String s=message.replace("disc-","");
+                        disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
                     }
+                    }
+                messagesFromServer.remove(0);
                 }
             }
         }
 
 
-
+    /**
+     * method used for movement
+     */
     public void movement(){//Interagisce con l'utente per fargli decidere la giocata
         List<SerializedInteger>[] stalin;
         stalin=recieveListArray();//recupero le posizioni
@@ -73,6 +109,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         sendInt(play);
     }
 
+    /**
+     * method used for building
+     */
     public void building(){//Molto simile a build ma viene saltata la fase di scelta del worker
         List<SerializedInteger> stalin;
         stalin=recieveList();//ricevo la lista stalin
@@ -80,7 +119,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         sendInt(play);
     }
 
-    public void specialChoice(String s){//Viene fatta una scelta speciale. Viene inviato a server il responso: 1=sì 2=no todo Aggiungere la stringa in input
+    /**
+     * method used for special choices
+     * @param s contains the message that users will see to know what are they choosing
+     */
+    public void specialChoice(String s){//Viene fatta una scelta speciale. Viene inviato a server il responso: 1=sì 2=no
         boolean n=methodSelection.specialChoices(s);
         int choice;
         if(n)
@@ -90,11 +133,17 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         sendInt(choice);
     }
 
+    /**
+     * How much players gonna to play?
+     */
     public void number_of_players(){//da fare ancora in methods
         int number=methodSelection.numberOfPlayers();
         sendInt(number);
     }
 
+    /**
+     * Players' names and birthdays
+     */
     public void nickname_birthday(){//invia nick e altro nel server
         String[] inputs=new String[2];
         inputs=methodSelection.nicknameBirthdayChoice();
@@ -102,22 +151,35 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         sendString(inputs[1]);//Birthday
     }
 
+    /**
+     * Shot the actual state of the board to the player
+     * @param board contains a stream of characters that will be used to build the correct board to print
+     */
     public void printBoard(String board){
         methodSelection.printBoard(board);
     }
 
+    /**
+     * Set the workers' position at the start of the game
+     */
     public void setworkers(){
         List<SerializedInteger> takenPositions=recieveList();
         int[][] answer=methodSelection.firstSetWorkers(convertTypePositionBuild(takenPositions));
         sendPositions(convertInteger_to_Serialized(answer));
     }
 
+    /**
+     * The first player needs to choose in-game cards
+     */
     public void divinityChoice(){
         int numberOfPlayers=receiveInt();
         GlobalVariables.DivinityCard[] inGameCards=methodSelection.cardChoices(numberOfPlayers);
         sendCards(inGameCards);
     }
 
+    /**
+     * Card pick between available cards
+     */
     public void divinitySelection(){
         GlobalVariables.DivinityCard[] cards;
         cards=receiveCards();
@@ -127,37 +189,37 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
 
-
+    /**
+     * Some methods for Client-Server communication. Methods can send/receive string, integers or special objects
+     * Some methods are used to convert normal types to serialized types and the other way around
+     */
     public void sendPositions(SerializedInteger[] positions){
         try{
-            out_obj=new ObjectOutputStream(socket.getOutputStream());
             out_obj.writeObject(positions);
         }
         catch(IOException e_0){
-            //todo chiama la disonnessione
+            disconnection("Communication error, logging out");
         }
     }
 
     public void sendInt(int send){
         try {
-            socket.getOutputStream().write(send);
-            socket.getOutputStream().flush();
+                output.write(send);
+                output.flush();
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection("Communication error, logging out");
         }
     }
 
     public List<SerializedInteger>[] recieveListArray(){
         try {
             List<SerializedInteger>[] stalin;
-            input = socket.getInputStream();//preparo lo stream per ricevere la lista di posizioni
-            in_obj = new ObjectInputStream(input);
             stalin = (List<SerializedInteger>[]) in_obj.readObject();
             return stalin;
         }
         catch(IOException | ClassNotFoundException e){
-            //todo chiama la disconnessione
+            disconnection("Communication error, logging out");
         }
         return null;
     }//Per  il movement.
@@ -165,13 +227,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     public List<SerializedInteger> recieveList(){   //Per il building
         try {
             List<SerializedInteger> stalin;
-            input = socket.getInputStream();//preparo lo stream per ricevere la lista di posizioni
-            in_obj = new ObjectInputStream(input);
             stalin = (List<SerializedInteger>) in_obj.readObject();
             return stalin;
         }
         catch(IOException | ClassNotFoundException e){
-            //todo chiama la disconnessione
+            disconnection("Communication error, logging out");
         }
         return null;
     }
@@ -213,57 +273,63 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     public SerializedInteger[] receiveWorkers(){
         SerializedInteger[] positionworkers=null;
         try {
-            input = socket.getInputStream();
-            in_obj=new ObjectInputStream(input);
             positionworkers=(SerializedInteger[]) in_obj.readObject();
         }
         catch(IOException | ClassNotFoundException e){
-            //todo chiama la disconnessione
+            disconnection("Communication error, logging out");
         }
         return positionworkers;
     }
 
     public void sendString(String toServer){
-        try {
-            pr = new PrintWriter(socket.getOutputStream(), true);
-            pr.println(toServer);
-        }
-        catch(IOException e_0){
-            //todo chiama la disconnessione
-        }
+        pr.println(toServer);
+        if(pr.checkError())
+            disconnection("Communication error, logging out");
     }
 
     public int receiveInt(){
         int n=-1;
         try {
-            n=socket.getInputStream().read();
+            n=input.read();
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection("Communication error, logging out");
         }
         return n;
     }
 
     public void sendCards(GlobalVariables.DivinityCard[] cards){
         try {
-            out_obj = new ObjectOutputStream(socket.getOutputStream());
             out_obj.writeObject(cards);
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection("Communication error, logging out");
         }
     }
 
     public GlobalVariables.DivinityCard[] receiveCards(){
         GlobalVariables.DivinityCard[] appoggio=null;
         try {
-            in_obj = new ObjectInputStream(socket.getInputStream());
             appoggio=(GlobalVariables.DivinityCard[]) in_obj.readObject();
         }
         catch(IOException | ClassNotFoundException e){
-            //todo chiama la disconnessione
+            disconnection("Communication error, logging out");
         }
         return appoggio;
+    }
+
+    /**
+     * disconnection
+     * @param s contains the message to print before disconnection
+     */
+    public void disconnection(String s){
+        methodSelection.alert(s);
+        try{
+            socket.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        };
     }
 
 }

@@ -78,11 +78,10 @@ public class ServerThread extends Thread {
         GlobalVariables.DivinityCard[] choice=receiveCards();
         return choice;
     }
-
-    public void buildPrintBoardStream(){
-        
+    public void sendBoard(char[] board){
+        String result=board.toString();
+        sendString("pr-"+result);
     }
-
 
     public int receiveInteger(){
         int n=-1;
@@ -199,5 +198,4 @@ public class ServerThread extends Thread {
         }
     }
 
-    //todo Tutti sti metodi sono ripetuti uguali nel client. Tanto vale creare una classe unica in utils
 }
