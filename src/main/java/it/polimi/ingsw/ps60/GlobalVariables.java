@@ -14,7 +14,7 @@ public class GlobalVariables {
 
         private IdWorker[] idWorkers;
         private Colour colour;
-        //private ServerThread serverThread;
+        private ServerThread serverThread;
 
         IdPlayer(IdWorker[] idWorkers, Colour colour) {
             this.idWorkers = idWorkers;

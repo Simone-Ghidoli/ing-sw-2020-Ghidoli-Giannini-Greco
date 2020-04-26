@@ -26,10 +26,12 @@ public class TritonStrategy extends TurnStrategy {
                             if ((cell = game.getCellByPosition(new int[]{position[d].get(c)[0] + i, position[d].get(c)[1] + j})) != null
                                     && !listContains.isContained(cell.getPosition()) && !(i == 0 && j == 0)) {
                                 if (cell.isFree()) {
-                                    if (!cell.isDomed()) {
-                                        if (!isDisturbedByDivinity(position[d].get(c), cell.getPosition())){
-                                            if (!(cellWorker[d].getPosition()[0] == cell.getPosition()[0] && cellWorker[d].getPosition()[1] == cell.getPosition()[1]))
-                                            position[d].add(cell.getPosition());
+                                    if (cell.getBuildingLevel() <= game.getCellByPosition(position[d].get(c)).getBuildingLevel() + 1) {
+                                        if (!cell.isDomed()) {
+                                            if (!isDisturbedByDivinity(position[d].get(c), cell.getPosition())) {
+                                                if (!(cellWorker[d].getPosition()[0] == cell.getPosition()[0] && cellWorker[d].getPosition()[1] == cell.getPosition()[1]))
+                                                    position[d].add(cell.getPosition());
+                                            }
                                         }
                                     }
                                 }

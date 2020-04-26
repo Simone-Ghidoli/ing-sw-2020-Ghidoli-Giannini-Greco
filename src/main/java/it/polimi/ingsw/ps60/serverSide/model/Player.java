@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps60.serverSide.model;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityController;
+import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
 public class Player {
 
@@ -13,6 +14,7 @@ public class Player {
     private Worker workerMoved;
     private boolean buildByWorker;
     private DivinityController divinityController;
+    private ServerThread serverThread;
 
 
     /**
@@ -28,6 +30,12 @@ public class Player {
             workers[x] = new Worker(idPlayer.getIdWorkers()[x], this);
         }
         buildByWorker = false;
+        serverThread = null;
+
+    }
+
+    public void setServerThread(ServerThread serverThread) {
+        this.serverThread = serverThread;
     }
 
     /**

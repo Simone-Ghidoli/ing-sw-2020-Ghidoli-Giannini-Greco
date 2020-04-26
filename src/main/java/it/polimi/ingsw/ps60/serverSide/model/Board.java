@@ -12,7 +12,7 @@ public class Board {
     CircularLinkedList<Player> playerList;
     int completeTower;
     char[] cellToSend;
-    int winner;
+    Player playerWinner;
 
     /**
      * The board is the memory of the game.
@@ -26,7 +26,7 @@ public class Board {
         cellMatrix = new Cell[5][5];
         playerMatrix = new Player[playersNumber];
         playerList = new CircularLinkedList<>();
-        winner = 0;
+        playerWinner = null;
         cellToSend = new char[25];
 
         //This will create a 5 x 5 array of cells
@@ -107,22 +107,18 @@ public class Board {
 
     /**
      *
-     * @param player
+     * @param player is the winner of the game
      */
     public void win(Player player){
-        winner=1;
-        /*
-         * Manda un messaggio in output a tutti i client informandoli di quale giocatore ha vinto e che la partita è finita.
-         * Questo metodo viene chiamato anche nel momento in cui un giocatore fa Last Man Standing
-         */
+        playerWinner = player;
     }
 
-    /**
-     *
-     * @return 1 if someone has won the game
-     */
-    public int getBitWinner(){
-        return this.winner;
+    public Player getPlayerWinner() {
+        return playerWinner;
+    }
+
+    public char[] getCellToSend() {
+        return cellToSend;
     }
 
     //method not sure it will be used

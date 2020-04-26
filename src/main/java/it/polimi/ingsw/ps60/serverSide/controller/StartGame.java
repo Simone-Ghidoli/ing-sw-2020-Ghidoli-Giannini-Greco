@@ -8,8 +8,9 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class StartGame {
 
-    public void startBoard(String[] nickname) {
-        game = new Board(nickname);
+    public StartGame(String[][] nickname){
+        game = new Board(nickname[0]);
+
     }
 
     public GlobalVariables.DivinityCard[] getDivinityCard() {
