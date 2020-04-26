@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class ServerStarter {
     public static void start() throws IOException {
-        new StartGame(new Server(portSelection()).getNick_birth());
+        new StartGame(new Server(portSelection()));
     }
 
     private static int portSelection(){

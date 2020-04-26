@@ -3,18 +3,34 @@ package it.polimi.ingsw.ps60.serverSide.controller;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
+import it.polimi.ingsw.ps60.serverSide.server.Server;
+import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class StartGame {
 
-    public StartGame(String[][] nicknamesAndBirthdays){
-        game = new Board(sort(nicknamesAndBirthdays));
+    public StartGame(Server server){
+        String[] strings = sort(server.getNick_birth());
+        game = new Board(strings);
+
+        ArrayList<ServerThread> serverThreads = server.getsocketlist();
+        String string;
+
+        for (int i = 0; i < strings.length; i++) {
+            string = serverThreads.get(i).nickname_birthday()[0];
+            for (int k = 0; k < strings.length; k++){
+                if (string.equals(strings[k])){
+                    game.getPlayerById(GlobalVariables.IdPlayer.values()[k]).setServerThread(serverThreads.get(i));
+                }
+            }
+        }
 
     }
 
@@ -46,10 +62,6 @@ public class StartGame {
             nicknames[k] = nicknamesAndBirthdays[k][0];
 
         return nicknames;
-    }
-
-    public GlobalVariables.DivinityCard[] getDivinityCard() {
-        return GlobalVariables.DivinityCard.values();
     }
 
     public void selectDivinityCard(GlobalVariables.DivinityCard[] divinityCards) {

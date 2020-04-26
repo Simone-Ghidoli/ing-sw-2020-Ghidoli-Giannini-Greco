@@ -27,7 +27,7 @@ public  class Server{
     /**
      * Open connections between clinets and server. Get players' nicknames and the number of players.
      */
-    public void serverStart() throws IOException { //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
+    private void serverStart() throws IOException { //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
         String s = null; //stringa di comodo per salvare i nomi dal metodo
         List<String> names = new ArrayList<>();
         while (serverSocket.isClosed()) {
