@@ -16,15 +16,22 @@ public class ServerThread extends Thread {
     protected Socket socket;
     private List<ServerThread> list;
     private InputStream in;
+    private OutputStream out;
     private BufferedReader buffer;
     private PrintWriter writer;
     private ObjectInputStream in_obj;
-    private ObjectOutputStream obj;
+    private ObjectOutputStream out_obj;
 
     public ServerThread(Socket soc, ArrayList<ServerThread> lista, String s) throws IOException {
         Playerbound = s;
         this.socket = soc;
         this.list = lista;
+        in=socket.getInputStream();
+        out=socket.getOutputStream();
+        buffer=new BufferedReader(new InputStreamReader(in));
+        writer=new PrintWriter(out,true);
+        out_obj=new ObjectOutputStream(out);
+        in_obj=new ObjectInputStream(in);
     }
 
     public int moveMessage(List<SerializedInteger>[] possible_choice,SerializedInteger[] positionworkers) {//Comunica con l'utente per decidere quale muratore muovere e dove
@@ -83,10 +90,14 @@ public class ServerThread extends Thread {
         sendString("pr-"+result);
     }
 
+    public List<ServerThread> getList(){
+        return list;
+    }
+
     public int receiveInteger(){
         int n=-1;
         try {
-            n = socket.getInputStream().read();
+            n = in.read();
         }
         catch(IOException e){
             //todo chiama la disconnessione
@@ -95,19 +106,15 @@ public class ServerThread extends Thread {
     }
 
     public void sendString(String message){
-        try {
-            writer=new PrintWriter(socket.getOutputStream(),true);
-            writer.println(message);
-        }
-        catch(IOException e){
+        writer.println(message);
+        if(writer.checkError()){
             //todo chiama la disconnessione
         }
     }
 
     public void sendPositionsArray(List<SerializedInteger>[] list){
         try{
-            obj=new ObjectOutputStream(socket.getOutputStream());
-            obj.writeObject(list);
+            out_obj.writeObject(list);
         }
         catch(IOException e){
             //todo chiama la disconnessione
@@ -116,8 +123,7 @@ public class ServerThread extends Thread {
 
     public void sendPositionsList(List<SerializedInteger> list){
         try{
-            obj=new ObjectOutputStream(socket.getOutputStream());
-            obj.writeObject(list);
+            out_obj.writeObject(list);
         }
         catch(IOException e){
             //todo chiama la disconnessione
@@ -126,8 +132,7 @@ public class ServerThread extends Thread {
 
     public void sendPositionWorkers(SerializedInteger[] positionworkers){
         try{
-            obj=new ObjectOutputStream(socket.getOutputStream());
-            obj.writeObject(positionworkers);
+            out_obj.writeObject(positionworkers);
         }
         catch(IOException e){
             //todo chiama la disconnessione
@@ -137,7 +142,6 @@ public class ServerThread extends Thread {
     public String receiveString(){
         String n=null;
         try{
-            buffer=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             n=buffer.readLine();
         }
         catch(IOException e){
@@ -149,7 +153,6 @@ public class ServerThread extends Thread {
     public SerializedInteger[] receivePositions(){
         SerializedInteger[] pos=null;
         try{
-            in_obj=new ObjectInputStream(socket.getInputStream());
             pos=(SerializedInteger[]) in_obj.readObject();
         }
         catch(IOException | ClassNotFoundException e) {
@@ -169,7 +172,6 @@ public class ServerThread extends Thread {
     public GlobalVariables.DivinityCard[] receiveCards(){
         GlobalVariables.DivinityCard[] appoggio=null;
         try {
-            in_obj = new ObjectInputStream(socket.getInputStream());
             appoggio=(GlobalVariables.DivinityCard[]) in_obj.readObject();
         }
         catch(IOException | ClassNotFoundException e){
@@ -180,8 +182,8 @@ public class ServerThread extends Thread {
 
     public void sendInt(int send){
         try {
-            socket.getOutputStream().write(send);
-            socket.getOutputStream().flush();
+            out.write(send);
+            out.flush();
         }
         catch(IOException e){
             //todo chiama la disconnessione
@@ -190,8 +192,7 @@ public class ServerThread extends Thread {
 
     public void sendCards(GlobalVariables.DivinityCard[] cards){
         try {
-            obj = new ObjectOutputStream(socket.getOutputStream());
-            obj.writeObject(cards);
+            out_obj.writeObject(cards);
         }
         catch(IOException e){
             //todo chiama la disconnessione
