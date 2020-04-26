@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public class ServerThread extends Thread {
-    private String Playerbound;
+    private String playerBound;
     protected Socket socket;
     private List<ServerThread> list;
     private InputStream in;
@@ -22,8 +22,7 @@ public class ServerThread extends Thread {
     private ObjectInputStream in_obj;
     private ObjectOutputStream out_obj;
 
-    public ServerThread(Socket soc, ArrayList<ServerThread> lista, String s) throws IOException {
-        Playerbound = s;
+    public ServerThread(Socket soc, ArrayList<ServerThread> lista) throws IOException {
         this.socket = soc;
         this.list = lista;
         in=socket.getInputStream();
@@ -55,7 +54,7 @@ public class ServerThread extends Thread {
         choice=receiveInteger();
         return choice;
     }
-    public int numberOfPlayers(){
+    public int numberOfPlayers(){//ask how much players gonna play
         int n=-1;
         sendString("nPlayers");
         n=receiveInteger();
@@ -64,8 +63,8 @@ public class ServerThread extends Thread {
     public String[] nickname_birthday(){
         String[] nick_birth=new String[2];
         sendString("nick_birth");
-        nick_birth[0]=receiveString();
-        nick_birth[1]=receiveString();
+        nick_birth[0]=receiveString();//Nickname
+        nick_birth[1]=receiveString();//Birth
         return nick_birth;
     }
     public int[][] setWorkers(){//Restituisce un vettore con le posizioni dei 2 workers
@@ -197,6 +196,12 @@ public class ServerThread extends Thread {
         catch(IOException e){
             //todo chiama la disconnessione
         }
+    }
+
+    //public void printDisconnection()
+
+    public void setPlayerBound(String s){
+        playerBound =s;
     }
 
 }
