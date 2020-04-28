@@ -22,29 +22,37 @@ public class ServerThread extends Thread {
     private ObjectInputStream in_obj;
     private ObjectOutputStream out_obj;
 
-    public ServerThread(Socket soc, ArrayList<ServerThread> lista) throws IOException {
+    public ServerThread(Socket soc, ArrayList<ServerThread> lista){
         this.socket = soc;
         this.list = lista;
-        in=socket.getInputStream();
-        out=socket.getOutputStream();
-        buffer=new BufferedReader(new InputStreamReader(in));
-        writer=new PrintWriter(out,true);
-        out_obj=new ObjectOutputStream(out);
-        in_obj=new ObjectInputStream(in);
+        try {
+            in = socket.getInputStream();
+            out = socket.getOutputStream();
+            buffer = new BufferedReader(new InputStreamReader(in));
+            writer = new PrintWriter(out, true);
+            out_obj = new ObjectOutputStream(out);
+            in_obj = new ObjectInputStream(in);
+        }
+        catch(IOException e){
+            try{
+                socket.close();
+            }
+            catch(IOException e_1){e_1.printStackTrace();}
+        }
     }
 
-    public int moveMessage(List<SerializedInteger>[] possible_choice,SerializedInteger[] positionworkers) {//Comunica con l'utente per decidere quale muratore muovere e dove
+    public int moveMessage(List<int[]>[] possible_choice,int[][] positionworkers) {//Comunica con l'utente per decidere quale muratore muovere e dove
         int choice=-1;
         sendString("move");
-        sendPositionsArray(possible_choice);//Invio solo la parte delle mosse che mi serve(ovvero quelle associate al worker da muovere)
-        sendPositionWorkers(positionworkers);//PositionWorkers viene inserito in input quando viene chiamato il metodo.
+        sendPositionsArray(convertIntegerToSerialized_move(possible_choice));//Invio solo la parte delle mosse che mi serve(ovvero quelle associate al worker da muovere)
+        sendPositionWorkers(convertIntegerToSerialized_workers(positionworkers));//PositionWorkers viene inserito in input quando viene chiamato il metodo.
         choice=receiveInteger();
         return choice;//Restituisce il numero inserito dall'utente (quindi la posizione del vettore con la casella in cui costruire)
     }
-    public int buildMessage(List<SerializedInteger> possible_choice){//Comunica con l`utente per decidere dove costruire
+    public int buildMessage(List<int[]> possible_choice){//Comunica con l`utente per decidere dove costruire
         int choice=-1;
         sendString("build");
-        sendPositionsList(possible_choice);
+        sendPositionsList(convertPositionListToSerializedInteger(possible_choice));
         choice=receiveInteger();
         return choice;//Restituisce il numero inserito dall`utente (Quindi la posizione del vettore con la casella in cui costruire)
     }
@@ -67,10 +75,11 @@ public class ServerThread extends Thread {
         nick_birth[1]=receiveString();//Birth
         return nick_birth;
     }
-    public int[][] setWorkers(){//Restituisce un vettore con le posizioni dei 2 workers
+    public int[][] setWorkers(List<int[]> takenPos){//Restituisce un vettore con le posizioni dei 2 workers
+        sendPositionsList(convertPositionListToSerializedInteger(takenPos));
         sendString("workset");
         SerializedInteger[] appoggio=receivePositions();
-        return convertSerializedToInteger(appoggio);
+        return convertSerializedToInteger_workers(appoggio);
     }
     public GlobalVariables.DivinityCard[] divinity_Choice(){
         sendString("dv_choice");
@@ -160,12 +169,31 @@ public class ServerThread extends Thread {
         return pos;
     }
 
-    public int[][] convertSerializedToInteger(SerializedInteger[] seria){
+    public int[][] convertSerializedToInteger_workers(SerializedInteger[] seria){
         int[][] appoggio=new int[2][2];
         for(int i=0;i<seria.length;i++){
             appoggio[i]=seria[i].serialized;
         }
         return appoggio;
+    }
+
+    public List<SerializedInteger>[] convertIntegerToSerialized_move(List<int[]>[] possible_choice){
+        List<SerializedInteger>[] list=new ArrayList[possible_choice.length];
+        for(int[] elem:possible_choice[0]){
+            list[0].add(new SerializedInteger(elem));
+        }
+        for(int[] elem:possible_choice[1]){
+            list[1].add(new SerializedInteger(elem));
+        }
+        return list;
+    }
+
+    public SerializedInteger[] convertIntegerToSerialized_workers(int[][] positions){ //Riceve sempre un vettore con le posizioni di 2 workers.
+        SerializedInteger[] temp=new SerializedInteger[2];
+        for(int i=0;i<2;i++){
+            temp[i].serialized=positions[i];
+        }
+        return temp;
     }
 
     public GlobalVariables.DivinityCard[] receiveCards(){
@@ -196,6 +224,14 @@ public class ServerThread extends Thread {
         catch(IOException e){
             //todo chiama la disconnessione
         }
+    }
+
+    public List<SerializedInteger> convertPositionListToSerializedInteger(List<int[]> lista){ //Converte il tipo da List<int> a Serialized Integer
+        List<SerializedInteger> appoggio= new ArrayList<>();
+        for(int[] elem: lista){
+            appoggio.add(new SerializedInteger(elem));
+        }
+        return appoggio;
     }
 
     //public void printDisconnection()
