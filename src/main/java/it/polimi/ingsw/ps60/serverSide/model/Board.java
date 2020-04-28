@@ -13,6 +13,7 @@ public class Board {
     int completeTower;
     char[] cellToSend;
     Player playerWinner;
+    int winner;
 
     /**
      * The board is the memory of the game.
@@ -23,6 +24,7 @@ public class Board {
      */
     public Board(String[] nicknames){
         this.playersNumber = nicknames.length;
+        winner = 0;
         cellMatrix = new Cell[5][5];
         playerMatrix = new Player[playersNumber];
         playerList = new CircularLinkedList<>();
@@ -110,6 +112,7 @@ public class Board {
      * @param player is the winner of the game
      */
     public void win(Player player){
+        winner = 1;
         playerWinner = player;
     }
 
@@ -142,5 +145,9 @@ public class Board {
 
     public void increaseCompleteTower(){
         completeTower++;
+    }
+
+    public int getBitWinner() {
+        return winner;
     }
 }

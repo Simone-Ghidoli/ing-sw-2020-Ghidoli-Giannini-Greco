@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ps60.serverSide.model;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityController;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy;
 import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
 public class Player {
@@ -13,7 +13,7 @@ public class Player {
     private GlobalVariables.Colour colour;
     private Worker workerMoved;
     private boolean buildByWorker;
-    private DivinityController divinityController;
+    private DivinityStrategy divinityStrategy;
     private ServerThread serverThread;
 
 
@@ -60,7 +60,7 @@ public class Player {
      */
     public void setDivinityCard(GlobalVariables.DivinityCard divinityCard) {
         this.divinityCard = divinityCard;
-        divinityController = new DivinityController(divinityCard);
+        divinityStrategy = new DivinityStrategy(divinityCard);
     }
 
     /**
@@ -112,7 +112,11 @@ public class Player {
         buildByWorker = i;
     }
 
-    public DivinityController getDivinityController() {
-        return divinityController;
+    public DivinityStrategy getDivinityStrategy() {
+        return divinityStrategy;
+    }
+
+    public ServerThread getServerThread() {
+        return serverThread;
     }
 }

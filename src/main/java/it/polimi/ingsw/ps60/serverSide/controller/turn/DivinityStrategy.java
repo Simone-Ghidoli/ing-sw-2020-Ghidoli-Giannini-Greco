@@ -7,12 +7,13 @@ import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.*;
 import java.util.List;
 
 
-public class DivinityController {
+public class DivinityStrategy {
 
-    private Strategy strategy;
-    private Turn effect;
+    private final Strategy strategy;
+    private final Turn effect;
 
-    public DivinityController(GlobalVariables.DivinityCard divinityCard){
+    public DivinityStrategy(GlobalVariables.DivinityCard divinityCard){
+
         switch (divinityCard) {
             case APOLLO:
                 strategy = new ApolloStrategy();
@@ -75,7 +76,7 @@ public class DivinityController {
         return strategy.baseMovement();
     }
 
-    public void setMovemet(int[][] movement){
+    public void setMovement(int[][] movement){
         effect.move(movement);
     }
 

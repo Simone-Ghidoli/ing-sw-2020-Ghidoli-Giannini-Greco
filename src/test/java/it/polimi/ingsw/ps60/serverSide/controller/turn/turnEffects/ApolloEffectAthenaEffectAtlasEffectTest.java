@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 
-import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityController;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy;
 
 import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.SetupForTest;
@@ -27,26 +27,26 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
         test.player2.setDivinityCard(GlobalVariables.DivinityCard.ATHENA);
         test.player3.setDivinityCard(GlobalVariables.DivinityCard.ATLAS);
 
-        DivinityController divinityController1 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
-        test.listContains=new ListContains(divinityController1.getTurnStrategyMovement()[0]);
+        DivinityStrategy divinityStrategy1 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
+        test.listContains=new ListContains(divinityStrategy1.getTurnStrategyMovement()[0]);
         int[][] mossa1 = new int[2][2];
 
         mossa1[0][0] = 0; //muovo il worker 1
         mossa1[0][1] = 0; //default 0 poi cambia per ogni carta divinità
         mossa1[1] = test.coord6;
         if(test.listContains.isContained(mossa1[1])) {
-            divinityController1.setMovemet(mossa1);
+            divinityStrategy1.setMovement(mossa1);
         }
 
-        test.listContains=new ListContains((divinityController1.getTurnStrategyBuilding()));
+        test.listContains=new ListContains((divinityStrategy1.getTurnStrategyBuilding()));
 
         if (test.listContains.isContained(new int[]{2, 2}))
-            divinityController1.setBuilding(new int[]{2, 2});
+            divinityStrategy1.setBuilding(new int[]{2, 2});
 
 
-        divinityController1.setEndTurn();
-        DivinityController divinityController2 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
-        test.listContains=new ListContains(divinityController2.getTurnStrategyMovement()[0]);
+        divinityStrategy1.setEndTurn();
+        DivinityStrategy divinityStrategy2 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
+        test.listContains=new ListContains(divinityStrategy2.getTurnStrategyMovement()[0]);
         int[][] mossa2 = new int[2][2];
 
 
@@ -54,75 +54,75 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
         mossa2[0][1] = 0;
         mossa2[1] = new int[]{2, 2};
         if(test.listContains.isContained(mossa2[1]))
-            divinityController2.setMovemet(mossa2);
+            divinityStrategy2.setMovement(mossa2);
 
-        test.listContains=new ListContains((divinityController2.getTurnStrategyBuilding()));
+        test.listContains=new ListContains((divinityStrategy2.getTurnStrategyBuilding()));
         if (test.listContains.isContained(new int[]{2, 3}))
-            divinityController2.setBuilding(new int[]{2, 3});
-        divinityController2.setEndTurn();
+            divinityStrategy2.setBuilding(new int[]{2, 3});
+        divinityStrategy2.setEndTurn();
 
-        DivinityController divinityController3 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
+        DivinityStrategy divinityStrategy3 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
 
         int[][] mossa3 = new int[2][2];
-        test.listContains= new ListContains(divinityController3.getTurnStrategyMovement()[1]);
+        test.listContains= new ListContains(divinityStrategy3.getTurnStrategyMovement()[1]);
         mossa3[0][0] = 1;
         mossa3[0][1] = 0;
         mossa3[1] = new int[]{2, 3};
         if(test.listContains.isContained(mossa3[1]))
-            divinityController3.setMovemet(mossa3);
+            divinityStrategy3.setMovement(mossa3);
         else {
-            test.listContains = new ListContains(divinityController3.getTurnStrategyMovement()[0]);
+            test.listContains = new ListContains(divinityStrategy3.getTurnStrategyMovement()[0]);
             mossa3[0][0] = 0;
             mossa3[0][1] = 0;
             mossa3[1] = new int[]{2, 4};
             if (test.listContains.isContained(mossa3[1]))
-                divinityController3.setMovemet(mossa3);
+                divinityStrategy3.setMovement(mossa3);
         }
-        test.listContains=new ListContains((divinityController3.getTurnStrategyBuilding()));
+        test.listContains=new ListContains((divinityStrategy3.getTurnStrategyBuilding()));
         if(test.listContains.isContained(new int[]{1, 4}))
-            divinityController3.setBuilding(new int[]{1, 4, 1});
-        divinityController3.setEndTurn();
+            divinityStrategy3.setBuilding(new int[]{1, 4, 1});
+        divinityStrategy3.setEndTurn();
 
 
-        test.listContains=new ListContains(divinityController1.getTurnStrategyMovement()[1]);
+        test.listContains=new ListContains(divinityStrategy1.getTurnStrategyMovement()[1]);
         mossa1[0][0]=1;
         mossa1[0][1]=0;
         mossa1[1]=new int[]{2,3};
         if(test.listContains.isContained(mossa1[1]))
-            divinityController1.setMovemet(mossa1);
+            divinityStrategy1.setMovement(mossa1);
         else{
             mossa1[1]=new int[]{2,1};
             if (test.listContains.isContained(mossa1[1]))
-                divinityController1.setMovemet(mossa1);
+                divinityStrategy1.setMovement(mossa1);
         }
-        test.listContains=new ListContains(divinityController1.getTurnStrategyBuilding());
+        test.listContains=new ListContains(divinityStrategy1.getTurnStrategyBuilding());
         if(test.listContains.isContained(new int[]{2,2}))
-            divinityController1.setBuilding(new int[]{2,2});
+            divinityStrategy1.setBuilding(new int[]{2,2});
         else if(test.listContains.isContained(new int[]{3,1}))
-            divinityController1.setBuilding(new int[]{3,1});
-        divinityController1.setEndTurn();
+            divinityStrategy1.setBuilding(new int[]{3,1});
+        divinityStrategy1.setEndTurn();
 
-        test.listContains= new ListContains(divinityController2.getTurnStrategyMovement()[1]);
+        test.listContains= new ListContains(divinityStrategy2.getTurnStrategyMovement()[1]);
         mossa2[0][0]=1;
         mossa2[0][1]=0;
         mossa2[1]=new int[]{4,1};
         if(test.listContains.isContained(mossa2[1]))
-            divinityController2.setMovemet(mossa2);
-        test.listContains=new ListContains(divinityController2.getTurnStrategyBuilding());
+            divinityStrategy2.setMovement(mossa2);
+        test.listContains=new ListContains(divinityStrategy2.getTurnStrategyBuilding());
         if(test.listContains.isContained(new int[]{4,2}))
-            divinityController2.setBuilding(new int[]{4,2});
-        divinityController2.setEndTurn();
+            divinityStrategy2.setBuilding(new int[]{4,2});
+        divinityStrategy2.setEndTurn();
 
-        test.listContains= new ListContains(divinityController3.getTurnStrategyMovement()[0]);
+        test.listContains= new ListContains(divinityStrategy3.getTurnStrategyMovement()[0]);
         mossa3[0][0]=0;
         mossa3[0][1]=0;
         mossa3[1]=new int[]{2,3};
         if(test.listContains.isContained(mossa3[1])) {
-            divinityController3.setMovemet(mossa3);
+            divinityStrategy3.setMovement(mossa3);
         }
-        test.listContains=new ListContains((divinityController3.getTurnStrategyBuilding()));
+        test.listContains=new ListContains((divinityStrategy3.getTurnStrategyBuilding()));
         if(test.listContains.isContained(new int[]{1,3}))
-            divinityController3.setBuilding(new int[]{1,3,0});
+            divinityStrategy3.setBuilding(new int[]{1,3,0});
 
     }
 
