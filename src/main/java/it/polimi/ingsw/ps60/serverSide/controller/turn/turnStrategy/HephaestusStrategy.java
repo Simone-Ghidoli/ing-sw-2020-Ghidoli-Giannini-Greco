@@ -9,7 +9,6 @@ public class HephaestusStrategy extends TurnStrategy{// position = p; p[0] = x, 
     public List<int[]> baseBuilding() {
         List<int[]> positions = super.baseBuilding();
         int[] cellPosition;
-
         int c = 0;
 
         while (c < positions.size()){

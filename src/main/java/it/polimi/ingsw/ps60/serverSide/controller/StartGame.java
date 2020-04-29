@@ -2,19 +2,15 @@ package it.polimi.ingsw.ps60.serverSide.controller;
 
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.TurnController;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
-import it.polimi.ingsw.ps60.serverSide.model.Player;
 import it.polimi.ingsw.ps60.serverSide.server.Server;
 import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
-import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
 
-import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
@@ -35,11 +31,6 @@ public class StartGame {
                 }
             }
         }
-
-        selectWorkersPositions();
-        selectDivinityCard();
-
-        new TurnController();
 
     }
 
@@ -73,56 +64,9 @@ public class StartGame {
         return nicknames;
     }
 
-    public void selectDivinityCard() { //sceglie le n carte divinita' dal primo giocatore
-
-        GlobalVariables.DivinityCard[] divinityCards = game.getPlayerInGame().getNode().getValue().getServerThread().divinity_Choice();
-
-        GlobalVariables.DivinityCard divinityCard;
-        CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
-        circularListIterator.nextNode();
-        GlobalVariables.DivinityCard[] divinityCards1;
-        int k;
-
-        for (int i = 0; i < divinityCards.length - 1; i++){
-            divinityCard = circularListIterator.getNode().getValue().getServerThread().divinity_Selection(divinityCards)[0];
-
-            circularListIterator.getNode().getValue().setDivinityCard(divinityCard);
-
-            divinityCards1 = new GlobalVariables.DivinityCard[divinityCards.length - 1];
-            k = 0;
-
-            for (int j = 0; j < divinityCards.length; j++){
-                if (divinityCard != divinityCards[j]){
-                    divinityCards1[k] = divinityCards[j];
-                    k++;
-                }
-            }
-
-            divinityCards = divinityCards1;
-            circularListIterator.nextNode();
-        }
-
-        circularListIterator.getNode().getValue().setDivinityCard(divinityCards[0]);
-    }
-
-    public void selectWorkersPositions(){
-
-        int[][][] positions = new int[game.getPlayersNumber()][][];
-
-        List<int[]> list = new ArrayList<>();
-
-        CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
-
-        for (int i = 0; i < game.getPlayersNumber(); i++){
-            positions[i] = circularListIterator.getNode().getValue().getServerThread().setWorkers(list);
-
-            for (int j = 0; j < 2; j++)
-                list.add(positions[i][j]);
-
-            circularListIterator.nextNode();
-        }
-
-        setWorkersPositions(positions);
+    public void selectDivinityCard (GlobalVariables.DivinityCard[] divinityCards) {
+        for (int j = 0; j < divinityCards.length; j++)
+            game.getPlayerById(GlobalVariables.IdPlayer.getPlayerByInt(j)).setDivinityCard(divinityCards[j]);
     }
 
     public void setWorkersPositions(int[][][] positions) {
@@ -132,7 +76,4 @@ public class StartGame {
             }
         }
     }
-
-
-
 }
