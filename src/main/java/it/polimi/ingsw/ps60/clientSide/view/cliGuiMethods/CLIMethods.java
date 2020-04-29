@@ -102,6 +102,8 @@ public class CLIMethods implements ViewMethodSelection {
         int choice = 0;
 
         for (int[] move : moves) {
+
+
             System.out.println("Press " + (choice + 1) + " in order to build on the cell: " +
                     (move[0] + 1) + "; " + (move[1] + 1));
             choice++;
@@ -119,9 +121,8 @@ public class CLIMethods implements ViewMethodSelection {
             System.out.println("Wrong input");
             return buildChoice(moves);
         }
-        else {
+        else
             return choice-1;
-        }
     }
 
     @Override
