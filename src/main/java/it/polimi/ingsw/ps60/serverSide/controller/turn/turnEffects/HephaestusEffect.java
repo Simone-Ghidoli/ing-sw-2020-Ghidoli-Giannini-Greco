@@ -6,7 +6,8 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class HephaestusEffect extends TurnEffect {
     @Override
-    public void build(int[] build) {
+    public void build(int[] build) {//posizione 3 se 1 costruisci di nuovo
+
         super.build(build);
 
         Cell cell = game.getCellByPosition(build);

@@ -4,6 +4,8 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 
 import java.util.List;
 
+import static it.polimi.ingsw.ps60.GlobalVariables.frame;
+
 public class GUIMethods implements ViewMethodSelection {
     @Override
     public void printBoard(String board) {

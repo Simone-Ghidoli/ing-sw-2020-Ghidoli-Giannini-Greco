@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps60;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
+import javax.swing.*;
 import java.io.Serializable;
 
 public class GlobalVariables {
@@ -37,10 +38,6 @@ public class GlobalVariables {
                     return null;
             }
         }
-
-        //public void setServerThread(ServerThread serverThread) {
-        //    this.serverThread = serverThread;
-        //}
 
         public Colour getColour() {
             return colour;
@@ -118,4 +115,6 @@ public class GlobalVariables {
             return pattern;
         }
     }
+
+    public static JFrame frame;
 }

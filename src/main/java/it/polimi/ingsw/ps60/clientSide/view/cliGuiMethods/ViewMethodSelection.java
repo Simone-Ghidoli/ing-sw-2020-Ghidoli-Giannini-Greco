@@ -5,6 +5,7 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import java.util.List;
 
 public interface ViewMethodSelection {
+
     void printBoard(String board);
 
     int moveChoice(List<int[]>[] moves, int[][] positionsWorkers);
