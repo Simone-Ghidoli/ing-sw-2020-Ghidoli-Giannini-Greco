@@ -128,7 +128,7 @@ public class ApolloEffectAthenaEffectAtlasEffectTest {
 
     @After
     public void tearDown(){
-        test.board=null;
+        GlobalVariables.game=null;
 
     }
     @Test

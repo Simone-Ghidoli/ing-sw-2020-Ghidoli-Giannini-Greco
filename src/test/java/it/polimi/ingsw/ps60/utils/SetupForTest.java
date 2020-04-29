@@ -4,6 +4,7 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.controller.StartGame;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
+import it.polimi.ingsw.ps60.serverSide.server.Server;
 
 public class SetupForTest {
     public StartGame newgame;
@@ -28,7 +29,7 @@ public class SetupForTest {
         posPlayer1 = new int[][]{coord1, coord2};
         posPlayer2 = new int[][]{coord3, coord4};
         posPlayer3 = new int[][]{coord5, coord6};
-        GlobalVariables.game = new Board(nicknames);
+        //newgame = new StartGame(new Server());
 
         newgame.setWorkersPositions(new int[][][]{posPlayer1, posPlayer2, posPlayer3});
 

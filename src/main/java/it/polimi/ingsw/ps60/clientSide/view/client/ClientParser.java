@@ -4,12 +4,10 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.*;
-
-import com.sun.tools.javac.util.ArrayUtils;
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
-import sun.security.util.ArrayUtil;
+
 
 /**
  * This class is the parser. Its function is to process server's commands and call the correct method to proceed in the game

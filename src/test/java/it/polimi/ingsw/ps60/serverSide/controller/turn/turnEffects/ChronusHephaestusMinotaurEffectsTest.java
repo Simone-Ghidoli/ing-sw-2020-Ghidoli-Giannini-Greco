@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityController;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy;
 import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.SetupForTest;
 import org.junit.After;
@@ -37,7 +37,7 @@ public class ChronusHephaestusMinotaurEffectsTest {
         GlobalVariables.game.getCellByPosition(new int[]{3, 0}).incrementBuildingLevel();
         GlobalVariables.game.getCellByPosition(new int[]{3, 0}).buildDome();
 
-        DivinityController divinityController1 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
+        DivinityStrategy divinityController1 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
         test.listContains = new ListContains(divinityController1.getTurnStrategyMovement()[0]);
         int[][] mossa1 = new int[2][2];
 
@@ -54,7 +54,7 @@ public class ChronusHephaestusMinotaurEffectsTest {
             divinityController1.setBuilding(new int[]{2, 3});
         divinityController1.setEndTurn();
 
-        DivinityController divinityController2 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
+        DivinityStrategy divinityController2 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
         test.listContains = new ListContains(divinityController2.getTurnStrategyMovement()[0]);
         int[][] mossa2 = new int[2][2];
         mossa2[0][0] = 0; //muovo il worker 1
@@ -69,7 +69,7 @@ public class ChronusHephaestusMinotaurEffectsTest {
         divinityController2.setEndTurn();
 
 
-        DivinityController divinityController3 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityController();
+        DivinityStrategy divinityController3 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
         test.listContains = new ListContains(divinityController3.getTurnStrategyMovement()[0]);
         int[][] mossa3 = new int[2][2];
         mossa3[0][0] = 0; //muovo il worker 1
@@ -100,7 +100,7 @@ public class ChronusHephaestusMinotaurEffectsTest {
     }
     @After
     public void tearDown(){
-        test.board=null;
+        GlobalVariables.game=null;
 
     }
 
