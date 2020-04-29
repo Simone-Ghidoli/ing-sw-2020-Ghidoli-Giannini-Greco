@@ -21,6 +21,9 @@ public class DivinityStrategy {
             case ARTEMIS:
                 strategy = new ArtemisStrategy();
                 break;
+            case ATLAS:
+                strategy = new AtlasStrategy();
+                break;
             case HEPHAESTUS:
                 strategy = new HephaestusStrategy();
                 break;
