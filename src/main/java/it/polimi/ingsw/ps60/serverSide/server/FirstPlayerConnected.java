@@ -9,10 +9,8 @@ public class FirstPlayerConnected implements Callable<Integer>{
     }
     @Override
     public Integer call(){
-        int n=server.numberOfPlayers();
-        if(n!=2&&n!=3){
-            
-        }
+        int n=server.numberOfPlayers(); //todo Per number of players chiamo una chiusura diversa.
+
         return n;
     }
 }

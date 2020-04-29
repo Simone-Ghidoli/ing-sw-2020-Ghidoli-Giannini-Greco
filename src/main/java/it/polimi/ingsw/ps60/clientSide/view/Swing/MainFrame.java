@@ -15,7 +15,7 @@ public class MainFrame extends JFrame{
      */
 
     public MainFrame() {
-
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame window = new JFrame("SANTORINI");
         //window.setResizable(false);
@@ -30,7 +30,7 @@ public class MainFrame extends JFrame{
         window.setSize(1920,1080);
         window.setLocationRelativeTo(null);
         ImageIcon imagine=new ImageIcon("src/resources/board/SantoriniBoard.png");
-        Image scaleImage=imagine.getImage().getScaledInstance(1366  ,768,Image.SCALE_SMOOTH);
+        Image scaleImage=imagine.getImage().getScaledInstance(screenSize.width,screenSize.height,Image.SCALE_SMOOTH);
 
 
         JLabel board_imagine=new JLabel(new ImageIcon(scaleImage));
