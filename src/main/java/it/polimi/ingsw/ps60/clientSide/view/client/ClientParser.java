@@ -2,7 +2,6 @@ package it.polimi.ingsw.ps60.clientSide.view.client;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.*;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
@@ -330,7 +329,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
         catch(IOException e){
             e.printStackTrace();
-        };
+        }
     }
 
 }

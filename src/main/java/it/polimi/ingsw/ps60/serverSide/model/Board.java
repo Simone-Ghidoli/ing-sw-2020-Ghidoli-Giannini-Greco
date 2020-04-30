@@ -31,7 +31,6 @@ public class Board {
         playerWinner = null;
         cellToSend = new char[25];
 
-        //This will create a 5 x 5 array of cells
         for (int i = 0; i < 5; i++){
             for (int j = 0; j < 5; j++){
                 cellMatrix[i][j] = new Cell(new int[]{i, j}, this);
@@ -40,7 +39,7 @@ public class Board {
         }
 
         for (int i = 0; i< playersNumber; i++) {
-            playerMatrix[i] = new Player(GlobalVariables.IdPlayer.getPlayerByInt(i), nicknames[i]);
+            playerMatrix[i] = new Player(GlobalVariables.IdPlayer.values()[i], nicknames[i]);
             playerList.addNode(playerMatrix[i]);
         }
 

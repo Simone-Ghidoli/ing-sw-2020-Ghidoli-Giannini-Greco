@@ -42,7 +42,6 @@ public class ClientReader extends Thread {
                 }
             }
             methodSelection.alert("communication error, logging out");
-            return;
         }
     }
 

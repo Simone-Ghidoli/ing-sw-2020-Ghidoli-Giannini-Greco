@@ -13,7 +13,7 @@ import java.util.List;
  * for every possible god.
  */
 
-public class TurnStrategy implements Strategy {
+public class BaseStrategy implements Strategy {
 
     /**
      * This method look for all the possible move that both player's worker can do
