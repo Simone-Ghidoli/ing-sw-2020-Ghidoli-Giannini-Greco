@@ -20,7 +20,7 @@ public class TritonStrategy extends TurnStrategy {
         for (int d = 0; d < 2; d++) {
             listContains = new ListContains(position[d]);
             for (int c = 0; c < position[d].size(); c++) {
-                if (position[d].get(c)[0] == 0 || position[d].get(c)[1] == 0) {
+                if (position[d].get(c)[0] == 0 || position[d].get(c)[1] == 0 || position[d].get(c)[0] == 4 || position[d].get(c)[1] == 4) {
                     for (int i = -1; i < 2; i++) {
                         for (int j = -1; j < 2; j++) {
                             if ((cell = game.getCellByPosition(new int[]{position[d].get(c)[0] + i, position[d].get(c)[1] + j})) != null

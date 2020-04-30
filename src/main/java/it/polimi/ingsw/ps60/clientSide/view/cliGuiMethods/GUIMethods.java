@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static it.polimi.ingsw.ps60.GlobalVariables.frame;
-
 public class GUIMethods implements ViewMethodSelection {
 
     private JFrame boardWindow;

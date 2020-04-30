@@ -54,7 +54,7 @@ public class GlobalVariables {
     public enum DivinityCard implements Serializable {//L'ho messa serializzabile per poterla mandare via socket.
         APOLLO, ARTEMIS, ATHENA(false),
         ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS,
-        ZEUS, TRITON, CHRONUS;
+        ZEUS, TRITON, CHRONUS, HESTIA;
 
         private boolean bitException;
 
@@ -115,6 +115,4 @@ public class GlobalVariables {
             return pattern;
         }
     }
-
-    public static JFrame frame;
 }
