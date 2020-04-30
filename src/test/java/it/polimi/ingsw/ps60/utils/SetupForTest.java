@@ -1,13 +1,13 @@
 package it.polimi.ingsw.ps60.utils;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.StartGame;
+import it.polimi.ingsw.ps60.serverSide.controller.Game;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
 import it.polimi.ingsw.ps60.serverSide.server.Server;
 
 public class SetupForTest {
-    public StartGame newgame;
+    public Game newgame;
     public String[] nicknames;
     public Player player1, player2, player3;
     public int[] coord1;

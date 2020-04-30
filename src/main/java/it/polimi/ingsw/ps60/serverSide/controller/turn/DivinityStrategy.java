@@ -1,6 +1,10 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.AtlasHephaestusController;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.DemeterController;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PrometheusController;
+import it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.*;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.*;
 
@@ -11,6 +15,8 @@ public class DivinityStrategy {
 
     private final Strategy strategy;
     private final Turn effect;
+    private final String specialChoice;
+    private final TurnController turnController;
 
     public DivinityStrategy(GlobalVariables.DivinityCard divinityCard){
 
@@ -69,6 +75,40 @@ public class DivinityStrategy {
                 effect = new TurnEffect();
                 break;
         }
+
+        switch (divinityCard){
+            case ATLAS:
+                specialChoice = "Do you want to build a dome on it?";
+                break;
+            case DEMETER:
+                specialChoice = "Do you want to build again?";
+                break;
+            case HEPHAESTUS:
+                specialChoice = "Do you want to build again on it?";
+                break;
+            case PROMETHEUS:
+                specialChoice = "Do you want to build also before moving?\nWith which worker?";
+                break;
+            default:
+                specialChoice = null;
+        }
+
+        switch (divinityCard){
+            case ATLAS:
+            case HEPHAESTUS:
+                turnController = new AtlasHephaestusController();
+                break;
+            case DEMETER:
+                turnController = new DemeterController();
+                break;
+            case PROMETHEUS:
+                turnController = new PrometheusController();
+                break;
+            default:
+                turnController = new TurnController();
+        }
+
+
     }
 
     public List<int[]> getTurnStrategyBuilding() {
@@ -89,5 +129,13 @@ public class DivinityStrategy {
 
     public void setEndTurn(){
         effect.endTurn();
+    }
+
+    public String getSpecialChoice() {
+        return specialChoice;
+    }
+
+    public TurnController getTurnController() {
+        return turnController;
     }
 }
