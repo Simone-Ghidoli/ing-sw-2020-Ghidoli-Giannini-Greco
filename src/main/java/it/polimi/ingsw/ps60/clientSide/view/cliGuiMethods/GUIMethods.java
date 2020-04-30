@@ -2,9 +2,14 @@ package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.Swing.MainFrame;
+import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.frame;
@@ -12,7 +17,8 @@ import static it.polimi.ingsw.ps60.GlobalVariables.frame;
 public class GUIMethods implements ViewMethodSelection {
 
     private JFrame boardWindow;
-    private JPanel userInterations;
+    private JFrame userInterations;
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public GUIMethods(){
         boardWindow = new JFrame();
@@ -20,7 +26,6 @@ public class GUIMethods implements ViewMethodSelection {
 
         boardWindow.setResizable(false);
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         boardWindow.setTitle("Santorini");
@@ -30,11 +35,11 @@ public class GUIMethods implements ViewMethodSelection {
 
 
         boardWindow.setLayout(new BorderLayout());
-        ImageIcon imagine = new ImageIcon("src/resources/board/SantoriniBoard.png");
-        Image scaleImage = imagine.getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
+        ImageIcon imagineBoard = new ImageIcon("src/resources/board/SantoriniBoard.png");
+        Image scaleImageBoard = imagineBoard.getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
         JPanel grid = new JPanel();
 
-        JLabel board = new JLabel(new ImageIcon(scaleImage));
+        JLabel board = new JLabel(new ImageIcon(scaleImageBoard));
 
 
 
@@ -55,17 +60,18 @@ public class GUIMethods implements ViewMethodSelection {
 
         boardWindow.add(board, BorderLayout.CENTER);
         boardWindow.pack();
-        boardWindow.setVisible(true);
+        boardWindow.setVisible(false);
 
 
-        userInterations = new JPanel();
-        board.add(userInterations);
-        userInterations.setPreferredSize(new Dimension(screenSize.width*6/30, screenSize.height*1/2));
-        userInterations.setVisible(true);
+        userInterations = new JFrame();
+        userInterations.setTitle("choose Server");
+        userInterations.setPreferredSize(new Dimension(screenSize.width*7/30, screenSize.height*1/3));
+        userInterations.setVisible(false);
     }
 
     @Override
     public void printBoard(String board) {
+        userInterations.setVisible(true);
 
     }
 
@@ -81,10 +87,135 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public String[] ipPortChoices() {
-        userInterations.setVisible(true);
 
-//        userInterations.setVisible(false);
-        return new String[0];
+
+        userInterations.setResizable(false);
+        userInterations.setLocationRelativeTo(null);
+        userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userInterations.setSize(screenSize.width/5,screenSize.height/3);
+        ImageIcon imagineBox = new ImageIcon("src/resources/board/SantoriniBox.png");
+        Image scaleImageBox = imagineBox.getImage().getScaledInstance(userInterations.getWidth(), userInterations.getHeight(), Image.SCALE_SMOOTH);
+        JLabel box = new JLabel(new ImageIcon(scaleImageBox));
+        box.setLayout(new GridLayout(4,1));
+        JPanel empty=new JPanel();
+        JPanel ipPanel=new JPanel();
+        JPanel portPanel =new JPanel();
+        JPanel next =new JPanel();
+        ipPanel.setLayout(new FlowLayout());
+        portPanel.setLayout(new FlowLayout());
+        //next.setLayout(new GridBagLayout());
+        userInterations.add(box);
+
+
+        box.add(empty);
+        box.add(ipPanel);
+        ipPanel.setOpaque(false);
+        box.add(portPanel);
+        portPanel.setOpaque(false);
+        box.add(next);
+        next.setOpaque(false);
+
+
+
+        empty.setOpaque(false);
+        //JLabel serverIp=new JLabel("IP SERVER:");
+        //JLabel serverPort=new JLabel("SERVER PORT:");
+        final JTextField ip= new JTextField("inserire ip server",14);
+        final JTextField port= new JTextField("inserire port server",14);
+        final JButton nextButton= new JButton("next");
+
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        next.add(nextButton);
+        nextButton.setVisible(true);
+
+        ip.addFocusListener(new FocusListener() {
+                                @Override
+                                public void focusGained(FocusEvent focusEvent) {
+                                    if(ip.getText().equals("")||ip.getText().equals("inserire ip server"))
+                                        ip.setText("");
+
+                                }
+
+                                @Override
+                                public void focusLost(FocusEvent focusEvent) {
+
+                                    if(ip.getText().equals(new String("")))
+                                        ip.setText("inserire ip server");
+
+                                }
+                            });
+        port.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent focusEvent) {
+                if(port.getText().equals("")||port.getText().equals("inserire port server"))
+                    port.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent focusEvent) {
+                if(port.getText().equals(new String("")))
+                    port.setText("inserire port server");
+
+            }
+        });
+        ipPanel.add(ip);
+        portPanel.add(port);
+
+
+        nextButton.grabFocus();
+        next.requestFocus();
+        userInterations.setVisible(true);
+        userInterations.pack();
+        nextButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                {
+                    if(!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port.getText())&&
+                            !new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip.getText())){
+                        JOptionPane.showMessageDialog(frame,
+                                "Server non trovato, inserire un ip valido",
+                                "",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    if (!new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip.getText())) {
+                        JOptionPane.showMessageDialog(frame,
+                                "Server non trovato, inserire un ip valido",
+                                "",
+                                JOptionPane.ERROR_MESSAGE);
+
+
+
+                    } else if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port.getText())) {
+                        JOptionPane.showMessageDialog(frame,
+                                " inserire un valore di porta valido",
+                                "",
+                                JOptionPane.WARNING_MESSAGE);
+
+
+
+                    }
+
+
+
+                    }
+
+
+                }
+            });
+
+        
+
+        //ipPanel.add(serverIp);
+        //portPanel.add(serverPort);
+        return new String[]{ip.getText(),port.getText()};
+
     }
 
     @Override
