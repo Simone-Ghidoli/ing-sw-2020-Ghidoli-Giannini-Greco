@@ -84,14 +84,12 @@ public class ServerThread extends Thread {
     public GlobalVariables.DivinityCard[] divinity_Choice(){
         sendString("dv_choice");
         sendInt(list.size());
-        GlobalVariables.DivinityCard[] appoggio=receiveCards();
-        return appoggio;
+        return receiveCards();
     }
     public GlobalVariables.DivinityCard[] divinity_Selection(GlobalVariables.DivinityCard[] ingame){
         sendString("div_sel");
         sendCards(ingame);
-        GlobalVariables.DivinityCard[] choice=receiveCards();
-        return choice;
+        return receiveCards();
     }
     public void sendBoard(char[] board){
         String result=board.toString();

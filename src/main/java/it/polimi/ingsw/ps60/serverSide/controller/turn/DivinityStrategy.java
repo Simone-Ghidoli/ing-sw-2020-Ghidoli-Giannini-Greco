@@ -11,10 +11,14 @@ import java.util.List;
 public class DivinityStrategy {
 
     private final Strategy strategy;
-    private final Turn effect;
+    private final Effect effect;
     private final String specialChoice;
     private final TurnController turnController;
 
+    /**
+     * This class implements the right methods based on which divinity card a player has
+     * @param divinityCard is the divinity card that a player has
+     */
     public DivinityStrategy(GlobalVariables.DivinityCard divinityCard){
 
         switch (divinityCard) {
@@ -43,7 +47,7 @@ public class DivinityStrategy {
                 strategy = new ZeusStrategy();
                 break;
             default:
-                strategy = new TurnStrategy();
+                strategy = new BaseStrategy();
         }
 
         switch (divinityCard){
@@ -69,7 +73,7 @@ public class DivinityStrategy {
                 effect = new PanEffect();
                 break;
             default:
-                effect = new TurnEffect();
+                effect = new BaseEffect();
                 break;
         }
 
@@ -94,19 +98,19 @@ public class DivinityStrategy {
         switch (divinityCard){
             case ATLAS:
             case HEPHAESTUS:
-                turnController = new AtlasHephaestusController();
+                turnController = new AtlasHephaestusTurnController();
                 break;
             case DEMETER:
-                turnController = new DemeterController();
+                turnController = new DemeterTurnController();
                 break;
             case PROMETHEUS:
-                turnController = new PrometheusController();
+                turnController = new PrometheusTurnController();
                 break;
             case HESTIA:
-                turnController = new HestiaController();
+                turnController = new HestiaTurnController();
                 break;
             default:
-                turnController = new TurnController();
+                turnController = new BaseTurnController();
         }
 
 

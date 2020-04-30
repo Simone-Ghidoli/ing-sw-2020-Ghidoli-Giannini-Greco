@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnController;
 
 import java.util.List;
 
-public class HestiaController extends TurnController {
+public class HestiaTurnController extends BaseTurnController {
     @Override
     public void buildingSection() {
         super.buildingSection();

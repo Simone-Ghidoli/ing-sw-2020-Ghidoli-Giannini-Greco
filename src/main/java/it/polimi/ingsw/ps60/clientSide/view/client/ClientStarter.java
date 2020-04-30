@@ -35,9 +35,8 @@ public class ClientStarter{
      * Pippo tries to connect to the server, if the connection fails, this method will wait for 5 seconds before try again.
      * When the connection is established pippo create the reader and the parser.
      * When the game ends(for any reason) pippo will close the parser/reader tasks
-     * @throws InterruptedException
+     * @throws InterruptedException throws InterruptedException
      */
-
     public void pippo() throws InterruptedException {
         while (socket.isClosed()){
             try {

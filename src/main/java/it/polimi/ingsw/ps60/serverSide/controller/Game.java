@@ -2,12 +2,12 @@ package it.polimi.ingsw.ps60.serverSide.controller;
 
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
 import it.polimi.ingsw.ps60.serverSide.server.Server;
 import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +19,11 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class Game {
 
-    public Game(Server server){
+    /**
+     * This class initialize the board and every turn
+     * @param server is the instance of the server of the game
+     */
+    public Game(@NotNull Server server){
         String[] strings = sort(server.getNick_birth());
         game = new Board(strings);
 
@@ -44,7 +48,12 @@ public class Game {
 
     }
 
-    private String[] sort(String[][] nicknamesAndBirthdays) {
+    /**
+     * This method only sorts the nicknames by the birthday
+     * @param nicknamesAndBirthdays is an array with all the nickname of each player associated of its birthday
+     * @return returns all the nicknames sorted by the birthday
+     */
+    private String[] sort(@NotNull String[][] nicknamesAndBirthdays) {
         String[] nicknames = new String[nicknamesAndBirthdays.length];
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date dateSelected, date;
@@ -74,7 +83,12 @@ public class Game {
         return nicknames;
     }
 
-    public void selectDivinityCard() { //sceglie le n carte divinita' dal primo giocatore
+    /**
+     * In this section the first player select n = player number of divinity cards and
+     * all the player, starting for the second one, will chose a divinity card for the n
+     * divinity cards picked
+     */
+    public void selectDivinityCard() {
 
         GlobalVariables.DivinityCard[] divinityCards = game.getPlayerInGame().getNode().getValue().getServerThread().divinity_Choice();
 
@@ -106,6 +120,9 @@ public class Game {
         circularListIterator.getNode().getValue().setDivinityCard(divinityCards[0]);
     }
 
+    /**
+     * This method will asks to all the player where to set its workers
+     */
     public void selectWorkersPositions(){
 
         int[][][] positions = new int[game.getPlayersNumber()][][];
@@ -129,7 +146,7 @@ public class Game {
     public void setWorkersPositions(int[][][] positions) {
         for (int j = 0; j < positions.length; j++) {
             for (int i = 0; i < 2; i++) {
-                game.getPlayerById(GlobalVariables.IdPlayer.getPlayerByInt(j)).getWorker(i).moveWorker(game.getCellByPosition(positions[j][i]));
+                game.getPlayerById(GlobalVariables.IdPlayer.values()[i]).getWorker(i).moveWorker(game.getCellByPosition(positions[j][i]));
             }
         }
     }

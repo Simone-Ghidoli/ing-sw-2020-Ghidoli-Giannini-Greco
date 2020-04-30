@@ -7,7 +7,7 @@ import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class TritonStrategy extends TurnStrategy {
+public class TritonStrategy extends BaseStrategy {
     @Override
     public List<int[]>[] baseMovement() {
         List<int[]>[] position = super.baseMovement();

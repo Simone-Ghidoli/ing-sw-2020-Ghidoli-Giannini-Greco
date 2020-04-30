@@ -3,7 +3,7 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
 import java.util.List;
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class AtlasStrategy extends TurnStrategy {
+public class AtlasStrategy extends BaseStrategy {
 
     @Override
     public List<int[]> baseBuilding() {

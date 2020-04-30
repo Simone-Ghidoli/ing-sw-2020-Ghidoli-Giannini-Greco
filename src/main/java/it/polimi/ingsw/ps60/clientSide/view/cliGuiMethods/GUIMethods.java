@@ -1,7 +1,6 @@
 package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.clientSide.view.Swing.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;

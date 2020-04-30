@@ -7,7 +7,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZeusStrategy extends TurnStrategy {
+public class ZeusStrategy extends BaseStrategy {
     @Override
     public List<int[]> baseBuilding() {
         Board game = GlobalVariables.game;

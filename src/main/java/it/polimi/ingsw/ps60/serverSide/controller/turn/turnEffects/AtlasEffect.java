@@ -4,7 +4,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Cell;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class AtlasEffect extends TurnEffect {
+public class AtlasEffect extends BaseEffect {
 
     @Override
     public void build(int[] build){ //Ci devono essere 3 elementi nel vettore (da 0 a 2)

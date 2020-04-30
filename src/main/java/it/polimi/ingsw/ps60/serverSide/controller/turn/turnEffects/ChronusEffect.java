@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class ChronusEffect extends TurnEffect {
+public class ChronusEffect extends BaseEffect {
 
     @Override
     public void winConditions () {

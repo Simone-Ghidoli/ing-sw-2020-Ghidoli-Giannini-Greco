@@ -7,7 +7,7 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApolloStrategy extends TurnStrategy {
+public class ApolloStrategy extends BaseStrategy {
 
     /**
      * A player can move his worker into an opponent's space forcing opponent's worker to the space the first one

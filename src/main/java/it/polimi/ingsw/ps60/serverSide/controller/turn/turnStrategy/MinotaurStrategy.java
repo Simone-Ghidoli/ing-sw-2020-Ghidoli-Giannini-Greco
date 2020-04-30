@@ -7,7 +7,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinotaurStrategy extends TurnStrategy {
+public class MinotaurStrategy extends BaseStrategy {
 
     @Override
     public List<int[]>[] baseMovement() {

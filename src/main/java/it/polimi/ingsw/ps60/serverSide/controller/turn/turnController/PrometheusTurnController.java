@@ -3,7 +3,7 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnController;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrometheusController extends TurnController {
+public class PrometheusTurnController extends BaseTurnController {
     @Override
     public void movementSection() {
 

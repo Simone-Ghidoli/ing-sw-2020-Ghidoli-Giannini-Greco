@@ -1,9 +1,6 @@
 package it.polimi.ingsw.ps60;
 
 import it.polimi.ingsw.ps60.serverSide.model.Board;
-import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
-
-import javax.swing.*;
 import java.io.Serializable;
 
 public class GlobalVariables {
@@ -15,7 +12,6 @@ public class GlobalVariables {
 
         private IdWorker[] idWorkers;
         private Colour colour;
-        private ServerThread serverThread;
 
         IdPlayer(IdWorker[] idWorkers, Colour colour) {
             this.idWorkers = idWorkers;
@@ -24,19 +20,6 @@ public class GlobalVariables {
 
         public IdWorker[] getIdWorkers() {
             return idWorkers;
-        }
-
-        public static IdPlayer getPlayerByInt(int i) {
-            switch (i) {
-                case 0:
-                    return PLAYER1;
-                case 1:
-                    return PLAYER2;
-                case 2:
-                    return PLAYER3;
-                default:
-                    return null;
-            }
         }
 
         public Colour getColour() {
