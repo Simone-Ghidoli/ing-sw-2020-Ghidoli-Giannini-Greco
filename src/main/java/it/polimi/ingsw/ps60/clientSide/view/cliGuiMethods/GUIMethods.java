@@ -1,14 +1,72 @@
 package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.clientSide.view.Swing.MainFrame;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.frame;
 
 public class GUIMethods implements ViewMethodSelection {
+
+    private JFrame boardWindow;
+    private JPanel userInterations;
+
+    public GUIMethods(){
+        boardWindow = new JFrame();
+
+
+        boardWindow.setResizable(false);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+        boardWindow.setTitle("Santorini");
+        boardWindow.setSize(screenSize.width, screenSize.height);
+        boardWindow.setLocationRelativeTo(null);
+        boardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        boardWindow.setLayout(new BorderLayout());
+        ImageIcon imagine = new ImageIcon("src/resources/board/SantoriniBoard.png");
+        Image scaleImage = imagine.getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
+        JPanel grid = new JPanel();
+
+        JLabel board = new JLabel(new ImageIcon(scaleImage));
+
+
+
+        board.setLayout(new GridBagLayout());
+        board.add(grid);
+        grid.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*47/64));
+
+        grid.setLayout(new GridLayout(5,5));
+        grid.setOpaque(false);
+
+        JButton[] jButtons = new JButton[25];
+        for (int i = 0; i < 25; i++){
+            jButtons[i] = new JButton(String.valueOf(i + 1));
+            jButtons[i].setContentAreaFilled(false);
+            jButtons[i].setOpaque(false);
+            grid.add(jButtons[i]);
+        }
+
+        boardWindow.add(board, BorderLayout.CENTER);
+        boardWindow.pack();
+        boardWindow.setVisible(true);
+
+
+        userInterations = new JPanel();
+        board.add(userInterations);
+        userInterations.setPreferredSize(new Dimension(screenSize.width*6/30, screenSize.height*1/2));
+        userInterations.setVisible(true);
+    }
+
     @Override
     public void printBoard(String board) {
+
     }
 
     @Override
@@ -23,6 +81,9 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public String[] ipPortChoices() {
+        userInterations.setVisible(true);
+
+//        userInterations.setVisible(false);
         return new String[0];
     }
 
