@@ -27,7 +27,7 @@ public  class Server{
     /**
      * Open connections between clinets and server. Get players' nicknames and the number of players.
      */
-    private void serverStart() throws IOException { //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
+    private void serverStart(){ //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
         String s = null; //stringa di comodo per salvare i nomi dal metodo
         List<String> names = new ArrayList<>();
         while (serverSocket.isClosed()) {
@@ -42,7 +42,10 @@ public  class Server{
                 socket = serverSocket.accept();
             } catch (IOException error) {
                 if (!socket.isClosed())
-                    socket.close();
+                    try {
+                        socket.close();
+                    }
+                catch(IOException e_0){e_0.printStackTrace();}
             }//Socket Chiuso e riparte la connessione del primo giocatore
             if (!socket.isClosed()) {
                 ServerThread nuovo = new ServerThread(socket, clientList);
@@ -57,7 +60,10 @@ public  class Server{
                 socket = serverSocket.accept();
             } catch (IOException errore) {
                 if (!socket.isClosed())
-                    socket.close();
+                    try {
+                        socket.close();
+                    }
+                catch(IOException e_1){e_1.printStackTrace();}
             }    //viene chiuso il socket e si riprova la connessione con il client che ha fallito
             if (!socket.isClosed()) { //Se il socket è aperto crea un nuovo Thread e lo aggiunge alla lista di quelli in esecuzione
                 ServerThread nuovoThread = new ServerThread(socket, clientList);

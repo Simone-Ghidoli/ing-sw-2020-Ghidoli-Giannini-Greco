@@ -38,11 +38,12 @@ public class ClientStarter{
      * @throws InterruptedException throws InterruptedException
      */
     public void pippo() throws InterruptedException {
-        while (socket.isClosed()){
+        while (socket==null||!socket.isClosed()){
             try {
                 socket = new Socket(address, porta);
             } catch (IOException e1) {
                 methodSelection.alert("Failed to connect to the server. I`m trying again");
+                socket=null;
                 try {
                     TimeUnit.SECONDS.sleep(5);
                 }
@@ -50,7 +51,7 @@ public class ClientStarter{
                     System.out.println("\nBro, do you ever hear philopendolo's tale?");
                 }
             }
-            if(!socket.isClosed()) {
+            if(socket!=null) {
                 reader = new ClientReader(socket,messagesFromServer,methodSelection);
                 parser= new ClientParser(socket,messagesFromServer,methodSelection);
                 pool.execute(reader);

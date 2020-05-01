@@ -106,7 +106,7 @@ public class ServerThread extends Thread {
             n = in.read();
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection();
         }
         return n;
     }
@@ -114,7 +114,7 @@ public class ServerThread extends Thread {
     public void sendString(String message){
         writer.println(message);
         if(writer.checkError()){
-            //todo chiama la disconnessione
+            disconnection();
         }
     }
 
@@ -123,7 +123,7 @@ public class ServerThread extends Thread {
             out_obj.writeObject(list);
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection();
         }
     }
 
@@ -132,7 +132,7 @@ public class ServerThread extends Thread {
             out_obj.writeObject(list);
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection();
         }
     }//A differenza del primo manda una sola lista e non un vettore di liste
 
@@ -141,7 +141,7 @@ public class ServerThread extends Thread {
             out_obj.writeObject(positionworkers);
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection();
         }
     }
 
@@ -151,7 +151,7 @@ public class ServerThread extends Thread {
             n=buffer.readLine();
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection();
         }
         return n;
     }
@@ -162,7 +162,7 @@ public class ServerThread extends Thread {
             pos=(SerializedInteger[]) in_obj.readObject();
         }
         catch(IOException | ClassNotFoundException e) {
-            //todo chiama la disconnessione
+            disconnection();
         }
         return pos;
     }
@@ -200,7 +200,7 @@ public class ServerThread extends Thread {
             appoggio=(GlobalVariables.DivinityCard[]) in_obj.readObject();
         }
         catch(IOException | ClassNotFoundException e){
-            //todo chiama la disconnessione
+            disconnection();
         }
         return appoggio;
     }
@@ -211,7 +211,7 @@ public class ServerThread extends Thread {
             out.flush();
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection();
         }
     }
 
@@ -220,7 +220,7 @@ public class ServerThread extends Thread {
             out_obj.writeObject(cards);
         }
         catch(IOException e){
-            //todo chiama la disconnessione
+            disconnection();
         }
     }
 
@@ -236,6 +236,13 @@ public class ServerThread extends Thread {
 
     public void setPlayerBound(String s){
         playerBound =s;
+    }
+
+    public void disconnection(){
+        ServerThread disconnected=null;
+        for(int j=0;j<3;j++){
+        list.get(j).writer.println("User "+playerBound+" left the game. The match is over.");
+        }
     }
 
 }
