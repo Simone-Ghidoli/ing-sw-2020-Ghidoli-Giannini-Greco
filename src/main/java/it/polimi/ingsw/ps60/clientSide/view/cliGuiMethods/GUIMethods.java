@@ -2,7 +2,8 @@ package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 
-import it.polimi.ingsw.ps60.clientSide.view.Swing.MainFrame;
+import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
+import it.polimi.ingsw.ps60.serverSide.server.Server_new;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 import javax.swing.*;
@@ -12,13 +13,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.border.TitledBorder;
+import java.awt.event.*;
+
 
 public class GUIMethods implements ViewMethodSelection {
 
     private JFrame boardWindow;
     private JFrame userInterations;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
     public GUIMethods(){
         boardWindow = new JFrame();
 
@@ -201,19 +205,31 @@ public class GUIMethods implements ViewMethodSelection {
 
 
                     }
-
-
-
+                    else {
+                        /*userInterations.setVisible(false);
+                        JFrame tryToConnect=new JFrame("JPROGRESSBAR");
+                        tryToConnect.setResizable(false);
+                        tryToConnect.setLayout(new GridLayout(3,1));
+                        tryToConnect.setLocationRelativeTo(null);
+                        tryToConnect.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        tryToConnect.setSize(screenSize.width/7,screenSize.height/4);
+                        tryToConnect.setLayout(new GridLayout(2,1));
+                        JLabel border=new JLabel("Try to connect..");
+                        JProgressBar connect= new JProgressBar(0,100);
+                        connect.setValue(0);
+                        connect.add(border);
+                        connect.setStringPainted(true);
+                        tryToConnect.add(border);
+                        tryToConnect.add(connect);
+                        tryToConnect.setVisible(true);
+                        */
+                        userInterations.setVisible(false);
+                        return;
                     }
-
-
                 }
-            });
+            }
+        });
 
-
-
-        //ipPanel.add(serverIp);
-        //portPanel.add(serverPort);
         return new String[]{ip.getText(),port.getText()};
 
     }
