@@ -34,10 +34,10 @@ public class GlobalVariables {
         WORKER5, WORKER6
     }
 
-    public enum DivinityCard implements Serializable {//L'ho messa serializzabile per poterla mandare via socket.
+    public enum DivinityCard implements Serializable {
         APOLLO, ARTEMIS, ATHENA(false),
         ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS,
-        ZEUS, TRITON, CHRONUS, HESTIA;
+        ZEUS, TRITON, CHRONUS, HESTIA, POSEIDON;
 
         private boolean bitException;
 
@@ -73,7 +73,7 @@ public class GlobalVariables {
     public static Board game;
 
     public enum StringPatterns{
-        IPv4("((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9]).)((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9]).){2}" +
+        IPv4("((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\\.)((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){2}" +
                 "(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])"),
 
         PortNumber("(4915[2-9]|491[6-9][0-9]|49[2-9][0-9][0-9]|5[0-9][0-9][0-9][0-9]|6[0-4][0-9][0-9][0-9]|" +

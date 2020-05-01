@@ -91,6 +91,9 @@ public class DivinityStrategy {
             case PROMETHEUS:
                 specialChoice = "Do you want to build also before moving?\nWith which worker?";
                 break;
+            case POSEIDON:
+                specialChoice = "Do you want to build again with your unmoved worker?";
+                break;
             default:
                 specialChoice = null;
         }
@@ -108,6 +111,9 @@ public class DivinityStrategy {
                 break;
             case HESTIA:
                 turnController = new HestiaTurnController();
+                break;
+            case POSEIDON:
+                turnController = new PoseidonTurnController();
                 break;
             default:
                 turnController = new BaseTurnController();

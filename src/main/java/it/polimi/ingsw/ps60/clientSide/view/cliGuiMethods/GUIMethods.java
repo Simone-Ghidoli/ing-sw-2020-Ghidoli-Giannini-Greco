@@ -14,11 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import java.util.Date;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
-import java.awt.event.*;
+
 
 
 public class GUIMethods implements ViewMethodSelection {
@@ -72,7 +69,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         userInterations = new JFrame();
         userInterations.setTitle("choose Server");
-        userInterations.setPreferredSize(new Dimension(screenSize.width*7/30, screenSize.height*1/3));
+        userInterations.setPreferredSize(new Dimension(screenSize.width*7/30, screenSize.height /3));
         userInterations.setVisible(false);
     }
 
@@ -241,9 +238,19 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public String[] nicknameBirthdayChoice() {
         JFrame.setDefaultLookAndFeelDecorated(true);
-        String day[]={"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-        int month[]={1,2,3,4,5,6,7,8,9,10,11,12};
-        int year[]={1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986, 1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020};
+        String[] day = new String[31];
+        String[] month = new String[12];
+        String[] year = new String[1021];
+
+        for (int i = 1900; i < 2021; i++)
+            year[i - 1900] = String.valueOf(i);
+
+        for (int i = 1; i < 13; i++)
+            year[i - 1] = String.valueOf(i);
+
+        for (int i = 1; i < 31; i++)
+            day[i - 1] = String.valueOf(i);
+
         JFrame setupNicknameBirthday=new JFrame("Nickname & birth date");
         setupNicknameBirthday.setResizable(false);
         setupNicknameBirthday.setLocationRelativeTo(null);
@@ -264,8 +271,12 @@ public class GUIMethods implements ViewMethodSelection {
         JLabel nm=new JLabel("insert your nickname");
         JTextField nicknameText=new JTextField(14);
         JComboBox dayCombo=new JComboBox(day);
-        JComboBox monthCombo=new JComboBox();
-        JComboBox yearCombo= new JComboBox();
+        JComboBox monthCombo=new JComboBox(month);
+        JComboBox yearCombo= new JComboBox(year);
+        dayCombo.setSelectedIndex(0);
+        monthCombo.setSelectedIndex(0);
+        yearCombo.setSelectedIndex(0);
+
         nickname.add(nm);
         nickname.add(nicknameText);
         JLabel dayLabel=new JLabel("day:");
