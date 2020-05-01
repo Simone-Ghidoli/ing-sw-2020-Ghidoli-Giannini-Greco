@@ -6,12 +6,15 @@ import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 import it.polimi.ingsw.ps60.serverSide.server.Server_new;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
+import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
@@ -23,6 +26,7 @@ public class GUIMethods implements ViewMethodSelection {
     private JFrame boardWindow;
     private JFrame userInterations;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    boolean pressed=false;
     public GUIMethods(){
         boardWindow = new JFrame();
 
@@ -126,13 +130,6 @@ public class GUIMethods implements ViewMethodSelection {
         final JTextField ip= new JTextField("inserire ip server",14);
         final JTextField port= new JTextField("inserire port server",14);
         final JButton nextButton= new JButton("next");
-
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-            }
-        });
         next.add(nextButton);
         nextButton.setVisible(true);
 
@@ -172,8 +169,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         nextButton.grabFocus();
         next.requestFocus();
-        userInterations.setVisible(true);
-        userInterations.pack();
+
         nextButton.addActionListener(new ActionListener() {
 
             @Override
@@ -204,6 +200,7 @@ public class GUIMethods implements ViewMethodSelection {
 
 
 
+
                     }
                     else {
                         /*userInterations.setVisible(false);
@@ -224,18 +221,60 @@ public class GUIMethods implements ViewMethodSelection {
                         tryToConnect.setVisible(true);
                         */
                         userInterations.setVisible(false);
-                        return;
+                        pressed=true;
+                        boardWindow.setVisible(true);
+
+
                     }
                 }
             }
         });
-
+        userInterations.setVisible(true);
+        userInterations.pack();
+        while(!pressed) {
+        }
         return new String[]{ip.getText(),port.getText()};
+
 
     }
 
     @Override
     public String[] nicknameBirthdayChoice() {
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        String day[]={"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+        int month[]={1,2,3,4,5,6,7,8,9,10,11,12};
+        int year[]={1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986, 1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020};
+        JFrame setupNicknameBirthday=new JFrame("Nickname & birth date");
+        setupNicknameBirthday.setResizable(false);
+        setupNicknameBirthday.setLocationRelativeTo(null);
+        setupNicknameBirthday.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width*1/4, screenSize.height*1/2));
+        setupNicknameBirthday.setAlwaysOnTop(true);
+        setupNicknameBirthday.setVisible(true);
+        boardWindow.add(setupNicknameBirthday, BorderLayout.CENTER);
+        setupNicknameBirthday.setLayout(new GridLayout(3,1));
+        JPanel nickname=new JPanel();
+        nickname.setLayout(new FlowLayout());
+        JPanel birthdayPanel=new JPanel();
+        birthdayPanel.setLayout(new FlowLayout());
+        JButton next=new JButton("next");
+        setupNicknameBirthday.add(nickname);
+        setupNicknameBirthday.add(birthdayPanel);
+        setupNicknameBirthday.add(next);
+        JLabel nm=new JLabel("insert your nickname");
+        JTextField nicknameText=new JTextField(14);
+        JComboBox dayCombo=new JComboBox(day);
+        JComboBox monthCombo=new JComboBox();
+        JComboBox yearCombo= new JComboBox();
+        nickname.add(nm);
+        nickname.add(nicknameText);
+        JLabel dayLabel=new JLabel("day:");
+        birthdayPanel.add(dayLabel);
+        birthdayPanel.add(dayCombo);
+        dayCombo.setSize(birthdayPanel.getWidth()/5,birthdayPanel.getHeight()/7);
+
+        setupNicknameBirthday.pack();
+
         return new String[0];
     }
 
@@ -264,6 +303,10 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public void alert(String string) {
+         JOptionPane.showMessageDialog(userInterations,
+                 string,
+                 "",
+                 JOptionPane.WARNING_MESSAGE);
 
     }
 }
