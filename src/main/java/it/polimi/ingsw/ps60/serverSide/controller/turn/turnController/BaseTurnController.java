@@ -16,22 +16,32 @@ public class BaseTurnController implements TurnController {
         endTurnSection();
     }
 
-    public void movementSection(){
+    public void movementSection() {
         List<int[]>[] moveChoices = player.getDivinityStrategy().getTurnStrategyMovement();
-        int choice = player.getServerThread().moveMessage(moveChoices,
-                new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});
-        if (moveChoices[0].size() >= choice + 1)
-            player.getDivinityStrategy().setMovement(new int[][]{new int[]{0, 0}, moveChoices[0].get(choice)});
-        else {
-            choice = choice - moveChoices[0].size() + 1;
-            player.getDivinityStrategy().setMovement(new int[][]{new int[]{1, 0}, moveChoices[1].get(choice)});
+        if (moveChoices[0].size() != 0 || moveChoices[1].size() != 0) {
+            int choice = player.getServerThread().moveMessage(moveChoices,
+                    new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});
+            if (moveChoices[0].size() >= choice + 1)
+                player.getDivinityStrategy().setMovement(new int[][]{new int[]{0, 0}, moveChoices[0].get(choice)});
+            else {
+                choice = choice - moveChoices[0].size() + 1;
+                player.getDivinityStrategy().setMovement(new int[][]{new int[]{1, 0}, moveChoices[1].get(choice)});
+            }
+        } else {
+            player.getServerThread().lossMessage("Unable to move in any position");
+            endTurnSection();
         }
     }
 
-    public void buildingSection(){
+    public void buildingSection() {
         List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
-        int choice = player.getServerThread().buildMessage(buildChoices);
-        player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+        if (buildChoices.size() != 0) {
+            int choice = player.getServerThread().buildMessage(buildChoices);
+            player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+        } else {
+            player.getServerThread().lossMessage("Unable to build in any position");
+            endTurnSection();
+        }
     }
 
     public void endTurnSection(){

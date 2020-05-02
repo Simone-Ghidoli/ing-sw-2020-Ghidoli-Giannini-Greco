@@ -14,8 +14,10 @@ public class PrometheusTurnController extends BaseTurnController {
             specialChoice = player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice().split("\n")[1]);
             player.setWorkerMoved(player.getWorker(specialChoice));
             List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
-            choice = player.getServerThread().buildMessage(buildChoices);
-            player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+            if (buildChoices.size() != 0) {
+                choice = player.getServerThread().buildMessage(buildChoices);
+                player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+            }
             player.setWorkerMoved(null);
         }
 
@@ -29,14 +31,21 @@ public class PrometheusTurnController extends BaseTurnController {
         }
         player.setBuildByWorker(false);
 
-        choice = player.getServerThread().moveMessage(moveChoices,
-                new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});
+        if (moveChoices[specialChoice].size() != 0) {
 
-        if (moveChoices[0].size() - 1 >= choice)
-            player.getDivinityStrategy().setMovement(new int[][]{new int[]{0, 0}, moveChoices[0].get(choice)});
+            choice = player.getServerThread().moveMessage(moveChoices,
+                    new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});
+
+            if (moveChoices[0].size() - 1 >= choice)
+                player.getDivinityStrategy().setMovement(new int[][]{new int[]{0, 0}, moveChoices[0].get(choice)});
+            else {
+                choice = choice - moveChoices[0].size() + 1;
+                player.getDivinityStrategy().setMovement(new int[][]{new int[]{1, 0}, moveChoices[1].get(choice)});
+            }
+        }
         else {
-            choice = choice - moveChoices[0].size() + 1;
-            player.getDivinityStrategy().setMovement(new int[][]{new int[]{1, 0}, moveChoices[1].get(choice)});
+            player.getServerThread().lossMessage("Unable to move in any position");
+            endTurnSection();
         }
     }
 }

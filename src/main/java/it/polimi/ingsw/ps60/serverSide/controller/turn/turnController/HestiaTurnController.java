@@ -7,16 +7,17 @@ public class HestiaTurnController extends BaseTurnController {
     public void buildingSection() {
         super.buildingSection();
         List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
-
-        if (player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice()) == 1){
-            int i = 0;
-            while (i < buildChoices.size()){
-                if (buildChoices.get(i)[0] == 0 || buildChoices.get(i)[0] == 4 || buildChoices.get(i)[1] == 0 || buildChoices.get(i)[1] == 4)
-                    buildChoices.remove(i);
-                else
-                    i++;
+        int i = 0;
+        while (i < buildChoices.size()) {
+            if (buildChoices.get(i)[0] == 0 || buildChoices.get(i)[0] == 4 || buildChoices.get(i)[1] == 0 || buildChoices.get(i)[1] == 4)
+                buildChoices.remove(i);
+            else
+                i++;
+        }
+        if (buildChoices.size() != 0) {
+            if (player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice()) == 1) {
+                player.getDivinityStrategy().setBuilding(buildChoices.get(player.getServerThread().buildMessage(buildChoices)));
             }
-            player.getDivinityStrategy().setBuilding(buildChoices.get(player.getServerThread().buildMessage(buildChoices)));
         }
     }
 }

@@ -6,13 +6,19 @@ public class DemeterTurnController extends BaseTurnController {
     @Override
     public void buildingSection() {
         List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
-        int choice = player.getServerThread().buildMessage(buildChoices);
-        player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
-
-        if (player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice()) == 1) {
-            buildChoices.remove(choice);
-            choice = player.getServerThread().buildMessage(buildChoices);
+        if (buildChoices.size() != 0) {
+            int choice = player.getServerThread().buildMessage(buildChoices);
             player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+
+            if (player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice()) == 1) {
+                buildChoices.remove(choice);
+                choice = player.getServerThread().buildMessage(buildChoices);
+                player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+            }
+        }
+        else {
+            player.getServerThread().lossMessage("Unable to move in any position");
+            endTurnSection();
         }
     }
 }
