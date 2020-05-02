@@ -28,24 +28,26 @@ public  class Server{
      * Open connections between clinets and server. Get players' nicknames and the number of players.
      */
     private void serverStart(){ //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
-        String s = null; //stringa di comodo per salvare i nomi dal metodo
         List<String> names = new ArrayList<>();
-        while (serverSocket.isClosed()) {
+        while (serverSocket==null||serverSocket.isClosed()) {
             try {
                 serverSocket = new ServerSocket(port);
             } catch (IOException error) {
+                serverSocket=null;
                 System.out.println("Errore apertura server");
             }
         }
-        while (socket.isClosed()) {//finchè non va a buon fine il collegamento del primo giocatore ci riprovo
+        while (socket==null||socket.isClosed()) {//finchè non va a buon fine il collegamento del primo giocatore ci riprovo
             try {// Accetto il primo giocatore e chiedo in quanti si gioca
                 socket = serverSocket.accept();
+                System.out.println("client accepted");
             } catch (IOException error) {
                 if (!socket.isClosed())
                     try {
                         socket.close();
                     }
                 catch(IOException e_0){e_0.printStackTrace();}
+                socket=null;
             }//Socket Chiuso e riparte la connessione del primo giocatore
             if (!socket.isClosed()) {
                 ServerThread nuovo = new ServerThread(socket, clientList);

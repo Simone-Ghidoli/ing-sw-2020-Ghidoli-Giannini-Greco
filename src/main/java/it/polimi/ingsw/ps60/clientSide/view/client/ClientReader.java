@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * This class is used to read and store server's commands
  */
-public class ClientReader extends Thread {
+public class ClientReader implements Runnable {
     private final List<String> messagesFromServer;
     final Socket socket;
     String serverSays;
@@ -48,11 +48,14 @@ public class ClientReader extends Thread {
     /**
      * Just receive all text messages(Strings) from the server and stores them in the list
      */
+
+    @Override
     public void run() {
             while(true) {
                 synchronized(socket) {
-                    if (socket.isClosed())
+                    if (socket.isClosed()) {
                         return;
+                    }
                 }
                 try{
                     serverSays = br.readLine();
@@ -61,10 +64,11 @@ public class ClientReader extends Thread {
                     }
                 }
                 catch (IOException e) {
-                    methodSelection.alert("Communication error, logging out");
                     try {
                         synchronized (socket) {
                             socket.close();
+                            //Thread.currentThread().interrupt();
+                            //System.set
                         }
                     } catch (IOException ex) {
                         return;
@@ -75,4 +79,5 @@ public class ClientReader extends Thread {
     public List<String> getMessagesFromServer(){
         return messagesFromServer;
     }
+
 }

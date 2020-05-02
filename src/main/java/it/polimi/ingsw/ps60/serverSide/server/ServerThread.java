@@ -41,6 +41,10 @@ public class ServerThread extends Thread {
         }
     }
 
+    public void lossMessage(String message){
+        sendString("loss-"+message);
+    }
+
     public int moveMessage(List<int[]>[] possible_choice,int[][] positionworkers) {//Comunica con l'utente per decidere quale muratore muovere e dove
         int choice=-1;
         sendString("move");
@@ -232,17 +236,17 @@ public class ServerThread extends Thread {
         return appoggio;
     }
 
-    //public void printDisconnection()
-
     public void setPlayerBound(String s){
         playerBound =s;
     }
 
     public void disconnection(){
         ServerThread disconnected=null;
-        for(int j=0;j<3;j++){
+        for(int j=0;j<list.size();j++){
         list.get(j).writer.println("User "+playerBound+" left the game. The match is over.");
         }
+        System.out.println("Communication error. Exit...");
+        System.exit(0);
     }
 
 }

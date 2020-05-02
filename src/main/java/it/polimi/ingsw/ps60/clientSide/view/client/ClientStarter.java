@@ -48,7 +48,7 @@ public class ClientStarter{
                     TimeUnit.SECONDS.sleep(5);
                 }
                 catch(InterruptedException e){
-                    System.out.println("\nBro, do you ever hear philopendolo's tale?");
+                    System.out.println("\nBro, have you ever heard philopendolo's tale?");
                 }
             }
             if(socket!=null) {
