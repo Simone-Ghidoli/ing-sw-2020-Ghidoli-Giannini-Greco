@@ -6,16 +6,18 @@ import java.io.Serializable;
 public class GlobalVariables {
 
     public enum IdPlayer {
-        PLAYER1(new IdWorker[]{IdWorker.WORKER1, IdWorker.WORKER2}, Colour.RED),
-        PLAYER2(new IdWorker[]{IdWorker.WORKER3, IdWorker.WORKER4}, Colour.BLUE),
-        PLAYER3(new IdWorker[]{IdWorker.WORKER5, IdWorker.WORKER6}, Colour.GREEN);
+        PLAYER1(new IdWorker[]{IdWorker.WORKER1, IdWorker.WORKER2}, Colour.RED, "Red "),
+        PLAYER2(new IdWorker[]{IdWorker.WORKER3, IdWorker.WORKER4}, Colour.BLUE, "Blue "),
+        PLAYER3(new IdWorker[]{IdWorker.WORKER5, IdWorker.WORKER6}, Colour.GREEN, "Green ");
 
-        private IdWorker[] idWorkers;
-        private Colour colour;
+        private final IdWorker[] idWorkers;
+        private final Colour colour;
+        private final String sourcePawn;
 
-        IdPlayer(IdWorker[] idWorkers, Colour colour) {
+        IdPlayer(IdWorker[] idWorkers, Colour colour, String sourcePawn) {
             this.idWorkers = idWorkers;
             this.colour = colour;
+            this.sourcePawn = "src/resources/board/" + sourcePawn + "pawn.png";
         }
 
         public IdWorker[] getIdWorkers() {
@@ -24,6 +26,10 @@ public class GlobalVariables {
 
         public Colour getColour() {
             return colour;
+        }
+
+        public String getSourcePawn() {
+            return sourcePawn;
         }
     }
 
@@ -35,17 +41,22 @@ public class GlobalVariables {
     }
 
     public enum DivinityCard implements Serializable {
-        APOLLO, ARTEMIS, ATHENA(false),
-        ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS,
-        ZEUS, TRITON, CHRONUS, HESTIA, POSEIDON;
+        APOLLO("01"), ARTEMIS("02"), ATHENA("03", false),
+        ATLAS("04"), DEMETER("05"), HEPHAESTUS("06"), MINOTAUR("08"),
+        PAN("09"), PROMETHEUS("10"), ZEUS("30"), TRITON("29"),
+        CHRONUS("16"), HESTIA("21"), POSEIDON("27");
 
         private boolean bitException;
+        private final String sourcePosition;
 
-        DivinityCard(boolean bitException) {
+        DivinityCard(String sourcePosition, boolean bitException) {
+            this.sourcePosition = "src/resources/" + sourcePosition + ".png";
             this.bitException = bitException;
         }
 
-        DivinityCard(){}
+        DivinityCard(String sourcePosition){
+            this.sourcePosition = "src/resources/" + sourcePosition + ".png";
+        }
 
         public boolean isBitException() {
             return bitException;
@@ -53,6 +64,10 @@ public class GlobalVariables {
 
         public void setBitException(boolean bitException) {
             this.bitException = bitException;
+        }
+
+        public String getSourcePosition() {
+            return sourcePosition;
         }
     }
 
