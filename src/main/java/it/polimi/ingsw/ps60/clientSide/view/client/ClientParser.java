@@ -78,6 +78,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                     } else if (message.contains("disc-")) {
                         String s = message.replace("disc-", "");
                         disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
+                    } else if (message.contains("loss-")){
+                        String s = message.replace("loss-","");
+                        loss(s);
                     }
                     if(Thread.currentThread().isInterrupted())
                         return;
@@ -91,6 +94,10 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     /**
      * method used for movement
      */
+    public void loss(String s){
+        methodSelection.alert(s);
+    }
+
     public void movement() {//Interagisce con l'utente per fargli decidere la giocata
         List<SerializedInteger>[] stalin;
         stalin = recieveListArray();//recupero le posizioni

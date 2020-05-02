@@ -98,7 +98,7 @@ public class GlobalVariables {
 
         /**
          * Trenta giorni ha novembre
-         * con april, giugno e settembre.
+         * con april, luglio e settembre.
          * Di ventotto ce n'è uno,
          * tutti gli altri ne han trentuno
          */
