@@ -22,9 +22,9 @@ public class ServerThread extends Thread {
     private ObjectInputStream in_obj;
     private ObjectOutputStream out_obj;
 
-    public ServerThread(Socket soc, ArrayList<ServerThread> lista){
+    public ServerThread(Socket soc, ArrayList<ServerThread> list){
         this.socket = soc;
-        this.list = lista;
+        this.list = list;
         try {
             in = socket.getInputStream();
             out = socket.getOutputStream();
@@ -72,7 +72,7 @@ public class ServerThread extends Thread {
         n=receiveInteger();
         return n;
     }
-    public String[] nickname_birthday(){
+    public String[] nicknameBirthday(){
         String[] nick_birth=new String[2];
         sendString("nick_birth");
         nick_birth[0]=receiveString();//Nickname

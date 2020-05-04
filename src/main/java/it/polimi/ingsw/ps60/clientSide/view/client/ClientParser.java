@@ -22,10 +22,10 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     ObjectOutputStream out_obj;
     ViewMethodSelection methodSelection;
 
-    public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewmethod) {
+    public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection) {
         socket = sock;
         messagesFromServer = messages;
-        methodSelection = viewmethod;
+        methodSelection = viewMethodSelection;
         try {
             input = socket.getInputStream();
             output = socket.getOutputStream();
@@ -55,7 +55,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
             synchronized (messagesFromServer) {
                 while (messagesFromServer.size() != 0) {
                     String message = messagesFromServer.get(0);
-                    if (message.equals("move")) {
+                     if (message.equals("move")) {
                         movement();
                     } else if (message.equals("build")) {
                         building();

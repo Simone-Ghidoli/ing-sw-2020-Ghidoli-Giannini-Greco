@@ -18,7 +18,7 @@ public class PlayerConnection implements Callable<String[]> {
     @Override
     public String[] call(){
         String[] nick_birth=null;
-        nick_birth=thread.nickname_birthday();
+        nick_birth=thread.nicknameBirthday();
         return nick_birth;
     }
 }

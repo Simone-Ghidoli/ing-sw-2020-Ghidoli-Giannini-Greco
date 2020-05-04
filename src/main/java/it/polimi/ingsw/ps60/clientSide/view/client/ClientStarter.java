@@ -20,13 +20,13 @@ public class ClientStarter{
     private ClientReader reader;
     private ClientParser parser;
     Socket socket;
-    private static int porta;
+    private static int port;
     private static String address;
     private static ViewMethodSelection methodSelection;
 
     public ClientStarter(int port, String ipAddress, ViewMethodSelection viewMethodSelection){
         messagesFromServer= new ArrayList<>();
-        porta=port;
+        ClientStarter.port =port;
         address=ipAddress;
         methodSelection=viewMethodSelection;
     }
@@ -40,7 +40,7 @@ public class ClientStarter{
     public void pippo() throws InterruptedException {
         while (socket==null||!socket.isClosed()){
             try {
-                socket = new Socket(address, porta);
+                socket = new Socket(address, port);
             } catch (IOException e1) {
                 methodSelection.alert("Failed to connect to the server. I`m trying again");
                 socket=null;

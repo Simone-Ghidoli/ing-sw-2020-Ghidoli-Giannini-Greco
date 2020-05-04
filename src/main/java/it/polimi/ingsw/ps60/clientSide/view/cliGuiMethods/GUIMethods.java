@@ -98,11 +98,11 @@ public class GUIMethods implements ViewMethodSelection {
         userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInterations.setSize(screenSize.width/5,screenSize.height/3);
         userInterations.setAlwaysOnTop(true);
-        userInterations.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-            }
-        });
+//        userInterations.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent windowEvent){
+//                System.exit(0);
+//            }
+//        });
 
         ImageIcon imagineBox = new ImageIcon("src/resources/board/SantoriniBox.png");
         Image scaleImageBox = imagineBox.getImage().getScaledInstance(userInterations.getWidth(), userInterations.getHeight(), Image.SCALE_SMOOTH);
@@ -170,10 +170,6 @@ public class GUIMethods implements ViewMethodSelection {
         ipPanel.add(ip);
         portPanel.add(port);
 
-
-        nextButton.grabFocus();
-        nextButton.requestFocus();
-        next.requestFocus();
         userInterations.setVisible(true);
 
         nextButton.addActionListener(new ActionListener() {
@@ -200,7 +196,7 @@ public class GUIMethods implements ViewMethodSelection {
 
                     } else if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port.getText())) {
                         JOptionPane.showMessageDialog(userInterations,
-                                " inserire un valore di porta valido",
+                                "inserire un valore di porta valido",
                                 "",
                                 JOptionPane.WARNING_MESSAGE);
 
@@ -235,6 +231,10 @@ public class GUIMethods implements ViewMethodSelection {
             }
         });
 
+        nextButton.grabFocus();
+        nextButton.requestFocus();
+        next.requestFocus();
+
         JOptionPane.showMessageDialog(userInterations,
                 "inserire indirizzo ip e porta del server",
                 "",
@@ -243,8 +243,6 @@ public class GUIMethods implements ViewMethodSelection {
         while(!pressed) {
         }
         return new String[]{ip.getText(),port.getText()};
-
-
     }
 
     @Override
@@ -299,7 +297,7 @@ public class GUIMethods implements ViewMethodSelection {
         JComboBox yearCombo= new JComboBox(year);
         dayCombo.setSelectedIndex(0);
         monthCombo.setSelectedIndex(0);
-        yearCombo.setSelectedIndex(0);
+        yearCombo.setSelectedIndex(98);
 
         nickname.add(nm);
         nickname.add(nicknameText);
@@ -326,7 +324,7 @@ public class GUIMethods implements ViewMethodSelection {
         }
         String nameAndBirthday[]=new String[2];
         nameAndBirthday[0]=nicknameText.getText();
-        nameAndBirthday[1]=(String)dayCombo.getSelectedItem()+(String)monthCombo.getSelectedItem()+(String)yearCombo.getSelectedItem();
+        nameAndBirthday[1]=yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem()+ "/" +dayCombo.getSelectedItem();
         return nameAndBirthday;
     }
 

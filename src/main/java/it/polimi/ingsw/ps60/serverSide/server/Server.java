@@ -10,31 +10,30 @@ import java.util.List;
  */
 
 public  class Server{
-    private String[][] nick_birth;
+    private String[][] nickBirth;
     private final int port;
     private ArrayList<ServerThread> clientList;
     private ServerSocket serverSocket;
     private Socket socket;
     private int numberOfPlayers;
 
-    public Server(int port) throws IOException {
+    public Server(int port) {
         this.port=port;
-        nick_birth=new String[3][2];
         clientList = new ArrayList<>();
         serverStart();
     }
 
     /**
-     * Open connections between clinets and server. Get players' nicknames and the number of players.
+     * Open connections between clients and server. Get players' nicknames and the number of players.
      */
     private void serverStart(){ //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
-        List<String> names = new ArrayList<>();
+
         while (serverSocket==null||serverSocket.isClosed()) {
             try {
                 serverSocket = new ServerSocket(port);
             } catch (IOException error) {
                 serverSocket=null;
-                System.out.println("Errore apertura server");
+                System.out.println("Error opening server");
             }
         }
         while (socket==null||socket.isClosed()) {//finchè non va a buon fine il collegamento del primo giocatore ci riprovo
@@ -50,17 +49,18 @@ public  class Server{
                 socket=null;
             }//Socket Chiuso e riparte la connessione del primo giocatore
             if (!socket.isClosed()) {
-                ServerThread nuovo = new ServerThread(socket, clientList);
-                clientList.add(nuovo); //primo thread aggiunto alla lista
-                numberOfPlayers = nuovo.numberOfPlayers();
-                nick_birth[0] = nuovo.nickname_birthday();
-                nuovo.setPlayerBound(nick_birth[0][0]);
+                ServerThread newServerThread = new ServerThread(socket, clientList);
+                clientList.add(newServerThread); //primo thread aggiunto alla lista
+                numberOfPlayers = newServerThread.numberOfPlayers();
+                nickBirth = new String[numberOfPlayers][2];
+                nickBirth[0] = newServerThread.nicknameBirthday();
+                newServerThread.setPlayerBound(nickBirth[0][0]);
             }
         }
         while (clientList.size() < numberOfPlayers) {//Collega i socket fino a quando si arriva al numero corretto di giocatori
             try {
                 socket = serverSocket.accept();
-            } catch (IOException errore) {
+            } catch (IOException e) {
                 if (!socket.isClosed())
                     try {
                         socket.close();
@@ -68,20 +68,20 @@ public  class Server{
                 catch(IOException e_1){e_1.printStackTrace();}
             }    //viene chiuso il socket e si riprova la connessione con il client che ha fallito
             if (!socket.isClosed()) { //Se il socket è aperto crea un nuovo Thread e lo aggiunge alla lista di quelli in esecuzione
-                ServerThread nuovoThread = new ServerThread(socket, clientList);
-                nick_birth[clientList.size()] = nuovoThread.nickname_birthday();
-                nuovoThread.setPlayerBound(nick_birth[clientList.size()][0]);
-                clientList.add(nuovoThread);
+                ServerThread newThread = new ServerThread(socket, clientList);
+                nickBirth[clientList.size()] = newThread.nicknameBirthday();
+                newThread.setPlayerBound(nickBirth[clientList.size()][0]);
+                clientList.add(newThread);
             }
         }
     }
 
-    public String[][] getNick_birth() {
-        return nick_birth;
+    public String[][] getNickBirth() {
+        return nickBirth;
     }
 
     /**
      * @return the list of the sockets
      */
-    public ArrayList<ServerThread> getsocketlist(){return clientList;}//recupera la lista dei Thread
+    public ArrayList<ServerThread> getSocketList(){return clientList;}//recupera la lista dei Thread
 }

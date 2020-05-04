@@ -24,14 +24,14 @@ public class Game {
      * @param server is the instance of the server of the game
      */
     public Game(@NotNull Server server){
-        String[] strings = sort(server.getNick_birth());
+        String[] strings = sort(server.getNickBirth());
         game = new Board(strings);
 
-        ArrayList<ServerThread> serverThreads = server.getsocketlist();
+        ArrayList<ServerThread> serverThreads = server.getSocketList();
         String string;
 
         for (int i = 0; i < strings.length; i++) {
-            string = serverThreads.get(i).nickname_birthday()[0];
+            string = serverThreads.get(i).nicknameBirthday()[0];
             for (int k = 0; k < strings.length; k++){
                 if (string.equals(strings[k])){
                     game.getPlayerById(GlobalVariables.IdPlayer.values()[k]).setServerThread(serverThreads.get(i));
