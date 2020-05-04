@@ -7,10 +7,7 @@ import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 
 import java.util.List;
 
@@ -21,8 +18,10 @@ public class GUIMethods implements ViewMethodSelection {
     private JFrame boardWindow;
     private JFrame userInterations;
     private JFrame setupNicknameBirthday;
+    private JFrame number;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     boolean pressed=false;
+    private int numberOfPlayers;
     public GUIMethods(){
         boardWindow = new JFrame();
 
@@ -99,6 +98,11 @@ public class GUIMethods implements ViewMethodSelection {
         userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInterations.setSize(screenSize.width/5,screenSize.height/3);
         userInterations.setAlwaysOnTop(true);
+        userInterations.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent){
+                System.exit(0);
+            }
+        });
 
         ImageIcon imagineBox = new ImageIcon("src/resources/board/SantoriniBox.png");
         Image scaleImageBox = imagineBox.getImage().getScaledInstance(userInterations.getWidth(), userInterations.getHeight(), Image.SCALE_SMOOTH);
@@ -170,6 +174,7 @@ public class GUIMethods implements ViewMethodSelection {
         nextButton.grabFocus();
         nextButton.requestFocus();
         next.requestFocus();
+        userInterations.setVisible(true);
 
         nextButton.addActionListener(new ActionListener() {
 
@@ -229,7 +234,7 @@ public class GUIMethods implements ViewMethodSelection {
                 }
             }
         });
-        userInterations.setVisible(true);
+
         JOptionPane.showMessageDialog(userInterations,
                 "inserire indirizzo ip e porta del server",
                 "",
@@ -249,7 +254,11 @@ public class GUIMethods implements ViewMethodSelection {
         setupNicknameBirthday.setLocationRelativeTo(null);
         setupNicknameBirthday.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width, screenSize.height /2));
-
+        setupNicknameBirthday.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent){
+                System.exit(0);
+            }
+        });
         String[] day = new String[31];
         String[] month = new String[12];
         String[] year = new String[1021];
@@ -329,7 +338,73 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int numberOfPlayers(){return 0;}
+    public int numberOfPlayers(){
+        numberOfPlayers=2;
+        pressed=false;
+
+        number =new JFrame();
+        number.setLayout(new GridLayout(3,1));
+        number.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent){
+                System.exit(0);
+            }
+        });
+        number.setResizable(false);
+        number.setLocationRelativeTo(null);
+        number.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel n=new JLabel("selezionare numero di giocatori");
+        JPanel chk=new JPanel();
+        chk.setLayout(new FlowLayout());
+        JPanel next=new JPanel();
+        next.setLayout(new GridBagLayout());
+        final JCheckBox two =new JCheckBox("2");
+        final JCheckBox three =new JCheckBox("3");
+        JButton nextButton=new JButton("next");
+        number.add(n);
+        next.add(nextButton);
+        chk.add(two);
+        chk.add(three);
+        number.add(chk);
+        number.add(next);
+        number.setVisible(true);
+        two.setSelected(true);
+        three.setSelected(false);
+        number.setVisible(true);
+
+        class ActionHandler implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                JCheckBox checkbox = (JCheckBox) event.getSource();
+                if (checkbox == two) {
+                    two.setSelected(true);
+                    three.setSelected(false);
+                    numberOfPlayers=2;
+
+
+                } else if (checkbox == three) {
+                    two.setSelected(false);
+                    three.setSelected(true);
+                    numberOfPlayers=3;
+
+                }
+            }
+        }
+        ActionListener a =new ActionHandler();
+        two.addActionListener(a);
+        three.addActionListener(a);
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                number.dispose();
+                pressed=true;
+            }
+        });
+        while (!pressed) {
+        }
+        number.pack();
+
+
+        return numberOfPlayers;}
 
     @Override
     public void alert(String string) {
