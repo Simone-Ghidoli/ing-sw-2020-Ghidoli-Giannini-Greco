@@ -249,11 +249,12 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public String[] nicknameBirthdayChoice() {
+        pressed=false;
         JFrame setupNicknameBirthday=new JFrame("Nickname & birth date");
         setupNicknameBirthday.setResizable(false);
         setupNicknameBirthday.setLocationRelativeTo(null);
         setupNicknameBirthday.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width, screenSize.height /2));
+        setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width/4, screenSize.height /4));
         setupNicknameBirthday.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent){
                 System.exit(0);
@@ -261,14 +262,14 @@ public class GUIMethods implements ViewMethodSelection {
         });
         String[] day = new String[31];
         String[] month = new String[12];
-        String[] year = new String[1021];
+        String[] year = new String[121];
 
 
         for (int i = 1900; i < 2021; i++)
             year[i - 1900] = String.valueOf(i);
 
         for (int i = 1; i < 13; i++)
-            year[i - 1] = String.valueOf(i);
+            month[i - 1] = String.valueOf(i);
 
         for (int i = 1; i < 32; i++)
             day[i - 1] = String.valueOf(i);
@@ -311,10 +312,22 @@ public class GUIMethods implements ViewMethodSelection {
         birthdayPanel.add(monthCombo);
         birthdayPanel.add(yearLabel);
         birthdayPanel.add(yearCombo);
+        next.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                pressed=true;
+            }
+        });
 
         setupNicknameBirthday.setVisible(true);
         setupNicknameBirthday.pack();
-        return new String[0];
+        while(!pressed){
+
+        }
+        String nameAndBirthday[]=new String[2];
+        nameAndBirthday[0]=nicknameText.getText();
+        nameAndBirthday[1]=(String)dayCombo.getSelectedItem()+(String)monthCombo.getSelectedItem()+(String)yearCombo.getSelectedItem();
+        return nameAndBirthday;
     }
 
     @Override
@@ -344,6 +357,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         number =new JFrame();
         number.setLayout(new GridLayout(3,1));
+        number.setSize(screenSize.width/4,screenSize.height/4);
         number.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent){
                 System.exit(0);
