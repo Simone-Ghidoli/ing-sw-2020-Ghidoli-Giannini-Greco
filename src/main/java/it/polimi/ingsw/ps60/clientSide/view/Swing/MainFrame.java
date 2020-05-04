@@ -20,18 +20,18 @@ public class MainFrame extends JFrame {
             setupNicknameBirthday.setResizable(false);
             setupNicknameBirthday.setLocationRelativeTo(null);
             setupNicknameBirthday.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width, screenSize.height*1/2));
+            setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width/4, screenSize.height/4));
             setupNicknameBirthday.setVisible(true);
             String[] day = new String[31];
             String[] month = new String[12];
-            String[] year = new String[1021];
+            String[] year = new String[121];
 
 
             for (int i = 1900; i < 2021; i++)
                 year[i - 1900] = String.valueOf(i);
 
             for (int i = 1; i < 13; i++)
-                year[i - 1] = String.valueOf(i);
+                month[i - 1] = String.valueOf(i);
 
             for (int i = 1; i < 32; i++)
                 day[i - 1] = String.valueOf(i);
@@ -61,7 +61,7 @@ public class MainFrame extends JFrame {
             JComboBox yearCombo= new JComboBox(year);
             dayCombo.setSelectedIndex(0);
             monthCombo.setSelectedIndex(0);
-            yearCombo.setSelectedIndex(0);
+            yearCombo.setSelectedIndex(98);
 
             nickname.add(nm);
             nickname.add(nicknameText);

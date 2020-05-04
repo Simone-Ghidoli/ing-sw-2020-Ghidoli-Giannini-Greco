@@ -2,8 +2,6 @@ package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 
-import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
-import it.polimi.ingsw.ps60.serverSide.server.Server_new;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 
@@ -239,7 +237,6 @@ public class GUIMethods implements ViewMethodSelection {
         userInterations.pack();
         while(!pressed) {
         }
-        setupNicknameBirthday.setVisible(true);
         return new String[]{ip.getText(),port.getText()};
 
 
@@ -251,7 +248,7 @@ public class GUIMethods implements ViewMethodSelection {
         setupNicknameBirthday.setResizable(false);
         setupNicknameBirthday.setLocationRelativeTo(null);
         setupNicknameBirthday.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width, screenSize.height*1/2));
+        setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width, screenSize.height /2));
 
         String[] day = new String[31];
         String[] month = new String[12];

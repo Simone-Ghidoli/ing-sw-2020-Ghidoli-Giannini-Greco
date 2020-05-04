@@ -11,7 +11,7 @@ public class CircularLinkedList<T> {
     }
 
     public void addNode(T value){
-        Node<T> newNode = new Node<T>(value);
+        Node<T> newNode = new Node<>(value);
 
         if(head == null){
             head = newNode;
@@ -25,7 +25,7 @@ public class CircularLinkedList<T> {
     }
 
     public void addNodeIfNotExists(T value){
-        Node<T> newNode = new Node<T>(value);
+        Node<T> newNode = new Node<>(value);
 
         if (head == null) {
             addNode(value);

@@ -106,9 +106,9 @@ public class Game {
             divinityCards1 = new GlobalVariables.DivinityCard[divinityCards.length - 1];
             k = 0;
 
-            for (int j = 0; j < divinityCards.length; j++){
-                if (divinityCard != divinityCards[j]){
-                    divinityCards1[k] = divinityCards[j];
+            for (GlobalVariables.DivinityCard card : divinityCards) {
+                if (divinityCard != card) {
+                    divinityCards1[k] = card;
                     k++;
                 }
             }
@@ -144,9 +144,9 @@ public class Game {
     }
 
     public void setWorkersPositions(int[][][] positions) {
-        for (int j = 0; j < positions.length; j++) {
+        for (int[][] position : positions) {
             for (int i = 0; i < 2; i++) {
-                game.getPlayerById(GlobalVariables.IdPlayer.values()[i]).getWorker(i).moveWorker(game.getCellByPosition(positions[j][i]));
+                game.getPlayerById(GlobalVariables.IdPlayer.values()[i]).getWorker(i).moveWorker(game.getCellByPosition(position[i]));
             }
         }
     }
