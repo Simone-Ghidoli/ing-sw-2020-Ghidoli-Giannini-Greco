@@ -6,6 +6,8 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * This class contains some methods to communicate between server and client.
@@ -79,9 +81,12 @@ public class ServerThread extends Thread {
         nick_birth[1]=receiveString();//Birth
         return nick_birth;
     }
-    public int[][] setWorkers(List<int[]> takenPos){//Restituisce un vettore con le posizioni dei 2 workers
-        sendPositionsList(convertPositionListToSerializedInteger(takenPos));
+    public int[][] setWorkers(List<int[]> takenPos) throws InterruptedException {//Restituisce un vettore con le posizioni dei 2 workers
         sendString("workset");
+        List<SerializedInteger> temp;
+        //temp=(convertPositionListToSerializedInteger(takenPos));
+        temp=new ArrayList<>();
+        sendPositionsList(temp);
         SerializedInteger[] appoggio=receivePositions();
         return convertSerializedToInteger_workers(appoggio);
     }

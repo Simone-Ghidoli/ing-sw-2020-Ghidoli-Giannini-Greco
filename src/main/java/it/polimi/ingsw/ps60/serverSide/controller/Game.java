@@ -23,7 +23,7 @@ public class Game {
      * This class initialize the board and every turn
      * @param server is the instance of the server of the game
      */
-    public Game(@NotNull Server server){
+    public Game(@NotNull Server server) throws InterruptedException {
         String[] strings = sort(server.getNickBirth());
         game = new Board(strings);
 
@@ -31,7 +31,7 @@ public class Game {
         String string;
 
         for (int i = 0; i < strings.length; i++) {
-            string = serverThreads.get(i).nicknameBirthday()[0];
+            string = server.getNickBirth()[i][0];
             for (int k = 0; k < strings.length; k++){
                 if (string.equals(strings[k])){
                     game.getPlayerById(GlobalVariables.IdPlayer.values()[k]).setServerThread(serverThreads.get(i));
@@ -124,7 +124,7 @@ public class Game {
     /**
      * This method will asks to all the player where to set its workers
      */
-    public void selectWorkersPositions(){
+    public void selectWorkersPositions() throws InterruptedException {
 
         int[][][] positions = new int[game.getPlayersNumber()][][];
 

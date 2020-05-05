@@ -33,7 +33,7 @@ public  class Server{
                 serverSocket = new ServerSocket(port);
             } catch (IOException error) {
                 serverSocket=null;
-                System.out.println("Error opening server");
+                System.exit(3);
             }
         }
 

@@ -82,6 +82,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                         String s = message.replace("loss-","");
                         loss(s);
                     }
+                     message=null;
                     if(Thread.currentThread().isInterrupted())
                         return;
                     messagesFromServer.remove(0);
@@ -163,6 +164,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      */
     public void setworkers() {
         List<SerializedInteger> takenPositions = recieveList();
+        System.out.println("Ciaone");
         int[][] answer = methodSelection.firstSetWorkers(convertTypePositionBuild(takenPositions));
         sendPositions(convertInteger_to_Serialized(answer));
     }
@@ -221,12 +223,16 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }//Per  il movement.
 
     public List<SerializedInteger> recieveList() {   //Per il building
+        List<SerializedInteger> stalin = new ArrayList<>();
         try {
-            List<SerializedInteger> stalin;
             stalin = (List<SerializedInteger>) in_obj.readObject();
+            System.out.println("Ciaone123");
             return stalin;
-        } catch (IOException | ClassNotFoundException e) {
-            disconnection("Communication error, logging out");
+        } catch (IOException e) {
+            e.printStackTrace();
+            disconnection("Communication error, logging out, sono io");
+        } catch(ClassNotFoundException e_1){
+            System.out.println("fbuaiwbfu");
         }
         return null;
     }
