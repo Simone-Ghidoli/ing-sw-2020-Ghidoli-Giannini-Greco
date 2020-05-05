@@ -238,7 +238,7 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
-        int[][] choice = new int[2][2];
+        int[][] choice = new int[2][];
         int[] buffer;
         ListContains listContains = new ListContains(impossiblePositions);
 
@@ -256,7 +256,7 @@ public class CLIMethods implements ViewMethodSelection {
                 if (listContains.isContained(new int[]{i, j})) {
                     System.out.print(1);
                 } else {
-                    System.out.println(0);
+                    System.out.print(0);
                 }
                 System.out.print("  ");
             }
@@ -278,6 +278,8 @@ public class CLIMethods implements ViewMethodSelection {
                     }
                 }
 
+                buffer[0] = buffer[0] - 1;
+
                 System.out.println("Enter the y coordinate");
                 while (buffer[1] == 0) {
                     buffer[1] = input.nextInt();
@@ -286,6 +288,8 @@ public class CLIMethods implements ViewMethodSelection {
                         buffer[1] = 0;
                     }
                 }
+
+                buffer[1] = buffer[1] - 1;
 
                 if (!listContains.isContained(buffer))//todo la stessa cosa di prima
                     choice[i] = buffer;
