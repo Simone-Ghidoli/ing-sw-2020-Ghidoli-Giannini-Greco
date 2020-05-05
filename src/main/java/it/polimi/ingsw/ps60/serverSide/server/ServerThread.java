@@ -84,8 +84,7 @@ public class ServerThread extends Thread {
     public int[][] setWorkers(List<int[]> takenPos) throws InterruptedException {//Restituisce un vettore con le posizioni dei 2 workers
         sendString("workset");
         List<SerializedInteger> temp;
-        //temp=(convertPositionListToSerializedInteger(takenPos));
-        temp=new ArrayList<>();
+        temp=(convertPositionListToSerializedInteger(takenPos));
         sendPositionsList(temp);
         SerializedInteger[] appoggio=receivePositions();
         return convertSerializedToInteger_workers(appoggio);

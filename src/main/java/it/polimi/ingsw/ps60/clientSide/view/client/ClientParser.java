@@ -49,43 +49,46 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     public void run() {//processa i messaggi
         while (true) {
-            if(Thread.currentThread().isInterrupted()){
+            if (Thread.currentThread().isInterrupted()) {
                 return;
             }
             synchronized (messagesFromServer) {
                 while (messagesFromServer.size() != 0) {
-                    String message = messagesFromServer.get(0);
-                     if (message.equals("move")) {
-                        movement();
-                    } else if (message.equals("build")) {
-                        building();
-                    } else if (message.contains("spc-")) {
-                        String s = message.replace("spc-", "");
-                        specialChoice(s);
-                    } else if (message.equals("nPlayers")) {
-                        number_of_players();
-                    } else if (message.equals("nick_birth")) {
-                        nickname_birthday();
-                    } else if (message.equals("workset")) {
-                        setworkers();
-                    } else if (message.contains("pr-")) {
-                        String s = message.replace("pr-", "");
-                        printBoard(s);
-                    } else if (message.equals("dv_choice")) {
-                        divinityChoice();
-                    } else if (message.equals("div_sel")) {
-                        divinitySelection();
-                    } else if (message.contains("disc-")) {
-                        String s = message.replace("disc-", "");
-                        disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
-                    } else if (message.contains("loss-")){
-                        String s = message.replace("loss-","");
-                        loss(s);
+                    synchronized (socket) {
+                        String message = messagesFromServer.get(0);
+                        if (message.equals("move")) {
+                            movement();
+                        } else if (message.equals("build")) {
+                            building();
+                        } else if (message.contains("spc-")) {
+                            String s = message.replace("spc-", "");
+                            specialChoice(s);
+                        } else if (message.equals("nPlayers")) {
+                            number_of_players();
+                        } else if (message.equals("nick_birth")) {
+                            nickname_birthday();
+                        } else if (message.equals("workset")) {
+                            setworkers();
+                        } else if (message.contains("pr-")) {
+                            String s = message.replace("pr-", "");
+                            printBoard(s);
+                        } else if (message.equals("dv_choice")) {
+                            divinityChoice();
+                        } else if (message.equals("div_sel")) {
+                            divinitySelection();
+                        } else if (message.contains("disc-")) {
+                            String s = message.replace("disc-", "");
+                            disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
+                        } else if (message.contains("loss-")) {
+                            String s = message.replace("loss-", "");
+                            loss(s);
+                        }
+                        message = null;
+                        if (Thread.currentThread().isInterrupted())
+                            return;
+                        messagesFromServer.remove(0);
+                        socket.notify();
                     }
-                     message=null;
-                    if(Thread.currentThread().isInterrupted())
-                        return;
-                    messagesFromServer.remove(0);
                 }
             }
         }
@@ -164,7 +167,6 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      */
     public void setworkers() {
         List<SerializedInteger> takenPositions = recieveList();
-        System.out.println("Ciaone");
         int[][] answer = methodSelection.firstSetWorkers(convertTypePositionBuild(takenPositions));
         sendPositions(convertInteger_to_Serialized(answer));
     }
@@ -224,16 +226,15 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     public List<SerializedInteger> recieveList() {   //Per il building
         List<SerializedInteger> stalin = new ArrayList<>();
-        try {
-            stalin = (List<SerializedInteger>) in_obj.readObject();
-            System.out.println("Ciaone123");
-            return stalin;
-        } catch (IOException e) {
-            e.printStackTrace();
-            disconnection("Communication error, logging out, sono io");
-        } catch(ClassNotFoundException e_1){
-            System.out.println("fbuaiwbfu");
-        }
+            try {
+                stalin = (List<SerializedInteger>) in_obj.readObject();
+                return stalin;
+            } catch (IOException e) {
+                e.printStackTrace();
+                disconnection("Communication error, logging out");
+            } catch (ClassNotFoundException e_1) {
+                System.out.println("fbuaiwbfu");
+            }
         return null;
     }
 

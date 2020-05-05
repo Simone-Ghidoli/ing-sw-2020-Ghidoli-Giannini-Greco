@@ -5,6 +5,7 @@ import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is used to read and store server's commands
@@ -57,21 +58,23 @@ public class ClientReader implements Runnable {
                         return;
                     }
                 }
-                try{
-                    serverSays = br.readLine();
-                    synchronized (messagesFromServer){
-                        messagesFromServer.add(serverSays);
-                    }
-                }
-                catch (IOException e) {
+                synchronized (socket) {
                     try {
-                        synchronized (socket) {
-                            socket.close();
-                            //Thread.currentThread().interrupt();
-                            //System.set
+                        serverSays = br.readLine();
+                        synchronized (messagesFromServer) {
+                            messagesFromServer.add(serverSays);
                         }
-                    } catch (IOException ex) {
-                        return;
+                        socket.wait();
+                    } catch (IOException | InterruptedException e) {
+                        try {
+                            synchronized (socket) {
+                                socket.close();
+                                //Thread.currentThread().interrupt();
+                                //System.set
+                            }
+                        } catch (IOException ex) {
+                            return;
+                        }
                     }
                 }
             }
