@@ -248,7 +248,7 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public String[] nicknameBirthdayChoice() {
         pressed=false;
-        JFrame setupNicknameBirthday=new JFrame("Nickname & birth date");
+        setupNicknameBirthday=new JFrame("Nickname & birth date");
         setupNicknameBirthday.setResizable(false);
         setupNicknameBirthday.setLocationRelativeTo(null);
         setupNicknameBirthday.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -313,6 +313,7 @@ public class GUIMethods implements ViewMethodSelection {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                setupNicknameBirthday.dispose();
                 pressed=true;
             }
         });
