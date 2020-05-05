@@ -17,59 +17,57 @@ public class GUIMethods implements ViewMethodSelection {
 
     private JFrame boardWindow;
     private JFrame userInterations;
-    private JFrame setupNicknameBirthday;
-    private JFrame number;
+
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     boolean pressed=false;
     private int numberOfPlayers;
+
     public GUIMethods(){
-        boardWindow = new JFrame();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                boardWindow = new JFrame();
+                boardWindow.setResizable(false);
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                boardWindow.setTitle("Santorini");
+                boardWindow.setSize(screenSize.width, screenSize.height);
+                boardWindow.setLocationRelativeTo(null);
+                boardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                boardWindow.setLayout(new BorderLayout());
+                ImageIcon imagineBoard = new ImageIcon("src/resources/board/SantoriniBoard.png");
+                Image scaleImageBoard = imagineBoard.getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
+                JPanel grid = new JPanel();
 
-
-        boardWindow.setResizable(false);
-
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        boardWindow.setTitle("Santorini");
-        boardWindow.setSize(screenSize.width, screenSize.height);
-        boardWindow.setLocationRelativeTo(null);
-        boardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-        boardWindow.setLayout(new BorderLayout());
-        ImageIcon imagineBoard = new ImageIcon("src/resources/board/SantoriniBoard.png");
-        Image scaleImageBoard = imagineBoard.getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
-        JPanel grid = new JPanel();
-
-        JLabel board = new JLabel(new ImageIcon(scaleImageBoard));
+                JLabel board = new JLabel(new ImageIcon(scaleImageBoard));
 
 
 
-        board.setLayout(new GridBagLayout());
-        board.add(grid);
-        grid.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*47/64));
+                board.setLayout(new GridBagLayout());
+                board.add(grid);
+                grid.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*47/64));
 
-        grid.setLayout(new GridLayout(5,5));
-        grid.setOpaque(false);
+                grid.setLayout(new GridLayout(5,5));
+                grid.setOpaque(false);
 
-        JButton[] jButtons = new JButton[25];
-        for (int i = 0; i < 25; i++){
-            jButtons[i] = new JButton(String.valueOf(i + 1));
-            jButtons[i].setContentAreaFilled(false);
-            jButtons[i].setOpaque(false);
-            grid.add(jButtons[i]);
-        }
+                JButton[] jButtons = new JButton[25];
+                for (int i = 0; i < 25; i++){
+                    jButtons[i] = new JButton(String.valueOf(i + 1));
+                    jButtons[i].setContentAreaFilled(false);
+                    jButtons[i].setOpaque(false);
+                    grid.add(jButtons[i]);
+                }
 
-        boardWindow.add(board, BorderLayout.CENTER);
-        boardWindow.pack();
-        boardWindow.setVisible(false);
+                boardWindow.add(board, BorderLayout.CENTER);
+                boardWindow.pack();
+                boardWindow.setVisible(false);
+
+            }
+        });
 
 
-        userInterations = new JFrame();
-        userInterations.setTitle("choose Server");
-        userInterations.setPreferredSize(new Dimension(screenSize.width*7/30, screenSize.height /3));
-        userInterations.setVisible(false);
-        JFrame.setDefaultLookAndFeelDecorated(true);
+
+
+
 
     }
 
@@ -93,16 +91,23 @@ public class GUIMethods implements ViewMethodSelection {
     public String[] ipPortChoices() {
 
 
+        userInterations = new JFrame();
+        userInterations.setTitle("choose Server");
+        userInterations.setPreferredSize(new Dimension(screenSize.width*7/30, screenSize.height /3));
+        userInterations.setVisible(false);
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+
         userInterations.setResizable(false);
         userInterations.setLocationRelativeTo(null);
         userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInterations.setSize(screenSize.width/5,screenSize.height/3);
         userInterations.setAlwaysOnTop(true);
-//        userInterations.addWindowListener(new WindowAdapter() {
-//            public void windowClosing(WindowEvent windowEvent){
-//                System.exit(0);
-//            }
-//        });
+        userInterations.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent){
+                System.exit(0);
+            }
+        });
 
         ImageIcon imagineBox = new ImageIcon("src/resources/board/SantoriniBox.png");
         Image scaleImageBox = imagineBox.getImage().getScaledInstance(userInterations.getWidth(), userInterations.getHeight(), Image.SCALE_SMOOTH);
@@ -114,10 +119,7 @@ public class GUIMethods implements ViewMethodSelection {
         JPanel next =new JPanel();
         ipPanel.setLayout(new FlowLayout());
         portPanel.setLayout(new FlowLayout());
-        //next.setLayout(new GridBagLayout());
         userInterations.add(box);
-
-
         box.add(empty);
         box.add(ipPanel);
         ipPanel.setOpaque(false);
@@ -125,9 +127,6 @@ public class GUIMethods implements ViewMethodSelection {
         portPanel.setOpaque(false);
         box.add(next);
         next.setOpaque(false);
-
-
-
         empty.setOpaque(false);
         //JLabel serverIp=new JLabel("IP SERVER:");
         //JLabel serverPort=new JLabel("SERVER PORT:");
@@ -136,7 +135,6 @@ public class GUIMethods implements ViewMethodSelection {
         final JButton nextButton= new JButton("next");
         next.add(nextButton);
         nextButton.setVisible(true);
-
         ip.addFocusListener(new FocusListener() {
                                 @Override
                                 public void focusGained(FocusEvent focusEvent) {
@@ -148,9 +146,8 @@ public class GUIMethods implements ViewMethodSelection {
                                 @Override
                                 public void focusLost(FocusEvent focusEvent) {
 
-                                    if(ip.getText().equals(new String("")))
+                                    if(ip.getText().equals(("")))
                                         ip.setText("inserire ip server");
-
                                 }
                             });
         port.addFocusListener(new FocusListener() {
@@ -205,23 +202,7 @@ public class GUIMethods implements ViewMethodSelection {
 
                     }
                     else {
-                        /*userInterations.setVisible(false);
-                        JFrame tryToConnect=new JFrame("JPROGRESSBAR");
-                        tryToConnect.setResizable(false);
-                        tryToConnect.setLayout(new GridLayout(3,1));
-                        tryToConnect.setLocationRelativeTo(null);
-                        tryToConnect.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        tryToConnect.setSize(screenSize.width/7,screenSize.height/4);
-                        tryToConnect.setLayout(new GridLayout(2,1));
-                        JLabel border=new JLabel("Try to connect..");
-                        JProgressBar connect= new JProgressBar(0,100);
-                        connect.setValue(0);
-                        connect.add(border);
-                        connect.setStringPainted(true);
-                        tryToConnect.add(border);
-                        tryToConnect.add(connect);
-                        tryToConnect.setVisible(true);
-                        */
+
                         pressed=true;
                         userInterations.dispose();
                         //boardWindow.setVisible(true);
@@ -239,21 +220,24 @@ public class GUIMethods implements ViewMethodSelection {
                 "inserire indirizzo ip e porta del server",
                 "",
                 JOptionPane.INFORMATION_MESSAGE);
-        userInterations.pack();
+
         while(!pressed) {
         }
+        userInterations.pack();
         return new String[]{ip.getText(),port.getText()};
     }
 
     @Override
     public String[] nicknameBirthdayChoice() {
+
         pressed=false;
-        setupNicknameBirthday=new JFrame("Nickname & birth date");
-        setupNicknameBirthday.setResizable(false);
-        setupNicknameBirthday.setLocationRelativeTo(null);
-        setupNicknameBirthday.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setupNicknameBirthday.setPreferredSize(new Dimension(screenSize.width/4, screenSize.height /4));
-        setupNicknameBirthday.addWindowListener(new WindowAdapter() {
+        userInterations =new JFrame("Nickname & birth date");
+        userInterations.setResizable(false);
+        userInterations.setLocationRelativeTo(null);
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userInterations.setPreferredSize(new Dimension(screenSize.width/4, screenSize.height /4));
+        userInterations.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent){
                 System.exit(0);
             }
@@ -272,7 +256,7 @@ public class GUIMethods implements ViewMethodSelection {
         for (int i = 1; i < 32; i++)
             day[i - 1] = String.valueOf(i);
 
-        setupNicknameBirthday.setLayout(new GridLayout(4,1));
+        userInterations.setLayout(new GridLayout(4,1));
         JPanel intro=new JPanel();
         intro.setLayout(new GridBagLayout());
         JPanel nickname=new JPanel();
@@ -285,10 +269,10 @@ public class GUIMethods implements ViewMethodSelection {
         JButton next=new JButton("next");
         nextPanel.add(next);
         intro.add(jL);
-        setupNicknameBirthday.add(intro);
-        setupNicknameBirthday.add(nickname);
-        setupNicknameBirthday.add(birthdayPanel);
-        setupNicknameBirthday.add(nextPanel);
+        userInterations.add(intro);
+        userInterations.add(nickname);
+        userInterations.add(birthdayPanel);
+        userInterations.add(nextPanel);
         JLabel nm=new JLabel("Nickname:");
         jL.setLayout(new GridBagLayout());
         JTextField nicknameText=new JTextField(14);
@@ -313,13 +297,13 @@ public class GUIMethods implements ViewMethodSelection {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                setupNicknameBirthday.dispose();
+                userInterations.dispose();
                 pressed=true;
             }
         });
 
-        setupNicknameBirthday.setVisible(true);
-        setupNicknameBirthday.pack();
+        userInterations.setVisible(true);
+        userInterations.pack();
         while(!pressed){
 
         }
@@ -353,18 +337,18 @@ public class GUIMethods implements ViewMethodSelection {
     public int numberOfPlayers(){
         numberOfPlayers=2;
         pressed=false;
-
-        number =new JFrame();
-        number.setLayout(new GridLayout(3,1));
-        number.setSize(screenSize.width/4,screenSize.height/4);
-        number.addWindowListener(new WindowAdapter() {
+        userInterations =new JFrame();
+        userInterations.setLayout(new GridLayout(3,1));
+        userInterations.setSize(screenSize.width/4,screenSize.height/4);
+        userInterations.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent){
                 System.exit(0);
             }
         });
-        number.setResizable(false);
-        number.setLocationRelativeTo(null);
-        number.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userInterations.setResizable(false);
+        userInterations.setLocationRelativeTo(null);
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel n=new JLabel("selezionare numero di giocatori");
         JPanel chk=new JPanel();
         chk.setLayout(new FlowLayout());
@@ -373,16 +357,14 @@ public class GUIMethods implements ViewMethodSelection {
         final JCheckBox two =new JCheckBox("2");
         final JCheckBox three =new JCheckBox("3");
         JButton nextButton=new JButton("next");
-        number.add(n);
+        userInterations.add(n);
         next.add(nextButton);
         chk.add(two);
         chk.add(three);
-        number.add(chk);
-        number.add(next);
-        number.setVisible(true);
+        userInterations.add(chk);
+        userInterations.add(next);
         two.setSelected(true);
         three.setSelected(false);
-        number.setVisible(true);
 
         class ActionHandler implements ActionListener {
             @Override
@@ -408,13 +390,14 @@ public class GUIMethods implements ViewMethodSelection {
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                number.dispose();
+                userInterations.dispose();
                 pressed=true;
             }
         });
         while (!pressed) {
         }
-        number.pack();
+        userInterations.setVisible(true);
+        userInterations.pack();
 
 
         return numberOfPlayers;}
