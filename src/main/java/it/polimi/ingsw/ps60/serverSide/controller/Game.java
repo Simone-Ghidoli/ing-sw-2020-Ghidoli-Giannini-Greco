@@ -31,7 +31,7 @@ public class Game {
         String string;
 
         for (int i = 0; i < strings.length; i++) {
-            string = serverThreads.get(i).nicknameBirthday()[0];
+            string = server.getNickBirth()[i][0];
             for (int k = 0; k < strings.length; k++){
                 if (string.equals(strings[k])){
                     game.getPlayerById(GlobalVariables.IdPlayer.values()[k]).setServerThread(serverThreads.get(i));
