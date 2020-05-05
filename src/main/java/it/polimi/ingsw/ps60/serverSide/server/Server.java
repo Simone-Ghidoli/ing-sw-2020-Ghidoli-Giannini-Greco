@@ -36,6 +36,9 @@ public  class Server{
                 System.out.println("Error opening server");
             }
         }
+
+        ServerThread newThread;
+
         while (socket==null||socket.isClosed()) {//finchè non va a buon fine il collegamento del primo giocatore ci riprovo
             try {// Accetto il primo giocatore e chiedo in quanti si gioca
                 socket = serverSocket.accept();
@@ -49,12 +52,12 @@ public  class Server{
                 socket=null;
             }//Socket Chiuso e riparte la connessione del primo giocatore
             if (!socket.isClosed()) {
-                ServerThread newServerThread = new ServerThread(socket, clientList);
-                clientList.add(newServerThread); //primo thread aggiunto alla lista
-                numberOfPlayers = newServerThread.numberOfPlayers();
+                newThread = new ServerThread(socket, clientList);
+                clientList.add(newThread); //primo thread aggiunto alla lista
+                numberOfPlayers = newThread.numberOfPlayers();
                 nickBirth = new String[numberOfPlayers][2];
-                nickBirth[0] = newServerThread.nicknameBirthday();
-                newServerThread.setPlayerBound(nickBirth[0][0]);
+                nickBirth[0] = newThread.nicknameBirthday();
+                newThread.setPlayerBound(nickBirth[0][0]);
             }
         }
         while (clientList.size() < numberOfPlayers) {//Collega i socket fino a quando si arriva al numero corretto di giocatori
@@ -68,10 +71,10 @@ public  class Server{
                 catch(IOException e_1){e_1.printStackTrace();}
             }    //viene chiuso il socket e si riprova la connessione con il client che ha fallito
             if (!socket.isClosed()) { //Se il socket è aperto crea un nuovo Thread e lo aggiunge alla lista di quelli in esecuzione
-                ServerThread newThread = new ServerThread(socket, clientList);
-                nickBirth[clientList.size()] = newThread.nicknameBirthday();
-                newThread.setPlayerBound(nickBirth[clientList.size()][0]);
+                newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread);
+                nickBirth[clientList.size() - 1] = newThread.nicknameBirthday();
+                newThread.setPlayerBound(nickBirth[clientList.size() -1][0]);
             }
         }
     }

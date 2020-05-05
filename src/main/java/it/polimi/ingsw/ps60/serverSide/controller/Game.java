@@ -61,6 +61,7 @@ public class Game {
 
         try {
             for (int i = 0; i < nicknamesAndBirthdays.length; i++) {
+                System.out.println(nicknamesAndBirthdays[i][0] + " " + nicknamesAndBirthdays[i][1]);
                 dateSelected = simpleDateFormat.parse(nicknamesAndBirthdays[i][1]);
                 for (int j = i - 1; j >= 0; j--){
                     date = simpleDateFormat.parse(nicknamesAndBirthdays[j][1]);

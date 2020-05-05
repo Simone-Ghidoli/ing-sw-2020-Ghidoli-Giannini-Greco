@@ -159,10 +159,10 @@ public class CLIMethods implements ViewMethodSelection {
         String nickname = null;
         String birthday = null;
 
-        System.out.println("Enter your nickname");
         Scanner input = new Scanner(System.in);
 
         while (nickname == null){
+            System.out.println("Enter your nickname");
             nickname = input.nextLine();
             if (!new StringRegexValidation(GlobalVariables.StringPatterns.Nickname.getPattern()).isValid(nickname)) {
                 System.out.println("Wrong input");
@@ -170,9 +170,8 @@ public class CLIMethods implements ViewMethodSelection {
             }
         }
 
-        System.out.println("Enter your birthday");
-
         while (birthday == null){
+            System.out.println("Enter your birthday. [yyyy/MM/gg]");
             birthday = input.nextLine();
             if (!new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern()).isValid(birthday)) {
                 System.out.println("Wrong input");
