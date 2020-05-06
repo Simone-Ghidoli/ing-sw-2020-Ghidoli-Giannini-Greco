@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps60.clientSide.view.client;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
@@ -49,46 +51,40 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     public void run() {//processa i messaggi
         while (true) {
-            if (Thread.currentThread().isInterrupted()) {
-                return;
-            }
             synchronized (messagesFromServer) {
                 while (messagesFromServer.size() != 0) {
-                    synchronized (socket) {
-                        String message = messagesFromServer.get(0);
-                        if (message.equals("move")) {
-                            movement();
-                        } else if (message.equals("build")) {
-                            building();
-                        } else if (message.contains("spc-")) {
-                            String s = message.replace("spc-", "");
-                            specialChoice(s);
-                        } else if (message.equals("nPlayers")) {
-                            number_of_players();
-                        } else if (message.equals("nick_birth")) {
-                            nickname_birthday();
-                        } else if (message.equals("workset")) {
-                            setworkers();
-                        } else if (message.contains("pr-")) {
-                            String s = message.replace("pr-", "");
-                            printBoard(s);
-                        } else if (message.equals("dv_choice")) {
-                            divinityChoice();
-                        } else if (message.equals("div_sel")) {
-                            divinitySelection();
-                        } else if (message.contains("disc-")) {
-                            String s = message.replace("disc-", "");
-                            disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
-                        } else if (message.contains("loss-")) {
-                            String s = message.replace("loss-", "");
-                            loss(s);
-                        }
-                        message = null;
-                        if (Thread.currentThread().isInterrupted())
-                            return;
-                        messagesFromServer.remove(0);
-                        socket.notify();
+                    //synchronized (socket) {
+                    GlobalVariables.frassino.lock();
+                    String message = messagesFromServer.get(0);
+                    if (message.equals("move")) {
+                        movement();
+                    } else if (message.equals("build")) {
+                        building();
+                    } else if (message.contains("spc-")) {
+                        String s = message.replace("spc-", "");
+                        specialChoice(s);
+                    } else if (message.equals("nPlayers")) {
+                        number_of_players();
+                    } else if (message.equals("nick_birth")) {
+                        nickname_birthday();
+                    } else if (message.equals("workset")) {
+                        setworkers();
+                    } else if (message.contains("pr-")) {
+                        String s = message.replace("pr-", "");
+                        printBoard(s);
+                    } else if (message.equals("dv_choice")) {
+                        divinityChoice();
+                    } else if (message.equals("div_sel")) {
+                        divinitySelection();
+                    } else if (message.contains("disc-")) {
+                        String s = message.replace("disc-", "");
+                        disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
+                    } else if (message.contains("loss-")) {
+                        String s = message.replace("loss-", "");
+                        loss(s);
                     }
+                    messagesFromServer.remove(0);
+                    GlobalVariables.frassino.unlock();
                 }
             }
         }
@@ -225,7 +221,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }//Per  il movement.
 
     public List<SerializedInteger> recieveList() {   //Per il building
-        List<SerializedInteger> stalin = new ArrayList<>();
+        List<SerializedInteger> stalin;
             try {
                 stalin = (List<SerializedInteger>) in_obj.readObject();
                 return stalin;
@@ -239,9 +235,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     public SerializedInteger[] convertInteger_to_Serialized(int[][] inte) {
-        SerializedInteger[] appoggio = new SerializedInteger[inte.length];
+        SerializedInteger[] appoggio=new SerializedInteger[inte.length];
         for (int i = 0; i < inte.length; i++) {
-            appoggio[i].serialized = inte[i];
+            appoggio[i]=new SerializedInteger(inte[i]);
         }
         return appoggio;
     }

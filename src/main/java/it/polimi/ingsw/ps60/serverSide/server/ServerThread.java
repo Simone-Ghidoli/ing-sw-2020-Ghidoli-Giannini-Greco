@@ -128,27 +128,30 @@ public class ServerThread extends Thread {
 
     public void sendPositionsArray(List<SerializedInteger>[] list){
         try{
+            TimeUnit.MILLISECONDS.sleep(100);
             out_obj.writeObject(list);
         }
-        catch(IOException e){
+        catch(IOException | InterruptedException e){
             disconnection();
         }
     }
 
     public void sendPositionsList(List<SerializedInteger> list){
         try{
+            TimeUnit.MILLISECONDS.sleep(100);
             out_obj.writeObject(list);
         }
-        catch(IOException e){
+        catch(IOException | InterruptedException e){
             disconnection();
         }
     }//A differenza del primo manda una sola lista e non un vettore di liste
 
     public void sendPositionWorkers(SerializedInteger[] positionworkers){
         try{
+            TimeUnit.MILLISECONDS.sleep(100);
             out_obj.writeObject(positionworkers);
         }
-        catch(IOException e){
+        catch(IOException | InterruptedException e){
             disconnection();
         }
     }
@@ -215,19 +218,21 @@ public class ServerThread extends Thread {
 
     public void sendInt(int send){
         try {
+            TimeUnit.MILLISECONDS.sleep(100);
             out.write(send);
             out.flush();
         }
-        catch(IOException e){
+        catch(IOException | InterruptedException e){
             disconnection();
         }
     }
 
     public void sendCards(GlobalVariables.DivinityCard[] cards){
         try {
+            TimeUnit.MILLISECONDS.sleep(100);
             out_obj.writeObject(cards);
         }
-        catch(IOException e){
+        catch(IOException | InterruptedException e){
             disconnection();
         }
     }

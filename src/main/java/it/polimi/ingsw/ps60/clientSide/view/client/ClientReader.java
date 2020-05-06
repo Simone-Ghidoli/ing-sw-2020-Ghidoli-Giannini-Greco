@@ -1,11 +1,16 @@
 package it.polimi.ingsw.ps60.clientSide.view.client;
 
+import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 
 import java.io.*;
 import java.net.Socket;
+import java.sql.Time;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.frassino;
 
 /**
  * This class is used to read and store server's commands
@@ -15,6 +20,7 @@ public class ClientReader implements Runnable {
     final Socket socket;
     String serverSays;
     BufferedReader br;
+    InputStreamReader ir;
     ViewMethodSelection methodSelection;
 
 
@@ -52,33 +58,34 @@ public class ClientReader implements Runnable {
 
     @Override
     public void run() {
-            while(true) {
+        while (true) {
                 synchronized(socket) {
                     if (socket.isClosed()) {
                         return;
                     }
                 }
-                synchronized (socket) {
-                    try {
+            try {
+                //synchronized (socket) {
+                frassino.lock();
+                    if (br.ready())
                         serverSays = br.readLine();
-                        synchronized (messagesFromServer) {
-                            messagesFromServer.add(serverSays);
-                        }
-                        socket.wait();
-                    } catch (IOException | InterruptedException e) {
-                        try {
-                            synchronized (socket) {
-                                socket.close();
-                                //Thread.currentThread().interrupt();
-                                //System.set
-                            }
-                        } catch (IOException ex) {
-                            return;
-                        }
+                //}
+                frassino.unlock();
+                if(serverSays!=null) {
+                    synchronized (messagesFromServer) {
+                        messagesFromServer.add(serverSays);
+                        serverSays=null;
                     }
+                }
+            } catch (IOException e) {
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+                    return;
                 }
             }
         }
+    }
     public List<String> getMessagesFromServer(){
         return messagesFromServer;
     }
