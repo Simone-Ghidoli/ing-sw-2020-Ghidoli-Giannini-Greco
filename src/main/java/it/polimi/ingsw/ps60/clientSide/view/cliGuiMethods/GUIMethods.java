@@ -16,10 +16,9 @@ import java.util.List;
 public class GUIMethods implements ViewMethodSelection {
 
     private JFrame boardWindow;
-    private JFrame userInterations;
-
+    private boolean pressed;
+    private JFrame userInteraction;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    boolean pressed=false;
     private int numberOfPlayers;
 
     public GUIMethods(){
@@ -73,7 +72,7 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public void printBoard(String board) {
-        userInterations.setVisible(true);
+        userInteraction.setVisible(true);
 
     }
 
@@ -90,158 +89,132 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public String[] ipPortChoices() {
 
+        pressed = false;
+        
+        userInteraction = new JFrame();
+        userInteraction.setTitle("Choose server");
+        userInteraction.setSize(screenSize.width / 5, screenSize.height / 3);
+        userInteraction.setResizable(false);
+        userInteraction.setLocationRelativeTo(boardWindow);
+        userInteraction.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userInteraction.setAlwaysOnTop(true);
 
-        userInterations = new JFrame();
-        userInterations.setTitle("choose Server");
-        userInterations.setPreferredSize(new Dimension(screenSize.width*7/30, screenSize.height /3));
-        userInterations.setVisible(false);
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-
-        userInterations.setResizable(false);
-        userInterations.setLocationRelativeTo(null);
-        userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        userInterations.setSize(screenSize.width/5,screenSize.height/3);
-        userInterations.setAlwaysOnTop(true);
-        userInterations.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-            }
-        });
-
-        ImageIcon imagineBox = new ImageIcon("src/resources/board/SantoriniBox.png");
-        Image scaleImageBox = imagineBox.getImage().getScaledInstance(userInterations.getWidth(), userInterations.getHeight(), Image.SCALE_SMOOTH);
-        JLabel box = new JLabel(new ImageIcon(scaleImageBox));
-        box.setLayout(new GridLayout(4,1));
-        JPanel empty=new JPanel();
-        JPanel ipPanel=new JPanel();
-        JPanel portPanel =new JPanel();
-        JPanel next =new JPanel();
+        JLabel box = new JLabel();
+        box.setLayout(new GridLayout(4, 1));
+        JPanel empty = new JPanel();
+        JPanel ipPanel = new JPanel();
+        JPanel portPanel = new JPanel();
+        JPanel next = new JPanel();
         ipPanel.setLayout(new FlowLayout());
         portPanel.setLayout(new FlowLayout());
-        userInterations.add(box);
+
+        userInteraction.add(box);
         box.add(empty);
         box.add(ipPanel);
-        ipPanel.setOpaque(false);
         box.add(portPanel);
-        portPanel.setOpaque(false);
         box.add(next);
+
+        ipPanel.setOpaque(false);
+        portPanel.setOpaque(false);
         next.setOpaque(false);
         empty.setOpaque(false);
-        //JLabel serverIp=new JLabel("IP SERVER:");
-        //JLabel serverPort=new JLabel("SERVER PORT:");
-        final JTextField ip= new JTextField("inserire ip server",14);
-        final JTextField port= new JTextField("inserire port server",14);
-        final JButton nextButton= new JButton("next");
+
+        final JTextField ip = new JTextField("Enter IP server", 14);
+        final JTextField port = new JTextField("Enter port server", 14);
+        final JButton nextButton = new JButton("next");
         next.add(nextButton);
         nextButton.setVisible(true);
+
         ip.addFocusListener(new FocusListener() {
-                                @Override
-                                public void focusGained(FocusEvent focusEvent) {
-                                    if(ip.getText().equals("")||ip.getText().equals("inserire ip server"))
-                                        ip.setText("");
+            @Override
+            public void focusGained(FocusEvent focusEvent) {
+                if (ip.getText().equals("") || ip.getText().equals("Enter IP server"))
+                    ip.setText("");
 
-                                }
+            }
 
-                                @Override
-                                public void focusLost(FocusEvent focusEvent) {
+            @Override
+            public void focusLost(FocusEvent focusEvent) {
 
-                                    if(ip.getText().equals(("")))
-                                        ip.setText("inserire ip server");
-                                }
-                            });
+                if (ip.getText().equals(("")))
+                    ip.setText("Enter IP server");
+            }
+        });
+        ipPanel.add(ip);
+
         port.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent focusEvent) {
-                if(port.getText().equals("")||port.getText().equals("inserire port server"))
+                if (port.getText().equals("") || port.getText().equals("Enter port server"))
                     port.setText("");
             }
 
             @Override
             public void focusLost(FocusEvent focusEvent) {
-                if(port.getText().equals(new String("")))
-                    port.setText("inserire port server");
+                if (port.getText().equals(""))
+                    port.setText("Enter port server");
 
             }
         });
-        ipPanel.add(ip);
         portPanel.add(port);
 
-        userInterations.setVisible(true);
-
         nextButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 {
-                    if(!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port.getText())&&
-                            !new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip.getText())){
-                        JOptionPane.showMessageDialog(userInterations,
-                                "Server non trovato, inserire un ip valido",
+                    if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port.getText()) &&
+                            !new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip.getText())) {
+                        JOptionPane.showMessageDialog(userInteraction,
+                                "IP and port number not valid",
                                 "",
                                 JOptionPane.ERROR_MESSAGE);
-                    }
-
-
-                    else if (!new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip.getText())) {
-                        JOptionPane.showMessageDialog(userInterations,
-                                "Server non trovato, inserire un ip valido",
+                    } else if (!new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip.getText())) {
+                        JOptionPane.showMessageDialog(userInteraction,
+                                "IP not valid",
                                 "",
                                 JOptionPane.ERROR_MESSAGE);
-
 
 
                     } else if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port.getText())) {
-                        JOptionPane.showMessageDialog(userInterations,
-                                "inserire un valore di porta valido",
+                        JOptionPane.showMessageDialog(userInteraction,
+                                "Port number not valid",
                                 "",
-                                JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.ERROR_MESSAGE);
 
 
-
-
-                    }
-                    else {
-
-                        pressed=true;
-                        userInterations.dispose();
-                        //boardWindow.setVisible(true);
-
+                    } else {
+                        pressed = true;
+                        System.out.println("INFO : Next button pressed");
+                        userInteraction.dispose();
                     }
                 }
             }
         });
 
-        nextButton.grabFocus();
-        nextButton.requestFocus();
-        next.requestFocus();
+        userInteraction.setVisible(true);
 
-        JOptionPane.showMessageDialog(userInterations,
-                "inserire indirizzo ip e porta del server",
-                "",
-                JOptionPane.INFORMATION_MESSAGE);
-
-        while(!pressed) {
+        while (!pressed){
+            System.out.println("INFO : Waiting for input");
         }
-        userInterations.pack();
-        return new String[]{ip.getText(),port.getText()};
+
+        System.out.println("INFO : IpPortChoice is returning");
+
+        return new String[]{ip.getText(), port.getText()};
     }
 
     @Override
     public String[] nicknameBirthdayChoice() {
 
         pressed=false;
-        userInterations =new JFrame("Nickname & birth date");
-        userInterations.setResizable(false);
-        userInterations.setLocationRelativeTo(null);
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        userInterations.setPreferredSize(new Dimension(screenSize.width/4, screenSize.height /4));
-        userInterations.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-            }
-        });
+
+        userInteraction =new JFrame("Nickname & birth date");
+        userInteraction.setResizable(false);
+        userInteraction.setLocationRelativeTo(null);
+        userInteraction.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userInteraction.setPreferredSize(new Dimension(screenSize.width/4, screenSize.height /4));
+        userInteraction.setLayout(new GridLayout(4,1));
+
+
         String[] day = new String[31];
         String[] month = new String[12];
         String[] year = new String[121];
@@ -256,38 +229,42 @@ public class GUIMethods implements ViewMethodSelection {
         for (int i = 1; i < 32; i++)
             day[i - 1] = String.valueOf(i);
 
-        userInterations.setLayout(new GridLayout(4,1));
         JPanel intro=new JPanel();
+        JPanel birthdayPanel=new JPanel();
+
         intro.setLayout(new GridBagLayout());
+
         JPanel nickname=new JPanel();
         nickname.setLayout(new FlowLayout());
-        JLabel jL= new JLabel("inserire nickname e data di nascita");
-        JPanel birthdayPanel=new JPanel();
+        JLabel jL= new JLabel("Enter your nickname and birthday");
+
         birthdayPanel.setLayout(new FlowLayout());
         JPanel nextPanel=new JPanel();
         nextPanel.setLayout(new GridBagLayout());
         JButton next=new JButton("next");
         nextPanel.add(next);
         intro.add(jL);
-        userInterations.add(intro);
-        userInterations.add(nickname);
-        userInterations.add(birthdayPanel);
-        userInterations.add(nextPanel);
-        JLabel nm=new JLabel("Nickname:");
+        userInteraction.add(intro);
+        userInteraction.add(nickname);
+        userInteraction.add(birthdayPanel);
+        userInteraction.add(nextPanel);
+        JLabel nicknameLabel =new JLabel("Nickname:");
         jL.setLayout(new GridBagLayout());
         JTextField nicknameText=new JTextField(14);
-        JComboBox dayCombo=new JComboBox(day);
-        JComboBox monthCombo=new JComboBox(month);
-        JComboBox yearCombo= new JComboBox(year);
+
+
+        JComboBox<String> dayCombo=new JComboBox<>(day);
+        JComboBox<String> monthCombo=new JComboBox<>(month);
+        JComboBox<String> yearCombo= new JComboBox<>(year);
         dayCombo.setSelectedIndex(0);
         monthCombo.setSelectedIndex(0);
         yearCombo.setSelectedIndex(98);
 
-        nickname.add(nm);
+        nickname.add(nicknameLabel);
         nickname.add(nicknameText);
-        JLabel dayLabel=new JLabel("day:");
-        JLabel monthLabel=new JLabel("month:");
-        JLabel yearLabel=new JLabel("year:");
+        JLabel dayLabel=new JLabel("Day:");
+        JLabel monthLabel=new JLabel("Month:");
+        JLabel yearLabel=new JLabel("Year:");
         birthdayPanel.add(dayLabel);
         birthdayPanel.add(dayCombo);
         birthdayPanel.add(monthLabel);
@@ -297,20 +274,17 @@ public class GUIMethods implements ViewMethodSelection {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                userInterations.dispose();
+                userInteraction.dispose();
                 pressed=true;
             }
         });
 
-        userInterations.setVisible(true);
-        userInterations.pack();
+        userInteraction.setVisible(true);
+        userInteraction.pack();
         while(!pressed){
-
+            System.out.println("INFO : Waiting for input");
         }
-        String nameAndBirthday[]=new String[2];
-        nameAndBirthday[0]=nicknameText.getText();
-        nameAndBirthday[1]=yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem()+ "/" +dayCombo.getSelectedItem();
-        return nameAndBirthday;
+        return new String[]{nicknameText.getText(), yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem()+ "/" +dayCombo.getSelectedItem()};
     }
 
     @Override
@@ -335,21 +309,19 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public int numberOfPlayers(){
-        numberOfPlayers=2;
         pressed=false;
-        userInterations =new JFrame();
-        userInterations.setLayout(new GridLayout(3,1));
-        userInterations.setSize(screenSize.width/4,screenSize.height/4);
-        userInterations.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-            }
-        });
-        userInterations.setResizable(false);
-        userInterations.setLocationRelativeTo(null);
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        userInterations.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel n=new JLabel("selezionare numero di giocatori");
+
+        numberOfPlayers=2;
+
+        userInteraction =new JFrame();
+        userInteraction.setTitle("Select number of player");
+        userInteraction.setSize(screenSize.width/4,screenSize.height/4);
+        userInteraction.setResizable(false);
+        userInteraction.setLocationRelativeTo(boardWindow);
+        userInteraction.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userInteraction.setLayout(new GridLayout(3,1));
+
+        JLabel n=new JLabel("Select number of players");
         JPanel chk=new JPanel();
         chk.setLayout(new FlowLayout());
         JPanel next=new JPanel();
@@ -357,12 +329,12 @@ public class GUIMethods implements ViewMethodSelection {
         final JCheckBox two =new JCheckBox("2");
         final JCheckBox three =new JCheckBox("3");
         JButton nextButton=new JButton("next");
-        userInterations.add(n);
+        userInteraction.add(n);
         next.add(nextButton);
         chk.add(two);
         chk.add(three);
-        userInterations.add(chk);
-        userInterations.add(next);
+        userInteraction.add(chk);
+        userInteraction.add(next);
         two.setSelected(true);
         three.setSelected(false);
 
@@ -390,25 +362,25 @@ public class GUIMethods implements ViewMethodSelection {
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                userInterations.dispose();
+                userInteraction.dispose();
                 pressed=true;
             }
         });
+
+        userInteraction.setVisible(true);
+
         while (!pressed) {
+            System.out.println("INFO : Waiting for input");
         }
-        userInterations.setVisible(true);
-        userInterations.pack();
 
-
-        return numberOfPlayers;}
+        return numberOfPlayers;
+    }
 
     @Override
     public void alert(String string) {
-         JOptionPane.showMessageDialog(userInterations,
+         JOptionPane.showMessageDialog(userInteraction,
                  string,
-                 "",
+                 "ALERT",
                  JOptionPane.WARNING_MESSAGE);
-
-
     }
 }

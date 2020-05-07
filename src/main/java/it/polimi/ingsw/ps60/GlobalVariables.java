@@ -99,6 +99,12 @@ public class GlobalVariables {
 
         Nickname("([a-z|A-Z|0-9]){3,10}+"),
 
+        NumberOfPlayer("[2-3]"),
+
+        DivinityCard("([1-9]|1[0-4])"),
+
+        Boolean1True0False("([0-1])"),
+
         /**
          * Trenta giorni ha novembre
          * con april, luglio e settembre.

@@ -30,7 +30,7 @@ public class CLIMethods implements ViewMethodSelection {
     >       1       3
     ?       2       3
     @       3       3
-     */
+    */
     @Override
     public void printBoard(String board) {
 
@@ -102,8 +102,6 @@ public class CLIMethods implements ViewMethodSelection {
         int choice = 0;
 
         for (int[] move : moves) {
-
-
             System.out.println("Press " + (choice + 1) + " in order to build on the cell: " +
                     (move[0] + 1) + "; " + (move[1] + 1));
             choice++;
@@ -187,7 +185,9 @@ public class CLIMethods implements ViewMethodSelection {
 
         GlobalVariables.DivinityCard[] allCards = GlobalVariables.DivinityCard.values();
         GlobalVariables.DivinityCard[] cards = new GlobalVariables.DivinityCard[playerNumber];
-        int choice = 0;
+
+        String choice;
+
         System.out.println("Select " + playerNumber + " cards between:");
 
         for (int i = 0; i < allCards.length; i++){
@@ -195,45 +195,45 @@ public class CLIMethods implements ViewMethodSelection {
         }
 
         Scanner input = new Scanner(System.in);
+        StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.DivinityCard.getPattern());
 
         for (int j = 0; j < playerNumber; j++) {
             System.out.println("Enter card number " + (j+1));
 
-            while (choice == 0) {
-                choice = input.nextInt();
-                if (choice > allCards.length + 1 || choice < 1){
-                    choice = 0;
+            choice = null;
+            while (choice == null) {
+                choice = input.nextLine();
+                if (!stringRegexValidation.isValid(choice)){
+                    choice = null;
                     System.out.println("Wrong input");
                 }
             }
-            cards[j] = allCards[choice - 1];
+            cards[j] = allCards[Integer.parseInt(choice) - 1];
         }
-
         return cards;
     }
 
     @Override
     public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card) {
-        int choice = 0;
+        String string = null;
+
         System.out.println("Select one card between:");
 
-        for (int i = 0; i < card.length; i++){
+        for (int i = 0; i < card.length; i++)
             System.out.println((i+1) + "- " + card[i].toString());
-        }
 
         Scanner input = new Scanner(System.in);
+        StringRegexValidation stringRegexValidation = new StringRegexValidation("([1-" + card.length + "]){1}");
 
-        while (choice == 0) {
-            choice = input.nextInt();
-            if (choice > card.length + 1 || choice < 1){
-                choice = 0;
+        while (string == null) {
+            string = input.nextLine();
+            if (!stringRegexValidation.isValid(string)){
+                string = null;
                 System.out.println("Wrong input");
             }
         }
 
-        return card[choice -1];
-
-
+        return card[Integer.parseInt(string) - 1];
     }
 
     @Override
@@ -263,12 +263,12 @@ public class CLIMethods implements ViewMethodSelection {
         }
 
         Scanner input = new Scanner(System.in);
+        buffer = new int[]{0, 0};
 
         for (int i = 0; i < 2; i++) {
             while (choice[i] == null) {
                 System.out.println("Enter the position of the" + (i + 1) + "worker");
                 System.out.println("Enter the x coordinate");
-                buffer = new int[]{0, 0};
 
                 while (buffer[0] == 0) {
                     buffer[0] = input.nextInt();
@@ -301,26 +301,43 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public boolean specialChoices(String string) {
+        String choice;
+
         System.out.println(string + "\n Enter 1 for yes or 0 for no");
 
         Scanner input = new Scanner(System.in);
+        StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.Boolean1True0False.getPattern());
 
-        return input.nextBoolean();
+        choice = null;
+        while (choice == null){
+            choice = input.nextLine();
+            if (!stringRegexValidation.isValid(choice)){
+                choice =null;
+                System.out.println("Wrong input");
+            }
+        }
+
+        return Boolean.parseBoolean(choice);
     }
+
     @Override
     public int numberOfPlayers(){
-        int numberOfPlayers;
-
-        flushInput();
+        String numberOfPlayers;
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter the number of player");
+        System.out.println("Enter the number of player. [2 or 3]");
+        StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.NumberOfPlayer.getPattern());
 
-        do {
-            numberOfPlayers = scanner.nextInt();
-        }while(numberOfPlayers!=2 && numberOfPlayers!=3);
+        numberOfPlayers = null;
+        while (numberOfPlayers == null){
+            numberOfPlayers = scanner.nextLine();
+            if (!stringRegexValidation.isValid(numberOfPlayers)){
+                numberOfPlayers = null;
+                System.out.println("Wrong input");
+            }
+        }
 
-        return numberOfPlayers;
+        return Integer.parseInt(numberOfPlayers);
     }
 
     @Override
