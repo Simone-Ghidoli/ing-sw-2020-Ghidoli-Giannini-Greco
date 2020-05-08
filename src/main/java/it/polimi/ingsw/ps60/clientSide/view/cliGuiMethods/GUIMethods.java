@@ -62,12 +62,6 @@ public class GUIMethods implements ViewMethodSelection {
 
             }
         });
-
-
-
-
-
-
     }
 
     @Override

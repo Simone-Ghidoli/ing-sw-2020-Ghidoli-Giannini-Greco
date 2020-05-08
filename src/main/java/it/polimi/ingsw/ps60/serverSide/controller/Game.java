@@ -90,6 +90,15 @@ public class Game {
      * divinity cards picked
      */
     public void selectDivinityCard() {
+        int choice = game.getPlayerInGame().getNode().getValue().getServerThread().specialchoice("" +
+                "Do you want to play with divinity cards?");
+
+        if (choice == 0){
+            for (int i = 0; i < game.getPlayersNumber(); i++){
+                game.getPlayerById(GlobalVariables.IdPlayer.values()[i]).setDivinityCard(GlobalVariables.DivinityCard.NONE);
+            }
+            return;
+        }
 
         GlobalVariables.DivinityCard[] divinityCards = game.getPlayerInGame().getNode().getValue().getServerThread().divinity_Choice();
 

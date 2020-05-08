@@ -47,7 +47,7 @@ public class GlobalVariables {
         APOLLO("01"), ARTEMIS("02"), ATHENA("03", false),
         ATLAS("04"), DEMETER("05"), HEPHAESTUS("06"), MINOTAUR("08"),
         PAN("09"), PROMETHEUS("10"), ZEUS("30"), TRITON("29"),
-        CHRONUS("16"), HESTIA("21"), POSEIDON("27");
+        CHRONUS("16"), HESTIA("21"), POSEIDON("27"), NONE("00");
 
         private boolean bitException;
         private final String sourcePosition;
@@ -101,7 +101,7 @@ public class GlobalVariables {
 
         NumberOfPlayer("[2-3]"),
 
-        DivinityCard("([1-9]|1[0-4])"),
+        DivinityCard("([1-9]|1[0-5])"),
 
         Boolean1True0False("([0-1])"),
 

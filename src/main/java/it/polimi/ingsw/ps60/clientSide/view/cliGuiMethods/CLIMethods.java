@@ -267,7 +267,7 @@ public class CLIMethods implements ViewMethodSelection {
 
         for (int i = 0; i < 2; i++) {
             while (choice[i] == null) {
-                System.out.println("Enter the position of the" + (i + 1) + "worker");
+                System.out.println("\nEnter the position of the " + (i + 1) + " worker");
                 System.out.println("Enter the x coordinate");
 
                 while (buffer[0] == 0) {
