@@ -190,7 +190,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Some methods for Client-Server communication. Methods can send/receive string, integers or special objects
-     * Some methods are used to convert normal types to serialized types and the other way around
+     * Some methods are used to convert normal types to serializable types and the other way around
      */
     public void sendPositions(SerializedInteger[] positions) {
         try {

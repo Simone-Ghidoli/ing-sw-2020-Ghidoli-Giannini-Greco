@@ -249,7 +249,7 @@ public class CLIMethods implements ViewMethodSelection {
         System.out.print("    '  '  '  '  '");
 
         for (int i = 0; i < 5; i++) {
-            System.out.print("\n\n" + (i + 1) + "-  ");
+            System.out.print("\n" + (i + 1) + "-  ");
 
             for (int j = 0; j < 5; j ++) {
 
@@ -263,9 +263,9 @@ public class CLIMethods implements ViewMethodSelection {
         }
 
         Scanner input = new Scanner(System.in);
-        buffer = new int[]{0, 0};
 
         for (int i = 0; i < 2; i++) {
+            buffer=new int[2];
             while (choice[i] == null) {
                 System.out.println("\nEnter the position of the " + (i + 1) + " worker");
                 System.out.println("Enter the x coordinate");
@@ -291,8 +291,9 @@ public class CLIMethods implements ViewMethodSelection {
 
                 buffer[1] = buffer[1] - 1;
 
-                if (!listContains.isContained(buffer))//todo la stessa cosa di prima
+                if (!listContains.isContained(buffer)) {//todo la stessa cosa di prima
                     choice[i] = buffer;
+                }
             }
         }
 
