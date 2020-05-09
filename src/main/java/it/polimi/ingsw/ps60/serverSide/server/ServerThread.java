@@ -43,6 +43,10 @@ public class ServerThread extends Thread {
         }
     }
 
+    public String getPlayerBound() {
+        return playerBound;
+    }
+
     public void lossMessage(String message){
         sendString("loss-"+message);
     }
@@ -62,7 +66,7 @@ public class ServerThread extends Thread {
         choice=receiveInteger();
         return choice;//Restituisce il numero inserito dall`utente (Quindi la posizione del vettore con la casella in cui costruire)
     }
-    public int specialchoice(String message){
+    public int specialChoice(String message){
         int choice=-1;
         sendString("spc-"+message);
         choice=receiveInteger();
@@ -81,7 +85,7 @@ public class ServerThread extends Thread {
         nick_birth[1]=receiveString();//Birth
         return nick_birth;
     }
-    public int[][] setWorkers(List<int[]> takenPos) throws InterruptedException {//Restituisce un vettore con le posizioni dei 2 workers
+    public int[][] setWorkers(List<int[]> takenPos) {//Restituisce un vettore con le posizioni dei 2 workers
         sendString("workset");
         List<SerializedInteger> temp;
         temp=(convertPositionListToSerializedInteger(takenPos));
@@ -89,15 +93,15 @@ public class ServerThread extends Thread {
         SerializedInteger[] appoggio=receivePositions();
         return convertSerializedToInteger_workers(appoggio);
     }
-    public GlobalVariables.DivinityCard[] divinity_Choice(){
+    public GlobalVariables.DivinityCard[] divinityChoice(){
         sendString("dv_choice");
         sendInt(list.size());
         return receiveCards();
     }
-    public GlobalVariables.DivinityCard[] divinity_Selection(GlobalVariables.DivinityCard[] ingame){
+    public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] divinityCards){
         sendString("div_sel");
-        sendCards(ingame);
-        return receiveCards();
+        sendCards(divinityCards);
+        return receiveCards()[0];
     }
     public void sendBoard(char[] board){
         String result=board.toString();

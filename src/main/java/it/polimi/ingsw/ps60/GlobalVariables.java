@@ -101,7 +101,7 @@ public class GlobalVariables {
 
         NumberOfPlayer("[2-3]"),
 
-        DivinityCard("([1-9]|1[0-5])"),
+        DivinityCard("([1-9]|1[0-4])"),
 
         Boolean1True0False("([0-1])"),
 

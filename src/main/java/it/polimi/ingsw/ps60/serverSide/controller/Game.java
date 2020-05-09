@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -28,15 +29,13 @@ public class Game {
         game = new Board(strings);
 
         ArrayList<ServerThread> serverThreads = server.getSocketList();
-        String string;
+        CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
 
         for (int i = 0; i < strings.length; i++) {
-            string = server.getNickBirth()[i][0];
-            for (int k = 0; k < strings.length; k++){
-                if (string.equals(strings[k])){
-                    game.getPlayerById(GlobalVariables.IdPlayer.values()[k]).setServerThread(serverThreads.get(i));
-                }
-            }
+            while (!serverThreads.get(i).getPlayerBound().equals(circularListIterator.getNode().getValue().getNickname()))
+                circularListIterator.nextNode();
+            circularListIterator.getNode().getValue().setServerThread(serverThreads.get(i));
+            circularListIterator.nextNode();
         }
 
         selectWorkersPositions();
@@ -61,7 +60,7 @@ public class Game {
 
         try {
             for (int i = 0; i < nicknamesAndBirthdays.length; i++) {
-                System.out.println(nicknamesAndBirthdays[i][0] + " " + nicknamesAndBirthdays[i][1]);
+                System.out.println("INFO : Client connected number " + i + " : " + nicknamesAndBirthdays[i][0] + " " + nicknamesAndBirthdays[i][1]);
                 dateSelected = simpleDateFormat.parse(nicknamesAndBirthdays[i][1]);
                 for (int j = i - 1; j >= 0; j--){
                     date = simpleDateFormat.parse(nicknamesAndBirthdays[j][1]);
@@ -81,6 +80,9 @@ public class Game {
         for (int k = 0; k < nicknames.length; k++)
             nicknames[k] = nicknamesAndBirthdays[k][0];
 
+        for (int i = 0; i < nicknames.length; i++)
+            System.out.println("INFO : Player number " + i + " : " + nicknames[i]);
+
         return nicknames;
     }
 
@@ -90,7 +92,7 @@ public class Game {
      * divinity cards picked
      */
     public void selectDivinityCard() {
-        int choice = game.getPlayerInGame().getNode().getValue().getServerThread().specialchoice("" +
+        int choice = game.getPlayerInGame().getNode().getValue().getServerThread().specialChoice("" +
                 "Do you want to play with divinity cards?");
 
         if (choice == 0){
@@ -100,34 +102,28 @@ public class Game {
             return;
         }
 
-        GlobalVariables.DivinityCard[] divinityCards = game.getPlayerInGame().getNode().getValue().getServerThread().divinity_Choice();
+        GlobalVariables.DivinityCard[] divinityCards = game.getPlayerInGame().getNode().getValue().getServerThread().divinityChoice();
 
-        GlobalVariables.DivinityCard divinityCard;
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
         circularListIterator.nextNode();
+        GlobalVariables.DivinityCard selected;
         GlobalVariables.DivinityCard[] divinityCards1;
         int k;
 
-        for (int i = 0; i < divinityCards.length - 1; i++){
-            divinityCard = circularListIterator.getNode().getValue().getServerThread().divinity_Selection(divinityCards)[0];
-
-            circularListIterator.getNode().getValue().setDivinityCard(divinityCard);
+        for (int i = 0; i < game.getPlayersNumber(); i++){
+            selected = circularListIterator.getNode().getValue().getServerThread().divinitySelection(divinityCards);
+            circularListIterator.getNode().getValue().setDivinityCard(selected);
 
             divinityCards1 = new GlobalVariables.DivinityCard[divinityCards.length - 1];
             k = 0;
-
-            for (GlobalVariables.DivinityCard card : divinityCards) {
-                if (divinityCard != card) {
-                    divinityCards1[k] = card;
+            for (GlobalVariables.DivinityCard divinityCard : divinityCards) {
+                if (divinityCard != selected) {
+                    divinityCards1[k] = divinityCard;
                     k++;
                 }
             }
-
             divinityCards = divinityCards1;
-            circularListIterator.nextNode();
         }
-
-        circularListIterator.getNode().getValue().setDivinityCard(divinityCards[0]);
     }
 
     /**

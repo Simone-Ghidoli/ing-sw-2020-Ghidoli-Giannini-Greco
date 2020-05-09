@@ -10,7 +10,7 @@ public class DemeterTurnController extends BaseTurnController {
             int choice = player.getServerThread().buildMessage(buildChoices);
             player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
 
-            if (player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice()) == 1) {
+            if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice()) == 1) {
                 buildChoices.remove(choice);
                 choice = player.getServerThread().buildMessage(buildChoices);
                 player.getDivinityStrategy().setBuilding(buildChoices.get(choice));

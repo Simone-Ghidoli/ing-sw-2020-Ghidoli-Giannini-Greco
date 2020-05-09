@@ -10,8 +10,8 @@ public class PrometheusTurnController extends BaseTurnController {
         int specialChoice = 2;
         int choice;
 
-        if (player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice().split("\n")[0]) == 1) {
-            specialChoice = player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice().split("\n")[1]);
+        if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice().split("\n")[0]) == 1) {
+            specialChoice = player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice().split("\n")[1]);
             player.setWorkerMoved(player.getWorker(specialChoice));
             List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
             if (buildChoices.size() != 0) {
