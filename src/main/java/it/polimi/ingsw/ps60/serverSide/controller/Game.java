@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Date;
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class Game {
                 dateSelected = simpleDateFormat.parse(nicknamesAndBirthdays[i][1]);
                 for (int j = i - 1; j >= 0; j--){
                     date = simpleDateFormat.parse(nicknamesAndBirthdays[j][1]);
-                    if (date.compareTo(dateSelected) > 0){
+                    if (date.compareTo(dateSelected) < 0){
                         strings = nicknamesAndBirthdays[i];
                         nicknamesAndBirthdays[i] = nicknamesAndBirthdays[j];
                         nicknamesAndBirthdays[j] = strings;
@@ -123,6 +123,7 @@ public class Game {
                 }
             }
             divinityCards = divinityCards1;
+            circularListIterator.nextNode();
         }
     }
 

@@ -10,19 +10,19 @@ import it.polimi.ingsw.ps60.serverSide.ServerStarter;
 
 public class Launcher {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         firstSelection();
     }
 
-    private static void firstSelection() throws IOException, InterruptedException {
+    private static void firstSelection() throws InterruptedException {
 
         System.out.println("Enter 0 for server, 1 for client");
 
-        switch (new Scanner(System.in).nextInt()) {
-            case 0:
+        switch (new Scanner(System.in).nextLine()) {
+            case "0":
                 ServerStarter.start();
                 break;
-            case 1:
+            case "1":
                 clientSelection();
                 break;
             default:
@@ -34,11 +34,11 @@ public class Launcher {
     private static void clientSelection() throws InterruptedException {
         System.out.println("Enter 0 for GUI, 1 for CLI");
 
-        switch (new Scanner(System.in).nextInt()){
-            case 0:
+        switch (new Scanner(System.in).nextLine()){
+            case "0":
                 Starter.start(new GUIMethods());
                 break;
-            case 1:
+            case "1":
                 Starter.start(new CLIMethods());
                 break;
             default:

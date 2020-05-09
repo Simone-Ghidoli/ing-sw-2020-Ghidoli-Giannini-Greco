@@ -6,10 +6,10 @@ import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
 public class Player {
 
-    private GlobalVariables.IdPlayer id;
-    private String nickname;
+    private final GlobalVariables.IdPlayer id;
+    private final String nickname;
     private GlobalVariables.DivinityCard divinityCard;
-    private Worker[] workers;
+    private final Worker[] workers;
     private GlobalVariables.Colour colour;
     private Worker workerMoved;
     private boolean buildByWorker;
@@ -27,7 +27,7 @@ public class Player {
         this.nickname = nickname;
         workers = new Worker[2];
         for (int x = 0; x < 2; x++) {
-            workers[x] = new Worker(idPlayer.getIdWorkers()[x], this);
+            workers[x] = new Worker(this);
         }
         buildByWorker = false;
         serverThread = null;
