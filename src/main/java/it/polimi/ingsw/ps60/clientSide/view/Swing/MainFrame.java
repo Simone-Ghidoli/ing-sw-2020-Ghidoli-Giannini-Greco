@@ -6,88 +6,133 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class MainFrame extends JFrame {
-    private JFrame boardWindow;
-    private JFrame userInterations;
-    private JFrame setupNicknameBirthday;
-    private JFrame number;
+public class MainFrame extends JPanel {
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    boolean pressed=false;
-    private int numberOfPlayers;
-
-
-    private final JButton[][] tiles = new JButton[5][5];
-
-    public static void main(String[] args) {
-
-        MainFrame mainFrame = new MainFrame();
-
-    }
-
+    private JButton[] jButtons = new JButton[25];
+    private JLabel board;
+    private JPanel grid;
+    private JPanel players;
+    JButton player1=new JButton("Player1");
+    JButton player2=new JButton("Player2");
+    JButton player3=new JButton("Player3");
 
     public MainFrame() {
-        {
-            number =new JFrame();
-            number.setLayout(new GridLayout(3,1));
-            number.addWindowListener(new WindowAdapter() {
-                public void windowClosing(WindowEvent windowEvent){
-                    System.exit(0);
-                }
-            });
-            number.setSize(screenSize.width/4,screenSize.height/4);
-            number.setResizable(false);
-            number.setLocationRelativeTo(null);
-            number.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            JLabel n=new JLabel("selezionare numero di giocatori");
-            JPanel chk=new JPanel();
-            chk.setLayout(new FlowLayout());
-            JPanel next=new JPanel();
-            next.setLayout(new GridBagLayout());
-            final JCheckBox two =new JCheckBox("2");
-            final JCheckBox three =new JCheckBox("3");
-            JButton nextButton=new JButton("next");
-            number.add(n);
-            next.add(nextButton);
-            chk.add(two);
-            chk.add(three);
-            number.add(chk);
-            number.add(next);
-            number.setVisible(true);
-            two.setSelected(true);
-            three.setSelected(false);
-            number.setVisible(true);
+            super();
+            setLayout(new GridBagLayout());
+            ImageIcon imagineBoard = new ImageIcon("src/resources/board/SantoriniBoard.png");
+            Image scaleImageBoard = imagineBoard.getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
+            board = new JLabel(new ImageIcon(scaleImageBoard));
+            grid = new JPanel();
+            grid.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*47/64));
+            grid.setLayout(new GridLayout(5,5));
+            grid.setOpaque(false);
+            players=new JPanel();
+            players.setPreferredSize(new Dimension(screenSize.width*17/58,screenSize.height));
+            players.setOpaque(false);
+            players.setLayout(new GridLayout(3,1));
+            player1.setOpaque(false);
+            player2.setOpaque(false);
+            player3.setOpaque(false);
+            JPanel player1Panel= new JPanel();
+            player1Panel.setOpaque(false);
+            JPanel player2Panel= new JPanel();
+            player2Panel.setOpaque(false);
+            JPanel player3Panel= new JPanel();
+            player3Panel.setOpaque(false);
+            player1Panel.add(player1);
+            player2Panel.add(player2);
+            player3Panel.add(player3);
+            players.add(player1Panel);
+            players.add(player2Panel);
+            players.add(player3Panel);
+            JPanel divinityCards=new JPanel();
+            divinityCards.setPreferredSize(new Dimension(screenSize.width*17/58,screenSize.height));
+            divinityCards.setOpaque(false);
+            divinityCards.setLayout(new GridLayout(2,3));
+            ImageIcon divinityCard = new ImageIcon("src/resources/godCards/01.png");
+            Image scaleImageDivinityCard = divinityCard.getImage().getScaledInstance(screenSize.width*6/58, screenSize.height/6, Image.SCALE_SMOOTH);
+            JLabel divCardLabel = new JLabel(new ImageIcon(scaleImageDivinityCard));
+            divinityCards.add(divCardLabel);
+            JPanel workers=new JPanel();
+            workers.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*2/17));
+            workers.setOpaque(false);
+            workers.setLayout(new FlowLayout());
+            JPanel info=new JPanel();
+            info.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*2/17));
+            info.setOpaque(false);
+            info.setLayout(new BorderLayout());
+            board.setLayout(new BorderLayout());
+            board.add(grid,BorderLayout.CENTER);
+            board.add(players,BorderLayout.WEST);
+            board.add(divinityCards,BorderLayout.EAST);
+            board.add(workers,BorderLayout.NORTH);
+            board.add(info,BorderLayout.SOUTH);
 
-            class ActionHandler implements ActionListener {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    JCheckBox checkbox = (JCheckBox) event.getSource();
-                    if (checkbox == two) {
-                        two.setSelected(true);
-                        three.setSelected(false);
-                        numberOfPlayers=2;
 
-
-                    } else if (checkbox == three) {
-                        two.setSelected(false);
-                        three.setSelected(true);
-                        numberOfPlayers=3;
-
-                    }
-                }
+            for (int i = 0; i < 25; i++){
+                jButtons[i] = new JButton(String.valueOf(i + 1));
+                jButtons[i].setContentAreaFilled(false);
+                jButtons[i].setOpaque(false);
+                grid.add(jButtons[i]);
             }
-            ActionListener a =new ActionHandler();
-            two.addActionListener(a);
-            three.addActionListener(a);
-            nextButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    number.dispose();
-                    pressed=true;
-                }
-            });
-            while (!pressed) {
-            }
-            number.pack();
-        }
+            add(board);
     }
+    public JButton getButton(int i){
+        return jButtons[i];
+    }
+    public int[] getCoordOfButton(JButton jButton){
+        if(jButton.equals(jButtons[0]))
+            return new int[]{0,0};
+        else if (jButton.equals(jButtons[1]))
+            return new int[]{0,1};
+        else if (jButton.equals(jButtons[2]))
+            return new int[]{0,2};
+        else if (jButton.equals(jButtons[3]))
+            return new int[]{0,3};
+        else if (jButton.equals(jButtons[4]))
+            return new int[]{0,4};
+        else if (jButton.equals(jButtons[5]))
+            return new int[]{1,0};
+        else if (jButton.equals(jButtons[6]))
+            return new int[]{1,1};
+        else if (jButton.equals(jButtons[7]))
+            return new int[]{1,2};
+        else if (jButton.equals(jButtons[8]))
+            return new int[]{1,3};
+        else if (jButton.equals(jButtons[9]))
+            return new int[]{1,4};
+        else if (jButton.equals(jButtons[10]))
+            return new int[]{2,0};
+        else if (jButton.equals(jButtons[11]))
+            return new int[]{2,1};
+        else if (jButton.equals(jButtons[12]))
+            return new int[]{2,2};
+        else if (jButton.equals(jButtons[13]))
+            return new int[]{2,3};
+        else if (jButton.equals(jButtons[14]))
+            return new int[]{2,4};
+        else if (jButton.equals(jButtons[15]))
+            return new int[]{3,0};
+        else if (jButton.equals(jButtons[16]))
+            return new int[]{3,1};
+        else if (jButton.equals(jButtons[17]))
+            return new int[]{3,2};
+        else if (jButton.equals(jButtons[18]))
+            return new int[]{3,3};
+        else if (jButton.equals(jButtons[19]))
+            return new int[]{3,4};
+        else if (jButton.equals(jButtons[20]))
+            return new int[]{4,0};
+        else if (jButton.equals(jButtons[21]))
+            return new int[]{4,1};
+        else if (jButton.equals(jButtons[22]))
+            return new int[]{4,2};
+        else if (jButton.equals(jButtons[23]))
+            return new int[]{4,3};
+        else if (jButton.equals(jButtons[24]))
+            return new int[]{4,4};
+        else return null;
+    }
+
+
 }

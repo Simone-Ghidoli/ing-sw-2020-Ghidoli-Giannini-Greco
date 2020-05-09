@@ -2,6 +2,8 @@ package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 
+import it.polimi.ingsw.ps60.clientSide.view.Swing.MainFrame;
+import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 
@@ -11,15 +13,16 @@ import java.awt.event.*;
 
 import java.util.List;
 
-
-
 public class GUIMethods implements ViewMethodSelection {
 
     private JFrame boardWindow;
     private boolean pressed;
     private JFrame userInteraction;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private MainFrame santorini;
+    private JButton[] jButtons = new JButton[25];
     private int numberOfPlayers;
+    private int numberOfWorkers;
 
     public GUIMethods(){
         SwingUtilities.invokeLater(new Runnable() {
@@ -32,33 +35,10 @@ public class GUIMethods implements ViewMethodSelection {
                 boardWindow.setSize(screenSize.width, screenSize.height);
                 boardWindow.setLocationRelativeTo(null);
                 boardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                boardWindow.setLayout(new BorderLayout());
-                ImageIcon imagineBoard = new ImageIcon("src/resources/board/SantoriniBoard.png");
-                Image scaleImageBoard = imagineBoard.getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
-                JPanel grid = new JPanel();
-
-                JLabel board = new JLabel(new ImageIcon(scaleImageBoard));
-
-
-
-                board.setLayout(new GridBagLayout());
-                board.add(grid);
-                grid.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*47/64));
-
-                grid.setLayout(new GridLayout(5,5));
-                grid.setOpaque(false);
-
-                JButton[] jButtons = new JButton[25];
-                for (int i = 0; i < 25; i++){
-                    jButtons[i] = new JButton(String.valueOf(i + 1));
-                    jButtons[i].setContentAreaFilled(false);
-                    jButtons[i].setOpaque(false);
-                    grid.add(jButtons[i]);
-                }
-
-                boardWindow.add(board, BorderLayout.CENTER);
-                boardWindow.pack();
-                boardWindow.setVisible(false);
+                Container c=boardWindow.getContentPane();
+                santorini =new MainFrame();
+                c.add(santorini);
+                boardWindow.setVisible(true);
 
             }
         });
@@ -184,15 +164,12 @@ public class GUIMethods implements ViewMethodSelection {
                 }
             }
         });
-
         userInteraction.setVisible(true);
 
         while (!pressed){
             System.out.println("INFO : Waiting for input");
         }
-
         System.out.println("INFO : IpPortChoice is returning");
-
         return new String[]{ip.getText(), port.getText()};
     }
 
@@ -200,7 +177,6 @@ public class GUIMethods implements ViewMethodSelection {
     public String[] nicknameBirthdayChoice() {
 
         pressed=false;
-
         userInteraction =new JFrame("Nickname & birth date");
         userInteraction.setResizable(false);
         userInteraction.setLocationRelativeTo(null);
@@ -292,8 +268,66 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int[][] firstSetWorkers(List<int[]> posiiblePositions) {
-        return new int[0][];
+    public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
+        numberOfWorkers=0;
+        int[][] choice = new int[2][];
+        final ListContains listContains = new ListContains(impossiblePositions);
+        class Listener implements ActionListener{
+            JButton button;
+            JPanel panel;
+
+            public Listener(JPanel p, JButton button){
+                this.button=button;
+                panel=p;
+            }
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(!listContains.isContained(santorini.getCoordOfButton(button)))
+                button.setEnabled(false);
+                numberOfWorkers++;
+
+            }
+        }
+        for (int i = 0; i < 25; i++) {
+            jButtons[i] = santorini.getButton(i);
+            if(jButtons[i].isEnabled())
+                jButtons[i].addActionListener(new Listener(santorini,jButtons[i]));
+        }
+
+
+        while(numberOfWorkers!=1){
+            System.out.println("INFO : Waiting for input");
+
+        }
+        for (int i = 0; i < 25; i++) {
+            if (!jButtons[i].isEnabled()){
+                choice[0]=santorini.getCoordOfButton(jButtons[i]);
+                if(GlobalVariables.game.getPlayerInGame().getNode().getValue().equals(GlobalVariables.IdPlayer.PLAYER1)) {
+                    jButtons[i].setIcon(new ImageIcon("src/resources/board/Blue pawn.png"));
+                }
+                jButtons[i].setText("worker 1");
+                //jButtons[i].setBackground();
+                jButtons[i].setEnabled(true);
+
+            }
+        }
+        while (numberOfWorkers!=2) {
+            System.out.println("INFO : Waiting for input");
+        }
+        for (int i = 0; i < 25; i++) {
+            if (!jButtons[i].isEnabled()) {
+                choice[1] = santorini.getCoordOfButton(jButtons[i]);
+                jButtons[i].setText("worker 2");
+                jButtons[i].setEnabled(true);
+            }
+            jButtons[i].removeActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+
+                }
+            });
+        }
+        return choice;
     }
 
     @Override

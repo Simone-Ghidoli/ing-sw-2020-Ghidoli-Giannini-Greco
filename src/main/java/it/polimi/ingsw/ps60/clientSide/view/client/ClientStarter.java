@@ -23,7 +23,6 @@ public class ClientStarter{
     private static int port;
     private static String address;
     private static ViewMethodSelection methodSelection;
-
     public ClientStarter(int port, String ipAddress, ViewMethodSelection viewMethodSelection){
         messagesFromServer= new ArrayList<>();
         ClientStarter.port =port;
