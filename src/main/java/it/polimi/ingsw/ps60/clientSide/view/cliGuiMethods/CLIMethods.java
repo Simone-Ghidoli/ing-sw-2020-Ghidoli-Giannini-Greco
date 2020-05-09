@@ -294,6 +294,8 @@ public class CLIMethods implements ViewMethodSelection {
                 if (!listContains.isContained(buffer)) {//todo la stessa cosa di prima
                     choice[i] = buffer;
                 }
+                else
+                	System.out.println("Position already taken");
             }
         }
 
