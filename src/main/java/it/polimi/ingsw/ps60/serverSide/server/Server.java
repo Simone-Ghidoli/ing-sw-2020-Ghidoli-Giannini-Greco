@@ -63,6 +63,7 @@ public  class Server{
         while (clientList.size() < numberOfPlayers) {//Collega i socket fino a quando si arriva al numero corretto di giocatori
             try {
                 socket = serverSocket.accept();
+                System.out.println("client accepted");
             } catch (IOException e) {
                 if (!socket.isClosed())
                     try {
