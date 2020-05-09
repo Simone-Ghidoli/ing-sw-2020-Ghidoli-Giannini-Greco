@@ -293,12 +293,12 @@ public class CLIMethods implements ViewMethodSelection {
 
                 if (!listContains.isContained(buffer)) {//todo la stessa cosa di prima
                     choice[i] = buffer;
+                    impossiblePositions.add(buffer);
                 }
                 else
                 	System.out.println("Position already taken");
             }
         }
-
         return choice;
     }
 
@@ -320,7 +320,7 @@ public class CLIMethods implements ViewMethodSelection {
             }
         }
 
-        return Boolean.parseBoolean(choice);
+        return choice.equals("1");
     }
 
     @Override
