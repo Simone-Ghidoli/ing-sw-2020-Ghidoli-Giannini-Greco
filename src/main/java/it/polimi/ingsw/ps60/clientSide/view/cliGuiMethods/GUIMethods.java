@@ -282,16 +282,24 @@ public class GUIMethods implements ViewMethodSelection {
             }
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(!listContains.isContained(santorini.getCoordOfButton(button)))
+            if(numberOfWorkers<2) {
                 button.setEnabled(false);
                 numberOfWorkers++;
+            }
 
             }
         }
         for (int i = 0; i < 25; i++) {
             jButtons[i] = santorini.getButton(i);
-            if(jButtons[i].isEnabled())
-                jButtons[i].addActionListener(new Listener(santorini,jButtons[i]));
+            if(listContains.isContained(santorini.getCoordOfButton(jButtons[i]))) {
+             jButtons[i].setText("set isn't possible");
+            }
+            if(!listContains.isContained(santorini.getCoordOfButton(jButtons[i]))) {
+                if (jButtons[i].isEnabled())
+                    jButtons[i].addActionListener(new Listener(santorini, jButtons[i]));
+                if(numberOfWorkers==2)
+                    break;
+            }
         }
 
 
@@ -302,11 +310,7 @@ public class GUIMethods implements ViewMethodSelection {
         for (int i = 0; i < 25; i++) {
             if (!jButtons[i].isEnabled()){
                 choice[0]=santorini.getCoordOfButton(jButtons[i]);
-                if(GlobalVariables.game.getPlayerInGame().getNode().getValue().equals(GlobalVariables.IdPlayer.PLAYER1)) {
-                    jButtons[i].setIcon(new ImageIcon("src/resources/board/Blue pawn.png"));
-                }
                 jButtons[i].setText("worker 1");
-                //jButtons[i].setBackground();
                 jButtons[i].setEnabled(true);
 
             }
