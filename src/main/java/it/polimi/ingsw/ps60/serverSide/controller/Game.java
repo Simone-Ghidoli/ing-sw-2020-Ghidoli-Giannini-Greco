@@ -131,9 +131,7 @@ public class Game {
      * This method will asks to all the player where to set its workers
      */
     public void selectWorkersPositions() throws InterruptedException {
-
         int[][][] positions = new int[game.getPlayersNumber()][][];
-
         List<int[]> list = new ArrayList<>();
 
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
@@ -151,9 +149,9 @@ public class Game {
     }
 
     public void setWorkersPositions(int[][][] positions) {
-        for (int[][] position : positions) {
+        for (int j = 0; j < positions.length; j++) {
             for (int i = 0; i < 2; i++) {
-                game.getPlayerById(GlobalVariables.IdPlayer.values()[i]).getWorker(i).moveWorker(game.getCellByPosition(position[i]));
+                game.getPlayerById(GlobalVariables.IdPlayer.values()[j]).getWorker(i).moveWorker(game.getCellByPosition(positions[j][i]));
             }
         }
     }
