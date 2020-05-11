@@ -12,6 +12,8 @@ public class MainFrame extends JPanel {
     private JLabel board;
     private JPanel grid;
     private JPanel players;
+    private JPanel info;
+    private JTextField information;
     JButton player1=new JButton("Player1");
     JButton player2=new JButton("Player2");
     JButton player3=new JButton("Player3");
@@ -57,10 +59,12 @@ public class MainFrame extends JPanel {
             workers.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*2/17));
             workers.setOpaque(false);
             workers.setLayout(new FlowLayout());
-            JPanel info=new JPanel();
+            information=new JTextField();
+            info=new JPanel();
             info.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*2/17));
             info.setOpaque(false);
-            info.setLayout(new BorderLayout());
+            info.setLayout(new GridBagLayout());
+            info.add(information);
             board.setLayout(new BorderLayout());
             board.add(grid,BorderLayout.CENTER);
             board.add(players,BorderLayout.WEST);
@@ -79,6 +83,9 @@ public class MainFrame extends JPanel {
     }
     public JButton getButton(int i){
         return jButtons[i];
+    }
+    public JTextField getJtextSouth(){
+        return information;
     }
     public int[] getCoordOfButton(JButton jButton){
         if(jButton.equals(jButtons[0]))

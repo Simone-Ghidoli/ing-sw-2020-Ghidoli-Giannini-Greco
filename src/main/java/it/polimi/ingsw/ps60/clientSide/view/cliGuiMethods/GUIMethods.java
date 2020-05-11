@@ -39,6 +39,7 @@ public class GUIMethods implements ViewMethodSelection {
                 santorini =new MainFrame();
                 c.add(santorini);
                 boardWindow.setVisible(true);
+                santorini.getJtextSouth().setText("wait the others players");
 
             }
         });
@@ -67,13 +68,15 @@ public class GUIMethods implements ViewMethodSelection {
         
         userInteraction = new JFrame();
         userInteraction.setTitle("Choose server");
+        ImageIcon imagineBoard = new ImageIcon("src/resources/board/SantoriniBox.png");
+        Image scaleImageBoard = imagineBoard.getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
         userInteraction.setSize(screenSize.width / 5, screenSize.height / 3);
         userInteraction.setResizable(false);
         userInteraction.setLocationRelativeTo(boardWindow);
         userInteraction.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInteraction.setAlwaysOnTop(true);
 
-        JLabel box = new JLabel();
+        JLabel box = new JLabel(new ImageIcon(scaleImageBoard));
         box.setLayout(new GridLayout(4, 1));
         JPanel empty = new JPanel();
         JPanel ipPanel = new JPanel();
@@ -289,6 +292,8 @@ public class GUIMethods implements ViewMethodSelection {
 
             }
         }
+        santorini.getJtextSouth().setText("select positions of yours workers, if there is label 'set isn't possible' " +
+                "you can't set the worker there because another worker's player enjoys that position");
         for (int i = 0; i < 25; i++) {
             jButtons[i] = santorini.getButton(i);
             if(listContains.isContained(santorini.getCoordOfButton(jButtons[i]))) {
@@ -307,6 +312,7 @@ public class GUIMethods implements ViewMethodSelection {
             System.out.println("INFO : Waiting for input");
 
         }
+
         for (int i = 0; i < 25; i++) {
             if (!jButtons[i].isEnabled()){
                 choice[0]=santorini.getCoordOfButton(jButtons[i]);
@@ -315,6 +321,7 @@ public class GUIMethods implements ViewMethodSelection {
 
             }
         }
+        santorini.getJtextSouth().setText("a worker has been placed");
         while (numberOfWorkers!=2) {
             System.out.println("INFO : Waiting for input");
         }
@@ -324,13 +331,9 @@ public class GUIMethods implements ViewMethodSelection {
                 jButtons[i].setText("worker 2");
                 jButtons[i].setEnabled(true);
             }
-            jButtons[i].removeActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
 
-                }
-            });
         }
+        santorini.getJtextSouth().setText("both workers have been placed.. wait the others players");
         return choice;
     }
 
