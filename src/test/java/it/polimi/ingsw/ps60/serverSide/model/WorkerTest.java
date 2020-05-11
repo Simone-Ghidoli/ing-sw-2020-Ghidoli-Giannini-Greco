@@ -16,17 +16,13 @@ import static org.junit.Assert.*;
 
 public class WorkerTest {
 
-    private GlobalVariables.IdWorker idWorker;
     private Player owner;
     private Worker worker;
     private Cell cell;
 
     @Before
     public void setupWorker(){
-        idWorker = GlobalVariables.IdWorker.WORKER1;
         owner = new Player(GlobalVariables.IdPlayer.PLAYER1, "vincent");
-
-        worker = new Worker(idWorker, owner);
 
         cell = new Cell(new int[]{1, 2},null);
     }
@@ -34,11 +30,6 @@ public class WorkerTest {
     @After
     public void tearDown(){
         worker = null;
-    }
-
-    @Test
-    public void getId_correctOutput(){
-        assertSame(worker.getId(), idWorker);
     }
 
     @Test

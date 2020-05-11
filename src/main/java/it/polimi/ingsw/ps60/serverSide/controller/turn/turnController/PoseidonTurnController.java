@@ -26,7 +26,7 @@ public class PoseidonTurnController  extends BaseTurnController{
         player.setWorkerMoved(player.getWorker(i));
 
         for (int j = 0; j < 3; j++){
-            if (player.getServerThread().specialchoice(player.getDivinityStrategy().getSpecialChoice()) == 0)
+            if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice()) == 0)
                 break;
             buildingSection();
         }

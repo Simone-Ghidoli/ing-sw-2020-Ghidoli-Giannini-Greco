@@ -1,29 +1,17 @@
 package it.polimi.ingsw.ps60.serverSide.model;
 
-import it.polimi.ingsw.ps60.GlobalVariables;
-
 public class Worker {
 
-    private GlobalVariables.IdWorker id;
     private Cell cellPosition;
-    private Player owner;
+    private final Player owner;
     private Cell OldCell;
 
     /**
-     * @param id    associate an univocal id to the worker
      * @param owner associate to the worker his player
      */
-    public Worker(GlobalVariables.IdWorker id, Player owner) {
-        this.id = id;
+    public Worker(Player owner) {
         this.owner = owner;
         cellPosition = null;
-    }
-
-    /**
-     * @return return the id associated to the worker
-     */
-    public GlobalVariables.IdWorker getId() {
-        return id;
     }
 
     /**

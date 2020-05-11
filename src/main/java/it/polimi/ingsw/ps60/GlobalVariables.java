@@ -9,22 +9,16 @@ public class GlobalVariables {
     public static final ReentrantLock frassino=new ReentrantLock();
 
     public enum IdPlayer {
-        PLAYER1(new IdWorker[]{IdWorker.WORKER1, IdWorker.WORKER2}, Colour.RED, "Red "),
-        PLAYER2(new IdWorker[]{IdWorker.WORKER3, IdWorker.WORKER4}, Colour.BLUE, "Blue "),
-        PLAYER3(new IdWorker[]{IdWorker.WORKER5, IdWorker.WORKER6}, Colour.GREEN, "Green ");
+        PLAYER1(Colour.RED, "Red "),
+        PLAYER2(Colour.BLUE, "Blue "),
+        PLAYER3(Colour.GREEN, "Green ");
 
-        private final IdWorker[] idWorkers;
         private final Colour colour;
         private final String sourcePawn;
 
-        IdPlayer(IdWorker[] idWorkers, Colour colour, String sourcePawn) {
-            this.idWorkers = idWorkers;
+        IdPlayer(Colour colour, String sourcePawn) {
             this.colour = colour;
             this.sourcePawn = "src/resources/board/" + sourcePawn + "pawn.png";
-        }
-
-        public IdWorker[] getIdWorkers() {
-            return idWorkers;
         }
 
         public Colour getColour() {
@@ -34,13 +28,6 @@ public class GlobalVariables {
         public String getSourcePawn() {
             return sourcePawn;
         }
-    }
-
-
-    public enum IdWorker {
-        WORKER1, WORKER2,
-        WORKER3, WORKER4,
-        WORKER5, WORKER6
     }
 
     public enum DivinityCard implements Serializable {
@@ -101,7 +88,7 @@ public class GlobalVariables {
 
         NumberOfPlayer("[2-3]"),
 
-        DivinityCard("([1-9]|1[0-5])"),
+        DivinityCard("([1-9]|1[0-4])"),
 
         Boolean1True0False("([0-1])"),
 
