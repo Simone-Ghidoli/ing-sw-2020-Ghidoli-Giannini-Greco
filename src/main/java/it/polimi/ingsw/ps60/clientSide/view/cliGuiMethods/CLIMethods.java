@@ -303,8 +303,10 @@ public class CLIMethods implements ViewMethodSelection {
                     choice[i] = buffer;
                     impossiblePositions.add(buffer);
                 }
-                else
-                	System.out.println("Position already taken");
+                else {
+                    System.out.println("Position already taken");
+                    choice[i]=null;
+                }
             }
         }
         return choice;
