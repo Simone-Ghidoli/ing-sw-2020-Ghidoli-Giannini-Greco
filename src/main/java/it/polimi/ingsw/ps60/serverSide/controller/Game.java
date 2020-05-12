@@ -45,6 +45,11 @@ public class Game {
             game.getPlayerInGame().getNode().getValue().getDivinityStrategy().getTurnController().turn();
         }
 
+        for (ServerThread serverThread : game.getPlayerWinner().getServerThread().getList()){
+            serverThread.sendString(game.getPlayerWinner().getNickname() + "have want the game. 30L");
+            serverThread.disconnection();
+        }
+
     }
 
     /**
