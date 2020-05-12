@@ -36,7 +36,8 @@ public class CLIMethodsTest {
         int[][] choice;
         CLIMethods cli=new CLIMethods();
         List<int[]>impossiblePosition=new ArrayList<>();
-        String in="8\n3\n4\n4\n5";
+        String in="1\n1\n4\n5\n5\n4";
+        //String in="4\n5\n5\n4";
         System.setIn(new ByteArrayInputStream(in.getBytes()));
         impossiblePosition.add(new int[]{0,0});
         impossiblePosition.add(new int[]{0,1});

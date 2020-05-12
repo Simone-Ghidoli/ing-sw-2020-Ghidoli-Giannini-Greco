@@ -1,8 +1,10 @@
 package it.polimi.ingsw.ps60.serverSide.server;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.serverSide.model.Player;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -192,6 +194,8 @@ public class ServerThread extends Thread {
 
     public List<SerializedInteger>[] convertIntegerToSerialized_move(List<int[]>[] possible_choice){
         List<SerializedInteger>[] list=new ArrayList[possible_choice.length];
+        list[0]=new ArrayList<>();
+        list[1]=new ArrayList<>();
         for(int[] elem:possible_choice[0]){
             list[0].add(new SerializedInteger(elem));
         }
@@ -204,7 +208,7 @@ public class ServerThread extends Thread {
     public SerializedInteger[] convertIntegerToSerialized_workers(int[][] positions){ //Riceve sempre un vettore con le posizioni di 2 workers.
         SerializedInteger[] temp=new SerializedInteger[2];
         for(int i=0;i<2;i++){
-            temp[i].serialized=positions[i];
+            temp[i]=new SerializedInteger(positions[i]);
         }
         return temp;
     }
@@ -254,12 +258,10 @@ public class ServerThread extends Thread {
     }
 
     public void disconnection(){
-        ServerThread disconnected=null;
-        for(int j=0;j<list.size();j++){
-        list.get(j).writer.println("User "+playerBound+" left the game. The match is over.");
+        for(ServerThread elem:list){
+            elem.writer.println("disc-User "+playerBound+" left the game. The match is over.");
         }
         System.out.println("Communication error. Exit...");
         System.exit(0);
     }
-
 }

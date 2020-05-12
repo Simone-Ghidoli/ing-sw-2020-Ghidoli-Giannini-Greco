@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps60.clientSide.view.client;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.*;
 
@@ -212,8 +213,10 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
             List<SerializedInteger>[] stalin;
             stalin = (List<SerializedInteger>[]) in_obj.readObject();
             return stalin;
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             disconnection("Communication error, logging out");
+        } catch(ClassNotFoundException e_1){
+            System.out.println("non trovo la classe");
         }
         return null;
     }//Per  il movement.
@@ -250,9 +253,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     public List<int[]>[] convertTypePosition(List<SerializedInteger>[] positions) {//Restituisce position come Lista di interi e non SerializedInteger
         List<int[]>[] appoggio = new ArrayList[2];
+        appoggio[0]=new ArrayList<>();
+        appoggio[1]=new ArrayList<>();
         for (int i = 0; i < 2; i++) {
             for (int k = 0; k < positions[i].size(); k++) {
-                appoggio[i].add(positions[k].get(k).serialized);
+                appoggio[i].add(positions[i].get(k).serialized);
             }
         }
         return appoggio;
