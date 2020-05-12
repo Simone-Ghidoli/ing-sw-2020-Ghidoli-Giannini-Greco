@@ -3,8 +3,6 @@ package it.polimi.ingsw.ps60.clientSide.view.client;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
@@ -100,7 +98,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     public void movement() {//Interagisce con l'utente per fargli decidere la giocata
         List<SerializedInteger>[] stalin;
-        stalin = recieveListArray();//recupero le posizioni
+        stalin = receiveListArray();//recupero le posizioni
         SerializedInteger[] workers = receiveWorkers();//Riceve la posizione dei due signori
         int play = methodSelection.moveChoice(convertTypePosition(stalin), convertSerialized_to_integer(workers));//output della giocata fatta dall'utente
         sendInt(play);
@@ -209,7 +207,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
     }
 
-    public List<SerializedInteger>[] recieveListArray() {
+    public List<SerializedInteger>[] receiveListArray() {
         try {
             List<SerializedInteger>[] stalin;
             stalin = (List<SerializedInteger>[]) in_obj.readObject();

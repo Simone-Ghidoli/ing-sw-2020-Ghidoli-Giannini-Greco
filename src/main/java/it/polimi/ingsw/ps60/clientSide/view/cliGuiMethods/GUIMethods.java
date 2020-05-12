@@ -5,12 +5,9 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.Swing.MainFrame;
 import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
 import java.util.List;
 
 public class GUIMethods implements ViewMethodSelection {
@@ -318,7 +315,9 @@ public class GUIMethods implements ViewMethodSelection {
                 choice[0]=santorini.getCoordOfButton(jButtons[i]);
                 jButtons[i].setText("worker 1");
                 jButtons[i].setEnabled(true);
-
+                ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.PLAYER1.getSourcePawn());
+                Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(jButtons[i].getWidth(), jButtons[i].getHeight(), Image.SCALE_SMOOTH);
+                jButtons[i].setIcon(new ImageIcon(scaleImageWorker));
             }
         }
         santorini.getJtextSouth().setText("a worker has been placed");

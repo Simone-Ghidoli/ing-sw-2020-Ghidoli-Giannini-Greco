@@ -24,7 +24,7 @@ public class Game {
      * This class initialize the board and every turn
      * @param server is the instance of the server of the game
      */
-    public Game(@NotNull Server server) throws InterruptedException {
+    public Game(@NotNull Server server) {
         String[] strings = sort(server.getNickBirth());
         game = new Board(strings);
 
@@ -130,7 +130,7 @@ public class Game {
     /**
      * This method will asks to all the player where to set its workers
      */
-    public void selectWorkersPositions() throws InterruptedException {
+    public void selectWorkersPositions() {
         int[][][] positions = new int[game.getPlayersNumber()][][];
         List<int[]> list = new ArrayList<>();
 
