@@ -75,8 +75,6 @@ public class Board {
         return null;
     }
 
-
-
     /**
      *
      * @return return only the player in game

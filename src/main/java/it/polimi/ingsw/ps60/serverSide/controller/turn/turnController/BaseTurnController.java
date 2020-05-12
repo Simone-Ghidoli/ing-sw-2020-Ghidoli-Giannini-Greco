@@ -26,10 +26,10 @@ public class BaseTurnController implements TurnController {
         if (moveChoices[0].size() != 0 || moveChoices[1].size() != 0) {
             int choice = player.getServerThread().moveMessage(moveChoices,
                     new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});
-            if (moveChoices[0].size() >= choice + 1)
+            if (moveChoices[0].size() > choice)
                 player.getDivinityStrategy().setMovement(new int[][]{new int[]{0, 0}, moveChoices[0].get(choice)});
             else {
-                choice = choice - moveChoices[0].size() + 1;
+                choice = choice - moveChoices[0].size();
                 player.getDivinityStrategy().setMovement(new int[][]{new int[]{1, 0}, moveChoices[1].get(choice)});
             }
         } else {
