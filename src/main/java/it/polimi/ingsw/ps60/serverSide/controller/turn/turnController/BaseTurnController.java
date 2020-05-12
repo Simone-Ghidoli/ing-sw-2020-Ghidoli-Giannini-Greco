@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnController;
 
 import it.polimi.ingsw.ps60.serverSide.model.Player;
+import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
+
 import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
@@ -11,8 +13,11 @@ public class BaseTurnController implements TurnController {
     public void turn(){
         player = game.getPlayerInGame().getNode().getValue();
 
+        sendBoardToClient();
         movementSection();
+        sendBoardToClient();
         buildingSection();
+        sendBoardToClient();
         endTurnSection();
     }
 
@@ -48,4 +53,9 @@ public class BaseTurnController implements TurnController {
         player.getDivinityStrategy().setEndTurn();
     }
 
+    public void sendBoardToClient(){
+        for (ServerThread serverThread : game.getPlayerInGame().getNode().getValue().getServerThread().getList()){
+            serverThread.sendBoard(game.getCellToSend());
+        }
+    }
 }

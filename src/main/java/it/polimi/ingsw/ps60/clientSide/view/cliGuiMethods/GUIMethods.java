@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class GUIMethods implements ViewMethodSelection {
 
@@ -59,7 +60,7 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public String[] ipPortChoices() {
+    public String[] ipPortChoices() throws InterruptedException {
 
         pressed = false;
         
@@ -168,6 +169,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         while (!pressed){
             System.out.println("INFO : Waiting for input");
+            TimeUnit.MILLISECONDS.sleep(100);
         }
         System.out.println("INFO : IpPortChoice is returning");
         return new String[]{ip.getText(), port.getText()};
