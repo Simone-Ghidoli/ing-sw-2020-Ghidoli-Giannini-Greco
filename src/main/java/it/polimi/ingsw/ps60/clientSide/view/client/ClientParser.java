@@ -78,6 +78,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                     } else if (message.contains("disc-")) {
                         String s = message.replace("disc-", "");
                         disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
+                        return;
                     } else if (message.contains("loss-")) {
                         String s = message.replace("loss-", "");
                         loss(s);

@@ -1,12 +1,11 @@
 package it.polimi.ingsw.ps60.serverSide.server;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.model.Player;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -54,7 +53,7 @@ public class ServerThread extends Thread {
     }
 
     public int moveMessage(List<int[]>[] possible_choice,int[][] positionworkers) {//Comunica con l'utente per decidere quale muratore muovere e dove
-        int choice=-1;
+        int choice;
         sendString("move");
         sendPositionsArray(convertIntegerToSerialized_move(possible_choice));//Invio solo la parte delle mosse che mi serve(ovvero quelle associate al worker da muovere)
         sendPositionWorkers(convertIntegerToSerialized_workers(positionworkers));//PositionWorkers viene inserito in input quando viene chiamato il metodo.
@@ -62,20 +61,20 @@ public class ServerThread extends Thread {
         return choice;//Restituisce il numero inserito dall'utente (quindi la posizione del vettore con la casella in cui costruire)
     }
     public int buildMessage(List<int[]> possible_choice){//Comunica con l`utente per decidere dove costruire
-        int choice=-1;
+        int choice;
         sendString("build");
         sendPositionsList(convertPositionListToSerializedInteger(possible_choice));
         choice=receiveInteger();
         return choice;//Restituisce il numero inserito dall`utente (Quindi la posizione del vettore con la casella in cui costruire)
     }
     public int specialChoice(String message){
-        int choice=-1;
+        int choice;
         sendString("spc-"+message);
         choice=receiveInteger();
         return choice;
     }
     public int numberOfPlayers(){//ask how much players gonna play
-        int n=-1;
+        int n;
         sendString("nPlayers");
         n=receiveInteger();
         return n;
@@ -106,7 +105,13 @@ public class ServerThread extends Thread {
         return receiveCards()[0];
     }
     public void sendBoard(char[] board){
-        String result=board.toString();
+        try{
+            TimeUnit.MILLISECONDS.sleep(100);
+        }
+        catch(InterruptedException e) {
+            disconnection();
+        }
+        String result= new String(board);
         sendString("pr-"+result);
     }
 

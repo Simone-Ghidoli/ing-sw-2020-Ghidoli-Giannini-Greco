@@ -48,7 +48,7 @@ public class CLIMethods implements ViewMethodSelection {
 
         for (int i = 0; i < 25; i++) {
             if (i % 5 == 0)
-                System.out.print("\n\n" + ((i / 5)+1) + "-  ");
+                System.out.print("\n" + ((i / 5)+1) + "-  ");
 
             if (boardToPrint[i] < 53) {
                 System.out.print(boardToPrint[i]);
@@ -65,17 +65,18 @@ public class CLIMethods implements ViewMethodSelection {
             System.out.print(GlobalVariables.Colour.RESET.getString());
             System.out.print("  ");
         }
+        System.out.println("\n");
     }
 
     public int printPossibleMoves(List<int[]>[] moves, int[][]positionsWorkers){
         int choice = 0;
 
         for (int i = 0; i < moves.length; i++){
-            System.out.println("Worker " + (i+1) + " is on " + positionsWorkers[i][0] + "; " + positionsWorkers[i][1]);
+            System.out.println("Worker " + (i+1) + " is on " + (positionsWorkers[i][0]+1) + "; " + (positionsWorkers[i][1]+1));
             System.out.println("Available choice for worker " + (i+1));
             for(int j = 0; j < moves[i].size(); j++){
-                System.out.println("Press " + (choice + 1) + " in order to move in the cell: " +
-                        (moves[i].get(j)[0] + 1) + "; " + (moves[i].get(j)[1] + 1));
+                System.out.println("Press " + (choice + 1) + " in order to move in the cell: [" +
+                        (moves[i].get(j)[0] + 1) + ", " + (moves[i].get(j)[1] + 1)+"]");
                 choice++;
             }
         }
@@ -102,8 +103,8 @@ public class CLIMethods implements ViewMethodSelection {
         int choice = 0;
 
         for (int[] move : moves) {
-            System.out.println("Press " + (choice + 1) + " in order to build on the cell: " +
-                    (move[0] + 1) + "; " + (move[1] + 1));
+            System.out.println("Press " + (choice + 1) + " in order to build on the cell: [" +
+                    (move[0] + 1) + ", " + (move[1] + 1)+"]");
             choice++;
         }
         return choice;
