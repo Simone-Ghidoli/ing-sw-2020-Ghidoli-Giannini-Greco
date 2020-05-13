@@ -13,6 +13,7 @@ public class MainFrame extends JPanel {
     private JPanel grid;
     private JPanel players;
     private JPanel info;
+    private JPanel divinityCards;
     private JTextField information;
     JButton player1=new JButton("Player1");
     JButton player2=new JButton("Player2");
@@ -47,19 +48,15 @@ public class MainFrame extends JPanel {
             players.add(player1Panel);
             players.add(player2Panel);
             players.add(player3Panel);
-            JPanel divinityCards=new JPanel();
+            divinityCards=new JPanel();
             divinityCards.setPreferredSize(new Dimension(screenSize.width*17/58,screenSize.height));
             divinityCards.setOpaque(false);
-            divinityCards.setLayout(new GridLayout(2,3));
-            ImageIcon divinityCard = new ImageIcon("src/resources/godCards/01.png");
-            Image scaleImageDivinityCard = divinityCard.getImage().getScaledInstance(screenSize.width*6/58, screenSize.height/6, Image.SCALE_SMOOTH);
-            JLabel divCardLabel = new JLabel(new ImageIcon(scaleImageDivinityCard));
-            divinityCards.add(divCardLabel);
             JPanel workers=new JPanel();
             workers.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*2/17));
             workers.setOpaque(false);
             workers.setLayout(new FlowLayout());
             information=new JTextField();
+            information.setEditable(false);
             info=new JPanel();
             info.setPreferredSize(new Dimension(screenSize.width*12/29,screenSize.height*2/17));
             info.setOpaque(false);
@@ -86,6 +83,9 @@ public class MainFrame extends JPanel {
     }
     public JTextField getJtextSouth(){
         return information;
+    }
+    public JPanel getGodsPanel(){
+        return divinityCards;
     }
     public int[] getCoordOfButton(JButton jButton){
         if(jButton.equals(jButtons[0]))
