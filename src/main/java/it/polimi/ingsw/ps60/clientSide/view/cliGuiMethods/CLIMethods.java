@@ -85,7 +85,7 @@ public class CLIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int moveChoice(List<int[]>[] moves, int[][]positionsWorkers) {
+    public int moveChoice(List<int[]>[] moves, int[][] positionsWorkers) {
         System.out.println("Select where to move");
         int i = printPossibleMoves(moves, positionsWorkers);
         flushInput();

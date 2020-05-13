@@ -18,7 +18,7 @@ public interface ViewMethodSelection {
 
     GlobalVariables.DivinityCard[] cardChoices(int playerNumber); //qui verranno date le carte divinità al 1 giocatore e ne sceglierà n = numero giocatori
 
-    GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card); //scelta carta divinità singolo giocatore
+    GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] cards); //scelta carta divinità singolo giocatore
 
     int[][] firstSetWorkers(List<int[]> impossiblePositions); //posizionamento pedine prima di iniziare la partita
 

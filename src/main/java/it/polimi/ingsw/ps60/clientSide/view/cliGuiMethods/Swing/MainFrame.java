@@ -1,10 +1,6 @@
-package it.polimi.ingsw.ps60.clientSide.view.Swing;
+package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.Swing;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class MainFrame extends JPanel {
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -78,6 +74,11 @@ public class MainFrame extends JPanel {
             }
             add(board);
     }
+
+    public JButton[] getjButtons() {
+        return jButtons;
+    }
+
     public JButton getButton(int i){
         return jButtons[i];
     }

@@ -2,12 +2,13 @@ package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 
-import it.polimi.ingsw.ps60.clientSide.view.Swing.MainFrame;
+import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.Swing.MainFrame;
 import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -16,10 +17,8 @@ public class GUIMethods implements ViewMethodSelection {
     private JFrame boardWindow;
     private boolean pressed;
     private JFrame userInteraction;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private MainFrame santorini;
-    private JButton[] jButtonsBoard = new JButton[25];
-    private JButton[] godCard=new JButton[14];
     private int numberOfPlayers;
     private int numberOfWorkers;
 
@@ -34,8 +33,8 @@ public class GUIMethods implements ViewMethodSelection {
                 boardWindow.setSize(screenSize.width, screenSize.height);
                 boardWindow.setLocationRelativeTo(null);
                 boardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                Container c=boardWindow.getContentPane();
-                santorini =new MainFrame();
+                Container c = boardWindow.getContentPane();
+                santorini = new MainFrame();
                 c.add(santorini);
                 boardWindow.setVisible(true);
                 santorini.getJtextSouth().setText("wait the others players");
@@ -61,7 +60,7 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public String[] ipPortChoices() throws InterruptedException {
+    public String[] ipPortChoices() {
 
         pressed = false;
         
@@ -160,7 +159,6 @@ public class GUIMethods implements ViewMethodSelection {
 
                     } else {
                         pressed = true;
-                        System.out.println("INFO : Next button pressed");
                         userInteraction.dispose();
                     }
                 }
@@ -170,9 +168,13 @@ public class GUIMethods implements ViewMethodSelection {
 
         while (!pressed){
             System.out.println("INFO : Waiting for input");
-            TimeUnit.MILLISECONDS.sleep(100);
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        System.out.println("INFO : IpPortChoice is returning");
+
         return new String[]{ip.getText(), port.getText()};
     }
 
@@ -262,45 +264,89 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public GlobalVariables.DivinityCard[] cardChoices(int playerNumber) {
-        this.numberOfPlayers=playerNumber;
-        JPanel gods=santorini.getGodsPanel();
-        class Listener implements ActionListener{
-            JButton button;
-            JPanel panel;
+        List<GlobalVariables.DivinityCard> divinityCards = new ArrayList<>();
+        GlobalVariables.DivinityCard[] divinityCardsArray= new GlobalVariables.DivinityCard[playerNumber];
 
-            public Listener(JPanel p, JButton button){
-                this.button=button;
-                panel=p;
-            }
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if(numberOfPlayers>0) {
-                    button.setEnabled(false);
-                    numberOfPlayers--;
-                }
-
-            }
+        for (int i = 0; i < playerNumber; i++){
+            divinityCards.add(jOptionDivinitySelection(divinityCards));
         }
 
-        gods.setLayout(new GridLayout(8,2));
-        for(int i=0;i<16;i++){
+
+        for (int i = 0; i < playerNumber; i++){
+            divinityCardsArray[i] = divinityCards.get(i);
+        }
+
+        return divinityCardsArray;
+        //        this.numberOfPlayers=playerNumber;
+//        JPanel gods=santorini.getGodsPanel();
+//        class Listener implements ActionListener{
+//            JButton button;
+//            JPanel panel;
+//
+//            public Listener(JPanel p, JButton button){
+//                this.button=button;
+//                panel=p;
+//            }
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//                if(numberOfPlayers>0) {
+//                    button.setEnabled(false);
+//                    numberOfPlayers--;
+//                }
+//
+//            }
+//        }
+//
+//        gods.setLayout(new GridLayout(8,2));
+//        for(int i=0;i<16;i++){
+//            ImageIcon imagineGod = new ImageIcon(GlobalVariables.DivinityCard.values()[i].getSourcePosition());
+//            Image scaleImageGod = imagineGod.getImage().getScaledInstance(godCard[i].getWidth(), godCard[i].getHeight(), Image.SCALE_SMOOTH);
+//            godCard[i].setIcon(new ImageIcon(scaleImageGod));
+//            godCard[i].addActionListener(new Listener(gods, godCard[i]));
+//            gods.add(godCard[i]);
+//        }
+//        while(numberOfPlayers>0){
+//            System.out.println("INFO : Waiting for input");
+//        }
+//        for(int i=0;i<16;i++) {
+//            if(!godCard[i].isEnabled()){
+//
+//            }
+//        }
+    }
+
+    private GlobalVariables.DivinityCard jOptionDivinitySelection(List<GlobalVariables.DivinityCard> divinityCards){
+
+        JButton[] godCard = new JButton[14];
+
+        for(int i=0;i<14;i++){
+            godCard[i] = new JButton();
+            godCard[i].setPreferredSize(new Dimension(40, 40));
             ImageIcon imagineGod = new ImageIcon(GlobalVariables.DivinityCard.values()[i].getSourcePosition());
-            Image scaleImageGod = imagineGod.getImage().getScaledInstance(godCard[i].getWidth(), godCard[i].getHeight(), Image.SCALE_SMOOTH);
-            godCard[i].setIcon(new ImageIcon(scaleImageGod));
-            godCard[i].addActionListener(new Listener(gods, godCard[i]));
-            gods.add(godCard[i]);
-        }
-        while(numberOfPlayers>0){
-            System.out.println("INFO : Waiting for input");
-        }
-        for(int i=0;i<16;i++) {
-            if(!godCard[i].isEnabled()){
-
-            }
+//            Image scaleImageGod = imagineGod.getImage().getScaledInstance(godCard[i].getWidth(), godCard[i].getHeight(), Image.SCALE_SMOOTH);
+            godCard[i].setIcon(imagineGod);
         }
 
+        Object[] options = new Object[14];
 
-        return new GlobalVariables.DivinityCard[0];
+        System.arraycopy(godCard, 0, options, 0, 14);
+
+        JOptionPane pane = new JOptionPane();
+
+        pane.setOptions(options);
+
+        JDialog dialog = pane.createDialog("");
+        dialog.show();
+
+        Object selectedValue = pane.getValue();
+
+        for(int counter = 0, maxCounter = options.length;
+            counter < maxCounter; counter++) {
+            if(options[counter].equals(selectedValue))
+                return GlobalVariables.DivinityCard.values()[counter + 1];
+        }
+
+        return GlobalVariables.DivinityCard.values()[0];
     }
 
     @Override
@@ -321,80 +367,67 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
-        numberOfWorkers=0;
         int[][] choice = new int[2][];
+        numberOfWorkers = 0;
         final ListContains listContains = new ListContains(impossiblePositions);
-        class Listener implements ActionListener{
-            JButton button;
-            JPanel panel;
 
-            public Listener(JPanel p, JButton button){
-                this.button=button;
-                panel=p;
+        class Listener implements ActionListener {
+            final JButton button;
+            final int[][] choice;
+
+            public Listener(int[][] choice, JButton button) {
+                this.button = button;
+                this.choice = choice;
             }
+
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-            if(numberOfWorkers<2) {
-                button.setEnabled(false);
-                numberOfWorkers++;
-            }
-
+                if (numberOfWorkers < 2) {
+                    button.setEnabled(false);
+                    choice[numberOfWorkers] = santorini.getCoordOfButton(button);
+                    numberOfWorkers++;
+                    button.setText("");
+                    ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[0].getSourcePawn());
+                    Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(button.getWidth() / 2, button.getHeight() / 2, Image.SCALE_SMOOTH);
+                    button.setIcon(new ImageIcon(scaleImageWorker));
+                    button.setFocusPainted(false);
+                }
             }
         }
-        santorini.getJtextSouth().setText("select positions of yours workers, if there is label 'set isn't possible' " +
-                "you can't set the worker there because another worker's player enjoys that position");
+
+        santorini.getJtextSouth().setText("Select positions of yours workers. Only free positions are allowed");
+
         for (int i = 0; i < 25; i++) {
-            jButtonsBoard[i] = santorini.getButton(i);
-            if(listContains.isContained(santorini.getCoordOfButton(jButtonsBoard[i]))) {
-             jButtonsBoard[i].setText("set isn't possible");
-            }
-            if(!listContains.isContained(santorini.getCoordOfButton(jButtonsBoard[i]))) {
-                if (jButtonsBoard[i].isEnabled())
-                    jButtonsBoard[i].addActionListener(new Listener(santorini, jButtonsBoard[i]));
-                if(numberOfWorkers==2)
-                    break;
-            }
+
+            if (listContains.isContained(santorini.getCoordOfButton(santorini.getButton(i)))) {
+                santorini.getButton(i).setText("");
+                ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[0].getSourcePawn());
+                Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH);
+                santorini.getButton(i).setIcon(new ImageIcon(scaleImageWorker));
+            } else
+                santorini.getButton(i).addActionListener(new Listener(choice, santorini.getButton(i)));
         }
 
-
-        while(numberOfWorkers!=1){
+        while (numberOfWorkers != 2) {
             System.out.println("INFO : Waiting for input");
-
-        }
-
-        for (int i = 0; i < 25; i++) {
-            if (!jButtonsBoard[i].isEnabled()){
-                choice[0]=santorini.getCoordOfButton(jButtonsBoard[i]);
-                jButtonsBoard[i].setText("");
-                jButtonsBoard[i].setEnabled(true);
-                ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[numberOfPlayers].getSourcePawn());
-                Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(jButtonsBoard[i].getWidth()/2, jButtonsBoard[i].getHeight()/2, Image.SCALE_SMOOTH);
-                jButtonsBoard[i].setIcon(new ImageIcon(scaleImageWorker));
+            try {
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
-        santorini.getJtextSouth().setText("a worker has been placed");
-        while (numberOfWorkers!=2) {
-            System.out.println("INFO : Waiting for input");
-        }
-        for (int i = 0; i < 25; i++) {
-            if (!jButtonsBoard[i].isEnabled()) {
-                choice[1] = santorini.getCoordOfButton(jButtonsBoard[i]);
-                jButtonsBoard[i].setText("");
-                jButtonsBoard[i].setEnabled(true);
-                ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[numberOfPlayers].getSourcePawn());
-                Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(jButtonsBoard[i].getWidth()/2, jButtonsBoard[i].getHeight()/2, Image.SCALE_SMOOTH);
-                jButtonsBoard[i].setIcon(new ImageIcon(scaleImageWorker));
-                numberOfPlayers++;
-            }
 
-        }
-        santorini.getJtextSouth().setText("both workers have been placed.. wait the others players");
+        santorini.getJtextSouth().setText("Waiting for the others players");
         return choice;
     }
 
     @Override
     public boolean specialChoices(String string) {
-        return true;
+        Object[] options = {"Yes", "No"};
+        int n = JOptionPane.showOptionDialog(null, string, "Special choice", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        return n == JOptionPane.YES_OPTION;
     }
 
     @Override
