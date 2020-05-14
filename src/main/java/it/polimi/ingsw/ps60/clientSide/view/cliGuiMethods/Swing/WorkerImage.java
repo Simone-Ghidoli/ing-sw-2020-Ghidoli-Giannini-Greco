@@ -6,13 +6,13 @@ import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WorkerImage {
 
     public static void main(String[] args) {
         ViewMethodSelection v = new GUIMethods();
-        v.cardChoices(3);
+        System.out.println(Arrays.toString(v.cardChoices(2)));
     }
-
-
 }

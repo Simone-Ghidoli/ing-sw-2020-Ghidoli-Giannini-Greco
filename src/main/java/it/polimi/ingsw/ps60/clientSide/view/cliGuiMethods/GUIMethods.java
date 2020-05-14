@@ -93,10 +93,23 @@ public class GUIMethods implements ViewMethodSelection {
 
         while (nicknameBirthday[1] == null) {
 
-            nicknameBirthday[1] = JOptionPane.showInputDialog("Enter your birthday");
+            JTextField dayText = new JTextField(3);
+            JTextField monthText = new JTextField(3);
+            JTextField yearText = new JTextField(4);
+            JPanel message = new JPanel();
+            message.add(dayText);
+            message.add(new JLabel("/"));
+            message.add(monthText);
+            message.add(new JLabel("/"));
+            message.add(yearText);
 
-            if (nicknameBirthday[1] == null || !new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern()).isValid(nicknameBirthday[1]))
-                nicknameBirthday[1] = null;
+            int result = JOptionPane.showConfirmDialog(null, message, "Enter birthday", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                nicknameBirthday[1] = yearText.getText() + "/" + monthText.getText() + "/" + dayText.getText();
+
+                if (!new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern()).isValid(nicknameBirthday[1]))
+                    nicknameBirthday[1] = null;
+            }
         }
 
         return nicknameBirthday;
@@ -163,12 +176,11 @@ public class GUIMethods implements ViewMethodSelection {
         for (JButton jButton : godButtons)
             panel.add(jButton);
 
-        JOptionPane pane = new JOptionPane("Select a divinity card", JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_OPTION, null, okButton, okButton[0]);
+        JOptionPane pane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.YES_NO_OPTION, null, okButton, okButton[0]);
 
         okButton[0].addActionListener(new ListenerOkButton(pane, okButton[0]));
-        pane.add(panel);
 
-        JDialog dialog = pane.createDialog("Divinity card");
+        JDialog dialog = pane.createDialog("Select " + playerNumber + " divinity cards");
         pane.selectInitialValue();
         dialog.setVisible(true);
         dialog.dispose();
@@ -177,18 +189,14 @@ public class GUIMethods implements ViewMethodSelection {
 
         GlobalVariables.DivinityCard[] divinityCardsToReturn = new GlobalVariables.DivinityCard[playerNumber];
 
+        if (selectedValue == null)
+            return cardChoices(playerNumber);
+
         for (int i = 0; i < playerNumber; i++) {
             divinityCardsToReturn[i] = list.get(i);
         }
 
-        if (selectedValue == null)
-            return cardChoices(playerNumber);
-
-
-        if (okButton[0].equals(selectedValue))
-            return divinityCardsToReturn;
-
-        return GlobalVariables.DivinityCard.values();
+        return divinityCardsToReturn;
     }
 
     @Override
@@ -234,15 +242,12 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
         int[][] choice = new int[2][];
-        final JButton okButton[] = new JButton[]{new JButton("OK"), new JButton("Cancel")};
-        numberOfWorkers = 0;
         JPanel jPanel=new JPanel();
+        final JButton[] okButton = new JButton[]{new JButton("OK"), new JButton("Cancel")};
+        numberOfWorkers = 0;
         final ListContains listContains = new ListContains(impossiblePositions);
-        final JOptionPane pane = new JOptionPane("confirm", JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, okButton, okButton[0]);
-        pane.setVisible(false);
-        final JDialog dialog = pane.createDialog("do you confirm first worker's positions?");
-        pane.selectInitialValue();
-        dialog.setVisible(false);
+        final JOptionPane pane = new JOptionPane("Confirm", JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, okButton, okButton[0]);
+        final JDialog dialog = pane.createDialog("Do you confirm the selected positions?");
 
         class Listener implements ActionListener {
             final JButton button;
@@ -259,21 +264,16 @@ public class GUIMethods implements ViewMethodSelection {
                     button.setEnabled(false);
                     choice[numberOfWorkers] = santorini.getCoordOfButton(button);
                     numberOfWorkers++;
-                    button.setText("");
                     ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[0].getSourcePawn());
-                    Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(button.getWidth() / 2, button.getHeight() / 2, Image.SCALE_SMOOTH);
-                    button.setIcon(new ImageIcon(scaleImageWorker));
-                    button.setFocusPainted(false);
+                    button.setIcon(new ImageIcon(imagineWorker.getImage().getScaledInstance(button.getWidth() / 2, button.getHeight() / 2, Image.SCALE_SMOOTH);));
                     if(numberOfWorkers==2){
                         pane.setVisible(true);
                         dialog.setVisible(true);
-
-
-
                     }
                 }
             }
         }
+
         class ListenerOkButton implements ActionListener{
             final JOptionPane pane;
             final JButton button;
@@ -285,10 +285,10 @@ public class GUIMethods implements ViewMethodSelection {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(numberOfWorkers==2)
                     pane.setValue(button);
             }
         }
+
         class ListenerCancelButton implements ActionListener{
             final JOptionPane pane;
             final JButton button;
@@ -300,14 +300,11 @@ public class GUIMethods implements ViewMethodSelection {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                pane.setValue(button);
             }
         }
 
-                santorini.getJtextSouth().setText("Select positions of yours workers. Only free positions are allowed");
-
-
-
+        alert("Select positions of yours workers. Only free positions are allowed");
 
         for (int i = 0; i < 25; i++) {
 
@@ -319,14 +316,13 @@ public class GUIMethods implements ViewMethodSelection {
             } else
                 santorini.getButton(i).addActionListener(new Listener(choice, santorini.getButton(i)));
         }
+
         okButton[0].addActionListener(new ListenerOkButton(pane,okButton[0]));
         okButton[1].addActionListener(new ListenerCancelButton(pane,okButton[1]));
+
         for (JButton jButton : okButton)
             jPanel.add(jButton);
         pane.add(jPanel);
-
-
-
 
         dialog.dispose();
 
