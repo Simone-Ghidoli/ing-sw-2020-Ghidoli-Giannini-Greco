@@ -262,6 +262,13 @@ public class ServerThread extends Thread {
         playerBound =s;
     }
 
+    public void win(){
+        String message=playerBound+" won the game. 30L pliz";
+        for(ServerThread elem:list){
+            elem.sendString("win-"+message);
+        }
+    }
+
     public void disconnection(){
         for(ServerThread elem:list){
             elem.writer.println("disc-User "+playerBound+" left the game. The match is over.");

@@ -75,6 +75,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                         divinityChoice();
                     } else if (message.equals("div_sel")) {
                         divinitySelection();
+                    } else if (message.contains("win-")) {
+                        String s=message.replace("win-","");
+                        methodSelection.alert(s);
+                        socketClose();
+                        return;
                     } else if (message.contains("disc-")) {
                         String s = message.replace("disc-", "");
                         disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
@@ -94,6 +99,15 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     /**
      * method used for movement
      */
+    public void socketClose(){
+        try {
+            socket.close();
+        }
+        catch(IOException e){
+            //non fa nulla
+        }
+    }
+
     public void loss(String s){
         methodSelection.alert(s);
     }
