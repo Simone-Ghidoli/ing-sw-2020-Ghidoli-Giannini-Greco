@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps60.serverSide.model;
 
+import it.polimi.ingsw.ps60.GlobalVariables;
+
 public class Worker {
 
     private Cell cellPosition;

@@ -74,7 +74,7 @@ public class CLIMethodsTest {
         CLIMethods cli=new CLIMethods();
         String input="0";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
-        boolean choice=cli.specialChoices("Bella povcona");
+        boolean choice=cli.specialChoices("Dome?");
         System.out.println("ciao");
     }
 
