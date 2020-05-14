@@ -23,9 +23,7 @@ public class GUIMethods implements ViewMethodSelection {
     private int numberOfWorkers;
 
     public GUIMethods(){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+
                 boardWindow = new JFrame();
                 boardWindow.setResizable(false);
                 JFrame.setDefaultLookAndFeelDecorated(true);
@@ -39,8 +37,7 @@ public class GUIMethods implements ViewMethodSelection {
                 boardWindow.setVisible(true);
                 santorini.getJtextSouth().setText("wait the others players");
 
-            }
-        });
+
     }
 
     @Override
@@ -98,7 +95,7 @@ public class GUIMethods implements ViewMethodSelection {
 
             nicknameBirthday[1] = JOptionPane.showInputDialog("Enter your birthday");
 
-            if (nicknameBirthday[1] == null || !new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(nicknameBirthday[1]))
+            if (nicknameBirthday[1] == null || !new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern()).isValid(nicknameBirthday[1]))
                 nicknameBirthday[1] = null;
         }
 
@@ -237,8 +234,15 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
         int[][] choice = new int[2][];
+        final JButton okButton[] = new JButton[]{new JButton("OK"), new JButton("Cancel")};
         numberOfWorkers = 0;
+        JPanel jPanel=new JPanel();
         final ListContains listContains = new ListContains(impossiblePositions);
+        final JOptionPane pane = new JOptionPane("confirm", JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, okButton, okButton[0]);
+        pane.setVisible(false);
+        final JDialog dialog = pane.createDialog("do you confirm first worker's positions?");
+        pane.selectInitialValue();
+        dialog.setVisible(false);
 
         class Listener implements ActionListener {
             final JButton button;
@@ -260,11 +264,50 @@ public class GUIMethods implements ViewMethodSelection {
                     Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(button.getWidth() / 2, button.getHeight() / 2, Image.SCALE_SMOOTH);
                     button.setIcon(new ImageIcon(scaleImageWorker));
                     button.setFocusPainted(false);
+                    if(numberOfWorkers==2){
+                        pane.setVisible(true);
+                        dialog.setVisible(true);
+
+
+
+                    }
                 }
             }
         }
+        class ListenerOkButton implements ActionListener{
+            final JOptionPane pane;
+            final JButton button;
 
-        santorini.getJtextSouth().setText("Select positions of yours workers. Only free positions are allowed");
+            public ListenerOkButton(JOptionPane pane, JButton button) {
+                this.pane = pane;
+                this.button = button;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(numberOfWorkers==2)
+                    pane.setValue(button);
+            }
+        }
+        class ListenerCancelButton implements ActionListener{
+            final JOptionPane pane;
+            final JButton button;
+
+            public ListenerCancelButton(JOptionPane pane, JButton button) {
+                this.pane = pane;
+                this.button = button;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        }
+
+                santorini.getJtextSouth().setText("Select positions of yours workers. Only free positions are allowed");
+
+
+
 
         for (int i = 0; i < 25; i++) {
 
@@ -276,17 +319,24 @@ public class GUIMethods implements ViewMethodSelection {
             } else
                 santorini.getButton(i).addActionListener(new Listener(choice, santorini.getButton(i)));
         }
+        okButton[0].addActionListener(new ListenerOkButton(pane,okButton[0]));
+        okButton[1].addActionListener(new ListenerCancelButton(pane,okButton[1]));
+        for (JButton jButton : okButton)
+            jPanel.add(jButton);
+        pane.add(jPanel);
 
-        while (numberOfWorkers != 2) {
-            System.out.println("INFO : Waiting for input");
-            try {
-                TimeUnit.MILLISECONDS.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+
+
+        dialog.dispose();
+
+        Object selectedValue = pane.getValue();
+        if(okButton[0].equals(selectedValue)) {
+            santorini.getJtextSouth().setText("Waiting for the others players");
+            return choice;
         }
-
-        santorini.getJtextSouth().setText("Waiting for the others players");
+        else if (okButton[1].equals(selectedValue))
+            return firstSetWorkers(impossiblePositions);
         return choice;
     }
 
