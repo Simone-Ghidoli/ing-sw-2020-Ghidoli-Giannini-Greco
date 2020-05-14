@@ -74,10 +74,27 @@ public  class Server{
             if (!socket.isClosed()) { //Se il socket è aperto crea un nuovo Thread e lo aggiunge alla lista di quelli in esecuzione
                 newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread);
-                nickBirth[clientList.size() - 1] = newThread.nicknameBirthday();
+                do {
+                    nickBirth[clientList.size() - 1] = newThread.nicknameBirthday();
+                }while(name_problem(nickBirth[(clientList.size()-1)][0]));
                 newThread.setPlayerBound(nickBirth[clientList.size() -1][0]);
             }
         }
+    }
+
+    /**
+     * Check the uniqueness of the username
+     */
+    public boolean name_problem(String current){
+        int i=0;
+        for(String[] elem:nickBirth){
+            if(elem[0].equals(current))
+                i++;
+        }
+        if(i>1)
+            return true;
+        else
+            return false;
     }
 
     public String[][] getNickBirth() {
