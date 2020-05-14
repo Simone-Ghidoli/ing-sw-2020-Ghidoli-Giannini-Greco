@@ -7,6 +7,7 @@ import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -105,43 +106,71 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public GlobalVariables.DivinityCard[] cardChoices(int playerNumber) {
-        List<GlobalVariables.DivinityCard> divinityCards = new ArrayList<>();
-        GlobalVariables.DivinityCard[] divinityCardsToReturn = new GlobalVariables.DivinityCard[playerNumber];
-        for (int x = 0 ; x < playerNumber; x++){
-            divinityCards.add(singleDivinitySelection(divinityCards));
-            divinityCardsToReturn[x] = divinityCards.get(x);
-        }
-
-        return divinityCardsToReturn;
-    }
-
-    private GlobalVariables.DivinityCard singleDivinitySelection(List<GlobalVariables.DivinityCard> divinityCards){
-
-        JLabel[] godLabel = new JLabel[14 - divinityCards.size()];
-        String[] options = new String[godLabel.length];
+    public GlobalVariables.DivinityCard[] cardChoices(final int playerNumber) {
+        JButton[] godButtons = new JButton[14];
+        final JButton okButton[] = new JButton[]{new JButton("OK")};
         Image image;
+        final List<GlobalVariables.DivinityCard> list = new ArrayList<>();
         JPanel panel = new JPanel();
-        GlobalVariables.DivinityCard[] divinityCards1 = new  GlobalVariables.DivinityCard[options.length];
 
-        for (int i = 0, j = 0; i < godLabel.length; i++, j++){
-            godLabel[i] = new JLabel();
-            godLabel[i].setSize(screenSize.width/20, screenSize.height/8);
-            while (divinityCards.contains(GlobalVariables.DivinityCard.values()[j]))
-                j++;
-            image  = new ImageIcon(GlobalVariables.DivinityCard.values()[j].getSourcePosition()).getImage().getScaledInstance(godLabel[i].getWidth(), godLabel[i].getHeight(), Image.SCALE_SMOOTH);
-            godLabel[i].setIcon(new ImageIcon(image));
-            options[i] = GlobalVariables.DivinityCard.values()[j].name();
-            divinityCards1[i] = GlobalVariables.DivinityCard.values()[j];
+        class Listener implements ActionListener {
+
+            final JButton button;
+            final GlobalVariables.DivinityCard divinityCard;
+
+            public Listener(JButton button, GlobalVariables.DivinityCard divinityCard) {
+                this.button = button;
+                this.divinityCard = divinityCard;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (list.size() < playerNumber) {
+                    list.add(divinityCard);
+                    button.setEnabled(false);
+                }
+                if (list.size() == playerNumber)
+                    okButton[0].setEnabled(true);
+            }
         }
 
-        JOptionPane pane = new JOptionPane("Select a divinity card", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+        class ListenerOkButton implements ActionListener {
 
-        for (JLabel label : godLabel){
-            panel.add(label);
+            final JOptionPane pane;
+            final JButton button;
+
+            public ListenerOkButton(JOptionPane pane, JButton button) {
+                this.pane = pane;
+                this.button = button;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (list.size() == playerNumber) {
+                    pane.setValue(button);
+                }
+            }
         }
 
+        okButton[0].setEnabled(false);
+
+        for (int i = 0; i < godButtons.length; i++) {
+            godButtons[i] = new JButton();
+            godButtons[i].setSize(screenSize.width / 20, screenSize.height / 8);
+            image = new ImageIcon(GlobalVariables.DivinityCard.values()[i].getSourcePosition()).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH);
+            godButtons[i].setIcon(new ImageIcon(image));
+            godButtons[i].addActionListener(new Listener(godButtons[i], GlobalVariables.DivinityCard.values()[i]));
+        }
+
+
+        for (JButton jButton : godButtons)
+            panel.add(jButton);
+
+        JOptionPane pane = new JOptionPane("Select a divinity card", JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_OPTION, null, okButton, okButton[0]);
+
+        okButton[0].addActionListener(new ListenerOkButton(pane, okButton[0]));
         pane.add(panel);
+
         JDialog dialog = pane.createDialog("Divinity card");
         pane.selectInitialValue();
         dialog.setVisible(true);
@@ -149,16 +178,20 @@ public class GUIMethods implements ViewMethodSelection {
 
         Object selectedValue = pane.getValue();
 
-        if(selectedValue == null)
-            return singleDivinitySelection(divinityCards);
+        GlobalVariables.DivinityCard[] divinityCardsToReturn = new GlobalVariables.DivinityCard[playerNumber];
 
-        for(int counter = 0, maxCounter = options.length;
-            counter < maxCounter; counter++) {
-            if(options[counter].equals(selectedValue))
-                return divinityCards1[counter];
+        for (int i = 0; i < playerNumber; i++) {
+            divinityCardsToReturn[i] = list.get(i);
         }
 
-        return GlobalVariables.DivinityCard.values()[0];
+        if (selectedValue == null)
+            return cardChoices(playerNumber);
+
+
+        if (okButton[0].equals(selectedValue))
+            return divinityCardsToReturn;
+
+        return GlobalVariables.DivinityCard.values();
     }
 
     @Override
