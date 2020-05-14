@@ -11,7 +11,7 @@ public class WorkerImage {
 
     public static void main(String[] args) {
         ViewMethodSelection v = new GUIMethods();
-        v.cardChoices(3);
+        v.alert("MicroPeni");
     }
 
 

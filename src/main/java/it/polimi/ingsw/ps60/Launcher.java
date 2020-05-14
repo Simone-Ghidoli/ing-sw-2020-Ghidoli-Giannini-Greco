@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps60;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.CLIMethods;

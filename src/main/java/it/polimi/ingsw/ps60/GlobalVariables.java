@@ -40,7 +40,7 @@ public class GlobalVariables {
         private final String sourcePosition;
 
         DivinityCard(String sourcePosition) {
-            this.sourcePosition = "src/resources/" + sourcePosition + ".png";
+            this.sourcePosition = "src/resources/godCards/" + sourcePosition + ".png";
             this.bitException = false;
         }
 
