@@ -358,6 +358,7 @@ public class GUIMethods implements ViewMethodSelection {
         if(selectedValue == null)
             return divinitySelection(card);
 
+        santorini.setDivinityCardImage(divinityCardToReturn[0]);
         return divinityCardToReturn[0];
     }
 
