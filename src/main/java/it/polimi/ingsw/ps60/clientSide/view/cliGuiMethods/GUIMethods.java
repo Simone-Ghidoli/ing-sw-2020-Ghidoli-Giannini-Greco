@@ -201,43 +201,79 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card) {
-        JLabel[] godLabel = new JLabel[card.length];
-        String[] options = new String[godLabel.length];
+        final JButton godButtons[] = new JButton[card.length];
+        final JButton okButton[] = new JButton[]{new JButton("OK")};
         Image image;
         JPanel panel = new JPanel();
+        final GlobalVariables.DivinityCard[] choose = new GlobalVariables.DivinityCard[1];
 
-        for (int i = 0; i < godLabel.length; i++){
-            godLabel[i] = new JLabel();
-            godLabel[i].setSize(screenSize.width/20, screenSize.height/8);
-            image  = new ImageIcon(card[i].getSourcePosition()).getImage().getScaledInstance(godLabel[i].getWidth(), godLabel[i].getHeight(), Image.SCALE_SMOOTH);
-            godLabel[i].setIcon(new ImageIcon(image));
-            options[i] = card[i].name();
+        class Listener implements ActionListener{
+
+
+            final JButton button;
+            final GlobalVariables.DivinityCard divinityCard;
+
+            public Listener(JButton button, GlobalVariables.DivinityCard divinityCard) {
+                this.button = button;
+                this.divinityCard = divinityCard;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(choose[0]==null) {
+                    choose[0] = divinityCard;
+                    button.setEnabled(false);
+                    okButton[0].setEnabled(true);
+                }
+            }
+
         }
+        class ListenerOkButton implements ActionListener {
 
-        JOptionPane pane = new JOptionPane("Select your divinity card", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+            final JOptionPane pane;
+            final JButton button;
 
-        for (JLabel label : godLabel)
-            panel.add(label);
+            public ListenerOkButton(JOptionPane pane, JButton button) {
+                this.pane = pane;
+                this.button = button;
+            }
 
-        pane.add(panel);
-        JDialog dialog = pane.createDialog("Divinity card selection");
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                    pane.setValue(button);
+            }
+        }
+        okButton[0].setEnabled(false);
+        for (int i = 0; i < godButtons.length; i++){
+            godButtons[i] = new JButton();
+            godButtons[i].setSize(screenSize.width / 20, screenSize.height / 8);
+            image = new ImageIcon(card[i].getSourcePosition()).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH);
+            godButtons[i].setIcon(new ImageIcon(image));
+            godButtons[i].addActionListener(new Listener(godButtons[i], card[i]));
+        }
+        for (JButton jButton : godButtons)
+            panel.add(jButton);
+
+        JOptionPane pane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.YES_NO_OPTION, null, okButton, okButton[0]);
+
+        okButton[0].addActionListener(new ListenerOkButton(pane, okButton[0]));
+
+        JDialog dialog = pane.createDialog("Select your divinity card");
         pane.selectInitialValue();
         dialog.setVisible(true);
         dialog.dispose();
 
         Object selectedValue = pane.getValue();
 
-        if(selectedValue == null)
+        if (selectedValue == null)
             return divinitySelection(card);
 
-        for(int counter = 0, maxCounter = options.length;
-            counter < maxCounter; counter++) {
-            if(options[counter].equals(selectedValue))
-                return card[counter];
-        }
 
-        return GlobalVariables.DivinityCard.values()[0];
+        return choose[0];
     }
+
+
 
     @Override
     public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
@@ -247,8 +283,9 @@ public class GUIMethods implements ViewMethodSelection {
         numberOfWorkers = 0;
         final ListContains listContains = new ListContains(impossiblePositions);
         final JOptionPane pane = new JOptionPane("Confirm", JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, okButton, okButton[0]);
-        final JDialog dialog = pane.createDialog("Do you confirm the selected positions?");
 
+
+        final JDialog  dialog = new JDialog(pane.createDialog("Do you confirm the selected positions?"));
         class Listener implements ActionListener {
             final JButton button;
             final int[][] choice;
@@ -265,9 +302,9 @@ public class GUIMethods implements ViewMethodSelection {
                     choice[numberOfWorkers] = santorini.getCoordOfButton(button);
                     numberOfWorkers++;
                     ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[0].getSourcePawn());
-                    button.setIcon(new ImageIcon(imagineWorker.getImage().getScaledInstance(button.getWidth() / 2, button.getHeight() / 2, Image.SCALE_SMOOTH);));
+                    button.setIcon(new ImageIcon(imagineWorker.getImage().getScaledInstance(button.getWidth() / 2, button.getHeight() / 2, Image.SCALE_SMOOTH)));
                     if(numberOfWorkers==2){
-                        pane.setVisible(true);
+
                         dialog.setVisible(true);
                     }
                 }
@@ -316,6 +353,9 @@ public class GUIMethods implements ViewMethodSelection {
             } else
                 santorini.getButton(i).addActionListener(new Listener(choice, santorini.getButton(i)));
         }
+        pane.selectInitialValue();
+        dialog.setVisible(false);
+        dialog.dispose();
 
         okButton[0].addActionListener(new ListenerOkButton(pane,okButton[0]));
         okButton[1].addActionListener(new ListenerCancelButton(pane,okButton[1]));
@@ -324,7 +364,6 @@ public class GUIMethods implements ViewMethodSelection {
             jPanel.add(jButton);
         pane.add(jPanel);
 
-        dialog.dispose();
 
         Object selectedValue = pane.getValue();
         if(okButton[0].equals(selectedValue)) {

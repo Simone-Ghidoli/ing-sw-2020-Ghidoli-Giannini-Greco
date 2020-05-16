@@ -13,6 +13,7 @@ public class WorkerImage {
 
     public static void main(String[] args) {
         ViewMethodSelection v = new GUIMethods();
-        System.out.println(Arrays.toString(v.cardChoices(2)));
+       GlobalVariables.DivinityCard[] cards=v.cardChoices(3);
+       v.divinitySelection(cards);
     }
 }
