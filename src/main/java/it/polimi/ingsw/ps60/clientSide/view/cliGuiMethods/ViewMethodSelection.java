@@ -12,7 +12,7 @@ public interface ViewMethodSelection {
 
     int buildChoice(List<int[]> moves);
 
-    String[] ipPortChoices() throws InterruptedException;
+    String[] ipPortChoices();
 
     String[] nicknameBirthdayChoice();
 

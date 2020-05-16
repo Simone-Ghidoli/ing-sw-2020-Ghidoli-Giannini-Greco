@@ -45,10 +45,7 @@ public class Game {
             game.getPlayerInGame().getNode().getValue().getDivinityStrategy().getTurnController().turn();
         }
 
-        //for (ServerThread serverThread : game.getPlayerWinner().getServerThread().getList()){
-            //serverThread.sendString(game.getPlayerWinner().getNickname() + "have won the game. 30L pliz");
-            game.getPlayerWinner().getServerThread().win();
-        //}
+        game.getPlayerWinner().getServerThread().win();
 
     }
 

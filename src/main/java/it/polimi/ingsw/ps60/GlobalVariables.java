@@ -36,20 +36,10 @@ public class GlobalVariables {
         PAN("09"), PROMETHEUS("10"), ZEUS("30"), TRITON("29"),
         CHRONUS("16"), HESTIA("21"), POSEIDON("27"), NONE("00");
 
-        private boolean bitException;
         private final String sourcePosition;
 
         DivinityCard(String sourcePosition) {
             this.sourcePosition = "src/resources/godCards/" + sourcePosition + ".png";
-            this.bitException = false;
-        }
-
-        public boolean isBitException() {
-            return bitException;
-        }
-
-        public void setBitException(boolean bitException) {
-            this.bitException = bitException;
         }
 
         public String getSourcePosition() {

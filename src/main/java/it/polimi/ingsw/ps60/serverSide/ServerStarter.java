@@ -7,7 +7,7 @@ import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 import java.util.Scanner;
 
 public class ServerStarter {
-    public static void start() throws InterruptedException {
+    public static void start() {
         new Game(new Server(portSelection()));
     }
 

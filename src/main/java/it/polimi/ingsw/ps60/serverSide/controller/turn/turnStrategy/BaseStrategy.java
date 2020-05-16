@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
+import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
+
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 import java.util.ArrayList;
@@ -83,8 +85,17 @@ public class BaseStrategy implements Strategy {
      * @return false if no divinity disturbs the worker to move in the target position, true otherwise
      */
     public boolean isDisturbedByDivinity(int[] workerPosition, int[] targetPosition){
-        if (GlobalVariables.DivinityCard.ATHENA.isBitException() && game.getPlayerInGame().getNode().getValue().getDivinityCard() != GlobalVariables.DivinityCard.ATHENA)
-            return game.getCellByPosition(workerPosition).getBuildingLevel() < game.getCellByPosition(targetPosition).getBuildingLevel();
+
+        if (game.getPlayerInGame().getNode().getValue().getDivinityCard() != GlobalVariables.DivinityCard.ATHENA) {
+
+            CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
+
+            for (int i = 0; i < game.getPlayersNumber(); i++) {
+                if (circularListIterator.getNode().getValue().getDivinityStrategy().isBitException() && circularListIterator.getNode().getValue().getDivinityCard() == GlobalVariables.DivinityCard.ATHENA)
+                    return game.getCellByPosition(workerPosition).getBuildingLevel() < game.getCellByPosition(targetPosition).getBuildingLevel();
+                circularListIterator.nextNode();
+            }
+        }
         return false;
     }
 }
