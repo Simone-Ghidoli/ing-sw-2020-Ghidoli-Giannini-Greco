@@ -15,14 +15,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class GUIMethods implements ViewMethodSelection {
 
-    private JFrame boardWindow;
     private final MainFrame santorini;
 
     public GUIMethods() {
-        boardWindow = new JFrame();
+        JFrame boardWindow = new JFrame();
         boardWindow.setResizable(false);
         boardWindow.setTitle("Santorini");
         boardWindow.setSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -85,13 +85,125 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int moveChoice(List<int[]>[] moves, int[][] positionsWorkers) {
-        return 0;
+    public int moveChoice(final List<int[]>[] moves, int[][] positionsWorkers) {
+
+        alert("Select where to move");
+
+        final JButton[] buttonWorkers = new JButton[2];
+        final int[] choiceToReturn = new int[1];
+        final Semaphore semaphore = new Semaphore(0);
+
+        class ReturnListener implements ActionListener{
+            final int numberToReturn;
+
+            public ReturnListener(int numberToReturn){
+                this.numberToReturn = numberToReturn;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choiceToReturn[0] = numberToReturn;
+                semaphore.release();
+            }
+        }
+
+        class Listener implements ActionListener {
+            final int workerNumber;
+
+            public Listener(int workerNumber) {
+                this.workerNumber = workerNumber;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (choiceToReturn) {
+                    buttonWorkers[0].setEnabled(false);
+                    buttonWorkers[1].setEnabled(false);
+                    JButton button;
+                    for (int i = 0; i < moves[i].size(); i++){
+                        button = santorini.getButton(moves[workerNumber].get(i)[0] * 5 + moves[workerNumber].get(i)[0] * 5);
+                        button.addActionListener(new ReturnListener(workerNumber * moves[0].size() + moves[workerNumber].size()));
+                        button.setEnabled(true);
+                    }
+                    try {
+                        semaphore.acquire();
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                    }
+                    choiceToReturn.notifyAll();
+                }
+            }
+        }
+
+        for (int i = 0; i < 2; i++) {
+            buttonWorkers[i] = santorini.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
+            buttonWorkers[i].addActionListener(new Listener(i));
+        }
+
+        for (int i = 0; i < 25; i++) {
+            buttonWorkers[i].setEnabled(santorini.getButton(i).equals(buttonWorkers[0]) || santorini.getButton(i).equals(buttonWorkers[1]));
+        }
+
+        synchronized (choiceToReturn) {
+            try {
+                choiceToReturn.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (confirmOrRetry())
+            return choiceToReturn[0];
+        else
+            return moveChoice(moves, positionsWorkers);
     }
 
     @Override
     public int buildChoice(List<int[]> moves) {
-        return 0;
+
+        alert("Select where to build");
+
+        final int[] choiceToReturn = new int[1];
+
+        class Listener implements ActionListener{
+
+            final int numberToReturn;
+
+            public Listener(int numberToReturn){
+                this.numberToReturn = numberToReturn;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (choiceToReturn){
+                    choiceToReturn[0] = numberToReturn;
+                    choiceToReturn.notifyAll();
+                }
+            }
+        }
+
+        for (int i = 0; i < 25; i++)
+            santorini.getButton(i).setEnabled(false);
+
+        JButton button;
+        for (int i = 0; i < moves.size(); i++){
+            button = santorini.getButton(moves.get(i)[0] * 5 + moves.get(i)[1]);
+            button.addActionListener(new Listener(i));
+            button.setEnabled(true);
+        }
+
+        synchronized (choiceToReturn){
+            try {
+                choiceToReturn.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (confirmOrRetry())
+            return choiceToReturn[0];
+        else
+            return buildChoice(moves);
     }
 
     @Override
@@ -256,9 +368,6 @@ public class GUIMethods implements ViewMethodSelection {
 
         final int[][] workersPositions = new int[2][];
         final ListContains listContains = new ListContains(impossiblePositions);
-        final Object[] options = new Object[]{"YES", "NO"};
-        final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
-        final JDialog dialog = pane.createDialog("Confirm positions?");
 
         class Listener implements ActionListener {
 
@@ -286,18 +395,18 @@ public class GUIMethods implements ViewMethodSelection {
             }
         }
 
-            for (int i = 0; i < 25; i++) {
-                if (listContains.isContained(santorini.getButtonCoords(santorini.getButton(i)))) {
-                    ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[0].getSourcePawn());
-                    Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH);
-                    santorini.getButton(i).setIcon(new ImageIcon(scaleImageWorker));
-                    santorini.getButton(i).setEnabled(false);
-                } else {
-                    santorini.getButton(i).setIcon(null);
-                    santorini.getButton(i).addActionListener(new Listener(santorini.getButton(i)));
-                    santorini.getButton(i).setEnabled(true);
-                }
+        for (int i = 0; i < 25; i++) {
+            if (listContains.isContained(santorini.getButtonCoords(santorini.getButton(i)))) {
+                ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[0].getSourcePawn());
+                Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH);
+                santorini.getButton(i).setIcon(new ImageIcon(scaleImageWorker));
+                santorini.getButton(i).setEnabled(false);
+            } else {
+                santorini.getButton(i).setIcon(null);
+                santorini.getButton(i).addActionListener(new Listener(santorini.getButton(i)));
+                santorini.getButton(i).setEnabled(true);
             }
+        }
 
         synchronized (workersPositions) {
             try {
@@ -307,15 +416,12 @@ public class GUIMethods implements ViewMethodSelection {
             }
         }
 
-            dialog.setVisible(true);
-            dialog.dispose();
+        if (confirmOrRetry())
+            return workersPositions;
+        else
+            return firstSetWorkers(impossiblePositions);
 
-            if (pane.getValue() == null || pane.getValue() == options[1])
-                return firstSetWorkers(impossiblePositions);
-            else
-                return workersPositions;
     }
-
 
     @Override
     public boolean specialChoices(String string) {
@@ -350,5 +456,16 @@ public class GUIMethods implements ViewMethodSelection {
                  string,
                  "ALERT",
                  JOptionPane.WARNING_MESSAGE);
+    }
+
+    private boolean confirmOrRetry(){
+        final Object[] options = new Object[]{"YES", "NO"};
+        final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+        final JDialog dialog = pane.createDialog("Confirm selection?");
+
+        dialog.setVisible(true);
+        dialog.dispose();
+
+        return pane.getValue() != null && pane.getValue() != options[1];
     }
 }

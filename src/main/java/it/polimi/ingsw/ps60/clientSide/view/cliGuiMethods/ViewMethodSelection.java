@@ -16,11 +16,11 @@ public interface ViewMethodSelection {
 
     String[] nicknameBirthdayChoice();
 
-    GlobalVariables.DivinityCard[] cardChoices(int playerNumber); //qui verranno date le carte divinità al 1 giocatore e ne sceglierà n = numero giocatori
+    GlobalVariables.DivinityCard[] cardChoices(int playerNumber);
 
-    GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] cards); //scelta carta divinità singolo giocatore
+    GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] cards);
 
-    int[][] firstSetWorkers(List<int[]> impossiblePositions); //posizionamento pedine prima di iniziare la partita
+    int[][] firstSetWorkers(List<int[]> impossiblePositions);
 
     boolean specialChoices(String string);
 

@@ -14,7 +14,7 @@ public class DivinityStrategy {
     private final Effect effect;
     private final String specialChoice;
     private final TurnController turnController;
-    private Boolean bitException;
+    private boolean bitException;
 
     /**
      * This class implements the right methods based on which divinity card a player has
@@ -153,11 +153,11 @@ public class DivinityStrategy {
         return turnController;
     }
 
-    public Boolean isBitException() {
+    public boolean isBitException() {
         return bitException;
     }
 
-    public void setBitException(Boolean bitException) {
+    public void setBitException(boolean bitException) {
         this.bitException = bitException;
     }
 }
