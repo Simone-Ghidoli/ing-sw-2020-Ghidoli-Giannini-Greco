@@ -229,6 +229,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
             return stalin;
         } catch (IOException e) {
             disconnection("Communication error, logging out");
+            System.out.println("Communication error, logging out");
         } catch(ClassNotFoundException e_1){
             System.out.println("non trovo la classe");
         }

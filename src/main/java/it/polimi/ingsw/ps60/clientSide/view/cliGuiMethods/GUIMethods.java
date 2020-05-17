@@ -18,71 +18,80 @@ import java.util.List;
 
 public class GUIMethods implements ViewMethodSelection {
 
-    private final MainFrame santorini;
+    private final MainFrame santorini = new MainFrame();
 
     public GUIMethods() {
-        JFrame boardWindow = new JFrame();
-        boardWindow.setResizable(false);
-        boardWindow.setTitle("Santorini");
-        boardWindow.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        boardWindow.setLocationRelativeTo(null);
-        boardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Container c = boardWindow.getContentPane();
-        santorini = new MainFrame();
-        c.add(santorini);
-        boardWindow.setVisible(true);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JFrame boardWindow = new JFrame();
+                boardWindow.setResizable(false);
+                boardWindow.setTitle("Santorini");
+                boardWindow.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+                boardWindow.setLocationRelativeTo(null);
+                boardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                Container c = boardWindow.getContentPane();
+                c.add(santorini);
+                boardWindow.setVisible(true);
+            }
+        });
     }
 
     @Override
-    public void printBoard(String board) {
+    public void printBoard(final String board) {
 
         santorini.resetButtons();
 
-        char[] boardToPrint = board.toCharArray();
-        List<BufferedImage> imageToMerge;
-        BufferedImage combined;
-        Graphics g;
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    char[] boardToPrint = board.toCharArray();
+                    List<BufferedImage> imageToMerge;
+                    BufferedImage combined;
+                    Graphics g;
 
-        for (int i = 0; i < 25; i++) {
-            try {
-                imageToMerge = new ArrayList<>();
-                if (boardToPrint[i] == 49 || boardToPrint[i] == 54 || boardToPrint[i] == 58 || boardToPrint[i] == 62) {
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                } else if (boardToPrint[i] == 50 || boardToPrint[i] == 55 || boardToPrint[i] == 59 || boardToPrint[i] == 63) {
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                } else if (boardToPrint[i] == 51 || boardToPrint[i] == 56 || boardToPrint[i] == 60 || boardToPrint[i] == 64) {
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
-                } else if (boardToPrint[i] == 52) {
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/Dome.png")));
+                    for (int i = 0; i < 25; i++) {
+
+                        imageToMerge = new ArrayList<>();
+                        if (boardToPrint[i] == 49 || boardToPrint[i] == 54 || boardToPrint[i] == 58 || boardToPrint[i] == 62) {
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                        } else if (boardToPrint[i] == 50 || boardToPrint[i] == 55 || boardToPrint[i] == 59 || boardToPrint[i] == 63) {
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                        } else if (boardToPrint[i] == 51 || boardToPrint[i] == 56 || boardToPrint[i] == 60 || boardToPrint[i] == 64) {
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
+                        } else if (boardToPrint[i] == 52) {
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/Dome.png")));
+                        }
+
+                        if (boardToPrint[i] >= 53 && boardToPrint[i] <= 56)
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Red pawn.png")));
+                        else if (boardToPrint[i] >= 57 && boardToPrint[i] <= 60)
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Blue pawn.png")));
+                        else if (boardToPrint[i] >= 61 && boardToPrint[i] <= 64)
+                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Green pawn.png")));
+
+                        combined = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
+                        g = combined.getGraphics();
+
+                        for (BufferedImage bufferedImage : imageToMerge) {
+                            g.drawImage(bufferedImage, 0, 0, null);
+                        }
+
+                        g.dispose();
+                        santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth(), santorini.getButton(i).getHeight(), Image.SCALE_SMOOTH)));
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-                if (boardToPrint[i] >= 53 && boardToPrint[i] <= 56)
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Red pawn.png")));
-                else if (boardToPrint[i] >= 57 && boardToPrint[i] <= 60)
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Blue pawn.png")));
-                else if (boardToPrint[i] >= 61 && boardToPrint[i] <= 64)
-                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Green pawn.png")));
-
-                combined = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
-                g = combined.getGraphics();
-
-                for (BufferedImage bufferedImage : imageToMerge) {
-                    g.drawImage(bufferedImage, 0, 0, null);
-                }
-
-                g.dispose();
-                santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth(), santorini.getButton(i).getHeight(), Image.SCALE_SMOOTH)));
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
+        });
     }
 
     @Override
@@ -92,8 +101,8 @@ public class GUIMethods implements ViewMethodSelection {
 
         alert("Select where to move");
 
-        final JButton[] buttonWorkers = new JButton[2];
         final int[] choiceToReturn = new int[1];
+        final JButton[] buttonWorkers = new JButton[2];
 
         class ReturnListener implements ActionListener {
             final int numberToReturn;
