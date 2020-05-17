@@ -36,74 +36,77 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public void printBoard(String board) {
 
+        santorini.resetButtons();
+
         char[] boardToPrint = board.toCharArray();
         List<BufferedImage> imageToMerge;
         BufferedImage combined;
         Graphics g;
 
-        try {
         for (int i = 0; i < 25; i++) {
-            imageToMerge = new ArrayList<>();
-            if (boardToPrint[i] == 49 || boardToPrint[i] == 54 || boardToPrint[i] == 58 || boardToPrint[i] == 62) {
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-            } else if (boardToPrint[i] == 50 || boardToPrint[i] == 55 || boardToPrint[i] == 59 || boardToPrint[i] == 63) {
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-            } else if (boardToPrint[i] == 51 || boardToPrint[i] == 56 || boardToPrint[i] == 60 || boardToPrint[i] == 64) {
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
-            } else if (boardToPrint[i] == 52){
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/Dome.png")));
+            try {
+                imageToMerge = new ArrayList<>();
+                if (boardToPrint[i] == 49 || boardToPrint[i] == 54 || boardToPrint[i] == 58 || boardToPrint[i] == 62) {
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                } else if (boardToPrint[i] == 50 || boardToPrint[i] == 55 || boardToPrint[i] == 59 || boardToPrint[i] == 63) {
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                } else if (boardToPrint[i] == 51 || boardToPrint[i] == 56 || boardToPrint[i] == 60 || boardToPrint[i] == 64) {
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
+                } else if (boardToPrint[i] == 52) {
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/Dome.png")));
+                }
+
+                if (boardToPrint[i] >= 53 && boardToPrint[i] <= 56)
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Red pawn.png")));
+                else if (boardToPrint[i] >= 57 && boardToPrint[i] <= 60)
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Blue pawn.png")));
+                else if (boardToPrint[i] >= 61 && boardToPrint[i] <= 64)
+                    imageToMerge.add(ImageIO.read(new File("src/resources/board/Green pawn.png")));
+
+                combined = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
+                g = combined.getGraphics();
+
+                for (BufferedImage bufferedImage : imageToMerge) {
+                    g.drawImage(bufferedImage, 0, 0, null);
+                }
+
+                g.dispose();
+                santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth(), santorini.getButton(i).getHeight(), Image.SCALE_SMOOTH)));
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            if (boardToPrint[i] >= 53 && boardToPrint[i] <= 56)
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Red pawn.png")));
-            else if (boardToPrint[i] >= 57 && boardToPrint[i] <= 60)
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Blue pawn.png")));
-            else if (boardToPrint[i] >= 61 && boardToPrint[i] <= 64)
-                imageToMerge.add(ImageIO.read(new File("src/resources/board/Green pawn.png")));
-
-            combined = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
-            g = combined.getGraphics();
-
-            for (BufferedImage bufferedImage : imageToMerge) {
-                g.drawImage(bufferedImage, 0, 0, null);
-            }
-
-            g.dispose();
-            santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth(), santorini.getButton(i).getHeight(), Image.SCALE_SMOOTH)));
-        }
-
-    } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
     public int moveChoice(final List<int[]>[] moves, int[][] positionsWorkers) {
 
+        santorini.resetButtons();
+
         alert("Select where to move");
 
         final JButton[] buttonWorkers = new JButton[2];
         final int[] choiceToReturn = new int[1];
-        final Object[] objectToSynchronize = new Object[1];
 
-        class ReturnListener implements ActionListener{
+        class ReturnListener implements ActionListener {
             final int numberToReturn;
 
-            public ReturnListener(int numberToReturn){
+            public ReturnListener(int numberToReturn) {
                 this.numberToReturn = numberToReturn;
             }
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                synchronized (objectToSynchronize) {
+                synchronized (choiceToReturn) {
                     choiceToReturn[0] = numberToReturn;
-                    objectToSynchronize.notifyAll();
+                    choiceToReturn.notifyAll();
                 }
             }
         }
@@ -117,35 +120,24 @@ public class GUIMethods implements ViewMethodSelection {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                synchronized (choiceToReturn) {
-                    buttonWorkers[0].setEnabled(false);
-                    buttonWorkers[1].setEnabled(false);
-                    JButton button;
-                    for (int i = 0; i < moves[i].size(); i++) {
-                        button = santorini.getButton(moves[workerNumber].get(i)[0] * 5 + moves[workerNumber].get(i)[0] * 5);
-                        button.addActionListener(new ReturnListener(workerNumber * moves[0].size() + moves[workerNumber].size()));
-                        button.setEnabled(true);
-                    }
-                    synchronized (objectToSynchronize) {
-                        try {
-                            objectToSynchronize.wait();
-                        } catch (InterruptedException interruptedException) {
-                            interruptedException.printStackTrace();
-                        }
-                    }
 
-                    choiceToReturn.notifyAll();
+                buttonWorkers[0].setEnabled(false);
+                buttonWorkers[1].setEnabled(false);
+                JButton button;
+                for (int i = 0; i < moves[workerNumber].size(); i++) {
+                    button = santorini.getButton(moves[workerNumber].get(i)[0] * 5 + moves[workerNumber].get(i)[1]);
+                    button.addActionListener(new ReturnListener(workerNumber * moves[0].size() + moves[workerNumber].size()));
+                    button.setEnabled(true);
                 }
+
             }
         }
 
         for (int i = 0; i < 2; i++) {
             buttonWorkers[i] = santorini.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
             buttonWorkers[i].addActionListener(new Listener(i));
-        }
-
-        for (int i = 0; i < 25; i++) {
-            buttonWorkers[i].setEnabled(santorini.getButton(i).equals(buttonWorkers[0]) || santorini.getButton(i).equals(buttonWorkers[1]));
+            buttonWorkers[i].setEnabled(true);
+            // buttonWorkers[i].setFocusPainted(true);
         }
 
         synchronized (choiceToReturn) {
@@ -166,6 +158,8 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public int buildChoice(List<int[]> moves) {
+
+        santorini.resetButtons();
 
         alert("Select where to build");
 
@@ -372,6 +366,8 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
+
+        santorini.resetButtons();
 
         alert("Select positions of yours workers. Only free positions are allowed");
 
