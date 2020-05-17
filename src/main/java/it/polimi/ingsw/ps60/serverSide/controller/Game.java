@@ -28,6 +28,13 @@ public class Game {
         String[] strings = sort(server.getNickBirth());
         game = new Board(strings);
 
+        serverThreadBound(strings, server);
+        selectWorkersPositions();
+        selectDivinityCard();
+        turnInGame();
+    }
+
+    public void serverThreadBound(String[] strings, Server server){
         ArrayList<ServerThread> serverThreads = server.getSocketList();
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
 
@@ -37,16 +44,14 @@ public class Game {
             circularListIterator.getNode().getValue().setServerThread(serverThreads.get(i));
             circularListIterator.nextNode();
         }
+    }
 
-        selectWorkersPositions();
-        selectDivinityCard();
-
+    public void turnInGame(){
         while (game.getBitWinner() == 0){
             game.getPlayerInGame().getNode().getValue().getDivinityStrategy().getTurnController().turn();
         }
 
         game.getPlayerWinner().getServerThread().win();
-
     }
 
     /**
