@@ -1,14 +1,10 @@
 package it.polimi.ingsw.ps60.clientSide.view.client;
 
-import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 
 import java.io.*;
 import java.net.Socket;
-import java.sql.Time;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.frassino;
 

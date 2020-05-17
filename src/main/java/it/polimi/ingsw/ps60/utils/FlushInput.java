@@ -3,11 +3,11 @@ package it.polimi.ingsw.ps60.utils;
 import java.io.IOException;
 
 public class FlushInput {
-    public static int flushInput() {
+    public static void flushInput() {
         try {
-            return System.in.read(new byte[System.in.available()]);
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch(IOException e_0){}
-        return 0;
     }
 }

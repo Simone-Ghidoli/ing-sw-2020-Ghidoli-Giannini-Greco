@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.Swing;
+package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing;
 import it.polimi.ingsw.ps60.GlobalVariables;
 
 import javax.swing.*;

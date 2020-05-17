@@ -4,11 +4,11 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 
 public class Cell {
 
-    private int[] position;
+    private final int[] position;
     private int buildingLevel;
     private Worker workerIn;
     private boolean dome;
-    private Board board;
+    private final Board board;
 
     /**
      * This will be a single cell of the 5 x 5 board of the game.

@@ -24,26 +24,6 @@ public class CircularLinkedList<T> {
         size++;
     }
 
-    public void addNodeIfNotExists(T value){
-        Node<T> newNode = new Node<>(value);
-
-        if (head == null) {
-            addNode(value);
-            return;
-        }
-
-        if (head.getValue().equals(newNode))
-            return;
-
-        Node<T> node = head.nextNode;
-        while (node != head){
-            if (node.getValue().equals(newNode))
-                return;
-            node = node.nextNode;
-        }
-        addNode(value);
-    }
-
     public Node<T> getHead() {
         return head;
     }

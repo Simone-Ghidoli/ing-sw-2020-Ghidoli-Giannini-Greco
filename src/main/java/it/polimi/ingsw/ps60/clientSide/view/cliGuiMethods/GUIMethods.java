@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 
-import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.Swing.MainFrame;
+import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame;
 import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 

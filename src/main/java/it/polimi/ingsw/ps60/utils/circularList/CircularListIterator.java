@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps60.utils.circularList;
 
 public class CircularListIterator<T> {
     private Node<T> node;
-    private CircularLinkedList<T> list;
+    private final CircularLinkedList<T> list;
 
     public CircularListIterator(CircularLinkedList<T> list){
         node = list.getHead();

@@ -57,14 +57,6 @@ public class Board {
 
     /**
      *
-     * @return return all the cells of the board
-     */
-    public Cell[][] getCellMatrix() {
-        return cellMatrix;
-    }
-
-    /**
-     *
      * @param position represents the position of the cell in the 5 x 5 board
      * @return the cell in the position
      */

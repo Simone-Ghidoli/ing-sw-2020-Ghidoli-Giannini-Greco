@@ -3,7 +3,7 @@ package it.polimi.ingsw.ps60.utils;
 import java.util.List;
 
 public class ListContains {
-    private List<int[]> list;
+    private final List<int[]> list;
 
 
     public ListContains(List<int[]> list){
