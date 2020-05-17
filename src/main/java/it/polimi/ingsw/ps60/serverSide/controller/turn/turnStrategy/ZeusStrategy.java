@@ -9,7 +9,7 @@ public class ZeusStrategy extends BaseStrategy {
     public List<int[]> baseBuilding() {
         List<int[]> positions = super.baseBuilding();
 
-        int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();
+        int[] positionWorker = game.getPlayerInGame().get().getWorkerMoved().getCellPosition().getPosition();
         if(game.getCellByPosition(positionWorker).getBuildingLevel()<3)
             positions.add(positionWorker);
 

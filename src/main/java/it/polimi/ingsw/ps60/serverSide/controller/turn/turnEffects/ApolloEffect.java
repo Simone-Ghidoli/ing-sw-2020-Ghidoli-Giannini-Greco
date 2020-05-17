@@ -9,7 +9,7 @@ public class ApolloEffect extends BaseEffect {
     @Override
     public void move(int[][] move) {
         Worker worker;
-        Player player = game.getPlayerInGame().getNode().getValue();
+        Player player = game.getPlayerInGame().get();
         if(!(game.getCellByPosition(move[1]).isFree())){
             worker=game.getCellByPosition(move[1]).getWorkerIn();
             game.getCellByPosition(move[1]).getWorkerIn().moveWorker(player.getWorker(move[0][0]).getCellPosition());

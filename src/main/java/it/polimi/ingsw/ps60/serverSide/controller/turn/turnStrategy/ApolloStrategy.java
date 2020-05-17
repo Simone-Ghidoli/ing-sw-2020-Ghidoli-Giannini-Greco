@@ -17,7 +17,7 @@ public class ApolloStrategy extends BaseStrategy {
      */
     @Override
     public List<int[]>[] baseMovement() {
-        Player playerInGame = game.getPlayerInGame().getNode().getValue();
+        Player playerInGame = game.getPlayerInGame().get();
         Cell[] cellWorker = {playerInGame.getWorkers()[0].getCellPosition(), playerInGame.getWorkers()[1].getCellPosition()};
         List<int[]>[] positions = new ArrayList[2];
 

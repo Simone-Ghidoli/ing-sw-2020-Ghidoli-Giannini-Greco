@@ -39,16 +39,16 @@ public class Game {
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
 
         for (int i = 0; i < strings.length; i++) {
-            while (!serverThreads.get(i).getPlayerBound().equals(circularListIterator.getNode().getValue().getNickname()))
+            while (!serverThreads.get(i).getPlayerBound().equals(circularListIterator.get().getNickname()))
                 circularListIterator.nextNode();
-            circularListIterator.getNode().getValue().setServerThread(serverThreads.get(i));
+            circularListIterator.get().setServerThread(serverThreads.get(i));
             circularListIterator.nextNode();
         }
     }
 
     public void turnInGame(){
         while (game.getBitWinner() == 0){
-            game.getPlayerInGame().getNode().getValue().getDivinityStrategy().getTurnController().turn();
+            game.getPlayerInGame().get().getDivinityStrategy().getTurnController().turn();
         }
 
         game.getPlayerWinner().getServerThread().win();
@@ -99,7 +99,7 @@ public class Game {
      * divinity cards picked
      */
     public void selectDivinityCard() {
-        int choice = game.getPlayerInGame().getNode().getValue().getServerThread().specialChoice("" +
+        int choice = game.getPlayerInGame().get().getServerThread().specialChoice("" +
                 "Do you want to play with divinity cards?");
 
         if (choice == 0){
@@ -109,7 +109,7 @@ public class Game {
             return;
         }
 
-        GlobalVariables.DivinityCard[] divinityCards = game.getPlayerInGame().getNode().getValue().getServerThread().divinityChoice();
+        GlobalVariables.DivinityCard[] divinityCards = game.getPlayerInGame().get().getServerThread().divinityChoice();
 
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
         circularListIterator.nextNode();
@@ -118,8 +118,8 @@ public class Game {
         int k;
 
         for (int i = 0; i < game.getPlayersNumber(); i++){
-            selected = circularListIterator.getNode().getValue().getServerThread().divinitySelection(divinityCards);
-            circularListIterator.getNode().getValue().setDivinityCard(selected);
+            selected = circularListIterator.get().getServerThread().divinitySelection(divinityCards);
+            circularListIterator.get().setDivinityCard(selected);
 
             divinityCards1 = new GlobalVariables.DivinityCard[divinityCards.length - 1];
             k = 0;
@@ -144,7 +144,7 @@ public class Game {
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
 
         for (int i = 0; i < game.getPlayersNumber(); i++){
-            positions[i] = circularListIterator.getNode().getValue().getServerThread().setWorkers(list);
+            positions[i] = circularListIterator.get().getServerThread().setWorkers(list);
 
             for (int j = 0; j < 2; j++)
                 list.add(positions[i][j]);

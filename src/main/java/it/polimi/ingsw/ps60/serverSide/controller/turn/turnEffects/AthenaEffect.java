@@ -9,7 +9,7 @@ public class AthenaEffect extends BaseEffect {
     @Override
     public void move(int[][] move) {
         super.move(move);
-        Worker worker = game.getPlayerInGame().getNode().getValue().getWorkerMoved();
-        game.getPlayerInGame().getNode().getValue().getDivinityStrategy().setBitException(worker.getOldCell().getBuildingLevel() < worker.getCellPosition().getBuildingLevel());
+        Worker worker = game.getPlayerInGame().get().getWorkerMoved();
+        game.getPlayerInGame().get().getDivinityStrategy().setBitException(worker.getOldCell().getBuildingLevel() < worker.getCellPosition().getBuildingLevel());
     }
 }

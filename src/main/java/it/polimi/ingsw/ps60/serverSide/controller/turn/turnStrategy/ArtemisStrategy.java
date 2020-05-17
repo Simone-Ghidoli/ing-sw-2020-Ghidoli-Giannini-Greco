@@ -16,8 +16,8 @@ public class  ArtemisStrategy extends BaseStrategy {
         int numberOfIterations;
         int[] positionWorker;
         Cell cell;
-        Cell[] cellWorker = {game.getPlayerInGame().getNode().getValue().getWorkers()[0].getCellPosition(),
-                game.getPlayerInGame().getNode().getValue().getWorkers()[1].getCellPosition()};
+        Cell[] cellWorker = {game.getPlayerInGame().get().getWorkers()[0].getCellPosition(),
+                game.getPlayerInGame().get().getWorkers()[1].getCellPosition()};
 
         for (int k = 0; k < 2; k++) {
             numberOfIterations = positions[k].size();

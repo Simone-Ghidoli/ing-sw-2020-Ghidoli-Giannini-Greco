@@ -11,7 +11,7 @@ public class BaseTurnController implements TurnController {
     Player player;
 
     public void turn(){
-        player = game.getPlayerInGame().getNode().getValue();
+        player = game.getPlayerInGame().get();
 
         sendBoardToClient();
         movementSection();
@@ -54,7 +54,7 @@ public class BaseTurnController implements TurnController {
     }
 
     public void sendBoardToClient(){
-        for (ServerThread serverThread : game.getPlayerInGame().getNode().getValue().getServerThread().getList()){
+        for (ServerThread serverThread : game.getPlayerInGame().get().getServerThread().getList()){
             serverThread.sendBoard(game.getCellToSend());
         }
     }

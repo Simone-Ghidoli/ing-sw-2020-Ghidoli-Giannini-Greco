@@ -8,7 +8,7 @@ public class PanEffect extends BaseEffect {
     @Override
     public void winConditions() {
         super.winConditions();
-        Player player = game.getPlayerInGame().getNode().getValue();
+        Player player = game.getPlayerInGame().get();
 
         if (player.getWorkerMoved().getOldCell().getBuildingLevel() - player.getWorkerMoved().getCellPosition().getBuildingLevel() >= 2)
             game.win(player);

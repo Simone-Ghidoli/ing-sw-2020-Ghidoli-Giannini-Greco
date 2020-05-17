@@ -14,8 +14,8 @@ public class TritonStrategy extends BaseStrategy {
         ListContains listContains;
         Cell cell;
 
-        Cell[] cellWorker = {game.getPlayerInGame().getNode().getValue().getWorkers()[0].getCellPosition(),
-                game.getPlayerInGame().getNode().getValue().getWorkers()[1].getCellPosition()};
+        Cell[] cellWorker = {game.getPlayerInGame().get().getWorkers()[0].getCellPosition(),
+                game.getPlayerInGame().get().getWorkers()[1].getCellPosition()};
 
         for (int d = 0; d < 2; d++) {
             listContains = new ListContains(position[d]);

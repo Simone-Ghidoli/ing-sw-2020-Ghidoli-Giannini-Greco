@@ -8,7 +8,7 @@ public class ChronusEffect extends BaseEffect {
     public void winConditions () {
         super.winConditions();
         if (game.getCompleteTower() >= 5){
-            game.win(game.getPlayerInGame().getNode().getValue());
+            game.win(game.getPlayerInGame().get());
         }
     }
 }
