@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PrometheusTurnController extends BaseTurnController {
     @Override
-    public void movementSection() {
+    public void movementSection() {//todo migliorare domande e controllare con quale giocatore costruire prima cosi' non si rischia di inviare la lista vuota
 
         int specialChoice = 2;
         int choice;
@@ -17,6 +17,7 @@ public class PrometheusTurnController extends BaseTurnController {
             if (buildChoices.size() != 0) {
                 choice = player.getServerThread().buildMessage(buildChoices);
                 player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+                sendBoardToClient();
             }
             player.setWorkerMoved(null);
         }

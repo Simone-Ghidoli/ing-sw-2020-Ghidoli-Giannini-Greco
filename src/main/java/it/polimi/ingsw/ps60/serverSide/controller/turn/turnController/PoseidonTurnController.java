@@ -7,9 +7,13 @@ public class PoseidonTurnController  extends BaseTurnController{
     public void turn() {
         player = game.getPlayerInGame().getNode().getValue();
 
+        sendBoardToClient();
         movementSection();
+        sendBoardToClient();
         buildingSection();
+        sendBoardToClient();
         specialChoice();
+        sendBoardToClient();
         endTurnSection();
     }
 
