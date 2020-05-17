@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 public class GUIMethods implements ViewMethodSelection {
 
@@ -91,7 +90,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         final JButton[] buttonWorkers = new JButton[2];
         final int[] choiceToReturn = new int[1];
-        final Semaphore semaphore = new Semaphore(0);
+        final Object[] objectToSynchronize = new Object[1];
 
         class ReturnListener implements ActionListener{
             final int numberToReturn;
@@ -102,8 +101,10 @@ public class GUIMethods implements ViewMethodSelection {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                choiceToReturn[0] = numberToReturn;
-                semaphore.release();
+                synchronized (objectToSynchronize) {
+                    choiceToReturn[0] = numberToReturn;
+                    objectToSynchronize.notifyAll();
+                }
             }
         }
 
@@ -120,16 +121,19 @@ public class GUIMethods implements ViewMethodSelection {
                     buttonWorkers[0].setEnabled(false);
                     buttonWorkers[1].setEnabled(false);
                     JButton button;
-                    for (int i = 0; i < moves[i].size(); i++){
+                    for (int i = 0; i < moves[i].size(); i++) {
                         button = santorini.getButton(moves[workerNumber].get(i)[0] * 5 + moves[workerNumber].get(i)[0] * 5);
                         button.addActionListener(new ReturnListener(workerNumber * moves[0].size() + moves[workerNumber].size()));
                         button.setEnabled(true);
                     }
-                    try {
-                        semaphore.acquire();
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
+                    synchronized (objectToSynchronize) {
+                        try {
+                            objectToSynchronize.wait();
+                        } catch (InterruptedException interruptedException) {
+                            interruptedException.printStackTrace();
+                        }
                     }
+
                     choiceToReturn.notifyAll();
                 }
             }
