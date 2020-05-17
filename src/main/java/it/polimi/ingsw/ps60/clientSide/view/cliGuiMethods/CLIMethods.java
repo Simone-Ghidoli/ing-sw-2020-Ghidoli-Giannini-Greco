@@ -11,26 +11,6 @@ import static it.polimi.ingsw.ps60.utils.FlushInput.flushInput;
 
 public class CLIMethods implements ViewMethodSelection {
 
-    /* questi sono ascii da 48 a 64
-    valore  altezza giocatore
-    0       0       no
-    1       1       no
-    2       2       no
-    3       3       no
-    4       cupola  no
-    5       0       1
-    6       1       1
-    7       2       1
-    8       3       1
-    9       0       2
-    :       1       2
-    ;       2       2
-    <       3       2
-    =       0       3
-    >       1       3
-    ?       2       3
-    @       3       3
-    */
     @Override
     public void printBoard(String board) {
 
