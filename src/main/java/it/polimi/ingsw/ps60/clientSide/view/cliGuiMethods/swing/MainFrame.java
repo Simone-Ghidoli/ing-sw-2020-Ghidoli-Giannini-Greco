@@ -3,6 +3,7 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JPanel {
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -69,5 +70,14 @@ public class MainFrame extends JPanel {
 
     public void setDivinityCardImage(GlobalVariables.DivinityCard divinityCard) {
         divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(divinityCard.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 17 / 58, screenSize.height, Image.SCALE_SMOOTH)));
+    }
+
+    public void resetButtons(){
+        for (JButton button : jButtons){
+            for(ActionListener actionListener : button.getActionListeners()) {
+                button.removeActionListener(actionListener);
+            }
+            button.setEnabled(false);
+        }
     }
 }

@@ -152,6 +152,8 @@ public class GUIMethods implements ViewMethodSelection {
             }
         }
 
+        santorini.resetButtons();
+
         if (confirmOrRetry())
             return choiceToReturn[0];
         else
@@ -199,6 +201,8 @@ public class GUIMethods implements ViewMethodSelection {
                 e.printStackTrace();
             }
         }
+
+        santorini.resetButtons();
 
         if (confirmOrRetry())
             return choiceToReturn[0];
@@ -416,6 +420,8 @@ public class GUIMethods implements ViewMethodSelection {
                 e.printStackTrace();
             }
         }
+
+        santorini.resetButtons();
 
         if (confirmOrRetry())
             return workersPositions;
