@@ -176,7 +176,7 @@ public class CLIMethods implements ViewMethodSelection {
 
         System.out.println("Select " + playerNumber + " cards between:");
 
-        for (int i = 0; i < allCards.length; i++){
+        for (int i = 0; i < allCards.length - 1; i++){
             System.out.println((i+1) + "- " + allCards[i].toString());
         }
 
