@@ -1,44 +1,63 @@
 package it.polimi.ingsw.ps60.serverSide.controller;
 
-
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
 import it.polimi.ingsw.ps60.serverSide.server.Server;
 import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
+import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
-import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class Game {
+public class ServerStarter {
+
+    private String[] nicknames;
+    private final Server server;
 
     /**
      * This class initialize the board and every turn
-     * @param server is the instance of the server of the game
      */
-    public Game(@NotNull Server server) {
-        String[] strings = sort(server.getNickBirth());
-        game = new Board(strings);
+    public ServerStarter() {
+        server = new Server(portSelection());
+        sort();
+        game = new Board(nicknames);
 
-        serverThreadBound(strings, server);
+        serverThreadBound();
         selectWorkersPositions();
         selectDivinityCard();
-        turnInGame();
+        game();
     }
 
-    public void serverThreadBound(String[] strings, Server server){
+    private int portSelection(){
+        Scanner input = new Scanner(System.in);
+        String port = null;
+
+        System.out.println("Enter the port number");
+
+        while (port == null){
+            port = input.nextLine();
+            if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port)) {
+                System.out.println("Wrong input");
+                port = null;
+            }
+        }
+
+        return Integer.parseInt(port);
+    }
+
+    private void serverThreadBound(){
         ArrayList<ServerThread> serverThreads = server.getSocketList();
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
 
-        for (int i = 0; i < strings.length; i++) {
+        for (int i = 0; i < nicknames.length; i++) {
             while (!serverThreads.get(i).getPlayerBound().equals(circularListIterator.get().getNickname()))
                 circularListIterator.nextNode();
             circularListIterator.get().setServerThread(serverThreads.get(i));
@@ -46,20 +65,18 @@ public class Game {
         }
     }
 
-    public void turnInGame(){
-        while (game.getBitWinner() == 0){
+    private void game(){
+        while (game.getBitWinner() == 0)
             game.getPlayerInGame().get().getDivinityStrategy().getTurnController().turn();
-        }
 
         game.getPlayerWinner().getServerThread().win();
     }
 
     /**
      * This method only sorts the nicknames by the birthday
-     * @param nicknamesAndBirthdays is an array with all the nickname of each player associated of its birthday
-     * @return returns all the nicknames sorted by the birthday
      */
-    private String[] sort(@NotNull String[][] nicknamesAndBirthdays) {
+    private void sort() {
+        String[][] nicknamesAndBirthdays = server.getNickBirth();
         String[] nicknames = new String[nicknamesAndBirthdays.length];
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date dateSelected, date;
@@ -90,7 +107,7 @@ public class Game {
         for (int i = 0; i < nicknames.length; i++)
             System.out.println("INFO : Player number " + i + " : " + nicknames[i]);
 
-        return nicknames;
+        this.nicknames = nicknames;
     }
 
     /**
@@ -98,13 +115,13 @@ public class Game {
      * all the player, starting for the second one, will chose a divinity card for the n
      * divinity cards picked
      */
-    public void selectDivinityCard() {
+    private void selectDivinityCard() {
         int choice = game.getPlayerInGame().get().getServerThread().specialChoice("" +
                 "Do you want to play with divinity cards?");
 
         if (choice == 0){
             for (int i = 0; i < game.getPlayersNumber(); i++){
-                game.getPlayerById(GlobalVariables.IdPlayer.values()[i]).setDivinityCard(GlobalVariables.DivinityCard.NONE);
+                game.getPlayerMatrix()[i].setDivinityCard(GlobalVariables.DivinityCard.NONE);
             }
             return;
         }
@@ -137,7 +154,7 @@ public class Game {
     /**
      * This method will asks to all the player where to set its workers
      */
-    public void selectWorkersPositions() {
+    private void selectWorkersPositions() {
         int[][][] positions = new int[game.getPlayersNumber()][][];
         List<int[]> list = new ArrayList<>();
 
@@ -155,10 +172,10 @@ public class Game {
         setWorkersPositions(positions);
     }
 
-    public void setWorkersPositions(int[][][] positions) {
+    private void setWorkersPositions(int[][][] positions) {
         for (int j = 0; j < positions.length; j++) {
             for (int i = 0; i < 2; i++) {
-                game.getPlayerById(GlobalVariables.IdPlayer.values()[j]).getWorker(i).moveWorker(game.getCellByPosition(positions[j][i]));
+                game.getPlayerMatrix()[j].getWorker(i).moveWorker(game.getCellByPosition(positions[j][i]));
             }
         }
     }

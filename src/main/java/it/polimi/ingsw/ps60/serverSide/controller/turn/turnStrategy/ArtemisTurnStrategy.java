@@ -7,7 +7,7 @@ import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class  ArtemisStrategy extends BaseStrategy {
+public class ArtemisTurnStrategy extends BaseTurnStrategy {
 
     @Override
     public List<int[]>[] baseMovement() {

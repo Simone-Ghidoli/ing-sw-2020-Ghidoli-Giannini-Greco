@@ -26,13 +26,6 @@ public class BoardTest {
             cell=new Cell(coord1,board);
     }
 
-
-    @After
-    public void tearDown(){
-
-
-    }
-
     @Test
     public void playersNumber_correctOutput(){
         assertEquals(board.getPlayersNumber(), 3);
@@ -40,14 +33,14 @@ public class BoardTest {
 
     @Test
     public void getCellByPosition_correctInput_correctOutput(){
-        assertSame(board.getCellByPosition(coord1),board.cellMatrix[3][4]);
+        assertSame(board.getCellByPosition(coord1),board.getCellByPosition(new int[]{3, 4}));
     }
     @Test
     public void getPlayerInGame_correctOutput() {
-        assertSame(board.getPlayerInGame(), board.playerInGame);
+        assertSame(board.getPlayerInGame(), board.getPlayerInGame());
     }
     @Test
     public void getPlayerById_correctInput_correctOutput(){
-        assertSame(board.getPlayerById(GlobalVariables.IdPlayer.PLAYER1),board.playerMatrix[0]);
+        assertSame(board.getPlayerMatrix(),board.getPlayerMatrix());
     }
 }

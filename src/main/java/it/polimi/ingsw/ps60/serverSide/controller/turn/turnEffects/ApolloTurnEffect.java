@@ -5,7 +5,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Worker;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class ApolloEffect extends BaseEffect {
+public class ApolloTurnEffect extends BaseTurnEffect {
     @Override
     public void move(int[][] move) {
         Worker worker;

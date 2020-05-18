@@ -6,11 +6,10 @@ import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseStrategyTest {
+public class BaseTurnStrategyTest {
 
     @Before
     public void createBoard(){
@@ -25,7 +24,7 @@ public class BaseStrategyTest {
 
     @Test
     public void baseStrategyTest(){
-        BaseStrategy base=new BaseStrategy();
+        BaseTurnStrategy base=new BaseTurnStrategy();
         List<int[]>[] current=new ArrayList[2];
         current=base.baseMovement();
         System.out.println("ciao");

@@ -4,7 +4,7 @@ import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class ZeusStrategy extends BaseStrategy {
+public class ZeusTurnStrategy extends BaseTurnStrategy {
     @Override
     public List<int[]> baseBuilding() {
         List<int[]> positions = super.baseBuilding();

@@ -6,7 +6,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Player;
 import java.util.List;
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class PrometheusStrategy extends BaseStrategy {
+public class PrometheusTurnStrategy extends BaseTurnStrategy {
     @Override
     public List<int[]>[] baseMovement() {
         Player player = game.getPlayerInGame().get();

@@ -96,21 +96,21 @@ public class Cell {
 
     private void updateCellToSend() {
         if (isDomed())
-            board.cellToSend[position[0] * 5 + position[1]] = (char) 52;
+            board.getCellToSend()[position[0] * 5 + position[1]] = (char) 52;
 
         else {
             int i = 48 + getBuildingLevel();
 
             if (!isFree()) {
                 i = i + 5;
-                if (workerIn.getOwner().getId() != GlobalVariables.IdPlayer.PLAYER1){
+                if (workerIn.getOwner() != board.getPlayerMatrix()[0]){
                     i = i + 4;
-                    if (workerIn.getOwner().getId() != GlobalVariables.IdPlayer.PLAYER2) {
+                    if (workerIn.getOwner() != board.getPlayerMatrix()[1]) {
                         i = i + 4;
                     }
                 }
             }
-            board.cellToSend[position[0] * 5 + position[1]] = (char) i;
+            board.getCellToSend()[position[0] * 5 + position[1]] = (char) i;
         }
     }
 }

@@ -5,15 +5,15 @@ import it.polimi.ingsw.ps60.utils.circularList.CircularLinkedList;
 import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
 
 public class Board {
-    CircularListIterator<Player> playerInGame;
-    int playersNumber;
-    Cell[][] cellMatrix;
-    Player[] playerMatrix;
-    CircularLinkedList<Player> playerList;
-    int completeTower;
-    char[] cellToSend;
-    Player playerWinner;
-    int winner;
+    private final CircularListIterator<Player> playerInGame;
+    private int playersNumber;
+    private final Cell[][] cellMatrix;
+    private final Player[] playerMatrix;
+    private final CircularLinkedList<Player> playerList;
+    private int completeTower;
+    private final char[] cellToSend;
+    private Player playerWinner;
+    private int winner;
 
     /**
      * The board is the memory of the game.
@@ -39,7 +39,7 @@ public class Board {
         }
 
         for (int i = 0; i< playersNumber; i++) {
-            playerMatrix[i] = new Player(GlobalVariables.IdPlayer.values()[i], nicknames[i]);
+            playerMatrix[i] = new Player(nicknames[i]);
             playerList.addNode(playerMatrix[i]);
         }
 
@@ -113,21 +113,6 @@ public class Board {
         return cellToSend;
     }
 
-    //method not sure it will be used
-    /**
-     *
-     * @param idPlayer the id of the player that will be returned
-     * @return return a player based on his id
-     */
-    public Player getPlayerById(@org.jetbrains.annotations.NotNull GlobalVariables.IdPlayer idPlayer){
-        switch (idPlayer){
-            case PLAYER1: return playerMatrix[0];
-            case PLAYER2: return playerMatrix[1];
-            case PLAYER3: return playerMatrix[2];
-            default: return null;
-        }
-    }
-
     public int getCompleteTower() {
         return completeTower;
     }
@@ -138,5 +123,9 @@ public class Board {
 
     public int getBitWinner() {
         return winner;
+    }
+
+    public Player[] getPlayerMatrix() {
+        return playerMatrix;
     }
 }
