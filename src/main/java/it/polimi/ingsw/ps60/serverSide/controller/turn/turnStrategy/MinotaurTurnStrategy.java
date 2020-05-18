@@ -7,11 +7,11 @@ import it.polimi.ingsw.ps60.serverSide.model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinotaurStrategy extends BaseStrategy {
+public class MinotaurTurnStrategy extends BaseTurnStrategy {
 
     @Override
     public List<int[]>[] baseMovement() {
-        Player playerInGame = game.getPlayerInGame().getNode().getValue();
+        Player playerInGame = game.getPlayerInGame().get();
         Cell[] cellWorker = {playerInGame.getWorkers()[0].getCellPosition(), playerInGame.getWorkers()[1].getCellPosition()};
         List<int[]>[] positions = new ArrayList[2];
 

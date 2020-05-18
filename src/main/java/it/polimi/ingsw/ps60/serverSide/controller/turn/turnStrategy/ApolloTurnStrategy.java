@@ -7,7 +7,7 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApolloStrategy extends BaseStrategy {
+public class ApolloTurnStrategy extends BaseTurnStrategy {
 
     /**
      * A player can move his worker into an opponent's space forcing opponent's worker to the space the first one
@@ -17,7 +17,7 @@ public class ApolloStrategy extends BaseStrategy {
      */
     @Override
     public List<int[]>[] baseMovement() {
-        Player playerInGame = game.getPlayerInGame().getNode().getValue();
+        Player playerInGame = game.getPlayerInGame().get();
         Cell[] cellWorker = {playerInGame.getWorkers()[0].getCellPosition(), playerInGame.getWorkers()[1].getCellPosition()};
         List<int[]>[] positions = new ArrayList[2];
 

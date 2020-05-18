@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
+import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
+
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.List;
  * for every possible god.
  */
 
-public class BaseStrategy implements Strategy {
+public class BaseTurnStrategy implements TurnStrategy {
 
     /**
      * This method look for all the possible move that both player's worker can do
@@ -21,7 +23,7 @@ public class BaseStrategy implements Strategy {
      * @return returns a list containing the coordinates of all possible reachable cell.
      */
     public List<int[]>[] baseMovement() {
-        Player playerInGame = game.getPlayerInGame().getNode().getValue();
+        Player playerInGame = game.getPlayerInGame().get();
         Cell[] cellWorker = {playerInGame.getWorkers()[0].getCellPosition(), playerInGame.getWorkers()[1].getCellPosition()};
         List<int[]>[] positions = new ArrayList[2];
 
@@ -59,7 +61,7 @@ public class BaseStrategy implements Strategy {
     public List<int[]> baseBuilding() {
 
         List<int[]> positions = new ArrayList<>();
-        int[] positionWorker = game.getPlayerInGame().getNode().getValue().getWorkerMoved().getCellPosition().getPosition();
+        int[] positionWorker = game.getPlayerInGame().get().getWorkerMoved().getCellPosition().getPosition();
         Cell cell;
 
         for (int i = -1; i < 2; i++) {
@@ -83,8 +85,17 @@ public class BaseStrategy implements Strategy {
      * @return false if no divinity disturbs the worker to move in the target position, true otherwise
      */
     public boolean isDisturbedByDivinity(int[] workerPosition, int[] targetPosition){
-        if (GlobalVariables.DivinityCard.ATHENA.isBitException() && game.getPlayerInGame().getNode().getValue().getDivinityCard() != GlobalVariables.DivinityCard.ATHENA)
-            return game.getCellByPosition(workerPosition).getBuildingLevel() < game.getCellByPosition(targetPosition).getBuildingLevel();
+
+        if (game.getPlayerInGame().get().getDivinityCard() != GlobalVariables.DivinityCard.ATHENA) {
+
+            CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
+
+            for (int i = 0; i < game.getPlayersNumber(); i++) {
+                if (circularListIterator.get().getDivinityStrategy().isBitException() && circularListIterator.get().getDivinityCard() == GlobalVariables.DivinityCard.ATHENA)
+                    return game.getCellByPosition(workerPosition).getBuildingLevel() < game.getCellByPosition(targetPosition).getBuildingLevel();
+                circularListIterator.nextNode();
+            }
+        }
         return false;
     }
 }

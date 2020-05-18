@@ -10,10 +10,11 @@ import java.util.List;
 
 public class DivinityStrategy {
 
-    private final Strategy strategy;
-    private final Effect effect;
+    private final TurnStrategy turnStrategy;
+    private final TurnEffect turnEffect;
     private final String specialChoice;
     private final TurnController turnController;
+    private boolean bitException;
 
     /**
      * This class implements the right methods based on which divinity card a player has
@@ -21,59 +22,61 @@ public class DivinityStrategy {
      */
     public DivinityStrategy(GlobalVariables.DivinityCard divinityCard){
 
+        bitException = false;
+
         switch (divinityCard) {
             case APOLLO:
-                strategy = new ApolloStrategy();
+                turnStrategy = new ApolloTurnStrategy();
                 break;
             case ARTEMIS:
-                strategy = new ArtemisStrategy();
+                turnStrategy = new ArtemisTurnStrategy();
                 break;
             case ATLAS:
-                strategy = new AtlasStrategy();
+                turnStrategy = new AtlasTurnStrategy();
                 break;
             case HEPHAESTUS:
-                strategy = new HephaestusStrategy();
+                turnStrategy = new HephaestusTurnStrategy();
                 break;
             case MINOTAUR:
-                strategy = new MinotaurStrategy();
+                turnStrategy = new MinotaurTurnStrategy();
                 break;
             case PROMETHEUS:
-                strategy = new PrometheusStrategy();
+                turnStrategy = new PrometheusTurnStrategy();
                 break;
             case TRITON:
-                strategy = new TritonStrategy();
+                turnStrategy = new TritonTurnStrategy();
                 break;
             case ZEUS:
-                strategy = new ZeusStrategy();
+                turnStrategy = new ZeusTurnStrategy();
                 break;
             default:
-                strategy = new BaseStrategy();
+                turnStrategy = new BaseTurnStrategy();
         }
 
         switch (divinityCard){
             case APOLLO:
-                effect = new ApolloEffect();
+                turnEffect = new ApolloTurnEffect();
                 break;
             case ATHENA:
-                effect = new AthenaEffect();
+                turnEffect = new AthenaTurnEffect();
                 break;
             case ATLAS:
-                effect = new AtlasEffect();
+                turnEffect = new AtlasTurnEffect();
                 break;
             case CHRONUS:
-                effect = new ChronusEffect();
+                turnEffect = new ChronusTurnEffect();
                 break;
             case HEPHAESTUS:
-                effect = new HephaestusEffect();
+                turnEffect = new HephaestusTurnEffect();
                 break;
             case MINOTAUR:
-                effect = new MinotaurEffect();
+                turnEffect = new MinotaurTurnEffect();
                 break;
             case PAN:
-                effect = new PanEffect();
+                turnEffect = new PanTurnEffect();
                 break;
             default:
-                effect = new BaseEffect();
+                turnEffect = new BaseTurnEffect();
                 break;
         }
 
@@ -123,23 +126,23 @@ public class DivinityStrategy {
     }
 
     public List<int[]> getTurnStrategyBuilding() {
-        return strategy.baseBuilding();
+        return turnStrategy.baseBuilding();
     }
 
     public List<int[]>[] getTurnStrategyMovement() {
-        return strategy.baseMovement();
+        return turnStrategy.baseMovement();
     }
 
     public void setMovement(int[][] movement){
-        effect.move(movement);
+        turnEffect.move(movement);
     }
 
     public void setBuilding(int[] building){
-        effect.build(building);
+        turnEffect.build(building);
     }
 
     public void setEndTurn(){
-        effect.endTurn();
+        turnEffect.endTurn();
     }
 
     public String getSpecialChoice() {
@@ -148,5 +151,13 @@ public class DivinityStrategy {
 
     public TurnController getTurnController() {
         return turnController;
+    }
+
+    public boolean isBitException() {
+        return bitException;
+    }
+
+    public void setBitException(boolean bitException) {
+        this.bitException = bitException;
     }
 }

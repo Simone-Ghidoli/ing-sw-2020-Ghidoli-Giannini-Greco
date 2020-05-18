@@ -5,11 +5,18 @@ public class CircularLinkedList<T> {
     private Node<T> tail;
     private int size;
 
+    /**
+     * Is a list with head and tail connected
+     */
     public CircularLinkedList(){
         head = tail = null;
         size = 0;
     }
 
+    /**
+     * This method will add a node to the list
+     * @param value is the value of the node
+     */
     public void addNode(T value){
         Node<T> newNode = new Node<>(value);
 
@@ -24,30 +31,18 @@ public class CircularLinkedList<T> {
         size++;
     }
 
-    public void addNodeIfNotExists(T value){
-        Node<T> newNode = new Node<>(value);
-
-        if (head == null) {
-            addNode(value);
-            return;
-        }
-
-        if (head.getValue().equals(newNode))
-            return;
-
-        Node<T> node = head.nextNode;
-        while (node != head){
-            if (node.getValue().equals(newNode))
-                return;
-            node = node.nextNode;
-        }
-        addNode(value);
-    }
-
+    /**
+     * This method will provide the head of the list
+     * @return the head of the circular list
+     */
     public Node<T> getHead() {
         return head;
     }
 
+    /**
+     * This method will delete a node of the list
+     * @param nodeToRemove is the node that has to be removed
+     */
     public void removeNode(T nodeToRemove){
         Node<T> node = head;
         if (node.value == nodeToRemove){
@@ -77,6 +72,10 @@ public class CircularLinkedList<T> {
         }
     }
 
+    /**
+     * This method will provide the size of the list
+     * @return the size of the list
+     */
     public int getSize() {
         return size;
     }

@@ -3,23 +3,23 @@ package it.polimi.ingsw.ps60;
 import java.util.Scanner;
 
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.CLIMethods;
-import it.polimi.ingsw.ps60.clientSide.view.client.Starter;
+import it.polimi.ingsw.ps60.clientSide.view.client.ClientStarter;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods;
-import it.polimi.ingsw.ps60.serverSide.ServerStarter;
+import it.polimi.ingsw.ps60.serverSide.controller.ServerStarter;
 
 public class Launcher {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args){
         firstSelection();
     }
 
-    private static void firstSelection() throws InterruptedException {
+    private static void firstSelection(){
 
         System.out.println("Enter 0 for server, 1 for client");
 
         switch (new Scanner(System.in).nextLine()) {
             case "0":
-                ServerStarter.start();
+                new ServerStarter().start();
                 break;
             case "1":
                 clientSelection();
@@ -30,15 +30,15 @@ public class Launcher {
         }
     }
 
-    private static void clientSelection() throws InterruptedException {
+    private static void clientSelection(){
         System.out.println("Enter 0 for GUI, 1 for CLI");
 
         switch (new Scanner(System.in).nextLine()){
             case "0":
-                Starter.start(new GUIMethods());
+                new ClientStarter(new GUIMethods()).start();
                 break;
             case "1":
-                Starter.start(new CLIMethods());
+                new ClientStarter(new CLIMethods()).start();
                 break;
             default:
                 System.out.println("Wrong input");

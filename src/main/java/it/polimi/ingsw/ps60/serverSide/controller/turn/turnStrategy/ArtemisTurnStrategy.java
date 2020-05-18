@@ -7,7 +7,7 @@ import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class  ArtemisStrategy extends BaseStrategy {
+public class ArtemisTurnStrategy extends BaseTurnStrategy {
 
     @Override
     public List<int[]>[] baseMovement() {
@@ -16,8 +16,8 @@ public class  ArtemisStrategy extends BaseStrategy {
         int numberOfIterations;
         int[] positionWorker;
         Cell cell;
-        Cell[] cellWorker = {game.getPlayerInGame().getNode().getValue().getWorkers()[0].getCellPosition(),
-                game.getPlayerInGame().getNode().getValue().getWorkers()[1].getCellPosition()};
+        Cell[] cellWorker = {game.getPlayerInGame().get().getWorkers()[0].getCellPosition(),
+                game.getPlayerInGame().get().getWorkers()[1].getCellPosition()};
 
         for (int k = 0; k < 2; k++) {
             numberOfIterations = positions[k].size();

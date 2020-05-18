@@ -4,11 +4,11 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 
 public class Cell {
 
-    private int[] position;
+    private final int[] position;
     private int buildingLevel;
     private Worker workerIn;
     private boolean dome;
-    private Board board;
+    private final Board board;
 
     /**
      * This will be a single cell of the 5 x 5 board of the game.
@@ -96,21 +96,21 @@ public class Cell {
 
     private void updateCellToSend() {
         if (isDomed())
-            board.cellToSend[position[0] * 5 + position[1]] = (char) 52;
+            board.getCellToSend()[position[0] * 5 + position[1]] = (char) 52;
 
         else {
             int i = 48 + getBuildingLevel();
 
             if (!isFree()) {
                 i = i + 5;
-                if (workerIn.getOwner().getId() != GlobalVariables.IdPlayer.PLAYER1){
+                if (workerIn.getOwner() != board.getPlayerMatrix()[0]){
                     i = i + 4;
-                    if (workerIn.getOwner().getId() != GlobalVariables.IdPlayer.PLAYER2) {
+                    if (workerIn.getOwner() != board.getPlayerMatrix()[1]) {
                         i = i + 4;
                     }
                 }
             }
-            board.cellToSend[position[0] * 5 + position[1]] = (char) i;
+            board.getCellToSend()[position[0] * 5 + position[1]] = (char) i;
         }
     }
 }

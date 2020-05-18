@@ -37,11 +37,11 @@ public class SetupForTest {
 
         for (int i = 0; i < game.getPlayersNumber(); i++) {
             for (int j = 0; j < 2; j++) {
-                game.getPlayerInGame().getNode().getValue().getWorker(j).moveWorker(game.getCellByPosition(posPlayers[i][j]));
+                game.getPlayerInGame().get().getWorker(j).moveWorker(game.getCellByPosition(posPlayers[i][j]));
             }
         }
-        player1 = GlobalVariables.game.getPlayerById(GlobalVariables.IdPlayer.PLAYER1);
-        player2 = GlobalVariables.game.getPlayerById(GlobalVariables.IdPlayer.PLAYER2);
-        player3 = GlobalVariables.game.getPlayerById(GlobalVariables.IdPlayer.PLAYER3);
+        player1 = GlobalVariables.game.getPlayerMatrix()[0];
+        player1 = GlobalVariables.game.getPlayerMatrix()[1];
+        player1 = GlobalVariables.game.getPlayerMatrix()[2];
     }
 }

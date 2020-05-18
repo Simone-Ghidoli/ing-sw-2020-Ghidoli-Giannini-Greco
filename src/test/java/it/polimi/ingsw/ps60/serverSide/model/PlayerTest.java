@@ -16,11 +16,10 @@ public class PlayerTest {
         nicknames[0] = "Nico";
         nicknames[1] = "Vinz";
         nicknames[2] = "Simo";
-        player1=new Player(GlobalVariables.IdPlayer.PLAYER1, nicknames[0]);
-        player2=new Player(GlobalVariables.IdPlayer.PLAYER2, nicknames[1]);
-        player3=new Player(GlobalVariables.IdPlayer.PLAYER3, nicknames[2]);
+        player1=new Player(nicknames[0]);
+        player2=new Player(nicknames[1]);
+        player3=new Player(nicknames[2]);
         player1.setDivinityCard(GlobalVariables.DivinityCard.APOLLO);
-        player2.setColour(GlobalVariables.Colour.RED);
         player1.setWorkerMoved(player1.getWorkers()[0]);
         player2.setBuildByWorker(true);
         player3.setBuildByWorker(false);
@@ -33,10 +32,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void getid_correctOutput(){
-        assertSame(GlobalVariables.IdPlayer.PLAYER1, player1.getId());
-    }
-    @Test
     public void getNickname_correctOutput(){
         assertEquals(nicknames[0],player1.getNickname());
     }
@@ -45,15 +40,11 @@ public class PlayerTest {
         assertSame(GlobalVariables.DivinityCard.APOLLO, player1.getDivinityCard());
     }
     @Test
-    public void getColour_correctOutput(){
-        assertSame(GlobalVariables.Colour.RED, player2.getColour());
-    }
-    @Test
     public void getWorkers_correctOutput(){
         assertSame(player1.getWorker(0), player1.getWorkers()[0]);
     }
     @Test
-    public void getWorker_corrrectOutput(){
+    public void getWorker_correctOutput(){
         assertSame(player1.getWorkers()[0] ,player1.getWorker(0));
     }
     @Test

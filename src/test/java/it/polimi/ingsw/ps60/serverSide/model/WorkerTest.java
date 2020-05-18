@@ -22,7 +22,7 @@ public class WorkerTest {
 
     @Before
     public void setupWorker(){
-        owner = new Player(GlobalVariables.IdPlayer.PLAYER1, "vincent");
+        owner = new Player("vincent");
 
         cell = new Cell(new int[]{1, 2},null);
     }

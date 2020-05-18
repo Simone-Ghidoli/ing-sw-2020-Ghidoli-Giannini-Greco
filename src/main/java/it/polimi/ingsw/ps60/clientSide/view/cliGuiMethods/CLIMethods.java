@@ -11,26 +11,6 @@ import static it.polimi.ingsw.ps60.utils.FlushInput.flushInput;
 
 public class CLIMethods implements ViewMethodSelection {
 
-    /* questi sono ascii da 48 a 64
-    valore  altezza giocatore
-    0       0       no
-    1       1       no
-    2       2       no
-    3       3       no
-    4       cupola  no
-    5       0       1
-    6       1       1
-    7       2       1
-    8       3       1
-    9       0       2
-    :       1       2
-    ;       2       2
-    <       3       2
-    =       0       3
-    >       1       3
-    ?       2       3
-    @       3       3
-    */
     @Override
     public void printBoard(String board) {
 
@@ -259,7 +239,7 @@ public class CLIMethods implements ViewMethodSelection {
         for (int i = 0; i < 5; i++) {
             System.out.print("\n" + (i + 1) + "-  ");
 
-            for (int j = 0; j < 5; j ++) {
+            for (int j = 0; j < 5; j++) {
 
                 if (listContains.isContained(new int[]{i, j})) {
                     System.out.print(1);
@@ -274,7 +254,7 @@ public class CLIMethods implements ViewMethodSelection {
         flushInput();
 
         for (int i = 0; i < 2; i++) {
-            buffer=new int[2];
+            buffer = new int[2];
             while (choice[i] == null) {
                 System.out.println("\nEnter the position of the " + (i + 1) + " worker");
                 System.out.println("Enter the x coordinate");
@@ -300,14 +280,11 @@ public class CLIMethods implements ViewMethodSelection {
 
                 buffer[1] = buffer[1] - 1;
 
-                if (!listContains.isContained(buffer)) {//todo la stessa cosa di prima
+                if (!listContains.isContained(buffer)) {
                     choice[i] = buffer;
                     impossiblePositions.add(buffer);
-                }
-                else {
+                } else
                     System.out.println("Position already taken");
-                    choice[i]=null;
-                }
             }
         }
         return choice;

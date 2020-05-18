@@ -5,11 +5,15 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 public class PoseidonTurnController  extends BaseTurnController{
     @Override
     public void turn() {
-        player = game.getPlayerInGame().getNode().getValue();
+        player = game.getPlayerInGame().get();
 
+        sendBoardToClient();
         movementSection();
+        sendBoardToClient();
         buildingSection();
+        sendBoardToClient();
         specialChoice();
+        sendBoardToClient();
         endTurnSection();
     }
 

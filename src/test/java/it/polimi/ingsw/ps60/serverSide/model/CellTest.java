@@ -44,7 +44,7 @@ public class CellTest {
         cell2.buildDome();
         cell3.buildDome();
         cell4.incrementBuildingLevel();
-        cell4.setWorkerIn(board.playerMatrix[0].getWorker(0));
+        cell4.setWorkerIn(board.getPlayerMatrix()[0].getWorker(0));
         cell5.incrementBuildingLevel();
         cell5.buildDome();
         cell5.removeDome();
@@ -90,11 +90,11 @@ public class CellTest {
 
     @Test
     public void getWorkerIn_correctOutput(){
-        assertSame(cell4.getWorkerIn(),board.playerMatrix[0].getWorker(0));
+        assertSame(cell4.getWorkerIn(),board.getPlayerMatrix()[0].getWorker(0));
     }
 
     @Test
     public void numberCompleteBuild(){
-        assertEquals(board.completeTower,1);
+        assertEquals(board.getCompleteTower(),1);
     }
 }

@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class StringRegexValidation {
 
-    private Pattern regex;
+    private final Pattern regex;
 
     /**
      * It can validate a string if it respects a pattern

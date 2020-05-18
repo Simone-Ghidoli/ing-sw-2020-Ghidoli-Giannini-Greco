@@ -5,11 +5,11 @@ import it.polimi.ingsw.ps60.serverSide.model.Worker;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class ApolloEffect extends BaseEffect {
+public class ApolloTurnEffect extends BaseTurnEffect {
     @Override
     public void move(int[][] move) {
         Worker worker;
-        Player player = game.getPlayerInGame().getNode().getValue();
+        Player player = game.getPlayerInGame().get();
         if(!(game.getCellByPosition(move[1]).isFree())){
             worker=game.getCellByPosition(move[1]).getWorkerIn();
             game.getCellByPosition(move[1]).getWorkerIn().moveWorker(player.getWorker(move[0][0]).getCellPosition());

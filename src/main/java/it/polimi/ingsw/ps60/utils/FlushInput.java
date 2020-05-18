@@ -3,11 +3,15 @@ package it.polimi.ingsw.ps60.utils;
 import java.io.IOException;
 
 public class FlushInput {
-    public static int flushInput() {
+
+    /**
+     * This method will empty the buffer before an input in order to not read an input written for error by the player
+     */
+    public static void flushInput() {
         try {
-            return System.in.read(new byte[System.in.available()]);
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch(IOException e_0){}
-        return 0;
     }
 }
