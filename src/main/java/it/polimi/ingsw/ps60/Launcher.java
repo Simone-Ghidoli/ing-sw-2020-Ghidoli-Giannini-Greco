@@ -19,7 +19,7 @@ public class Launcher {
 
         switch (new Scanner(System.in).nextLine()) {
             case "0":
-                new ServerStarter();
+                new ServerStarter().start();
                 break;
             case "1":
                 clientSelection();
@@ -35,10 +35,10 @@ public class Launcher {
 
         switch (new Scanner(System.in).nextLine()){
             case "0":
-                new ClientStarter(new GUIMethods());
+                new ClientStarter(new GUIMethods()).start();
                 break;
             case "1":
-                new ClientStarter(new CLIMethods());
+                new ClientStarter(new CLIMethods()).start();
                 break;
             default:
                 System.out.println("Wrong input");

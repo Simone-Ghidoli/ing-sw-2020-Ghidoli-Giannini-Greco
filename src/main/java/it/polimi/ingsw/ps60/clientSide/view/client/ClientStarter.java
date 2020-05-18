@@ -28,7 +28,6 @@ public class ClientStarter {
         ipAddress = strings[0];
         port = Integer.parseInt(strings[1]);
         this.viewMethodSelection = viewMethodSelection;
-        start();
     }
 
     /**

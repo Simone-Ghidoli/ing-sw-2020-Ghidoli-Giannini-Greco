@@ -27,6 +27,9 @@ public class ServerStarter {
      */
     public ServerStarter() {
         server = new Server(portSelection());
+    }
+
+    public void start(){
         sort();
         game = new Board(nicknames);
 
