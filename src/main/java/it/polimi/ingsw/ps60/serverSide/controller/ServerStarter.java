@@ -5,6 +5,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
 import it.polimi.ingsw.ps60.serverSide.server.Server;
 import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
+import it.polimi.ingsw.ps60.utils.FileAccess;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
 
@@ -21,24 +22,56 @@ public class ServerStarter {
 
     private String[] nicknames;
     private final Server server;
+    private final FileAccess fileAccess = new FileAccess();
 
     /**
-     * This class initialize the board and every turn
+     * Initialize the server
      */
     public ServerStarter() {
         server = new Server(portSelection());
     }
 
+    /**
+     * This method menage the sequence of steps to do in order to start the game
+     */
     public void start(){
         sort();
-        game = new Board(nicknames);
-
+        boolean gameLoaded = loadGame();
         serverThreadBound();
-        selectWorkersPositions();
-        selectDivinityCard();
-        game();
+        if (!gameLoaded) {
+            selectWorkersPositions();
+            selectDivinityCard();
+        }
+        gameTurn();
     }
 
+    /**
+     * This method check if there is a game saved and if the players can access to that save
+     */
+    private boolean loadGame() {
+        game = fileAccess.reader();
+        if (game != null && nicknames.length == game.getPlayerMatrix().length) {
+            for (int i = 0; i < game.getPlayerMatrix().length; i++) {
+                for (int j = 0; j < game.getPlayerMatrix().length; j++) {
+                    if (nicknames[i].equals(game.getPlayerMatrix()[j].getNickname()))
+                        break;
+                    else if (j == game.getPlayerMatrix().length - 1) {
+                        game = new Board(nicknames);
+                        return false;
+                    }
+                }
+            }
+        } else {
+            game = new Board(nicknames);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * This method provide a port number checking if that port is free
+     * @return the port number
+     */
     private int portSelection(){
         Scanner input = new Scanner(System.in);
         String port = null;
@@ -56,6 +89,9 @@ public class ServerStarter {
         return Integer.parseInt(port);
     }
 
+    /**
+     * Associate at each Player his serverThread
+     */
     private void serverThreadBound(){
         ArrayList<ServerThread> serverThreads = server.getSocketList();
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
@@ -68,9 +104,17 @@ public class ServerStarter {
         }
     }
 
-    private void game(){
-        while (game.getBitWinner() == 0)
+    /**
+     * This method menage the successions of turns
+     */
+    private void gameTurn(){
+
+        while (game.getBitWinner() == 0) {
+            fileAccess.writer(game);
             game.getPlayerInGame().get().getDivinityStrategy().getTurnController().turn();
+        }
+
+        fileAccess.writer(null);
 
         game.getPlayerWinner().getServerThread().win();
     }
@@ -155,7 +199,7 @@ public class ServerStarter {
     }
 
     /**
-     * This method will asks to all the player where to set its workers
+     * This method will asks to all the player where to set its workers and will set it in the board
      */
     private void selectWorkersPositions() {
         int[][][] positions = new int[game.getPlayersNumber()][][];
@@ -172,14 +216,8 @@ public class ServerStarter {
             circularListIterator.nextNode();
         }
 
-        setWorkersPositions(positions);
-    }
-
-    private void setWorkersPositions(int[][][] positions) {
-        for (int j = 0; j < positions.length; j++) {
-            for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < positions.length; j++)
+            for (int i = 0; i < 2; i++)
                 game.getPlayerMatrix()[j].getWorker(i).moveWorker(game.getCellByPosition(positions[j][i]));
-            }
-        }
     }
 }

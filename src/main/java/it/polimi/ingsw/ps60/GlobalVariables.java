@@ -2,7 +2,6 @@ package it.polimi.ingsw.ps60;
 
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import java.io.Serializable;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class GlobalVariables {
 

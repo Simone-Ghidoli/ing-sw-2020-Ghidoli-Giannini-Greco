@@ -3,7 +3,6 @@ package it.polimi.ingsw.ps60.serverSide.server;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Starts the server and open the connection between clinets and server. Puts Threads in an arraylist trehadsList
@@ -91,10 +90,7 @@ public  class Server{
             if(elem[0].equals(current))
                 i++;
         }
-        if(i>1)
-            return true;
-        else
-            return false;
+        return i > 1;
     }
 
     public String[][] getNickBirth() {

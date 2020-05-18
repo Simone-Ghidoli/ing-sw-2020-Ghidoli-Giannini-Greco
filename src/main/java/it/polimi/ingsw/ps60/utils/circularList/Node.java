@@ -16,7 +16,7 @@ public class Node<T> {
 
     /**
      * This method will get the value of the node in a list
-     * @return
+     * @return the value of the node
      */
     public T getValue() {
         return value;

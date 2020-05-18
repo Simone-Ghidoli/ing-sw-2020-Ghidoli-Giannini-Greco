@@ -6,7 +6,7 @@ public class CircularListIterator<T> {
 
     /**
      * The iterator allow iterate in a list
-     * @param list
+     * @param list is the list in which iterate
      */
     public CircularListIterator(CircularLinkedList<T> list){
         node = list.getHead();

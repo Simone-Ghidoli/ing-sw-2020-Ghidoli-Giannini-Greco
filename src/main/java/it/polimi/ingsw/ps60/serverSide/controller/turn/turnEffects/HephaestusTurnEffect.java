@@ -6,7 +6,7 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class HephaestusTurnEffect extends BaseTurnEffect {
     @Override
-    public void build(int[] build) {//posizione 3 se 1 costruisci di nuovo
+    public void build(int[] build) {
 
         super.build(build);
 

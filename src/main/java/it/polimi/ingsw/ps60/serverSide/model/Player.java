@@ -4,7 +4,9 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy;
 import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     private final String nickname;
     private GlobalVariables.DivinityCard divinityCard;

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps60.serverSide.model;
 
-import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.utils.circularList.CircularLinkedList;
 import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
 
