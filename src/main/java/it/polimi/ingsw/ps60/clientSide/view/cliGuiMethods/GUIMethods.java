@@ -84,7 +84,8 @@ public class GUIMethods implements ViewMethodSelection {
                         }
 
                         g.dispose();
-                        santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth(), santorini.getButton(i).getHeight(), Image.SCALE_SMOOTH)));
+                        santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth()/2, santorini.getButton(i).getHeight()/2, Image.SCALE_SMOOTH)));
+                        santorini.getButton(i).setDisabledIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth()/2, santorini.getButton(i).getHeight()/2, Image.SCALE_SMOOTH)));
 
                     }
                 } catch (IOException e) {
@@ -135,7 +136,7 @@ public class GUIMethods implements ViewMethodSelection {
                 JButton button;
                 for (int i = 0; i < moves[workerNumber].size(); i++) {
                     button = santorini.getButton(moves[workerNumber].get(i)[0] * 5 + moves[workerNumber].get(i)[1]);
-                    button.addActionListener(new ReturnListener(workerNumber * moves[0].size() + moves[workerNumber].size()));
+                    button.addActionListener(new ReturnListener(workerNumber * moves[0].size() + i));
                     button.setEnabled(true);
                 }
 
@@ -146,7 +147,6 @@ public class GUIMethods implements ViewMethodSelection {
             buttonWorkers[i] = santorini.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
             buttonWorkers[i].addActionListener(new Listener(i));
             buttonWorkers[i].setEnabled(true);
-            // buttonWorkers[i].setFocusPainted(true);
         }
 
         synchronized (choiceToReturn) {

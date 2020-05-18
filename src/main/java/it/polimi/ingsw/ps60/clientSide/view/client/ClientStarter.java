@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class ClientStarter {
     private final List<String> messagesFromServer;
     private final ExecutorService pool = Executors.newFixedThreadPool(2);
-    Socket socket;
+    private Socket socket;
     private final int port;
     private final String ipAddress;
     private final ViewMethodSelection viewMethodSelection;
