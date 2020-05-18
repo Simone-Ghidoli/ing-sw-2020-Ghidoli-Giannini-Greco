@@ -6,7 +6,6 @@ import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
-import static it.polimi.ingsw.ps60.GlobalVariables.frassino;
 
 /**
  * This class is used to read and store server's commands
@@ -61,12 +60,10 @@ public class ClientReader implements Runnable {
                     }
                 }
             try {
-                //synchronized (socket) {
-                frassino.lock();
+                synchronized (socket) {
                     if (br.ready())
                         serverSays = br.readLine();
-                //}
-                frassino.unlock();
+                }
                 if(serverSays!=null) {
                     synchronized (messagesFromServer) {
                         messagesFromServer.add(serverSays);

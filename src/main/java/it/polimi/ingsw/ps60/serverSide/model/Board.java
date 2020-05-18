@@ -4,7 +4,9 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.utils.circularList.CircularLinkedList;
 import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable {
     private final CircularListIterator<Player> playerInGame;
     private int playersNumber;
     private final Cell[][] cellMatrix;

@@ -51,44 +51,46 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         while (true) {
             synchronized (messagesFromServer) {
                 while (messagesFromServer.size() != 0) {
-                    //synchronized (socket) {
-                    GlobalVariables.frassino.lock();
-                    String message = messagesFromServer.get(0);
-                    if (message.equals("move")) {
-                        movement();
-                    } else if (message.equals("build")) {
-                        building();
-                    } else if (message.contains("spc-")) {
-                        String s = message.replace("spc-", "");
-                        specialChoice(s);
-                    } else if (message.equals("nPlayers")) {
-                        number_of_players();
-                    } else if (message.equals("nick_birth")) {
-                        nickname_birthday();
-                    } else if (message.equals("workset")) {
-                        setworkers();
-                    } else if (message.contains("pr-")) {
-                        String s = message.replace("pr-", "");
-                        printBoard(s);
-                    } else if (message.equals("dv_choice")) {
-                        divinityChoice();
-                    } else if (message.equals("div_sel")) {
-                        divinitySelection();
-                    } else if (message.contains("win-")) {
-                        String s=message.replace("win-","");
-                        methodSelection.alert(s);
-                        socketClose();
-                        return;
-                    } else if (message.contains("disc-")) {
-                        String s = message.replace("disc-", "");
-                        disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
-                        return;
-                    } else if (message.contains("loss-")) {
-                        String s = message.replace("loss-", "");
-                        loss(s);
+                    synchronized (socket) {
+                        if (socket.isClosed()) {
+                            return;
+                        }
+                        String message = messagesFromServer.get(0);
+                        if (message.equals("move")) {
+                            movement();
+                        } else if (message.equals("build")) {
+                            building();
+                        } else if (message.contains("spc-")) {
+                            String s = message.replace("spc-", "");
+                            specialChoice(s);
+                        } else if (message.equals("nPlayers")) {
+                            number_of_players();
+                        } else if (message.equals("nick_birth")) {
+                            nickname_birthday();
+                        } else if (message.equals("workset")) {
+                            setworkers();
+                        } else if (message.contains("pr-")) {
+                            String s = message.replace("pr-", "");
+                            printBoard(s);
+                        } else if (message.equals("dv_choice")) {
+                            divinityChoice();
+                        } else if (message.equals("div_sel")) {
+                            divinitySelection();
+                        } else if (message.contains("win-")) {
+                            String s = message.replace("win-", "");
+                            methodSelection.alert(s);
+                            socketClose();
+                            return;
+                        } else if (message.contains("disc-")) {
+                            String s = message.replace("disc-", "");
+                            disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
+                            return;
+                        } else if (message.contains("loss-")) {
+                            String s = message.replace("loss-", "");
+                            loss(s);
+                        }
+                        messagesFromServer.remove(0);
                     }
-                    messagesFromServer.remove(0);
-                    GlobalVariables.frassino.unlock();
                 }
             }
         }

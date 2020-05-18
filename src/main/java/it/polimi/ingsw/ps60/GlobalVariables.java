@@ -6,8 +6,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class GlobalVariables {
 
-    public static final ReentrantLock frassino=new ReentrantLock();
-
     public enum IdPlayer {
         PLAYER1(Colour.RED, "Red "),
         PLAYER2(Colour.BLUE, "Blue "),
