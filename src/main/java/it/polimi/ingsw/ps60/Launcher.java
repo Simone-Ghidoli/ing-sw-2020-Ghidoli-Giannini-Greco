@@ -10,10 +10,6 @@ import it.polimi.ingsw.ps60.serverSide.controller.ServerStarter;
 public class Launcher {
 
     public static void main(String[] args){
-        firstSelection();
-    }
-
-    private static void firstSelection(){
 
         System.out.println("Enter 0 for server, 1 for client");
 
@@ -26,7 +22,7 @@ public class Launcher {
                 break;
             default:
                 System.out.println("Wrong input");
-                firstSelection();
+                main(args);
         }
     }
 

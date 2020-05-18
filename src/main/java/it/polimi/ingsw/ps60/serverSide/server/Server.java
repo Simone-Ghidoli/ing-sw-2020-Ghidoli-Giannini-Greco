@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public  class Server{
     private String[][] nickBirth;
     private final int port;
-    private ArrayList<ServerThread> clientList;
+    private final ArrayList<ServerThread> clientList;
     private ServerSocket serverSocket;
     private Socket socket;
     private int numberOfPlayers;
@@ -25,7 +25,7 @@ public  class Server{
     /**
      * Open connections between clients and server. Get players' nicknames and the number of players.
      */
-    private void serverStart(){ //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
+    private void serverStart(){
 
         while (serverSocket==null||serverSocket.isClosed()) {
             try {
@@ -38,44 +38,54 @@ public  class Server{
 
         ServerThread newThread;
 
-        while (socket==null||socket.isClosed()) {//finchè non va a buon fine il collegamento del primo giocatore ci riprovo
-            try {// Accetto il primo giocatore e chiedo in quanti si gioca
+        while (socket==null||socket.isClosed()) {
+
+            try {
                 socket = serverSocket.accept();
                 System.out.println("client accepted");
             } catch (IOException error) {
-                if (!socket.isClosed())
+                if (!socket.isClosed()) {
                     try {
                         socket.close();
+                    } catch (IOException e_0) {
+                        e_0.printStackTrace();
                     }
-                catch(IOException e_0){e_0.printStackTrace();}
-                socket=null;
-            }//Socket Chiuso e riparte la connessione del primo giocatore
-            if (!socket.isClosed()) {
+                }
+                socket = null;
+            }
+
+            if (socket != null && !socket.isClosed()) {
                 newThread = new ServerThread(socket, clientList);
-                clientList.add(newThread); //primo thread aggiunto alla lista
+                clientList.add(newThread);
                 numberOfPlayers = newThread.numberOfPlayers();
                 nickBirth = new String[numberOfPlayers][2];
                 nickBirth[0] = newThread.nicknameBirthday();
                 newThread.setPlayerBound(nickBirth[0][0]);
             }
         }
-        while (clientList.size() < numberOfPlayers) {//Collega i socket fino a quando si arriva al numero corretto di giocatori
+
+        while (clientList.size() < numberOfPlayers) {
             try {
                 socket = serverSocket.accept();
                 System.out.println("client accepted");
             } catch (IOException e) {
-                if (!socket.isClosed())
+                if (!socket.isClosed()) {
                     try {
                         socket.close();
+                    } catch (IOException e_1) {
+                        e_1.printStackTrace();
                     }
-                catch(IOException e_1){e_1.printStackTrace();}
-            }    //viene chiuso il socket e si riprova la connessione con il client che ha fallito
-            if (!socket.isClosed()) { //Se il socket è aperto crea un nuovo Thread e lo aggiunge alla lista di quelli in esecuzione
+                    socket = null;
+                }
+            }
+            if (socket != null && !socket.isClosed()) {
                 newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread);
-                do {
+
+                do
                     nickBirth[clientList.size() - 1] = newThread.nicknameBirthday();
-                }while(name_problem(nickBirth[(clientList.size()-1)][0]));
+                while(name_problem(nickBirth[(clientList.size()-1)][0]));
+
                 newThread.setPlayerBound(nickBirth[clientList.size() -1][0]);
             }
         }

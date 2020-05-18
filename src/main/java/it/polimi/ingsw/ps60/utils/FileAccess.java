@@ -6,39 +6,65 @@ import java.io.*;
 
 public class FileAccess {
 
-    ObjectOutputStream objOut;
-    ObjectInputStream objectInputStream;
+    private FileOutputStream outputStream = null;
+    private ObjectOutputStream objectOutputStream = null;
+    private FileInputStream inputStream = null;
+    private ObjectInputStream objectInputStream = null;
 
-    public FileAccess(){
-        try {
-            FileOutputStream outStream = new FileOutputStream("src/resources/save");
-            objOut = new ObjectOutputStream(outStream);
-            FileInputStream inputStream = new FileInputStream("src/resources/save");
-            objectInputStream = new ObjectInputStream(inputStream);
-        }
-        catch(IOException e){
-            e.printStackTrace();
-            System.out.println("Problems found");
-        }
-    }
+    /**
+     * This method will write the board in a file
+     *
+     * @param board board to write
+     */
+    public void writer(Board board) {
 
-    public void writer(Board board){
         try {
+            outputStream = new FileOutputStream("src/resources/save");
+            objectOutputStream = new ObjectOutputStream(outputStream);
             System.out.println("Saving...");
-            objOut.writeObject(board);
+            objectOutputStream.writeObject(board);
             System.out.println("Items successfully written to file");
-        }
-        catch(IOException e_1){
+        } catch (IOException e_1) {
             System.out.println("Writing failed");
+        } finally {
+            try {
+                if (outputStream != null)
+                    outputStream.close();
+
+                if (objectOutputStream != null)
+                    objectOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public Board reader(){
+
+    /**
+     * This method will read the board from a file
+     *
+     * @return board stored in a file
+     */
+    public Board reader() {
+        Board board = null;
+
         try {
-            return (Board) objectInputStream.readObject();
+            inputStream = new FileInputStream("src/resources/save");
+            objectInputStream = new ObjectInputStream(inputStream);
+            board = (Board) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Save not found");
-            return null;
+        } finally {
+            try {
+                if (inputStream != null)
+                    inputStream.close();
+
+                if (objectInputStream != null)
+                    objectInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return board;
     }
 }
