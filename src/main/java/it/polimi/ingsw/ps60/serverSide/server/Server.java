@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Starts the server and open the connection between clinets and server. Puts Threads in an arraylist trehadsList
+ * Starts the server and open the connection between clients and server. Puts Threads in an arraylist threadsList
  */
 
 public  class Server{
@@ -26,20 +26,20 @@ public  class Server{
     /**
      * Open connections between clients and server. Get players' nicknames and the number of players.
      */
-    private void serverStart(){ //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
+    private void serverStart() { //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
 
-        while (serverSocket==null||serverSocket.isClosed()) {
+        while (serverSocket == null || serverSocket.isClosed()) {
             try {
                 serverSocket = new ServerSocket(port);
             } catch (IOException error) {
-                serverSocket=null;
+                serverSocket = null;
                 System.exit(3);
             }
         }
 
         ServerThread newThread;
 
-        while (socket==null||socket.isClosed()) {//finchè non va a buon fine il collegamento del primo giocatore ci riprovo
+        while (socket == null || socket.isClosed()) {//finchè non va a buon fine il collegamento del primo giocatore ci riprovo
             try {// Accetto il primo giocatore e chiedo in quanti si gioca
                 socket = serverSocket.accept();
                 System.out.println("client accepted");
@@ -47,11 +47,13 @@ public  class Server{
                 if (!socket.isClosed())
                     try {
                         socket.close();
+                    } catch (IOException e_0) {
+                        e_0.printStackTrace();
                     }
-                catch(IOException e_0){e_0.printStackTrace();}
-                socket=null;
+                socket = null;
             }//Socket Chiuso e riparte la connessione del primo giocatore
-            if (!socket.isClosed()) {
+
+            if (socket != null && !socket.isClosed()) {
                 newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread); //primo thread aggiunto alla lista
                 numberOfPlayers = newThread.numberOfPlayers();
@@ -60,6 +62,7 @@ public  class Server{
                 newThread.setPlayerBound(nickBirth.get(0)[0]);
             }
         }
+
         while (clientList.size() < numberOfPlayers) {//Collega i socket fino a quando si arriva al numero corretto di giocatori
             try {
                 socket = serverSocket.accept();
@@ -68,16 +71,18 @@ public  class Server{
                 if (!socket.isClosed())
                     try {
                         socket.close();
+                    } catch (IOException e_1) {
+                        e_1.printStackTrace();
                     }
-                catch(IOException e_1){e_1.printStackTrace();}
+                socket = null;
             }    //viene chiuso il socket e si riprova la connessione con il client che ha fallito
-            if (!socket.isClosed()) { //Se il socket è aperto crea un nuovo Thread e lo aggiunge alla lista di quelli in esecuzione
+            if (socket != null && !socket.isClosed()) { //Se il socket è aperto crea un nuovo Thread e lo aggiunge alla lista di quelli in esecuzione
                 newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread);
                 do {
                     nickBirth.add(newThread.nicknameBirthday());
-                }while(name_problem(nickBirth.get(clientList.size()-1)[0]));
-                newThread.setPlayerBound(nickBirth.get(clientList.size() -1)[0]);
+                } while (name_problem(nickBirth.get(clientList.size() - 1)[0]));
+                newThread.setPlayerBound(nickBirth.get(clientList.size() - 1)[0]);
             }
         }
     }
@@ -92,10 +97,7 @@ public  class Server{
                 i++;
             }
         }
-        if(i>1)
-            return true;
-        else
-            return false;
+        return i > 1;
     }
 
     public String[][] getNickBirth() {
