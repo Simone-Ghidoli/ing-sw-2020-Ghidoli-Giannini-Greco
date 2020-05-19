@@ -1,8 +1,8 @@
 package it.polimi.ingsw.ps60.serverSide.model;
 
-import it.polimi.ingsw.ps60.GlobalVariables;
+import java.io.Serializable;
 
-public class Cell {
+public class Cell implements Serializable {
 
     private final int[] position;
     private int buildingLevel;

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps60.utils.circularList;
 
-public class Node<T> {
+import java.io.Serializable;
+
+public class Node<T> implements Serializable {
 
     T value;
     Node<T> nextNode;
@@ -16,7 +18,7 @@ public class Node<T> {
 
     /**
      * This method will get the value of the node in a list
-     * @return
+     * @return the value of the node
      */
     public T getValue() {
         return value;

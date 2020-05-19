@@ -158,7 +158,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      * Players' names and birthdays
      */
     public void nickname_birthday() {//invia nick e altro nel server
-        String[] inputs = new String[2];
+        String[] inputs;
         inputs = methodSelection.nicknameBirthdayChoice();
         sendString(inputs[0]);//NickName
         sendString(inputs[1]);//Birthday

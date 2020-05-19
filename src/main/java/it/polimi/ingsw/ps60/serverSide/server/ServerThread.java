@@ -5,7 +5,6 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 

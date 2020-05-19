@@ -1,12 +1,14 @@
 package it.polimi.ingsw.ps60.utils.circularList;
 
-public class CircularListIterator<T> {
+import java.io.Serializable;
+
+public class CircularListIterator<T> implements Serializable {
     private Node<T> node;
     private final CircularLinkedList<T> list;
 
     /**
      * The iterator allow iterate in a list
-     * @param list
+     * @param list is the list in which iterate
      */
     public CircularListIterator(CircularLinkedList<T> list){
         node = list.getHead();

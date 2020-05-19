@@ -4,7 +4,7 @@ import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class HephaestusTurnStrategy extends BaseTurnStrategy {// position = p; p[0] = x, p[1] = y, p[2] posso costruire due volte
+public class HephaestusTurnStrategy extends BaseTurnStrategy {
     @Override
     public List<int[]> baseBuilding() {
         List<int[]> positions = super.baseBuilding();

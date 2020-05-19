@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps60.utils.circularList;
 
-public class CircularLinkedList<T> {
+import java.io.Serializable;
+
+public class CircularLinkedList<T> implements Serializable {
     private Node<T> head;
     private Node<T> tail;
     private int size;
