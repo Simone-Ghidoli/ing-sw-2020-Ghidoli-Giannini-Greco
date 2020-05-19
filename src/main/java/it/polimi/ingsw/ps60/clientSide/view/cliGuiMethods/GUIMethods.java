@@ -84,8 +84,8 @@ public class GUIMethods implements ViewMethodSelection {
                         }
 
                         g.dispose();
-                        santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth()/2, santorini.getButton(i).getHeight()/2, Image.SCALE_SMOOTH)));
-                        santorini.getButton(i).setDisabledIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth()/2, santorini.getButton(i).getHeight()/2, Image.SCALE_SMOOTH)));
+                        santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
+                        santorini.getButton(i).setDisabledIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
 
                     }
                 } catch (IOException e) {
@@ -140,14 +140,15 @@ public class GUIMethods implements ViewMethodSelection {
                     button.addActionListener(new ReturnListener(workerNumber * moves[0].size() + i));
                     button.setEnabled(true);
                 }
-
             }
         }
 
         for (int i = 0; i < 2; i++) {
-            buttonWorkers[i] = santorini.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
-            buttonWorkers[i].addActionListener(new Listener(i));
-            buttonWorkers[i].setEnabled(true);
+            if (moves[i].size() > 0) {
+                buttonWorkers[i] = santorini.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
+                buttonWorkers[i].addActionListener(new Listener(i));
+                buttonWorkers[i].setEnabled(true);
+            }
         }
 
         synchronized (choiceToReturn) {
@@ -175,17 +176,17 @@ public class GUIMethods implements ViewMethodSelection {
 
         final int[] choiceToReturn = new int[1];
 
-        class Listener implements ActionListener{
+        class Listener implements ActionListener {
 
             final int numberToReturn;
 
-            public Listener(int numberToReturn){
+            public Listener(int numberToReturn) {
                 this.numberToReturn = numberToReturn;
             }
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                synchronized (choiceToReturn){
+                synchronized (choiceToReturn) {
                     choiceToReturn[0] = numberToReturn;
                     choiceToReturn.notifyAll();
                 }
@@ -196,13 +197,13 @@ public class GUIMethods implements ViewMethodSelection {
             santorini.getButton(i).setEnabled(false);
 
         JButton button;
-        for (int i = 0; i < moves.size(); i++){
+        for (int i = 0; i < moves.size(); i++) {
             button = santorini.getButton(moves.get(i)[0] * 5 + moves.get(i)[1]);
             button.addActionListener(new Listener(i));
             button.setEnabled(true);
         }
 
-        synchronized (choiceToReturn){
+        synchronized (choiceToReturn) {
             try {
                 choiceToReturn.wait();
             } catch (InterruptedException e) {
@@ -336,7 +337,7 @@ public class GUIMethods implements ViewMethodSelection {
         final JButton[] godButtons = new JButton[card.length];
         final GlobalVariables.DivinityCard[] divinityCardToReturn = new GlobalVariables.DivinityCard[1];
 
-        for (int i = 0; i < godButtons.length; i++){
+        for (int i = 0; i < godButtons.length; i++) {
             godButtons[i] = new JButton();
             godButtons[i].setSize(santorini.getScreenSize().width / 20, santorini.getScreenSize().height / 8);
             godButtons[i].setIcon(new ImageIcon(new ImageIcon(card[i].getSourcePosition()).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
@@ -345,10 +346,10 @@ public class GUIMethods implements ViewMethodSelection {
         final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, godButtons, godButtons[0]);
         final JDialog dialog = pane.createDialog("Select your divinity card");
 
-        class Listener implements ActionListener{
+        class Listener implements ActionListener {
             final GlobalVariables.DivinityCard divinityCard;
 
-            public Listener(GlobalVariables.DivinityCard divinityCard){
+            public Listener(GlobalVariables.DivinityCard divinityCard) {
                 this.divinityCard = divinityCard;
             }
 
@@ -367,7 +368,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         Object selectedValue = pane.getValue();
 
-        if(selectedValue == null)
+        if (selectedValue == null)
             return divinitySelection(card);
 
         santorini.setDivinityCardImage(divinityCardToReturn[0]);
@@ -454,7 +455,7 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int numberOfPlayers(){
+    public int numberOfPlayers() {
         Object[] options = {"2", "3"};
         int n = JOptionPane.showOptionDialog(null, "Select number of players", "Number of players", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -469,13 +470,13 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public void alert(String string) {
-         JOptionPane.showMessageDialog(null,
-                 string,
-                 "ALERT",
-                 JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                string,
+                "ALERT",
+                JOptionPane.WARNING_MESSAGE);
     }
 
-    private boolean confirmOrRetry(){
+    private boolean confirmOrRetry() {
         final Object[] options = new Object[]{"YES", "NO"};
         final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
         final JDialog dialog = pane.createDialog("Confirm selection?");
