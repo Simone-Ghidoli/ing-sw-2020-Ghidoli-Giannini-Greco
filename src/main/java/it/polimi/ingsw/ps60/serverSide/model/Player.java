@@ -30,6 +30,10 @@ public class Player implements Serializable {
 
     }
 
+    /**
+     * This method set the serverThread of the player
+     * @param serverThread the serverThread of the player
+     */
     public void setServerThread(ServerThread serverThread) {
         this.serverThread = serverThread;
     }
@@ -67,30 +71,59 @@ public class Player implements Serializable {
         return workers;
     }
 
+    /**
+     * This method returns a specific player
+     * @param workerNumber 0 for worker 1 and 1 for worker 2
+     * @return The worker specified by parameter
+     */
     public Worker getWorker(int workerNumber){
         return workers[workerNumber];
     }
 
+    /**
+     * This method return the worker that has been moved in the turn
+     * @return the worker that has been moved
+     */
     public Worker getWorkerMoved() {
         return workerMoved;
     }
 
+    /**
+     * This method set the worker that has been moved in the turn
+     * @param workerMoved the worker that has been moved in the turn
+     */
     public void setWorkerMoved(Worker workerMoved) {
         this.workerMoved = workerMoved;
     }
 
+    /**
+     * This method returns if worker has built in a turn
+     * @return tre if has built, false otherwise
+     */
     public boolean isBuildByWorker() {
         return buildByWorker;
     }
 
+    /**
+     * This method set if a worker has built in a turn
+     * @param i true if has built, false otherwise
+     */
     public void setBuildByWorker(boolean i){
         buildByWorker = i;
     }
 
+    /**
+     * This methods return a divinity strategy
+     * @return the divinity strategy associated at the player's divinity card
+     */
     public DivinityStrategy getDivinityStrategy() {
         return new DivinityStrategy(getDivinityCard());
     }
 
+    /**
+     * This method return the serverThread associated to the player
+     * @return serverThread associated to the player
+     */
     public ServerThread getServerThread() {
         return serverThread;
     }
