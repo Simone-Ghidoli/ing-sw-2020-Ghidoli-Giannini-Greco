@@ -32,7 +32,8 @@ public class PoseidonTurnController  extends BaseTurnController{
         for (int j = 0; j < 3; j++){
             if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice()) == 0)
                 break;
-            buildingSection();
+            if (player.getDivinityStrategy().getTurnStrategyBuilding().size() > 0)
+                buildingSection();
         }
 
         if (i == 0)

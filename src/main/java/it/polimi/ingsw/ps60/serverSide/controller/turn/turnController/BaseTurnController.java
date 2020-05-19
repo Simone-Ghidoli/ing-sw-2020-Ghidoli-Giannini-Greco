@@ -9,15 +9,22 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class BaseTurnController implements TurnController {
     Player player;
+    boolean lost;
 
     public void turn(){
         player = game.getPlayerInGame().get();
+        lost = false;
 
         sendBoardToClient();
         movementSection();
-        sendBoardToClient();
-        buildingSection();
-        sendBoardToClient();
+        if (!lost) {
+
+            sendBoardToClient();
+            buildingSection();
+        }
+        if (!lost)
+            sendBoardToClient();
+
         endTurnSection();
     }
 
@@ -34,7 +41,7 @@ public class BaseTurnController implements TurnController {
             }
         } else {
             player.getServerThread().lossMessage("Unable to move in any position");
-            endTurnSection();
+            lost = true;
         }
     }
 
@@ -45,7 +52,7 @@ public class BaseTurnController implements TurnController {
             player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
         } else {
             player.getServerThread().lossMessage("Unable to build in any position");
-            endTurnSection();
+            lost = true;
         }
     }
 

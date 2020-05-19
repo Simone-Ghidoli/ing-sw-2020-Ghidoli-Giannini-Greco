@@ -18,7 +18,7 @@ public class DemeterTurnController extends BaseTurnController {
         }
         else {
             player.getServerThread().lossMessage("Unable to move in any position");
-            endTurnSection();
+            lost = true;
         }
     }
 }
