@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public  class Server{
-    private String[][] nickBirth;
+    private List<String[]> nickBirth;
     private final int port;
     private ArrayList<ServerThread> clientList;
     private ServerSocket serverSocket;
@@ -55,9 +55,9 @@ public  class Server{
                 newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread); //primo thread aggiunto alla lista
                 numberOfPlayers = newThread.numberOfPlayers();
-                nickBirth = new String[numberOfPlayers][2];
-                nickBirth[0] = newThread.nicknameBirthday();
-                newThread.setPlayerBound(nickBirth[0][0]);
+                nickBirth = new ArrayList<>();
+                nickBirth.add(newThread.nicknameBirthday());
+                newThread.setPlayerBound(nickBirth.get(0)[0]);
             }
         }
         while (clientList.size() < numberOfPlayers) {//Collega i socket fino a quando si arriva al numero corretto di giocatori
@@ -75,9 +75,9 @@ public  class Server{
                 newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread);
                 do {
-                    nickBirth[clientList.size() - 1] = newThread.nicknameBirthday();
-                }while(name_problem(nickBirth[(clientList.size()-1)][0]));
-                newThread.setPlayerBound(nickBirth[clientList.size() -1][0]);
+                    nickBirth.add(newThread.nicknameBirthday());
+                }while(name_problem(nickBirth.get(clientList.size()-1)[0]));
+                newThread.setPlayerBound(nickBirth.get(clientList.size() -1)[0]);
             }
         }
     }
@@ -87,9 +87,10 @@ public  class Server{
      */
     public boolean name_problem(String current){
         int i=0;
-        for(String[] elem:nickBirth){
-            if(elem[0].equals(current))
+        for(String[] elem:nickBirth) {
+            if (elem[0].equals(current)) {
                 i++;
+            }
         }
         if(i>1)
             return true;
@@ -98,7 +99,11 @@ public  class Server{
     }
 
     public String[][] getNickBirth() {
-        return nickBirth;
+        String[][] nicksValue=new String[nickBirth.size()][];
+        for(int i=0;i<nickBirth.size();i++){
+            nicksValue[i]=nickBirth.get(i);
+        }
+        return nicksValue;
     }
 
     /**

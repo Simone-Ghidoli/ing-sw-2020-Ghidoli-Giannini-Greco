@@ -106,7 +106,7 @@ public class ServerThread extends Thread {
     }
     public void sendBoard(char[] board){
         try{
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(250);
         }
         catch(InterruptedException e) {
             disconnection();
@@ -139,7 +139,7 @@ public class ServerThread extends Thread {
 
     public void sendPositionsArray(List<SerializedInteger>[] list){
         try{
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(250);
             out_obj.writeObject(list);
         }
         catch(IOException | InterruptedException e){
@@ -149,7 +149,7 @@ public class ServerThread extends Thread {
 
     public void sendPositionsList(List<SerializedInteger> list){
         try{
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(250);
             out_obj.writeObject(list);
         }
         catch(IOException | InterruptedException e){
@@ -159,7 +159,7 @@ public class ServerThread extends Thread {
 
     public void sendPositionWorkers(SerializedInteger[] positionworkers){
         try{
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(250);
             out_obj.writeObject(positionworkers);
         }
         catch(IOException | InterruptedException e){
@@ -231,7 +231,7 @@ public class ServerThread extends Thread {
 
     public void sendInt(int send){
         try {
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(250);
             out.write(send);
             out.flush();
         }
@@ -242,13 +242,14 @@ public class ServerThread extends Thread {
 
     public void sendCards(GlobalVariables.DivinityCard[] cards){
         try {
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(250);
             out_obj.writeObject(cards);
         }
         catch(IOException | InterruptedException e){
             disconnection();
         }
     }
+
 
     public List<SerializedInteger> convertPositionListToSerializedInteger(List<int[]> lista){ //Converte il tipo da List<int> a Serialized Integer
         List<SerializedInteger> appoggio= new ArrayList<>();
