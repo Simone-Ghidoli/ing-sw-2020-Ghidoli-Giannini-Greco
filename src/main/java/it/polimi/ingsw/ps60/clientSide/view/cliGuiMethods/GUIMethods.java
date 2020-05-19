@@ -109,6 +109,7 @@ public class GUIMethods implements ViewMethodSelection {
             final int numberToReturn;
 
             public ReturnListener(int numberToReturn) {
+
                 this.numberToReturn = numberToReturn;
             }
 

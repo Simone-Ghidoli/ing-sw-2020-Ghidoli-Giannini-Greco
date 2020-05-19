@@ -9,14 +9,15 @@ public class MainFrame extends JPanel {
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final JButton[] jButtons = new JButton[25];
     private JLabel divinityCardImage;
+    final JPanel grid = new JPanel();
+    final JPanel players = new JPanel();
+    JPanel divinityCard = new JPanel();
+    final JPanel workers = new JPanel();
+    final JPanel info = new JPanel();
 
     public MainFrame() {
         super();
-        final JPanel grid = new JPanel();
-        final JPanel players = new JPanel();
-        final JPanel divinityCard = new JPanel();
-        final JPanel workers = new JPanel();
-        final JPanel info = new JPanel();
+
         final JLabel board = new JLabel(new ImageIcon(new ImageIcon("src/resources/board/SantoriniBoard.png").getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH)));
 
         setLayout(new GridBagLayout());
@@ -26,9 +27,10 @@ public class MainFrame extends JPanel {
         players.setPreferredSize(new Dimension(screenSize.width * 17 / 58, screenSize.height));
         players.setOpaque(false);
         players.setLayout(new GridLayout(3, 1));
-        divinityCard.setSize(new Dimension(screenSize.width * 17 / 58, screenSize.height));
+        divinityCard.setPreferredSize(new Dimension(screenSize.width * 17 / 58, screenSize.height));
         divinityCard.setOpaque(false);
-        divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(GlobalVariables.DivinityCard.NONE.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 17 / 58, screenSize.height, Image.SCALE_SMOOTH)));
+        divinityCard.setLayout(new GridBagLayout());
+        divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(GlobalVariables.DivinityCard.NONE.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 9 / 58, screenSize.height/2,Image.SCALE_SMOOTH)));
         divinityCard.add(divinityCardImage);
         workers.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 2 / 17));
         workers.setOpaque(false);
@@ -68,8 +70,10 @@ public class MainFrame extends JPanel {
         return screenSize;
     }
 
-    public void setDivinityCardImage(GlobalVariables.DivinityCard divinityCard) {
-        divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(divinityCard.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 17 / 58, screenSize.height, Image.SCALE_SMOOTH)));
+    public void setDivinityCardImage(GlobalVariables.DivinityCard selectdivinityCard) {
+        divinityCard.remove(divinityCardImage);
+        divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(selectdivinityCard.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 9 / 58, screenSize.height/2, Image.SCALE_SMOOTH)));
+        divinityCard.add(divinityCardImage);
     }
 
     public void resetButtons(){
