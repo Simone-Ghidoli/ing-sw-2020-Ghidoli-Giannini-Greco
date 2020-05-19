@@ -9,12 +9,11 @@ import java.io.Serializable;
 public class Player implements Serializable {
 
     private final String nickname;
-    private GlobalVariables.DivinityCard divinityCard;
+    private int divinityCard;
     private final Worker[] workers;
     private Worker workerMoved;
     private boolean buildByWorker;
-    private DivinityStrategy divinityStrategy;
-    private ServerThread serverThread;
+    private transient ServerThread serverThread;
 
     /**
      *
@@ -48,8 +47,12 @@ public class Player implements Serializable {
      * @param divinityCard set the divinity card identified by his enumeration
      */
     public void setDivinityCard(GlobalVariables.DivinityCard divinityCard) {
-        this.divinityCard = divinityCard;
-        divinityStrategy = new DivinityStrategy(divinityCard);
+        for (int i = 0; i < GlobalVariables.DivinityCard.values().length; i++){
+            if (divinityCard.equals(GlobalVariables.DivinityCard.values()[i])) {
+                this.divinityCard = i;
+                break;
+            }
+        }
     }
 
     /**
@@ -57,7 +60,7 @@ public class Player implements Serializable {
      * @return return the enumeration of the divinity card
      */
     public GlobalVariables.DivinityCard getDivinityCard() {
-        return divinityCard;
+        return GlobalVariables.DivinityCard.values()[divinityCard];
     }
 
     public Worker[] getWorkers() {
@@ -85,7 +88,7 @@ public class Player implements Serializable {
     }
 
     public DivinityStrategy getDivinityStrategy() {
-        return divinityStrategy;
+        return new DivinityStrategy(getDivinityCard());
     }
 
     public ServerThread getServerThread() {

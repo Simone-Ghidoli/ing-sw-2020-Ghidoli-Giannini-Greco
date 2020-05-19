@@ -25,6 +25,7 @@ public class FileAccess {
             objectOutputStream.writeObject(board);
             System.out.println("Items successfully written to file");
         } catch (IOException e_1) {
+            e_1.printStackTrace();
             System.out.println("Writing failed");
         } finally {
             try {
