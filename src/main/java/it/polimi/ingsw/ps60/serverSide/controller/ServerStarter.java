@@ -12,7 +12,6 @@ import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -124,37 +123,40 @@ public class ServerStarter {
      */
     private void sort() {
         String[][] nicknamesAndBirthdays = server.getNickBirth();
-        String[] nicknames = new String[nicknamesAndBirthdays.length];
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date dateSelected, date;
-        String[] strings;
+        nicknames = new String[nicknamesAndBirthdays.length];
 
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+        String[] youngest = new String[0];
         try {
             for (int i = 0; i < nicknamesAndBirthdays.length; i++) {
-                System.out.println("INFO : Client connected number " + i + " : " + nicknamesAndBirthdays[i][0] + " " + nicknamesAndBirthdays[i][1]);
-                dateSelected = simpleDateFormat.parse(nicknamesAndBirthdays[i][1]);
-                for (int j = i - 1; j > 0; j--){
-                    date = simpleDateFormat.parse(nicknamesAndBirthdays[j][1]);
-                    if (date.compareTo(dateSelected) < 0){
-                        strings = nicknamesAndBirthdays[i];
-                        nicknamesAndBirthdays[i] = nicknamesAndBirthdays[j];
-                        nicknamesAndBirthdays[j] = strings;
-                    }
-                    else
+                for (int k = 0; k < nicknamesAndBirthdays.length; k++) {
+                    if (nicknamesAndBirthdays[k] != null) {
+                        youngest = nicknamesAndBirthdays[k];
                         break;
+                    }
                 }
+                if (youngest == null)
+                    break;
+                for (int j = i; j < nicknamesAndBirthdays.length; j++) {
+                    if (nicknamesAndBirthdays[j] != null)
+                        if (simpleDateFormat.parse(youngest[1]).compareTo(simpleDateFormat.parse(nicknamesAndBirthdays[j][1])) < 0) {
+                            youngest = nicknamesAndBirthdays[j];
+                        }
+                }
+                nicknames[i] = youngest[0];
+                for (int j = 0; j < nicknamesAndBirthdays.length; j++) {
+                    if (nicknamesAndBirthdays[j] == youngest) {
+                        nicknamesAndBirthdays[j] = null;
+                        break;
+                    }
+                }
+                System.out.println("INFO: Player number " + (i + 1) + ": " + youngest[0] + " born in" + youngest[1]);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        for (int k = 0; k < nicknames.length; k++)
-            nicknames[k] = nicknamesAndBirthdays[k][0];
-
-        for (int i = 0; i < nicknames.length; i++)
-            System.out.println("INFO : Player number " + i + " : " + nicknames[i]);
-
-        this.nicknames = nicknames;
     }
 
     /**

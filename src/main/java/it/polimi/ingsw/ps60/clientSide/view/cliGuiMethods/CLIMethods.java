@@ -292,7 +292,8 @@ public class CLIMethods implements ViewMethodSelection {
     public boolean specialChoices(String string) {
         String choice;
 
-        System.out.println(string + "\n Enter 1 for yes or 0 for no");
+        System.out.println(string);
+        System.out.println("Enter 1 for yes or 0 for no");
 
         Scanner input = new Scanner(System.in);
         StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.Boolean1True0False.getPattern());
