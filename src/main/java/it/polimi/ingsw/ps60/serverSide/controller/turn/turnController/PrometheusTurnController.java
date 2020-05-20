@@ -7,7 +7,6 @@ public class PrometheusTurnController extends BaseTurnController {
     @Override
     public void movementSection() {
 
-        int specialChoice = 2;
         int choice = -1;
 
         List<int[]>[] buildChoices = new List[2];
@@ -23,11 +22,11 @@ public class PrometheusTurnController extends BaseTurnController {
                 choice = player.getServerThread().moveMessage(buildChoices,
                         new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});
                 if (buildChoices[0].size() > choice) {
-                    player.getDivinityStrategy().setMovement(new int[][]{new int[]{0, 0}, buildChoices[0].get(choice)});
+                    player.getDivinityStrategy().setBuilding(buildChoices[0].get(choice));
                     choice = 0;
                 } else {
                     choice = choice - buildChoices[0].size();
-                    player.getDivinityStrategy().setMovement(new int[][]{new int[]{1, 0}, buildChoices[1].get(choice)});
+                    player.getDivinityStrategy().setBuilding(buildChoices[1].get(choice));
                     choice = 1;
                 }
                 sendBoardToClient();
@@ -46,7 +45,9 @@ public class PrometheusTurnController extends BaseTurnController {
         }
         player.setBuildByWorker(false);
 
-        if (moveChoices[specialChoice].size() != 0) {
+        if (moveChoices[0].size() > 0 || moveChoices[1].size() > 0) {
+
+            player.getServerThread().sendString("Select where to move");
 
             choice = player.getServerThread().moveMessage(moveChoices,
                     new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});

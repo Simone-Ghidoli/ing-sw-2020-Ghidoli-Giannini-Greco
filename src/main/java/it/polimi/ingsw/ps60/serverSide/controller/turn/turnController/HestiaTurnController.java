@@ -17,7 +17,8 @@ public class HestiaTurnController extends BaseTurnController {
             else
                 i++;
         }
-        if (buildChoices.size() != 0) {
+
+        if (buildChoices.size() > 0) {
             if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice()) == 1)
                 player.getDivinityStrategy().setBuilding(buildChoices.get(player.getServerThread().buildMessage(buildChoices)));
         }

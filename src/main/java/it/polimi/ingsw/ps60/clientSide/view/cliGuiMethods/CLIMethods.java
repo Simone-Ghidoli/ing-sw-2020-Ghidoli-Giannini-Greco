@@ -66,7 +66,6 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public int moveChoice(List<int[]>[] moves, int[][] positionsWorkers) {
-        System.out.println("Select where to move");
         int i = printPossibleMoves(moves, positionsWorkers);
         flushInput();
         int choice = new Scanner(System.in).nextInt();
@@ -92,7 +91,6 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public int buildChoice(List<int[]> moves){
-        System.out.println("Select where to build");
         int i = printPossibleBuilds(moves);
         flushInput();
         int choice = new Scanner(System.in).nextInt();

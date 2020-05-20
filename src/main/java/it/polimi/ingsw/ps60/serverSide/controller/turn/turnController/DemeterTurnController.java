@@ -7,6 +7,9 @@ public class DemeterTurnController extends BaseTurnController {
     public void buildingSection() {
         List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
         if (buildChoices.size() != 0) {
+
+            player.getServerThread().sendString("Select where to build");
+
             int choice = player.getServerThread().buildMessage(buildChoices);
             player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
 

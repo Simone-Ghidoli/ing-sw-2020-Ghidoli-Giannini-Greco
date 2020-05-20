@@ -100,8 +100,6 @@ public class GUIMethods implements ViewMethodSelection {
 
         santorini.resetButtons();
 
-        alert("Select where to move");
-
         final int[] choiceToReturn = new int[1];
         final JButton[] buttonWorkers = new JButton[2];
 
@@ -144,8 +142,8 @@ public class GUIMethods implements ViewMethodSelection {
         }
 
         for (int i = 0; i < 2; i++) {
+            buttonWorkers[i] = santorini.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
             if (moves[i].size() > 0) {
-                buttonWorkers[i] = santorini.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
                 buttonWorkers[i].addActionListener(new Listener(i));
                 buttonWorkers[i].setEnabled(true);
             }
@@ -171,8 +169,6 @@ public class GUIMethods implements ViewMethodSelection {
     public int buildChoice(List<int[]> moves) {
 
         santorini.resetButtons();
-
-        alert("Select where to build");
 
         final int[] choiceToReturn = new int[1];
 

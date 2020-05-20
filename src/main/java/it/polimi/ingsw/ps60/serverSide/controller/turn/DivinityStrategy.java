@@ -93,7 +93,7 @@ public class DivinityStrategy {
                 specialChoice = "Do you want to build again on it?";
                 break;
             case PROMETHEUS:
-                specialChoice = "Do you want to build also before moving?\nWith which worker?";
+                specialChoice = "Do you want to build also before moving?\nSelect where to build";
                 break;
             case POSEIDON:
                 specialChoice = "Do you want to build again with your unmoved worker?";
