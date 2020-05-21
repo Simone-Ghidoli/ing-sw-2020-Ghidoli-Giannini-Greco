@@ -41,6 +41,13 @@ public class ServerStarter {
             selectWorkersPositions();
             selectDivinityCard();
         }
+        else{
+            for (int i = 0; i < game.getPlayerMatrix().length; i++){
+                game.getPlayerMatrix()[i].getServerThread().sendAlert("Game loaded from save\n" +
+                        "You are: " + GlobalVariables.IdPlayer.values()[i].getColour().getString() +
+                        "\nYour divinity card is: " + game.getPlayerMatrix()[i].getDivinityCard().toString());
+            }
+        }
         gameTurn();
     }
 

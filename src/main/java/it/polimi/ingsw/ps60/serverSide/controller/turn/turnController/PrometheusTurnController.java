@@ -18,7 +18,7 @@ public class PrometheusTurnController extends BaseTurnController {
         if (buildChoices[0].size() != 0 || buildChoices[1].size() != 0) {
             if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice().split("\n")[0]) == 1) {
 
-                player.getServerThread().sendString(player.getDivinityStrategy().getSpecialChoice().split("\n")[1]);
+                player.getServerThread().sendAlert(player.getDivinityStrategy().getSpecialChoice().split("\n")[1]);
                 choice = player.getServerThread().moveMessage(buildChoices,
                         new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});
                 if (buildChoices[0].size() > choice) {
@@ -47,7 +47,7 @@ public class PrometheusTurnController extends BaseTurnController {
 
         if (moveChoices[0].size() > 0 || moveChoices[1].size() > 0) {
 
-            player.getServerThread().sendString("Select where to move");
+            player.getServerThread().sendAlert("Select where to move");
 
             choice = player.getServerThread().moveMessage(moveChoices,
                     new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});

@@ -253,6 +253,14 @@ public class ServerThread extends Thread {
         return appoggio;
     }
 
+    /**
+     * This method send an alert to the client
+     * @param sting is the alert to send
+     */
+    public void sendAlert(String sting){
+        sendString("al-"+sting);
+    }
+
     public void setPlayerBound(String s){
         playerBound =s;
     }

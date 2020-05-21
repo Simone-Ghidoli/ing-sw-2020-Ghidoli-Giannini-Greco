@@ -12,7 +12,7 @@ import java.util.List;
 public  class Server{
     private List<String[]> nickBirth;
     private final int port;
-    private ArrayList<ServerThread> clientList;
+    private final ArrayList<ServerThread> clientList;
     private ServerSocket serverSocket;
     private Socket socket;
     private int numberOfPlayers;
@@ -39,8 +39,8 @@ public  class Server{
 
         ServerThread newThread;
 
-        while (socket == null || socket.isClosed()) {//finchè non va a buon fine il collegamento del primo giocatore ci riprovo
-            try {// Accetto il primo giocatore e chiedo in quanti si gioca
+        while (socket == null || socket.isClosed()) {
+            try {
                 socket = serverSocket.accept();
                 System.out.println("client accepted");
             } catch (IOException error) {
@@ -51,11 +51,11 @@ public  class Server{
                         e_0.printStackTrace();
                     }
                 socket = null;
-            }//Socket Chiuso e riparte la connessione del primo giocatore
+            }
 
             if (socket != null && !socket.isClosed()) {
                 newThread = new ServerThread(socket, clientList);
-                clientList.add(newThread); //primo thread aggiunto alla lista
+                clientList.add(newThread);
                 numberOfPlayers = newThread.numberOfPlayers();
                 nickBirth = new ArrayList<>();
                 nickBirth.add(newThread.nicknameBirthday());
@@ -63,7 +63,7 @@ public  class Server{
             }
         }
 
-        while (clientList.size() < numberOfPlayers) {//Collega i socket fino a quando si arriva al numero corretto di giocatori
+        while (clientList.size() < numberOfPlayers) {
             try {
                 socket = serverSocket.accept();
                 System.out.println("client accepted");
@@ -75,8 +75,8 @@ public  class Server{
                         e_1.printStackTrace();
                     }
                 socket = null;
-            }    //viene chiuso il socket e si riprova la connessione con il client che ha fallito
-            if (socket != null && !socket.isClosed()) { //Se il socket è aperto crea un nuovo Thread e lo aggiunge alla lista di quelli in esecuzione
+            }
+            if (socket != null && !socket.isClosed()) {
                 newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread);
                 do {

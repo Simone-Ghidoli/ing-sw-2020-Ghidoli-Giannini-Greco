@@ -32,7 +32,7 @@ public class BaseTurnController implements TurnController {
         List<int[]>[] moveChoices = player.getDivinityStrategy().getTurnStrategyMovement();
         if (moveChoices[0].size() != 0 || moveChoices[1].size() != 0) {
 
-            player.getServerThread().sendString("Select where to move");
+            player.getServerThread().sendAlert("Select where to move");
 
             int choice = player.getServerThread().moveMessage(moveChoices,
                     new int[][]{player.getWorker(0).getCellPosition().getPosition(), player.getWorker(1).getCellPosition().getPosition()});
@@ -52,7 +52,7 @@ public class BaseTurnController implements TurnController {
         List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
         if (buildChoices.size() != 0) {
 
-            player.getServerThread().sendString("Select where to build");
+            player.getServerThread().sendAlert("Select where to build");
 
             int choice = player.getServerThread().buildMessage(buildChoices);
             player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
