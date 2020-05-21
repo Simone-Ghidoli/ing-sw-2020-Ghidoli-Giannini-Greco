@@ -226,6 +226,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     public List<SerializedInteger>[] receiveListArray() {
         try {
+            sendInt(0);
             List<SerializedInteger>[] stalin;
             stalin = (List<SerializedInteger>[]) in_obj.readObject();
             return stalin;
@@ -239,6 +240,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }//Per  il movement.
 
     public List<SerializedInteger> recieveList() {   //Per il building
+        sendInt(0);
         List<SerializedInteger> stalin;
             try {
                 stalin = (List<SerializedInteger>) in_obj.readObject();
@@ -291,6 +293,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     public SerializedInteger[] receiveWorkers() {
         SerializedInteger[] positionworkers = null;
         try {
+            sendInt(0);
             positionworkers = (SerializedInteger[]) in_obj.readObject();
         } catch (IOException | ClassNotFoundException e) {
             disconnection("Communication error, logging out");
@@ -307,6 +310,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     public int receiveInt() {
         int n = -1;
         try {
+            sendInt(0);
             n = input.read();
         } catch (IOException e) {
             disconnection("Communication error, logging out");
@@ -325,6 +329,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     public GlobalVariables.DivinityCard[] receiveCards() {
         GlobalVariables.DivinityCard[] appoggio = null;
         try {
+            sendInt(0);
             appoggio = (GlobalVariables.DivinityCard[]) in_obj.readObject();
         } catch (IOException | ClassNotFoundException e) {
             disconnection("Communication error, logging out");

@@ -104,12 +104,7 @@ public class ServerThread extends Thread {
         return receiveCards()[0];
     }
     public void sendBoard(char[] board){
-        try{
-            TimeUnit.MILLISECONDS.sleep(250);
-        }
-        catch(InterruptedException e) {
-            disconnection();
-        }
+
         String result= new String(board);
         sendString("pr-"+result);
     }
@@ -138,30 +133,30 @@ public class ServerThread extends Thread {
 
     public void sendPositionsArray(List<SerializedInteger>[] list){
         try{
-            TimeUnit.MILLISECONDS.sleep(250);
+            receiveInteger();
             out_obj.writeObject(list);
         }
-        catch(IOException | InterruptedException e){
+        catch(IOException e){
             disconnection();
         }
     }
 
     public void sendPositionsList(List<SerializedInteger> list){
         try{
-            TimeUnit.MILLISECONDS.sleep(250);
+            receiveInteger();
             out_obj.writeObject(list);
         }
-        catch(IOException | InterruptedException e){
+        catch(IOException e){
             disconnection();
         }
     }//A differenza del primo manda una sola lista e non un vettore di liste
 
     public void sendPositionWorkers(SerializedInteger[] positionworkers){
         try{
-            TimeUnit.MILLISECONDS.sleep(250);
+            receiveInteger();
             out_obj.writeObject(positionworkers);
         }
-        catch(IOException | InterruptedException e){
+        catch(IOException e){
             disconnection();
         }
     }
@@ -230,21 +225,21 @@ public class ServerThread extends Thread {
 
     public void sendInt(int send){
         try {
-            TimeUnit.MILLISECONDS.sleep(250);
+            receiveInteger();
             out.write(send);
             out.flush();
         }
-        catch(IOException | InterruptedException e){
+        catch(IOException e){
             disconnection();
         }
     }
 
     public void sendCards(GlobalVariables.DivinityCard[] cards){
         try {
-            TimeUnit.MILLISECONDS.sleep(250);
+            receiveInteger();
             out_obj.writeObject(cards);
         }
-        catch(IOException | InterruptedException e){
+        catch(IOException e){
             disconnection();
         }
     }
