@@ -6,11 +6,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class BaseTurnStrategyTest {
-
+public class ApolloTurnStrategy {
     @Before
     public void createBoard(){
         GlobalVariables.game=new Board(new String[]{"poldo","franco","giacomo"}){
@@ -21,20 +17,8 @@ public class BaseTurnStrategyTest {
         GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(1).moveWorker(cell2);
     }
 
-
     @Test
-    public void baseStrategyTest(){
-        BaseTurnStrategy base=new BaseTurnStrategy();
-        List<int[]>[] current=new ArrayList[2];
-        current=base.baseMovement();
-        System.out.println("ciao");
-        //assert equals()
-    }
+    public void movementTest(){
 
-    @Test
-    public void baseStrategyBuild(){
-        BaseTurnStrategy base=new BaseTurnStrategy();
-        List<int[]> current=new ArrayList<>();
-        current=base.baseBuilding();
     }
 }
