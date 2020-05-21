@@ -88,6 +88,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                         } else if (message.contains("loss-")) {
                             String s = message.replace("loss-", "");
                             loss(s);
+                        } else if (message.contains("al-")){
+                            String s = message.replace("al-", "");
+                            methodSelection.alert(s);
                         }
                         messagesFromServer.remove(0);
                     }
