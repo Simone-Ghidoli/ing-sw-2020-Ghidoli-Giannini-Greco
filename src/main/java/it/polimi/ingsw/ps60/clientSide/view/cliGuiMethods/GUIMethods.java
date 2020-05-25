@@ -466,10 +466,15 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public void alert(String string) {
-        JOptionPane.showMessageDialog(null,
-                string,
-                "ALERT",
-                JOptionPane.WARNING_MESSAGE);
+        final Object[] option = new Object[]{"OK"};
+        final JOptionPane pane = new JOptionPane(string, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, option, option[0]);
+        final JDialog dialog = pane.createDialog("INFO:");
+
+        dialog.setVisible(true);
+        dialog.dispose();
+
+        if (string.contains("Your divinity card is: "))
+            santorini.setDivinityCardImage(GlobalVariables.DivinityCard.valueOf(string.split("Your divinity card is: ")[1]));
     }
 
     private boolean confirmOrRetry() {

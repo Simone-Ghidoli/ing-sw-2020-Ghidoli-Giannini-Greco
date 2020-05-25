@@ -46,52 +46,48 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     /**
      * List of comparisons between server's messages and known commands
      */
-
-    public void run() {//processa i messaggi
+    public void run() {
+        String message;
         while (true) {
             synchronized (messagesFromServer) {
                 while (messagesFromServer.size() != 0) {
                     synchronized (socket) {
-                        if (socket.isClosed()) {
+                        if (socket.isClosed())
                             return;
-                        }
-                        String message = messagesFromServer.get(0);
-                        if (message.equals("move")) {
+
+                        message = messagesFromServer.get(0);
+
+                        if (message.equals("move"))
                             movement();
-                        } else if (message.equals("build")) {
+                        else if (message.equals("build"))
                             building();
-                        } else if (message.contains("spc-")) {
-                            String s = message.replace("spc-", "");
-                            specialChoice(s);
-                        } else if (message.equals("nPlayers")) {
+                        else if (message.contains("spc-"))
+                            specialChoice(message.split("spc-", 2)[1]);
+                        else if (message.equals("nPlayers"))
                             number_of_players();
-                        } else if (message.equals("nick_birth")) {
+                        else if (message.equals("nick_birth"))
                             nickname_birthday();
-                        } else if (message.equals("workset")) {
-                            setworkers();
-                        } else if (message.contains("pr-")) {
-                            String s = message.replace("pr-", "");
-                            printBoard(s);
-                        } else if (message.equals("dv_choice")) {
+                        else if (message.equals("workset"))
+                            setWorkers();
+                        else if (message.contains("pr-"))
+                            printBoard(message.split("pr-", 2)[1]);
+                        else if (message.equals("dv_choice"))
                             divinityChoice();
-                        } else if (message.equals("div_sel")) {
+                        else if (message.equals("div_sel"))
                             divinitySelection();
-                        } else if (message.contains("win-")) {
-                            String s = message.replace("win-", "");
-                            methodSelection.alert(s);
+                        else if (message.contains("al-"))
+                            alert(message.split("al-", 2)[1]);
+                        else if (message.contains("loss-"))
+                            alert(message.split("loss-", 2)[1]);
+                        else if (message.contains("win-")) {
+                            methodSelection.alert(message.split("win-", 2)[1]);
                             socketClose();
                             return;
                         } else if (message.contains("disc-")) {
-                            String s = message.replace("disc-", "");
-                            disconnection(s);//chiama la disconnessione segnalando quale giocatore si è disconnesso
+                            disconnection(message.split("disc-", 2)[1]);
                             return;
-                        } else if (message.contains("loss-")) {
-                            String s = message.replace("loss-", "");
-                            loss(s);
-                        } else if (message.contains("al-")){
-                            String s = message.replace("al-", "");
-                            methodSelection.alert(s);
                         }
+
                         messagesFromServer.remove(0);
                     }
                 }
@@ -99,10 +95,6 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
     }
 
-
-    /**
-     * method used for movement
-     */
     public void socketClose(){
         try {
             socket.close();
@@ -112,26 +104,27 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
     }
 
-    public void loss(String s){
+    public void alert(String s){
         methodSelection.alert(s);
+        sendInt(0);
     }
 
-    public void movement() {//Interagisce con l'utente per fargli decidere la giocata
-        List<SerializedInteger>[] stalin;
-        stalin = receiveListArray();//recupero le posizioni
-        SerializedInteger[] workers = receiveWorkers();//Riceve la posizione dei due signori
-        int play = methodSelection.moveChoice(convertTypePosition(stalin), convertSerialized_to_integer(workers));//output della giocata fatta dall'utente
-        sendInt(play);
+    public void movement() {
+//        List<SerializedInteger>[] movementStrategy = receiveListArray();
+//        SerializedInteger[] workers = receiveWorkers();
+//        int play = methodSelection.moveChoice(convertTypePosition(movementStrategy), convertSerialized_to_integer(workers));
+//        sendInt(play);
+        sendInt(methodSelection.moveChoice(convertTypePosition(receiveListArray()), convertSerialized_to_integer(receiveWorkers())));
     }
 
     /**
      * method used for building
      */
-    public void building() {//Molto simile a build ma viene saltata la fase di scelta del worker
-        List<SerializedInteger> stalin;
-        stalin = recieveList();//ricevo la lista stalin
-        int play = methodSelection.buildChoice(convertTypePositionBuild(stalin));
-        sendInt(play);
+    public void building() {
+//        List<SerializedInteger> buildingStrategy = receiveList();
+//        int play = methodSelection.buildChoice(convertTypePositionBuild(buildingStrategy));
+//        sendInt(play);
+        sendInt(methodSelection.buildChoice(convertTypePositionBuild(receiveList())));
     }
 
     /**
@@ -139,7 +132,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      *
      * @param s contains the message that users will see to know what are they choosing
      */
-    public void specialChoice(String s) {//Viene fatta una scelta speciale. Viene inviato a server il responso: 1=sì 2=no
+    public void specialChoice(String s) {
         boolean n = methodSelection.specialChoices(s);
         int choice;
         if (n)
@@ -152,15 +145,16 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     /**
      * How much players gonna to play?
      */
-    public void number_of_players() {//da fare ancora in methods
-        int number = methodSelection.numberOfPlayers();
-        sendInt(number);
+    public void number_of_players() {
+//        int number = methodSelection.numberOfPlayers();
+//        sendInt(number);
+        sendInt(methodSelection.numberOfPlayers());
     }
 
     /**
      * Players' names and birthdays
      */
-    public void nickname_birthday() {//invia nick e altro nel server
+    public void nickname_birthday() {
         String[] inputs;
         inputs = methodSelection.nicknameBirthdayChoice();
         sendString(inputs[0]);//NickName
@@ -169,7 +163,6 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Shot the actual state of the board to the player
-     *
      * @param board contains a stream of characters that will be used to build the correct board to print
      */
     public void printBoard(String board) {
@@ -179,30 +172,32 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     /**
      * Set the workers' position at the start of the game
      */
-    public void setworkers() {
-        List<SerializedInteger> takenPositions = recieveList();
-        int[][] answer = methodSelection.firstSetWorkers(convertTypePositionBuild(takenPositions));
-        sendPositions(convertInteger_to_Serialized(answer));
+    public void setWorkers() {
+//        List<SerializedInteger> takenPositions = receiveList();
+//        int[][] answer = methodSelection.firstSetWorkers(convertTypePositionBuild(takenPositions));
+//        sendPositions(convertInteger_to_Serialized(answer));
+        sendPositions(convertInteger_to_Serialized(methodSelection.firstSetWorkers(convertTypePositionBuild(receiveList()))));
     }
 
     /**
      * The first player needs to choose in-game cards
      */
     public void divinityChoice() {
-        int numberOfPlayers = receiveInt();
-        GlobalVariables.DivinityCard[] inGameCards = methodSelection.cardChoices(numberOfPlayers);
-        sendCards(inGameCards);
+//        int numberOfPlayers = receiveInt();
+//        GlobalVariables.DivinityCard[] inGameCards = methodSelection.cardChoices(numberOfPlayers);
+//        sendCards(inGameCards);
+        sendCards(methodSelection.cardChoices(receiveInt()));
     }
 
     /**
      * Card pick between available cards
      */
     public void divinitySelection() {
-        GlobalVariables.DivinityCard[] cards;
-        cards = receiveCards();
-        GlobalVariables.DivinityCard[] choice = new GlobalVariables.DivinityCard[1];
-        choice[0] = methodSelection.divinitySelection(cards);
-        sendCards(choice);
+//        GlobalVariables.DivinityCard[] cards = receiveCards();
+//        GlobalVariables.DivinityCard[] choice = new GlobalVariables.DivinityCard[1];
+//        choice[0] = methodSelection.divinitySelection(cards);
+//        sendCards(choice);
+        sendCards(new GlobalVariables.DivinityCard[]{methodSelection.divinitySelection(receiveCards())});
     }
 
 
@@ -228,26 +223,30 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     public List<SerializedInteger>[] receiveListArray() {
+//        sendInt(0);
         try {
             sendInt(0);
-            List<SerializedInteger>[] stalin;
-            stalin = (List<SerializedInteger>[]) in_obj.readObject();
-            return stalin;
+//            List<SerializedInteger>[] stalin;
+//            stalin = (List<SerializedInteger>[]) in_obj.readObject();
+//            return stalin;
+            return (List<SerializedInteger>[]) in_obj.readObject();
         } catch (IOException e) {
             disconnection("Communication error, logging out");
             System.out.println("Communication error, logging out");
         } catch(ClassNotFoundException e_1){
-            System.out.println("non trovo la classe");
+            System.out.println("Class not found");
         }
         return null;
-    }//Per  il movement.
+    }
 
-    public List<SerializedInteger> recieveList() {   //Per il building
-        sendInt(0);
-        List<SerializedInteger> stalin;
+    public List<SerializedInteger> receiveList() {
+
+//        List<SerializedInteger> serializedIntegers;
             try {
-                stalin = (List<SerializedInteger>) in_obj.readObject();
-                return stalin;
+//                serializedIntegers = (List<SerializedInteger>) in_obj.readObject();
+//                return serializedIntegers;
+                sendInt(0);
+                return (List<SerializedInteger>) in_obj.readObject();
             } catch (IOException e) {
                 e.printStackTrace();
                 disconnection("Communication error, logging out");
@@ -257,40 +256,41 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         return null;
     }
 
-    public SerializedInteger[] convertInteger_to_Serialized(int[][] inte) {
-        SerializedInteger[] appoggio=new SerializedInteger[inte.length];
-        for (int i = 0; i < inte.length; i++) {
-            appoggio[i]=new SerializedInteger(inte[i]);
+    public SerializedInteger[] convertInteger_to_Serialized(int[][] ints) {
+        SerializedInteger[] serializedIntegers=new SerializedInteger[ints.length];
+        for (int i = 0; i < ints.length; i++) {
+            serializedIntegers[i]=new SerializedInteger(ints[i]);
         }
-        return appoggio;
+        return serializedIntegers;
     }
 
-    public int[][] convertSerialized_to_integer(SerializedInteger[] seria) {
-        int[][] appoggio = new int[2][2];
-        for (int i = 0; i < seria.length; i++) {
-            appoggio[i] = seria[i].serialized;
-        }
-        return appoggio;
+    public int[][] convertSerialized_to_integer(SerializedInteger[] serialized) {
+//        int[][] appoggio = new int[2][2];
+//        for (int i = 0; i < serialized.length; i++) {
+//            appoggio[i] = serialized[i].serialized;
+//        }
+        return new int[][]{serialized[0].serialized, serialized[1].serialized};
     }
 
     public List<int[]>[] convertTypePosition(List<SerializedInteger>[] positions) {//Restituisce position come Lista di interi e non SerializedInteger
-        List<int[]>[] appoggio = new ArrayList[2];
-        appoggio[0]=new ArrayList<>();
-        appoggio[1]=new ArrayList<>();
+        List<int[]>[] lists = new ArrayList[2];
+//        lists[0]=new ArrayList<>();
+//        lists[1]=new ArrayList<>();
         for (int i = 0; i < 2; i++) {
+            lists[i] = new ArrayList<>();
             for (int k = 0; k < positions[i].size(); k++) {
-                appoggio[i].add(positions[i].get(k).serialized);
+                lists[i].add(positions[i].get(k).serialized);
             }
         }
-        return appoggio;
+        return lists;
     }
 
     public List<int[]> convertTypePositionBuild(List<SerializedInteger> positions) {//Restituisce position come Lista di interi e non SerializedInteger
-        List<int[]> appoggio = new ArrayList<>();
+        List<int[]> list = new ArrayList<>();
         for (SerializedInteger position : positions) {
-            appoggio.add(position.serialized);
+            list.add(position.serialized);
         }
-        return appoggio;
+        return list;
     }
 
     public SerializedInteger[] receiveWorkers() {
@@ -330,14 +330,14 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     public GlobalVariables.DivinityCard[] receiveCards() {
-        GlobalVariables.DivinityCard[] appoggio = null;
+        GlobalVariables.DivinityCard[] divinityCards = null;
         try {
             sendInt(0);
-            appoggio = (GlobalVariables.DivinityCard[]) in_obj.readObject();
+            divinityCards = (GlobalVariables.DivinityCard[]) in_obj.readObject();
         } catch (IOException | ClassNotFoundException e) {
             disconnection("Communication error, logging out");
         }
-        return appoggio;
+        return divinityCards;
     }
 
     /**
@@ -354,5 +354,4 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
         Thread.currentThread().interrupt();
     }
-
 }

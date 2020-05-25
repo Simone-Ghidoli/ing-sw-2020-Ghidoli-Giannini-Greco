@@ -98,4 +98,5 @@ public interface ViewMethodSelection {
      * @param string is the message that has to be displayed
      */
     void alert(String string);
+
 }

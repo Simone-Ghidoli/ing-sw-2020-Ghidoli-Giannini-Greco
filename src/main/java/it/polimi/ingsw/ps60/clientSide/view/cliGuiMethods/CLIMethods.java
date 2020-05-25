@@ -28,19 +28,19 @@ public class CLIMethods implements ViewMethodSelection {
 
         for (int i = 0; i < 25; i++) {
             if (i % 5 == 0)
-                System.out.print("\n" + ((i / 5)+1) + "-  ");
+                System.out.print("\n" + ((i / 5) + 1) + "-  ");
 
             if (boardToPrint[i] < 53) {
                 System.out.print(boardToPrint[i]);
             } else if (boardToPrint[i] < 57) {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER1.getColour().getString());
-                System.out.print((char)(boardToPrint[i] - 5));
+                System.out.print((char) (boardToPrint[i] - 5));
             } else if (boardToPrint[i] < 61) {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER2.getColour().getString());
-                System.out.print((char)(boardToPrint[i] - 9));
+                System.out.print((char) (boardToPrint[i] - 9));
             } else {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER3.getColour().getString());
-                System.out.print((char)(boardToPrint[i] - 13));
+                System.out.print((char) (boardToPrint[i] - 13));
             }
             System.out.print(GlobalVariables.Colour.RESET.getString());
             System.out.print("  ");
@@ -48,15 +48,15 @@ public class CLIMethods implements ViewMethodSelection {
         System.out.println("\n");
     }
 
-    public int printPossibleMoves(List<int[]>[] moves, int[][]positionsWorkers){
+    public int printPossibleMoves(List<int[]>[] moves, int[][] positionsWorkers) {
         int choice = 0;
 
-        for (int i = 0; i < moves.length; i++){
-            System.out.println("Worker " + (i+1) + " is on " + (positionsWorkers[i][0]+1) + "; " + (positionsWorkers[i][1]+1));
-            System.out.println("Available choice for worker " + (i+1));
-            for(int j = 0; j < moves[i].size(); j++){
+        for (int i = 0; i < moves.length; i++) {
+            System.out.println("Worker " + (i + 1) + " is on " + (positionsWorkers[i][0] + 1) + "; " + (positionsWorkers[i][1] + 1));
+            System.out.println("Available choice for worker " + (i + 1));
+            for (int j = 0; j < moves[i].size(); j++) {
                 System.out.println("Press " + (choice + 1) + " in order to move in the cell: [" +
-                        (moves[i].get(j)[0] + 1) + ", " + (moves[i].get(j)[1] + 1)+"]");
+                        (moves[i].get(j)[0] + 1) + ", " + (moves[i].get(j)[1] + 1) + "]");
                 choice++;
             }
         }
@@ -74,33 +74,32 @@ public class CLIMethods implements ViewMethodSelection {
             System.out.println("Wrong input");
             return moveChoice(moves, positionsWorkers);
         } else {
-            return choice-1;
+            return choice - 1;
         }
     }
 
-    public int printPossibleBuilds(List<int[]> moves){
+    public int printPossibleBuilds(List<int[]> moves) {
         int choice = 0;
 
         for (int[] move : moves) {
             System.out.println("Press " + (choice + 1) + " in order to build on the cell: [" +
-                    (move[0] + 1) + ", " + (move[1] + 1)+"]");
+                    (move[0] + 1) + ", " + (move[1] + 1) + "]");
             choice++;
         }
         return choice;
     }
 
     @Override
-    public int buildChoice(List<int[]> moves){
+    public int buildChoice(List<int[]> moves) {
         int i = printPossibleBuilds(moves);
         flushInput();
         int choice = new Scanner(System.in).nextInt();
 
-        if (choice > i){
+        if (choice > i) {
             System.out.println("Wrong input");
             return buildChoice(moves);
-        }
-        else
-            return choice-1;
+        } else
+            return choice - 1;
     }
 
     @Override
@@ -112,7 +111,7 @@ public class CLIMethods implements ViewMethodSelection {
         Scanner input = new Scanner(System.in);
         flushInput();
 
-        while (ip == null){
+        while (ip == null) {
             ip = input.nextLine();
             if (!new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip)) {
                 System.out.println("Wrong input");
@@ -123,7 +122,7 @@ public class CLIMethods implements ViewMethodSelection {
         System.out.println("Enter the port number");
         flushInput();
 
-        while (port == null){
+        while (port == null) {
             port = input.nextLine();
             if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port)) {
                 System.out.println("Wrong input");
@@ -142,7 +141,7 @@ public class CLIMethods implements ViewMethodSelection {
         Scanner input = new Scanner(System.in);
         flushInput();
 
-        while (nickname == null){
+        while (nickname == null) {
             System.out.println("Enter your nickname");
             nickname = input.nextLine();
             if (!new StringRegexValidation(GlobalVariables.StringPatterns.Nickname.getPattern()).isValid(nickname)) {
@@ -152,7 +151,7 @@ public class CLIMethods implements ViewMethodSelection {
         }
         flushInput();
 
-        while (birthday == null){
+        while (birthday == null) {
             System.out.println("Enter your birthday. [yyyy/MM/gg]");
             birthday = input.nextLine();
             if (!new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern()).isValid(birthday)) {
@@ -174,21 +173,21 @@ public class CLIMethods implements ViewMethodSelection {
 
         System.out.println("Select " + playerNumber + " cards between:");
 
-        for (int i = 0; i < allCards.length - 1; i++){
-            System.out.println((i+1) + "- " + allCards[i].toString());
+        for (int i = 0; i < allCards.length - 1; i++) {
+            System.out.println((i + 1) + "- " + allCards[i].toString());
         }
 
         Scanner input = new Scanner(System.in);
         StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.DivinityCard.getPattern());
 
         for (int j = 0; j < playerNumber; j++) {
-            System.out.println("Enter card number " + (j+1));
+            System.out.println("Enter card number " + (j + 1));
 
             choice = null;
             flushInput();
             while (choice == null) {
                 choice = input.nextLine();
-                if (!stringRegexValidation.isValid(choice)){
+                if (!stringRegexValidation.isValid(choice)) {
                     choice = null;
                     System.out.println("Wrong input");
                 }
@@ -205,7 +204,7 @@ public class CLIMethods implements ViewMethodSelection {
         System.out.println("Select one card between:");
 
         for (int i = 0; i < card.length; i++)
-            System.out.println((i+1) + "- " + card[i].toString());
+            System.out.println((i + 1) + "- " + card[i].toString());
 
         Scanner input = new Scanner(System.in);
         StringRegexValidation stringRegexValidation = new StringRegexValidation("([1-" + card.length + "]){1}");
@@ -213,7 +212,7 @@ public class CLIMethods implements ViewMethodSelection {
         flushInput();
         while (string == null) {
             string = input.nextLine();
-            if (!stringRegexValidation.isValid(string)){
+            if (!stringRegexValidation.isValid(string)) {
                 string = null;
                 System.out.println("Wrong input");
             }
@@ -300,10 +299,10 @@ public class CLIMethods implements ViewMethodSelection {
 
         choice = null;
         flushInput();
-        while (choice == null){
+        while (choice == null) {
             choice = input.nextLine();
-            if (!stringRegexValidation.isValid(choice)){
-                choice =null;
+            if (!stringRegexValidation.isValid(choice)) {
+                choice = null;
                 System.out.println("Wrong input");
             }
         }
@@ -312,7 +311,7 @@ public class CLIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public int numberOfPlayers(){
+    public int numberOfPlayers() {
         String numberOfPlayers;
         Scanner scanner = new Scanner(System.in);
 
@@ -321,9 +320,9 @@ public class CLIMethods implements ViewMethodSelection {
 
         numberOfPlayers = null;
         flushInput();
-        while (numberOfPlayers == null){
+        while (numberOfPlayers == null) {
             numberOfPlayers = scanner.nextLine();
-            if (!stringRegexValidation.isValid(numberOfPlayers)){
+            if (!stringRegexValidation.isValid(numberOfPlayers)) {
                 numberOfPlayers = null;
                 System.out.println("Wrong input");
             }
