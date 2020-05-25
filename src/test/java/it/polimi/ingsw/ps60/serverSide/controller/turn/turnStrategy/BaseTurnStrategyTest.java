@@ -27,14 +27,16 @@ public class BaseTurnStrategyTest {
         BaseTurnStrategy base=new BaseTurnStrategy();
         List<int[]>[] current=new ArrayList[2];
         current=base.baseMovement();
-        System.out.println("ciao");
+        System.out.println("done");
         //assert equals()
     }
 
     @Test
     public void baseStrategyBuild(){
+        GlobalVariables.game.getPlayerInGame().getNode().getValue().setWorkerMoved(GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(0));
         BaseTurnStrategy base=new BaseTurnStrategy();
         List<int[]> current=new ArrayList<>();
         current=base.baseBuilding();
+        System.out.println("done");
     }
 }

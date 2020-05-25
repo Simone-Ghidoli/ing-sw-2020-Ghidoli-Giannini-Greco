@@ -32,9 +32,11 @@ public class ApolloTurnStrategy extends BaseTurnStrategy {
                 for (int j = -1; j < 2; j++) {
                     if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null && !(i == 0 && j == 0)) {
                         if (cell.getBuildingLevel() <= cellWorker[k].getBuildingLevel() + 1) {
-                            if (!cell.isDomed()) {
-                                if (!isDisturbedByDivinity(positionWorker, new int[]{positionWorker[0] + i, positionWorker[1] + j}))
-                                    positions[k].add(new int[]{positionWorker[0] + i, positionWorker[1] + j});
+                            if(cell.getWorkerIn()!=playerInGame.getWorker(0)&&cell.getWorkerIn()!=playerInGame.getWorker(1)){
+                                if (!cell.isDomed()) {
+                                    if (!isDisturbedByDivinity(positionWorker, new int[]{positionWorker[0] + i, positionWorker[1] + j}))
+                                        positions[k].add(new int[]{positionWorker[0] + i, positionWorker[1] + j});
+                                }
                             }
                         }
                     }
