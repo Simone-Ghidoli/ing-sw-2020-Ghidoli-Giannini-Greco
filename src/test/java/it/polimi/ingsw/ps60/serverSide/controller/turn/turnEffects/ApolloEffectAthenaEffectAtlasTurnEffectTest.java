@@ -61,6 +61,7 @@ public class ApolloEffectAthenaEffectAtlasTurnEffectTest {
             divinityStrategy2.setBuilding(new int[]{2, 3});
         divinityStrategy2.setEndTurn();
 
+
         DivinityStrategy divinityStrategy3 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
 
         int[][] mossa3 = new int[2][2];

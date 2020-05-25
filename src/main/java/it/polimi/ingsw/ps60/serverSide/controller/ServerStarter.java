@@ -129,7 +129,7 @@ public class ServerStarter {
      * This method only sorts the nicknames by the birthday
      */
     private void sort() {
-        String[][] nicknamesAndBirthdays = server.getNickBirth();
+        String[][] nicknamesAndBirthdays = server.getNicknameAndBirthday();
         nicknames = new String[nicknamesAndBirthdays.length];
 
 

@@ -67,7 +67,7 @@ public class BaseTurnController implements TurnController {
     }
 
     public void sendBoardToClient(){
-        for (ServerThread serverThread : game.getPlayerInGame().get().getServerThread().getList()){
+        for (ServerThread serverThread : game.getPlayerInGame().get().getServerThread().getServerThreads()){
             serverThread.sendBoard(game.getCellToSend());
         }
     }

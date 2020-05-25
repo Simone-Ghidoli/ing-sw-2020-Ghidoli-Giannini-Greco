@@ -6,6 +6,7 @@ import java.util.*;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
+import it.polimi.ingsw.ps60.utils.Converters;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
 /**
@@ -21,11 +22,13 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     ObjectInputStream in_obj;
     ObjectOutputStream out_obj;
     ViewMethodSelection methodSelection;
+    private final Converters converters;
 
     public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection) {
         socket = sock;
         messagesFromServer = messages;
         methodSelection = viewMethodSelection;
+        converters = new Converters();
         try {
             input = socket.getInputStream();
             output = socket.getOutputStream();
@@ -67,7 +70,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                             number_of_players();
                         else if (message.equals("nick_birth"))
                             nickname_birthday();
-                        else if (message.equals("workset"))
+                        else if (message.equals("workSet"))
                             setWorkers();
                         else if (message.contains("pr-"))
                             printBoard(message.split("pr-", 2)[1]);
@@ -110,21 +113,14 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     public void movement() {
-//        List<SerializedInteger>[] movementStrategy = receiveListArray();
-//        SerializedInteger[] workers = receiveWorkers();
-//        int play = methodSelection.moveChoice(convertTypePosition(movementStrategy), convertSerialized_to_integer(workers));
-//        sendInt(play);
-        sendInt(methodSelection.moveChoice(convertTypePosition(receiveListArray()), convertSerialized_to_integer(receiveWorkers())));
+        sendInt(methodSelection.moveChoice(converters.deserializeArrayOfListOfInts(receiveListArray()), converters.deserialize2DArrayOfInts(receiveWorkers())));
     }
 
     /**
      * method used for building
      */
     public void building() {
-//        List<SerializedInteger> buildingStrategy = receiveList();
-//        int play = methodSelection.buildChoice(convertTypePositionBuild(buildingStrategy));
-//        sendInt(play);
-        sendInt(methodSelection.buildChoice(convertTypePositionBuild(receiveList())));
+        sendInt(methodSelection.buildChoice(converters.deserializeListOfInts(receiveList())));
     }
 
     /**
@@ -146,8 +142,6 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      * How much players gonna to play?
      */
     public void number_of_players() {
-//        int number = methodSelection.numberOfPlayers();
-//        sendInt(number);
         sendInt(methodSelection.numberOfPlayers());
     }
 
@@ -173,19 +167,13 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      * Set the workers' position at the start of the game
      */
     public void setWorkers() {
-//        List<SerializedInteger> takenPositions = receiveList();
-//        int[][] answer = methodSelection.firstSetWorkers(convertTypePositionBuild(takenPositions));
-//        sendPositions(convertInteger_to_Serialized(answer));
-        sendPositions(convertInteger_to_Serialized(methodSelection.firstSetWorkers(convertTypePositionBuild(receiveList()))));
+        sendPositions(converters.serialize2DArrayOfInt(methodSelection.firstSetWorkers(converters.deserializeListOfInts(receiveList()))));
     }
 
     /**
      * The first player needs to choose in-game cards
      */
     public void divinityChoice() {
-//        int numberOfPlayers = receiveInt();
-//        GlobalVariables.DivinityCard[] inGameCards = methodSelection.cardChoices(numberOfPlayers);
-//        sendCards(inGameCards);
         sendCards(methodSelection.cardChoices(receiveInt()));
     }
 
@@ -193,10 +181,6 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      * Card pick between available cards
      */
     public void divinitySelection() {
-//        GlobalVariables.DivinityCard[] cards = receiveCards();
-//        GlobalVariables.DivinityCard[] choice = new GlobalVariables.DivinityCard[1];
-//        choice[0] = methodSelection.divinitySelection(cards);
-//        sendCards(choice);
         sendCards(new GlobalVariables.DivinityCard[]{methodSelection.divinitySelection(receiveCards())});
     }
 
@@ -223,12 +207,8 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     public List<SerializedInteger>[] receiveListArray() {
-//        sendInt(0);
         try {
             sendInt(0);
-//            List<SerializedInteger>[] stalin;
-//            stalin = (List<SerializedInteger>[]) in_obj.readObject();
-//            return stalin;
             return (List<SerializedInteger>[]) in_obj.readObject();
         } catch (IOException e) {
             disconnection("Communication error, logging out");
@@ -240,11 +220,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     public List<SerializedInteger> receiveList() {
-
-//        List<SerializedInteger> serializedIntegers;
-            try {
-//                serializedIntegers = (List<SerializedInteger>) in_obj.readObject();
-//                return serializedIntegers;
+         try {
                 sendInt(0);
                 return (List<SerializedInteger>) in_obj.readObject();
             } catch (IOException e) {
@@ -254,43 +230,6 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                 System.out.println("fbuaiwbfu");
             }
         return null;
-    }
-
-    public SerializedInteger[] convertInteger_to_Serialized(int[][] ints) {
-        SerializedInteger[] serializedIntegers=new SerializedInteger[ints.length];
-        for (int i = 0; i < ints.length; i++) {
-            serializedIntegers[i]=new SerializedInteger(ints[i]);
-        }
-        return serializedIntegers;
-    }
-
-    public int[][] convertSerialized_to_integer(SerializedInteger[] serialized) {
-//        int[][] appoggio = new int[2][2];
-//        for (int i = 0; i < serialized.length; i++) {
-//            appoggio[i] = serialized[i].serialized;
-//        }
-        return new int[][]{serialized[0].serialized, serialized[1].serialized};
-    }
-
-    public List<int[]>[] convertTypePosition(List<SerializedInteger>[] positions) {//Restituisce position come Lista di interi e non SerializedInteger
-        List<int[]>[] lists = new ArrayList[2];
-//        lists[0]=new ArrayList<>();
-//        lists[1]=new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            lists[i] = new ArrayList<>();
-            for (int k = 0; k < positions[i].size(); k++) {
-                lists[i].add(positions[i].get(k).serialized);
-            }
-        }
-        return lists;
-    }
-
-    public List<int[]> convertTypePositionBuild(List<SerializedInteger> positions) {//Restituisce position come Lista di interi e non SerializedInteger
-        List<int[]> list = new ArrayList<>();
-        for (SerializedInteger position : positions) {
-            list.add(position.serialized);
-        }
-        return list;
     }
 
     public SerializedInteger[] receiveWorkers() {

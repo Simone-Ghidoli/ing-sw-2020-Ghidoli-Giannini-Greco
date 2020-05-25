@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps60.serverSide.server;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
+import it.polimi.ingsw.ps60.utils.Converters;
 import it.polimi.ingsw.ps60.utils.SerializedInteger;
 import java.io.*;
 import java.net.Socket;
@@ -14,17 +15,19 @@ import java.util.List;
 public class ServerThread extends Thread {
     private String playerBound;
     protected Socket socket;
-    private final List<ServerThread> list;
+    private final List<ServerThread> serverThreads;
     private InputStream in;
     private OutputStream out;
     private BufferedReader buffer;
     private PrintWriter writer;
     private ObjectInputStream in_obj;
     private ObjectOutputStream out_obj;
+    private final Converters converters;
 
-    public ServerThread(Socket soc, ArrayList<ServerThread> list) {
+    public ServerThread(Socket soc, ArrayList<ServerThread> serverThreads) {
         this.socket = soc;
-        this.list = list;
+        this.serverThreads = serverThreads;
+        converters = new Converters();
         try {
             in = socket.getInputStream();
             out = socket.getOutputStream();
@@ -49,17 +52,17 @@ public class ServerThread extends Thread {
         sendString("loss-" + message);
     }
 
-    public int moveMessage(List<int[]>[] possible_choice, int[][] positionworkers) {//Comunica con l'utente per decidere quale muratore muovere e dove
+    public int moveMessage(List<int[]>[] possible_choice, int[][] positionWorkers) {
         sendString("move");
-        sendPositionsArray(convertIntegerToSerialized_move(possible_choice));//Invio solo la parte delle mosse che mi serve(ovvero quelle associate al worker da muovere)
-        sendPositionWorkers(convertIntegerToSerialized_workers(positionworkers));//PositionWorkers viene inserito in input quando viene chiamato il metodo.
-        return receiveInteger();//Restituisce il numero inserito dall'utente (quindi la posizione del vettore con la casella in cui costruire)
+        sendPositionsArray(converters.serializeArrayOfListOfInts(possible_choice));
+        sendPositionWorkers(converters.serialize2DArrayOfInt(positionWorkers));
+        return receiveInteger();
     }
 
-    public int buildMessage(List<int[]> possible_choice) {//Comunica con l`utente per decidere dove costruire
+    public int buildMessage(List<int[]> possible_choice) {
         sendString("build");
-        sendPositionsList(convertPositionListToSerializedInteger(possible_choice));
-        return receiveInteger();//Restituisce il numero inserito dall`utente (Quindi la posizione del vettore con la casella in cui costruire)
+        sendPositionsList(converters.serializeListOfInts(possible_choice));
+        return receiveInteger();
     }
 
     public int specialChoice(String message) {
@@ -67,7 +70,7 @@ public class ServerThread extends Thread {
         return receiveInteger();
     }
 
-    public int numberOfPlayers() {//ask how much players gonna play
+    public int numberOfPlayers() {
         int n;
         sendString("nPlayers");
         n = receiveInteger();
@@ -82,16 +85,15 @@ public class ServerThread extends Thread {
         return nick_birth;
     }
 
-    public int[][] setWorkers(List<int[]> takenPositions) {//Restituisce un vettore con le posizioni dei 2 workers
-        sendString("workset");
-        sendPositionsList((convertPositionListToSerializedInteger(takenPositions)));
-        SerializedInteger[] newTakenPositions = receivePositions();
-        return convertSerializedToInteger_workers(newTakenPositions);
+    public int[][] setWorkers(List<int[]> takenPositions) {
+        sendString("workSet");
+        sendPositionsList((converters.serializeListOfInts(takenPositions)));
+        return converters.deserialize2DArrayOfInts(receivePositions());
     }
 
     public GlobalVariables.DivinityCard[] divinityChoice() {
         sendString("dv_choice");
-        sendInt(list.size());
+        sendInt(serverThreads.size());
         return receiveCards();
     }
 
@@ -105,8 +107,8 @@ public class ServerThread extends Thread {
         sendString("pr-" + new String(board));
     }
 
-    public List<ServerThread> getList() {
-        return list;
+    public List<ServerThread> getServerThreads() {
+        return serverThreads;
     }
 
     public int receiveInteger() {
@@ -142,12 +144,12 @@ public class ServerThread extends Thread {
         } catch (IOException e) {
             disconnection();
         }
-    }//A differenza del primo manda una sola lista e non un vettore di liste
+    }
 
-    public void sendPositionWorkers(SerializedInteger[] positionworkers) {
+    public void sendPositionWorkers(SerializedInteger[] positionWorkers) {
         try {
             receiveInteger();
-            out_obj.writeObject(positionworkers);
+            out_obj.writeObject(positionWorkers);
         } catch (IOException e) {
             disconnection();
         }
@@ -171,33 +173,6 @@ public class ServerThread extends Thread {
             disconnection();
         }
         return pos;
-    }
-
-    public int[][] convertSerializedToInteger_workers(SerializedInteger[] serializedInteger) {
-        int[][] ints = new int[2][2];
-        for (int i = 0; i < serializedInteger.length; i++) {
-            ints[i] = serializedInteger[i].serialized;
-        }
-        return ints;
-    }
-
-    public List<SerializedInteger>[] convertIntegerToSerialized_move(List<int[]>[] possible_choice) {
-        List<SerializedInteger>[] list = new ArrayList[possible_choice.length];
-        for (int i = 0; i < 2; i++) {
-            list[i] = new ArrayList<>();
-            for (int[] elem : possible_choice[i]) {
-                list[i].add(new SerializedInteger(elem));
-            }
-        }
-        return list;
-    }
-
-    public SerializedInteger[] convertIntegerToSerialized_workers(int[][] positions) { //Riceve sempre un vettore con le posizioni di 2 workers.
-//        SerializedInteger[] temp=new SerializedInteger[2];
-//        for(int i=0;i<2;i++){
-//            temp[i]=new SerializedInteger(positions[i]);
-//        }
-        return new SerializedInteger[]{new SerializedInteger(positions[0]), new SerializedInteger(positions[1])};
     }
 
     public GlobalVariables.DivinityCard[] receiveCards() {
@@ -229,15 +204,6 @@ public class ServerThread extends Thread {
         }
     }
 
-
-    public List<SerializedInteger> convertPositionListToSerializedInteger(List<int[]> list) { //Converte il tipo da List<int> a Serialized Integer
-        List<SerializedInteger> serializedIntegerList = new ArrayList<>();
-        for (int[] elem : list) {
-            serializedIntegerList.add(new SerializedInteger(elem));
-        }
-        return serializedIntegerList;
-    }
-
     /**
      * This method send an alert to the client
      *
@@ -262,7 +228,7 @@ public class ServerThread extends Thread {
      */
     public void win() {
         String message = playerBound + " won the game. 30L pliz";
-        for (ServerThread elem : list) {
+        for (ServerThread elem : serverThreads) {
             elem.sendString("win-" + message);
         }
     }
@@ -271,7 +237,7 @@ public class ServerThread extends Thread {
      * This method communicate to all clients that a player has been disconnected
      */
     public void disconnection() {
-        for (ServerThread elem : list) {
+        for (ServerThread elem : serverThreads) {
             elem.writer.println("disc-User " + playerBound + " left the game. The match is over.");
         }
         System.out.println("Communication error. Exit...");

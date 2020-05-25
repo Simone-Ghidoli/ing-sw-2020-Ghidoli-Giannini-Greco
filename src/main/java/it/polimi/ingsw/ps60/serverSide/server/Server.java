@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * Starts the server and open the connection between clients and server. Puts Threads in an arraylist threadsList
  */
-
-public  class Server{
+public  class Server {
     private List<String[]> nickBirth;
     private final int port;
     private final ArrayList<ServerThread> clientList;
@@ -18,7 +17,7 @@ public  class Server{
     private int numberOfPlayers;
 
     public Server(int port) {
-        this.port=port;
+        this.port = port;
         clientList = new ArrayList<>();
         serverStart();
     }
@@ -40,18 +39,7 @@ public  class Server{
         ServerThread newThread;
 
         while (socket == null || socket.isClosed()) {
-            try {
-                socket = serverSocket.accept();
-                System.out.println("client accepted");
-            } catch (IOException error) {
-                if (!socket.isClosed())
-                    try {
-                        socket.close();
-                    } catch (IOException e_0) {
-                        e_0.printStackTrace();
-                    }
-                socket = null;
-            }
+            acceptClientConnection();
 
             if (socket != null && !socket.isClosed()) {
                 newThread = new ServerThread(socket, clientList);
@@ -64,52 +52,71 @@ public  class Server{
         }
 
         while (clientList.size() < numberOfPlayers) {
-            try {
-                socket = serverSocket.accept();
-                System.out.println("client accepted");
-            } catch (IOException e) {
-                if (!socket.isClosed())
-                    try {
-                        socket.close();
-                    } catch (IOException e_1) {
-                        e_1.printStackTrace();
-                    }
-                socket = null;
-            }
+            acceptClientConnection();
             if (socket != null && !socket.isClosed()) {
                 newThread = new ServerThread(socket, clientList);
                 clientList.add(newThread);
-                do {
-                    nickBirth.add(newThread.nicknameBirthday());
-                } while (name_problem(nickBirth.get(clientList.size() - 1)[0]));
-                newThread.setPlayerBound(nickBirth.get(clientList.size() - 1)[0]);
+                String[] newNickBirth = newThread.nicknameBirthday();
+
+                while (!nameProblem(newNickBirth[0]))
+                    newNickBirth = newThread.nicknameBirthday();
+
+                nickBirth.add(newNickBirth);
+
+                newThread.setPlayerBound(newNickBirth[0]);
             }
+        }
+    }
+
+    /**
+     * This method accept a client connection
+     */
+    private void acceptClientConnection() {
+        try {
+            socket = serverSocket.accept();
+            System.out.println("client accepted");
+        } catch (IOException e) {
+            if (!socket.isClosed())
+                try {
+                    socket.close();
+                } catch (IOException e_1) {
+                    e_1.printStackTrace();
+                }
+            socket = null;
         }
     }
 
     /**
      * Check the uniqueness of the username
      */
-    public boolean name_problem(String current){
-        int i=0;
-        for(String[] elem:nickBirth) {
+    public boolean nameProblem(String current) {
+        for (String[] elem : nickBirth) {
             if (elem[0].equals(current)) {
-                i++;
+                return false;
             }
         }
-        return i > 1;
+        return true;
     }
 
-    public String[][] getNickBirth() {
-        String[][] nicksValue=new String[nickBirth.size()][];
-        for(int i=0;i<nickBirth.size();i++){
-            nicksValue[i]=nickBirth.get(i);
+    /**
+     * This method return an array of nicknames and birthday of all players
+     *
+     * @return array of nicknames (position [n][0]) and birthday (position [n][1]) of all players
+     */
+    public String[][] getNicknameAndBirthday() {
+        String[][] nicksValue = new String[nickBirth.size()][];
+        for (int i = 0; i < nickBirth.size(); i++) {
+            nicksValue[i] = nickBirth.get(i);
         }
         return nicksValue;
     }
 
     /**
+     * This method return the list of all sockets
+     *
      * @return the list of the sockets
      */
-    public ArrayList<ServerThread> getSocketList(){return clientList;}//recupera la lista dei Thread
+    public ArrayList<ServerThread> getSocketList() {
+        return clientList;
+    }
 }
