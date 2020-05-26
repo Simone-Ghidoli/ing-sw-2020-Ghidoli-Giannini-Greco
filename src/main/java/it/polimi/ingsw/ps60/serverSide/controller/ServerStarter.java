@@ -138,14 +138,12 @@ public class ServerStarter {
         String[] youngest = new String[0];
         try {
             for (int i = 0; i < nicknamesAndBirthdays.length; i++) {
-                for (int k = 0; k < nicknamesAndBirthdays.length; k++) {
-                    if (nicknamesAndBirthdays[k] != null) {
-                        youngest = nicknamesAndBirthdays[k];
+                for (String[] nicknamesAndBirthday : nicknamesAndBirthdays) {
+                    if (nicknamesAndBirthday != null) {
+                        youngest = nicknamesAndBirthday;
                         break;
                     }
                 }
-                if (youngest == null)
-                    break;
                 for (int j = i; j < nicknamesAndBirthdays.length; j++) {
                     if (nicknamesAndBirthdays[j] != null)
                         if (simpleDateFormat.parse(youngest[1]).compareTo(simpleDateFormat.parse(nicknamesAndBirthdays[j][1])) < 0) {
