@@ -27,7 +27,7 @@ public class ApolloEffectAthenaEffectAtlasTurnEffectTest {
         test.player2.setDivinityCard(GlobalVariables.DivinityCard.ATHENA);
         test.player3.setDivinityCard(GlobalVariables.DivinityCard.ATLAS);
 
-        DivinityStrategy divinityStrategy1 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
+        DivinityStrategy divinityStrategy1 = GlobalVariables.game.getPlayerInGame().get().getDivinityStrategy();
         test.listContains=new ListContains(divinityStrategy1.getTurnStrategyMovement()[0]);
         int[][] mossa1 = new int[2][2];
 
@@ -45,7 +45,7 @@ public class ApolloEffectAthenaEffectAtlasTurnEffectTest {
 
 
         divinityStrategy1.setEndTurn();
-        DivinityStrategy divinityStrategy2 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
+        DivinityStrategy divinityStrategy2 = GlobalVariables.game.getPlayerInGame().get().getDivinityStrategy();
         test.listContains=new ListContains(divinityStrategy2.getTurnStrategyMovement()[0]);
         int[][] mossa2 = new int[2][2];
 
@@ -62,7 +62,7 @@ public class ApolloEffectAthenaEffectAtlasTurnEffectTest {
         divinityStrategy2.setEndTurn();
 
 
-        DivinityStrategy divinityStrategy3 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
+        DivinityStrategy divinityStrategy3 = GlobalVariables.game.getPlayerInGame().get().getDivinityStrategy();
 
         int[][] mossa3 = new int[2][2];
         test.listContains= new ListContains(divinityStrategy3.getTurnStrategyMovement()[1]);

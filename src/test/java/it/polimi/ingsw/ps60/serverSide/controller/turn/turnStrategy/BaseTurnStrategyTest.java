@@ -20,15 +20,15 @@ public class BaseTurnStrategyTest {
     BaseTurnStrategy base = new BaseTurnStrategy();
 
     @Before
-    public void createBoard() {
+    public void setUp() {
         game = new Board(new String[]{"PlayerToCheck", "PlaceHolder"});
 
 
         Cell cell = game.getCellByPosition(new int[]{1, 1});
         Cell cell2 = game.getCellByPosition(new int[]{2, 0});
 
-        game.getPlayerInGame().getNode().getValue().getWorker(0).moveWorker(cell);
-        game.getPlayerInGame().getNode().getValue().getWorker(1).moveWorker(cell2);
+        game.getPlayerInGame().get().getWorker(0).moveWorker(cell);
+        game.getPlayerInGame().get().getWorker(1).moveWorker(cell2);
 
         testUtilities.buildsNTimes(new int[]{0, 0}, 1);
         testUtilities.buildsNTimes(new int[]{0, 1}, 2);
@@ -40,7 +40,7 @@ public class BaseTurnStrategyTest {
     }
 
     @Test
-    public void baseStrategyTest() {
+    public void testBaseMovement() {
         ListContains listContains;
 
         List<int[]>[] truePositions = new ArrayList[2];
@@ -69,7 +69,7 @@ public class BaseTurnStrategyTest {
     }
 
     @Test
-    public void baseStrategyBuild() {
+    public void testBaseBuilding() {
         ListContains listContains;
         List<int[]> positionsToTest;
         List<int[]> truePositions;

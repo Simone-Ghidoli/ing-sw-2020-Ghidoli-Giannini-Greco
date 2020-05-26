@@ -5,7 +5,6 @@ import it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.*;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.*;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.*;
 
-import java.io.Serializable;
 import java.util.List;
 
 

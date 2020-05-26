@@ -45,7 +45,7 @@ public class ClientStarter {
                 try {
                     TimeUnit.SECONDS.sleep(5);
                 } catch (InterruptedException e) {
-                    System.out.println("\nBro, have you ever heard philopendolo's tale?");
+                    e.printStackTrace();
                 }
             }
         }

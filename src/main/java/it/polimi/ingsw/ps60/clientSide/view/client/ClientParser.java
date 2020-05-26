@@ -21,7 +21,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     PrintWriter pr;
     ObjectInputStream in_obj;
     ObjectOutputStream out_obj;
-    ViewMethodSelection methodSelection;
+    final ViewMethodSelection methodSelection;
     private final Converters converters;
 
     public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection) {
@@ -103,7 +103,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
             socket.close();
         }
         catch(IOException e){
-            //non fa nulla
+            e.printStackTrace();
         }
     }
 
@@ -220,27 +220,27 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     public List<SerializedInteger> receiveList() {
-         try {
-                sendInt(0);
-                return (List<SerializedInteger>) in_obj.readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
-                disconnection("Communication error, logging out");
-            } catch (ClassNotFoundException e_1) {
-                System.out.println("fbuaiwbfu");
-            }
+        try {
+            sendInt(0);
+            return (List<SerializedInteger>) in_obj.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+            disconnection("Communication error, logging out");
+        } catch (ClassNotFoundException e_1) {
+            e_1.printStackTrace();
+        }
         return null;
     }
 
     public SerializedInteger[] receiveWorkers() {
-        SerializedInteger[] positionworkers = null;
+        SerializedInteger[] positionWorkers = null;
         try {
             sendInt(0);
-            positionworkers = (SerializedInteger[]) in_obj.readObject();
+            positionWorkers = (SerializedInteger[]) in_obj.readObject();
         } catch (IOException | ClassNotFoundException e) {
             disconnection("Communication error, logging out");
         }
-        return positionworkers;
+        return positionWorkers;
     }
 
     public void sendString(String toServer) {

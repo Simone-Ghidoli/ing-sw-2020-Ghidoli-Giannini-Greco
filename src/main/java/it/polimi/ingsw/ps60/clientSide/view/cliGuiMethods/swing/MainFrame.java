@@ -11,7 +11,7 @@ public class MainFrame extends JPanel {
     private JLabel divinityCardImage;
     final JPanel grid = new JPanel();
     final JPanel players = new JPanel();
-    JPanel divinityCard = new JPanel();
+    final JPanel divinityCard = new JPanel();
     final JPanel workers = new JPanel();
     final JPanel info = new JPanel();
 
@@ -70,9 +70,9 @@ public class MainFrame extends JPanel {
         return screenSize;
     }
 
-    public void setDivinityCardImage(GlobalVariables.DivinityCard selectdivinityCard) {
+    public void setDivinityCardImage(GlobalVariables.DivinityCard selectDivinityCard) {
         divinityCard.remove(divinityCardImage);
-        divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(selectdivinityCard.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 9 / 58, screenSize.height/2, Image.SCALE_SMOOTH)));
+        divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(selectDivinityCard.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 9 / 58, screenSize.height/2, Image.SCALE_SMOOTH)));
         divinityCard.add(divinityCardImage);
     }
 

@@ -16,7 +16,7 @@ public class ClientReader implements Runnable {
     String serverSays;
     BufferedReader br;
     InputStreamReader ir;
-    ViewMethodSelection methodSelection;
+    final ViewMethodSelection methodSelection;
 
 
     /**

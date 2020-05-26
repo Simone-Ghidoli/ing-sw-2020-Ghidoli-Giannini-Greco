@@ -23,14 +23,6 @@ public class CircularListIterator<T> implements Serializable {
     }
 
     /**
-     * This method will return the node where the iterator is pointing
-     * @return the node pointed by the iterator
-     */
-    public Node<T> getNode() {
-        return node;
-    }
-
-    /**
      * This method will return the list where the iterator is pointing
      * @return the list pointed by the iterator
      */

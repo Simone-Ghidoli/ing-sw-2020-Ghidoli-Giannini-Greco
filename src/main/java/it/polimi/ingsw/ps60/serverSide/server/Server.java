@@ -25,7 +25,7 @@ public  class Server {
     /**
      * Open connections between clients and server. Get players' nicknames and the number of players.
      */
-    private void serverStart() { //todo da riprogrammare sfruttando un po` il multithreading almeno per l`apertura delle connessioni. Per il resto va bene
+    private void serverStart() {
 
         while (serverSocket == null || serverSocket.isClosed()) {
             try {

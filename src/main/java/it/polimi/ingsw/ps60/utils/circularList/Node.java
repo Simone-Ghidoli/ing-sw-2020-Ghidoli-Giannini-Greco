@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Node<T> implements Serializable {
 
-    T value;
+    final T value;
     Node<T> nextNode;
 
     /**

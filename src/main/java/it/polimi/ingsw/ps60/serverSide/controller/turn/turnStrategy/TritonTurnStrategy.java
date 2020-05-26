@@ -28,7 +28,7 @@ public class TritonTurnStrategy extends BaseTurnStrategy {
                                 if (cell.isFree()) {
                                     if (cell.getBuildingLevel() <= game.getCellByPosition(position[d].get(c)).getBuildingLevel() + 1) {
                                         if (!cell.isDomed()) {
-                                            if (!isDisturbedByDivinity(position[d].get(c), cell.getPosition())) {
+                                            if (isNotDisturbedByDivinity(position[d].get(c), cell.getPosition())) {
                                                 if (!(cellWorker[d].getPosition()[0] == cell.getPosition()[0] && cellWorker[d].getPosition()[1] == cell.getPosition()[1]))
                                                     position[d].add(cell.getPosition());
                                             }

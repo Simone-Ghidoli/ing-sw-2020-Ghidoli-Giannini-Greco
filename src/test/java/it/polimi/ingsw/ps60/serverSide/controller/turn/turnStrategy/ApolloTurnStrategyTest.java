@@ -23,10 +23,10 @@ public class ApolloTurnStrategyTest {
         Cell cell3=new Cell(new int[]{1,2},GlobalVariables.game);
         GlobalVariables.game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
         GlobalVariables.game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
-        GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(0).moveWorker(cell);
-        GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(1).moveWorker(cell2);
+        GlobalVariables.game.getPlayerInGame().get().getWorker(0).moveWorker(cell);
+        GlobalVariables.game.getPlayerInGame().get().getWorker(1).moveWorker(cell2);
         GlobalVariables.game.getPlayerMatrix()[2].getWorker(0).moveWorker(cell3);
-        GlobalVariables.game.getCellByPosition(new int[]{2,2}).setWorkerIn(GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(1));
+        GlobalVariables.game.getCellByPosition(new int[]{2,2}).setWorkerIn(GlobalVariables.game.getPlayerInGame().get().getWorker(1));
         GlobalVariables.game.getCellByPosition(new int[]{1,2}).setWorkerIn(GlobalVariables.game.getPlayerMatrix()[2].getWorker(0));
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ServerThread extends Thread {
     private String playerBound;
-    protected Socket socket;
+    protected final Socket socket;
     private final List<ServerThread> serverThreads;
     private InputStream in;
     private OutputStream out;
@@ -227,7 +227,7 @@ public class ServerThread extends Thread {
      * This method communicate to all clients that a player has won
      */
     public void win() {
-        String message = playerBound + " won the game. 30L pliz";
+        String message = playerBound + " won the game.";
         for (ServerThread elem : serverThreads) {
             elem.sendString("win-" + message);
         }

@@ -25,7 +25,7 @@ public class PanArtemisTritonEffectsTest {
         GlobalVariables.game.getCellByPosition(new int[]{3, 4}).incrementBuildingLevel();
         GlobalVariables.game.getCellByPosition(new int[]{2, 4}).incrementBuildingLevel();
         GlobalVariables.game.getCellByPosition(new int[]{2, 4}).incrementBuildingLevel();
-        DivinityStrategy divinityController1 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
+        DivinityStrategy divinityController1 = GlobalVariables.game.getPlayerInGame().get().getDivinityStrategy();
         test.listContains = new ListContains(divinityController1.getTurnStrategyMovement()[0]);
         int[][] mossa1 = new int[2][2];
 
@@ -42,7 +42,7 @@ public class PanArtemisTritonEffectsTest {
             divinityController1.setBuilding(new int[]{2, 3});
         divinityController1.setEndTurn();
 
-        DivinityStrategy divinityController2 = GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
+        DivinityStrategy divinityController2 = GlobalVariables.game.getPlayerInGame().get().getDivinityStrategy();
         test.listContains=new ListContains(divinityController2.getTurnStrategyMovement()[0]);
         int[][] mossa2 = new int[2][2];
 
@@ -57,7 +57,7 @@ public class PanArtemisTritonEffectsTest {
             divinityController2.setBuilding(new int[]{2,3});
         divinityController2.setEndTurn();
 
-        DivinityStrategy divinityController3 =GlobalVariables.game.getPlayerInGame().getNode().getValue().getDivinityStrategy();
+        DivinityStrategy divinityController3 =GlobalVariables.game.getPlayerInGame().get().getDivinityStrategy();
         test.listContains=new ListContains(divinityController3.getTurnStrategyMovement()[1]);
         int[][] mossa3 = new int[2][2];
         mossa3[0][0]=1;

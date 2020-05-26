@@ -75,12 +75,6 @@ public class GlobalVariables {
 
         Boolean1True0False("([0-1])"),
 
-        /**
-         * Trenta giorni ha novembre
-         * con april, luglio e settembre.
-         * Di ventotto ce n'è uno,
-         * tutti gli altri ne han trentuno
-         */
         Date("(19[0-9][0-9]|20[0-1][0-9]|2020])/(((01|03|05|07|08|10|12)/(0[1-9]|[1-2][0-9]|3[0-1]))|((04|06|09|11)/(0[1-9]|[1-2][0-9]|30))|((02)/(0[1-9]|1[0-9]|2[0-9])))");
 
         private final String pattern;

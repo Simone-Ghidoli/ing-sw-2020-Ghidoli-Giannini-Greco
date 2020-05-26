@@ -65,14 +65,6 @@ public class Cell implements Serializable {
     }
 
     /**
-     * This method will remove the dome of the cell
-     */
-    public void removeDome() {
-        dome = false;
-        updateCellToSend();
-    }
-
-    /**
      * @return return the position of the cell in the 5 x 5 board
      */
     public int[] getPosition() {

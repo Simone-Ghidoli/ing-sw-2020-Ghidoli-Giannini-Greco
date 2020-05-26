@@ -47,7 +47,6 @@ public class CellTest {
         cell4.setWorkerIn(board.getPlayerMatrix()[0].getWorker(0));
         cell5.incrementBuildingLevel();
         cell5.buildDome();
-        cell5.removeDome();
         cell5.incrementBuildingLevel();
     }
 
