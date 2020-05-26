@@ -51,30 +51,41 @@ public class GUIMethods implements ViewMethodSelection {
                     Graphics g;
 
                     for (int i = 0; i < 25; i++) {
-
                         imageToMerge = new ArrayList<>();
-                        if (boardToPrint[i] == 49 || boardToPrint[i] == 54 || boardToPrint[i] == 58 || boardToPrint[i] == 62) {
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                        } else if (boardToPrint[i] == 50 || boardToPrint[i] == 55 || boardToPrint[i] == 59 || boardToPrint[i] == 63) {
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                        } else if (boardToPrint[i] == 51 || boardToPrint[i] == 56 || boardToPrint[i] == 60 || boardToPrint[i] == 64) {
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
-                        } else if (boardToPrint[i] == 52) {
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/Dome.png")));
+
+                        switch (boardToPrint[i] % 4) {
+                            case 0:
+                                break;
+                            case 1:
+                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                                break;
+                            case 2:
+                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                                break;
+                            case 3:
+                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
+                                break;
                         }
 
-                        if (boardToPrint[i] >= 53 && boardToPrint[i] <= 56)
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Red pawn.png")));
-                        else if (boardToPrint[i] >= 57 && boardToPrint[i] <= 60)
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Blue pawn.png")));
-                        else if (boardToPrint[i] >= 61 && boardToPrint[i] <= 64)
-                            imageToMerge.add(ImageIO.read(new File("src/resources/board/Green pawn.png")));
+                        switch ((boardToPrint[i] - 48) / 4){
+                            case 0:
+                                break;
+                            case 1:
+                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/Dome.png")));
+                                break;
+                            case 2:
+                                imageToMerge.add(ImageIO.read(new File(GlobalVariables.IdPlayer.PLAYER1.getSourcePawn())));
+                                break;
+                            case 3:
+                                imageToMerge.add(ImageIO.read(new File(GlobalVariables.IdPlayer.PLAYER2.getSourcePawn())));
+                                break;
+                            case 4:
+                                imageToMerge.add(ImageIO.read(new File(GlobalVariables.IdPlayer.PLAYER3.getSourcePawn())));
+                                break;
+                        }
 
                         combined = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
                         g = combined.getGraphics();
@@ -475,6 +486,10 @@ public class GUIMethods implements ViewMethodSelection {
 
         if (string.contains("Your divinity card is: "))
             santorini.setDivinityCardImage(GlobalVariables.DivinityCard.valueOf(string.split("Your divinity card is: ")[1]));
+    }
+
+    @Override
+    public void status(int[] divinityCards, int turnNumber) {
     }
 
     private boolean confirmOrRetry() {

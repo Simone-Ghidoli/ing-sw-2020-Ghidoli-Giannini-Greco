@@ -14,7 +14,6 @@ public class Board implements Serializable {
     private int completeTower;
     private final char[] cellToSend;
     private Player playerWinner;
-    private int winner;
 
     /**
      * The board is the memory of the game.
@@ -25,7 +24,6 @@ public class Board implements Serializable {
      */
     public Board(String[] nicknames){
         this.playersNumber = nicknames.length;
-        winner = 0;
         cellMatrix = new Cell[5][5];
         playerMatrix = new Player[playersNumber];
         playerList = new CircularLinkedList<>();
@@ -102,30 +100,52 @@ public class Board implements Serializable {
      * @param player is the winner of the game
      */
     public void win(Player player){
-        winner = 1;
         playerWinner = player;
     }
 
+    /**
+     * This method return the winner of the game
+     * @return the winner, if none has won return null
+     */
     public Player getPlayerWinner() {
         return playerWinner;
     }
 
+    /**
+     * This method returns all the chars associated to the cells to send to clients
+     * @return all the chars associated to the cells to send to clients based on what there are on them
+     */
     public char[] getCellToSend() {
         return cellToSend;
     }
 
+    /**
+     * This method returns the amount of complete towers on the board
+     * @return the number of complete tower. A complete tower is a building with high = 3 and a dome
+     */
     public int getCompleteTower() {
         return completeTower;
     }
 
+    /**
+     * This method increase the amount of complete tower
+     */
     public void increaseCompleteTower(){
         completeTower++;
     }
 
-    public int getBitWinner() {
-        return winner;
+    /**
+     * This method returns if a player has wan the game
+     * @return true if none has won the game, false otherwise
+     */
+    public boolean isNotWon() {
+        return playerWinner == null;
     }
 
+    /**
+     * This method returns the matrix of players in the game
+     * @return the matrix of players in game also if one of them have already lost
+     */
     public Player[] getPlayerMatrix() {
         return playerMatrix;
     }

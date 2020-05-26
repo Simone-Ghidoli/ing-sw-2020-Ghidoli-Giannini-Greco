@@ -6,27 +6,33 @@ import java.util.List;
 
 public interface ViewMethodSelection {
 
+    int playerNumber = 0;
+
+
     /**
      * This method will only print the board
-     * These are the ascii (from #48 to #64) value in the string provided as parameter
+     * These are the ascii (from #48 to #67) value in the string provided as parameter
      * value   high    player  ascii
-     * 0       0       no      48
-     * 1       1       no      49
-     * 2       2       no      50
-     * 3       3       no      51
-     * 4       dome    no      52
-     * 5       0       1       53
-     * 6       1       1       54
-     * 7       2       1       55
-     * 8       3       1       56
-     * 9       0       2       57
-     * :       1       2       58
-     * ;       2       2       59
-     * <       3       2       60
-     * =       0       3       61
-     * >       1       3       62
-     * ?       2       3       63
-     * @       3       3       64
+     * 0       0       no      #48
+     * 1       1       no      #49
+     * 2       2       no      #50
+     * 3       3       no      #51
+     * 4       0       dome    #52
+     * 5       1       dome    #53
+     * 6       2       dome    #54
+     * 7       3       dome    #55
+     * 8       0       1       #56
+     * 9       1       1       #57
+     * :       2       1       #58
+     * ;       3       1       #59
+     * <       0       2       #60
+     * =       1       2       #61
+     * >       2       2       #62
+     * ?       3       2       #63
+     * @       0       3       #64
+     * A       1       3       #65
+     * B       2       3       #66
+     * C       3       3       #67
      *
      * @param board the 25 characters represents every position of the board as declared previously
      */
@@ -98,5 +104,12 @@ public interface ViewMethodSelection {
      * @param string is the message that has to be displayed
      */
     void alert(String string);
+
+    /**
+     * This method will update the infos of the game
+     * @param divinityCards are the divinity card of all players
+     * @param turnNumber is your turn number
+     */
+    void status(int[] divinityCards, int turnNumber);
 
 }

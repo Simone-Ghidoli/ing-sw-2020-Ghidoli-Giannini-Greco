@@ -11,17 +11,29 @@ import static it.polimi.ingsw.ps60.utils.FlushInput.flushInput;
 
 public class CLIMethods implements ViewMethodSelection {
 
+    private int turnNumber;
+    private int[] divinityCards;
+
+    public CLIMethods() {
+        divinityCards = new int[]{15, 15, 15};
+        turnNumber = 0;
+    }
+
     @Override
     public void printBoard(String board) {
 
         char[] boardToPrint = board.toCharArray();
 
+        if (turnNumber != 0)
+            System.out.println("You are player number " + turnNumber);
         System.out.println("Legend:");
-        System.out.println("The number indicates the building level (4 is the dome), the colour indicates the player");
+        System.out.println("The number indicates the building level, the colour indicates the player");
         System.out.println("White: no player");
-        System.out.println("Red: 1st player");
-        System.out.println("Blue: 2nd player");
-        System.out.println("Green: 3rd player\n");
+        System.out.println("Red: 1st player with " + GlobalVariables.DivinityCard.values()[divinityCards[0]]);
+        System.out.println("Blue: 2nd player with " + GlobalVariables.DivinityCard.values()[divinityCards[1]]);
+        if (divinityCards.length == 3)
+            System.out.println("Green: 3rd player with" + GlobalVariables.DivinityCard.values()[divinityCards[2]]);
+        System.out.println("Yellow: Dome\n");
 
         System.out.println("    1  2  3  4  5");
         System.out.print("    '  '  '  '  '");
@@ -29,18 +41,20 @@ public class CLIMethods implements ViewMethodSelection {
         for (int i = 0; i < 25; i++) {
             if (i % 5 == 0)
                 System.out.print("\n" + ((i / 5) + 1) + "-  ");
-
-            if (boardToPrint[i] < 53) {
+            if (boardToPrint[i] < 52) {
                 System.out.print(boardToPrint[i]);
-            } else if (boardToPrint[i] < 57) {
+            } else if(boardToPrint[i] < 56){
+                System.out.print(GlobalVariables.Colour.YELLOW.getString());
+                System.out.print((char) (boardToPrint[i] - 4));
+            } else if (boardToPrint[i] < 60) {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER1.getColour().getString());
-                System.out.print((char) (boardToPrint[i] - 5));
-            } else if (boardToPrint[i] < 61) {
+                System.out.print((char) (boardToPrint[i] - 8));
+            } else if (boardToPrint[i] < 64) {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER2.getColour().getString());
-                System.out.print((char) (boardToPrint[i] - 9));
+                System.out.print((char) (boardToPrint[i] - 12));
             } else {
                 System.out.print(GlobalVariables.IdPlayer.PLAYER3.getColour().getString());
-                System.out.print((char) (boardToPrint[i] - 13));
+                System.out.print((char) (boardToPrint[i] - 16));
             }
             System.out.print(GlobalVariables.Colour.RESET.getString());
             System.out.print("  ");
@@ -334,5 +348,10 @@ public class CLIMethods implements ViewMethodSelection {
     @Override
     public void alert(String string) {
         System.out.println(string);
+    }
+
+    @Override
+    public void status(int[] divinityCards, int turnNumber) {
+
     }
 }

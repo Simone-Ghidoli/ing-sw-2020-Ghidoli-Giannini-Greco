@@ -22,7 +22,6 @@ public class ApolloEffectAthenaEffectAtlasTurnEffectTest {
 
         test= new SetupForTest();
 
-
         test.player1.setDivinityCard(GlobalVariables.DivinityCard.APOLLO);
         test.player2.setDivinityCard(GlobalVariables.DivinityCard.ATHENA);
         test.player3.setDivinityCard(GlobalVariables.DivinityCard.ATLAS);

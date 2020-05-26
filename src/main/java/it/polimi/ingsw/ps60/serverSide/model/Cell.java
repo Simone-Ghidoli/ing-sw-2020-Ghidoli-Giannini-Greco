@@ -86,23 +86,24 @@ public class Cell implements Serializable {
         return workerIn;
     }
 
+    /**
+     * This method update the char associated to the cell based on what there are on the cell itself
+     */
     private void updateCellToSend() {
+        int i = 48 + getBuildingLevel();
+
         if (isDomed())
-            board.getCellToSend()[position[0] * 5 + position[1]] = (char) 52;
-
-        else {
-            int i = 48 + getBuildingLevel();
-
-            if (!isFree()) {
-                i = i + 5;
-                if (workerIn.getOwner() != board.getPlayerMatrix()[0]){
+            i = i + 4;
+        else if (!isFree()) {
+            i = i + 8;
+            if (workerIn.getOwner() != board.getPlayerMatrix()[0]) {
+                i = i + 4;
+                if (workerIn.getOwner() != board.getPlayerMatrix()[1]) {
                     i = i + 4;
-                    if (workerIn.getOwner() != board.getPlayerMatrix()[1]) {
-                        i = i + 4;
-                    }
                 }
             }
-            board.getCellToSend()[position[0] * 5 + position[1]] = (char) i;
         }
+        board.getCellToSend()[position[0] * 5 + position[1]] = (char) i;
     }
+
 }

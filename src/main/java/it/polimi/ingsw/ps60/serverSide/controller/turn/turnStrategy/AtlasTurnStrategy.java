@@ -13,7 +13,7 @@ public class AtlasTurnStrategy extends BaseTurnStrategy {
 
         for (int i = 0; i < list.size(); i++){
             position = list.remove(k);
-            if (game.getCellByPosition(list.get(k)).getBuildingLevel() < 3)
+            if (game.getCellByPosition(position).getBuildingLevel() < 3)
                 list.add(new int[]{position[0], position[1], 1});
             else
                 list.add(new int[]{position[0], position[1], 0});

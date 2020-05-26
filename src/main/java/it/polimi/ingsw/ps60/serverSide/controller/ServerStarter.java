@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps60.serverSide.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Div;
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Player;
@@ -44,11 +45,32 @@ public class ServerStarter {
         else{
             for (int i = 0; i < game.getPlayerMatrix().length; i++){
                 game.getPlayerMatrix()[i].getServerThread().sendAlert("Game loaded from save. "
-                        + "You are: " + GlobalVariables.IdPlayer.values()[i].getColour().getString() +
+                        + "You are: " + GlobalVariables.IdPlayer.values()[i].getColour() +
                         ". Your divinity card is: " + game.getPlayerMatrix()[i].getDivinityCard().toString());
             }
         }
+
+        int[] divinityNumbers = divinityNumber();
+
+        for (int i = 0; i < game.getPlayerMatrix().length; i++){
+            game.getPlayerMatrix()[i].getServerThread().sendStatus(divinityNumbers, i);
+        }
+
         gameTurn();
+    }
+
+    private int[] divinityNumber(){
+        int[] divinityNumbers = new int[game.getPlayersNumber()];
+
+        for (int j = 0; j < game.getPlayerMatrix().length; j++){
+            for (int i = 0; i < GlobalVariables.DivinityCard.values().length; i++){
+                if (GlobalVariables.DivinityCard.values()[i] == game.getPlayerMatrix()[j].getDivinityCard()){
+                    divinityNumbers[j] = i;
+                    break;
+                }
+            }
+        }
+        return divinityNumbers;
     }
 
     /**
@@ -115,7 +137,7 @@ public class ServerStarter {
      */
     private void gameTurn(){
 
-        while (game.getBitWinner() == 0) {
+        while (game.isNotWon()) {
             fileAccess.writer(game);
             game.getPlayerInGame().get().getDivinityStrategy().getTurnController().turn();
         }
