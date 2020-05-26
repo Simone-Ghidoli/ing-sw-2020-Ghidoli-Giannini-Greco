@@ -108,6 +108,7 @@ public class ChronusHephaestusMinotaurEffectsTest {
     public void checkChronusPower(){
         assertEquals(GlobalVariables.game.getBitWinner(),1);
     }
+
     @Test
     public void checkHephaestusPower(){
         assertEquals(GlobalVariables.game.getCellByPosition(new int[]{2,3}).getBuildingLevel(),3);

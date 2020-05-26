@@ -17,7 +17,6 @@ public class PanArtemisTritonEffectsTest {
     @Before
 
     public void setupGame(){
-
         test = new SetupForTest();
         test.player1.setDivinityCard(GlobalVariables.DivinityCard.PAN);
         test.player2.setDivinityCard(GlobalVariables.DivinityCard.ARTEMIS);

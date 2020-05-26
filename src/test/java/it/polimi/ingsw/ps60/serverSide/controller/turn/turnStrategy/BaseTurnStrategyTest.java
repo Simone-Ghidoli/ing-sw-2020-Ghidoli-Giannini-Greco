@@ -26,7 +26,6 @@ public class BaseTurnStrategyTest {
 
         Cell cell = game.getCellByPosition(new int[]{1, 1});
         Cell cell2 = game.getCellByPosition(new int[]{2, 0});
-
         game.getPlayerInGame().get().getWorker(0).moveWorker(cell);
         game.getPlayerInGame().get().getWorker(1).moveWorker(cell2);
 
