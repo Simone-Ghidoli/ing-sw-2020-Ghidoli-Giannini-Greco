@@ -2,15 +2,15 @@ package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing;
 import it.polimi.ingsw.ps60.GlobalVariables;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JPanel {
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final JButton[] jButtons = new JButton[25];
-    private JLabel divinityCardImage;
     final JPanel grid = new JPanel();
-    final JPanel players = new JPanel();
+    final JPanel opponents = new JPanel();
     final JPanel divinityCard = new JPanel();
     final JPanel workers = new JPanel();
     final JPanel info = new JPanel();
@@ -24,15 +24,13 @@ public class MainFrame extends JPanel {
         grid.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 47 / 64));
         grid.setLayout(new GridLayout(5, 5));
         grid.setOpaque(false);
-        players.setPreferredSize(new Dimension(screenSize.width * 17 / 58, screenSize.height));
-        players.setOpaque(false);
-        players.setLayout(new GridLayout(3, 1));
+        opponents.setPreferredSize(new Dimension(screenSize.width * 17 / 58, screenSize.height));
+        opponents.setOpaque(false);
+        opponents.setLayout(new GridBagLayout());
         divinityCard.setPreferredSize(new Dimension(screenSize.width * 17 / 58, screenSize.height));
         divinityCard.setOpaque(false);
         divinityCard.setLayout(new GridBagLayout());
-        divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(GlobalVariables.DivinityCard.NONE.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 9 / 58, screenSize.height/2,Image.SCALE_SMOOTH)));
-        divinityCard.add(divinityCardImage);
-        workers.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 2 / 17));
+        workers.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 7 / 55));
         workers.setOpaque(false);
         workers.setLayout(new FlowLayout());
         info.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 2 / 17));
@@ -40,10 +38,12 @@ public class MainFrame extends JPanel {
         info.setLayout(new GridBagLayout());
         board.setLayout(new BorderLayout());
         board.add(grid, BorderLayout.CENTER);
-        board.add(players, BorderLayout.WEST);
+        board.add(opponents, BorderLayout.WEST);
         board.add(divinityCard, BorderLayout.EAST);
         board.add(workers, BorderLayout.NORTH);
         board.add(info, BorderLayout.SOUTH);
+
+        setDivinityCardImage(new int[]{0, 1, 14}, 1);
 
         for (int i = 0; i < 25; i++) {
             jButtons[i] = new JButton();
@@ -54,12 +54,12 @@ public class MainFrame extends JPanel {
         add(board);
     }
 
-    public JButton getButton(int i){
+    public JButton getButton(int i) {
         return jButtons[i];
     }
 
-    public int[] getButtonCoords(JButton jButton){
-        for (int i = 0; i < jButtons.length; i++){
+    public int[] getButtonCoords(JButton jButton) {
+        for (int i = 0; i < jButtons.length; i++) {
             if (jButtons[i].equals(jButton))
                 return new int[]{i / 5, i % 5};
         }
@@ -70,15 +70,39 @@ public class MainFrame extends JPanel {
         return screenSize;
     }
 
-    public void setDivinityCardImage(GlobalVariables.DivinityCard selectDivinityCard) {
-        divinityCard.remove(divinityCardImage);
-        divinityCardImage = new JLabel(new ImageIcon(new ImageIcon(selectDivinityCard.getSourcePosition()).getImage().getScaledInstance(screenSize.width * 9 / 58, screenSize.height/2, Image.SCALE_SMOOTH)));
-        divinityCard.add(divinityCardImage);
+    public void setDivinityCardImage(int[] divinityCards, int turnNumber) {
+
+        JLabel divinityCardImage;
+        for (int i = 0; i < divinityCards.length; i++) {
+            if (i == turnNumber) {
+
+                divinityCardImage = new JLabel(new ImageIcon
+                        (new ImageIcon(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition())
+                                .getImage().getScaledInstance(screenSize.width * 9 / 58, screenSize.height / 2, Image.SCALE_SMOOTH)));
+                divinityCardImage.setBorder(
+                        BorderFactory.createTitledBorder(
+                                BorderFactory.createEtchedBorder(
+                                        EtchedBorder.RAISED, GlobalVariables.Colour.values()[i].getColor(),
+                                        GlobalVariables.Colour.values()[i].getColor()), "You are player number " + (i + 1)));
+                divinityCard.add(divinityCardImage);
+            } else {
+                divinityCardImage = new JLabel(new ImageIcon
+                        (new ImageIcon(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition())
+                                .getImage().getScaledInstance(screenSize.width * 9 / 116, screenSize.height / 4, Image.SCALE_SMOOTH)));
+
+                divinityCardImage.setBorder(
+                        BorderFactory.createTitledBorder(
+                                BorderFactory.createEtchedBorder(
+                                        EtchedBorder.RAISED, GlobalVariables.Colour.values()[i].getColor(),
+                                        GlobalVariables.Colour.values()[i].getColor()), "Player number " + (i + 1)));
+                opponents.add(divinityCardImage);
+            }
+        }
     }
 
-    public void resetButtons(){
-        for (JButton button : jButtons){
-            for(ActionListener actionListener : button.getActionListeners()) {
+    public void resetButtons() {
+        for (JButton button : jButtons) {
+            for (ActionListener actionListener : button.getActionListeners()) {
                 button.removeActionListener(actionListener);
             }
             button.setEnabled(false);

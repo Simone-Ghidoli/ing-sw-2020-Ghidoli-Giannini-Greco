@@ -15,8 +15,8 @@ public class CLIMethods implements ViewMethodSelection {
     private int[] divinityCards;
 
     public CLIMethods() {
-        divinityCards = new int[]{15, 15, 15};
-        turnNumber = 0;
+        divinityCards = new int[]{14, 14, 14};
+        turnNumber = -1;
     }
 
     @Override
@@ -25,14 +25,14 @@ public class CLIMethods implements ViewMethodSelection {
         char[] boardToPrint = board.toCharArray();
 
         if (turnNumber != 0)
-            System.out.println("You are player number " + turnNumber);
+            System.out.println("You are player number " + (turnNumber + 1));
         System.out.println("Legend:");
         System.out.println("The number indicates the building level, the colour indicates the player");
         System.out.println("White: no player");
         System.out.println("Red: 1st player with " + GlobalVariables.DivinityCard.values()[divinityCards[0]]);
         System.out.println("Blue: 2nd player with " + GlobalVariables.DivinityCard.values()[divinityCards[1]]);
         if (divinityCards.length == 3)
-            System.out.println("Green: 3rd player with" + GlobalVariables.DivinityCard.values()[divinityCards[2]]);
+            System.out.println("Green: 3rd player with " + GlobalVariables.DivinityCard.values()[divinityCards[2]]);
         System.out.println("Yellow: Dome\n");
 
         System.out.println("    1  2  3  4  5");
@@ -352,6 +352,7 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public void status(int[] divinityCards, int turnNumber) {
-
+        this.divinityCards = divinityCards;
+        this.turnNumber = turnNumber;
     }
 }

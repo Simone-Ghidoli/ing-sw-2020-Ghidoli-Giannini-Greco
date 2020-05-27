@@ -53,6 +53,7 @@ public class GUIMethods implements ViewMethodSelection {
                     for (int i = 0; i < 25; i++) {
                         imageToMerge = new ArrayList<>();
 
+
                         switch (boardToPrint[i] % 4) {
                             case 0:
                                 break;
@@ -378,7 +379,6 @@ public class GUIMethods implements ViewMethodSelection {
         if (selectedValue == null)
             return divinitySelection(card);
 
-        santorini.setDivinityCardImage(divinityCardToReturn[0]);
         return divinityCardToReturn[0];
     }
 
@@ -483,13 +483,11 @@ public class GUIMethods implements ViewMethodSelection {
 
         dialog.setVisible(true);
         dialog.dispose();
-
-        if (string.contains("Your divinity card is: "))
-            santorini.setDivinityCardImage(GlobalVariables.DivinityCard.valueOf(string.split("Your divinity card is: ")[1]));
     }
 
     @Override
     public void status(int[] divinityCards, int turnNumber) {
+        santorini.setDivinityCardImage(divinityCards, turnNumber);
     }
 
     private boolean confirmOrRetry() {

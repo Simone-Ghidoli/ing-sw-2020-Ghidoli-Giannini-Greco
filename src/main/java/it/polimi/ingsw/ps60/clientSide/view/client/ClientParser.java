@@ -82,6 +82,8 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
                             alert(message.split("al-", 2)[1]);
                         else if (message.contains("loss-"))
                             alert(message.split("loss-", 2)[1]);
+                        else if (message.contains("st-"))
+                            status(message.split("st-", 2)[1]);
                         else if (message.contains("win-")) {
                             methodSelection.alert(message.split("win-", 2)[1]);
                             socketClose();
@@ -98,6 +100,20 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
     }
 
+    public void status(String status){
+        char[] statusReturn = status.toCharArray();
+
+        int[] divinityNumbers = new int[statusReturn.length-1];
+
+        for (int i = 0; i < statusReturn.length-1; i++){
+            divinityNumbers[i] = Integer.parseInt(String.valueOf(statusReturn[i]));
+        }
+
+        methodSelection.status(divinityNumbers, Integer.parseInt(String.valueOf(statusReturn[statusReturn.length - 1])));
+
+        sendInt(0);
+    }
+
     public void socketClose(){
         try {
             socket.close();
@@ -107,8 +123,8 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
     }
 
-    public void alert(String s){
-        methodSelection.alert(s);
+    public void alert(String alert){
+        methodSelection.alert(alert);
         sendInt(0);
     }
 

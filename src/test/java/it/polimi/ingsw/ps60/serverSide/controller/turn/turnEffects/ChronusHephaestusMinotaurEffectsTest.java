@@ -106,7 +106,7 @@ public class ChronusHephaestusMinotaurEffectsTest {
 
     @Test
     public void checkChronusPower(){
-        assertEquals(GlobalVariables.game.getBitWinner(),1);
+        assertFalse(GlobalVariables.game.isNotWon());
     }
 
     @Test

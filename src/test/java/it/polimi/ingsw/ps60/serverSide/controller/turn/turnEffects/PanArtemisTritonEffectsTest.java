@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 
 public class PanArtemisTritonEffectsTest {
@@ -104,7 +105,7 @@ public class PanArtemisTritonEffectsTest {
     @Test
     public void checkPanPower(){
 
-        assertEquals(GlobalVariables.game.getBitWinner(),1);
+        assertFalse(GlobalVariables.game.isNotWon());
     }
     @Test
     public void checkArtemisPower(){

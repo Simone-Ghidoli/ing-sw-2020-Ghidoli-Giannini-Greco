@@ -28,6 +28,9 @@ public class BaseTurnController implements TurnController {
         endTurnSection();
     }
 
+    /**
+     * This method is the sequence of actions in the movement section
+     */
     public void movementSection() {
         List<int[]>[] moveChoices = player.getDivinityStrategy().getTurnStrategyMovement();
         if (moveChoices[0].size() != 0 || moveChoices[1].size() != 0) {
@@ -48,6 +51,9 @@ public class BaseTurnController implements TurnController {
         }
     }
 
+    /**
+     * This method is the sequence of actions in the building section
+     */
     public void buildingSection() {
         List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
         if (buildChoices.size() != 0) {
@@ -62,10 +68,16 @@ public class BaseTurnController implements TurnController {
         }
     }
 
+    /**
+     * This method is the sequence of actions in the end turn section
+     */
     public void endTurnSection(){
         player.getDivinityStrategy().setEndTurn();
     }
 
+    /**
+     * This method will send the board to all the clients
+     */
     public void sendBoardToClient(){
         for (ServerThread serverThread : game.getPlayerInGame().get().getServerThread().getServerThreads()){
             serverThread.sendBoard(game.getCellToSend());

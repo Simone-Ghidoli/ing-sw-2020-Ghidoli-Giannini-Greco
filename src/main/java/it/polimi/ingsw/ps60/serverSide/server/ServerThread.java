@@ -214,6 +214,18 @@ public class ServerThread extends Thread {
         receiveInteger();
     }
 
+    public void sendStatus(int[] divinityCard, int turnNumber){
+        StringBuilder stringToSend = new StringBuilder("st-");
+
+        for (int i : divinityCard)
+            stringToSend.append(i);
+
+        stringToSend.append(turnNumber);
+
+        sendString(stringToSend.toString());
+        receiveInteger();
+    }
+
     /**
      * This method set the nickname of the player of the serverThread
      *

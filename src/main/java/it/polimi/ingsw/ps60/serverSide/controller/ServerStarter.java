@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps60.serverSide.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Div;
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Player;

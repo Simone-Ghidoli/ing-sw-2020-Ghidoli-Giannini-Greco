@@ -15,7 +15,6 @@ public class ClientReader implements Runnable {
     final Socket socket;
     String serverSays;
     BufferedReader br;
-    InputStreamReader ir;
     final ViewMethodSelection methodSelection;
 
 
@@ -79,8 +78,4 @@ public class ClientReader implements Runnable {
             }
         }
     }
-    public List<String> getMessagesFromServer(){
-        return messagesFromServer;
-    }
-
 }

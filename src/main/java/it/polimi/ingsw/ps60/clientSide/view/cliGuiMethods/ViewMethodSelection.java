@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface ViewMethodSelection {
 
-    int playerNumber = 0;
-
-
     /**
      * This method will only print the board
      * These are the ascii (from #48 to #67) value in the string provided as parameter

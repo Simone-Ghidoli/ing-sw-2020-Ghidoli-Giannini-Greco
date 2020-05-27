@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps60;
 
 import it.polimi.ingsw.ps60.serverSide.model.Board;
+
+import java.awt.*;
 import java.io.Serializable;
 
 public class GlobalVariables {
@@ -45,17 +47,23 @@ public class GlobalVariables {
     }
 
     public enum Colour {
-        RED("\033[0;31m"), BLUE("\033[0;34m"), GREEN("\033[0;32m"),
-        YELLOW("\033[0;33m"), RESET("\033[0m");
+        RED("\033[0;31m", Color.RED), BLUE("\033[0;34m", Color.BLUE), GREEN("\033[0;32m", Color.GREEN),
+        YELLOW("\033[0;33m", Color.YELLOW), RESET("\033[0m", Color.BLACK);
 
         private final String string;
+        private final Color color;
 
-        Colour(String code) {
+        Colour(String code, Color color) {
             this.string = code;
+            this.color = color;
         }
 
         public String getString() {
             return string;
+        }
+
+        public Color getColor() {
+            return color;
         }
     }
 
