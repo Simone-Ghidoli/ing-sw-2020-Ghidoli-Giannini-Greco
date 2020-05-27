@@ -24,6 +24,13 @@ public class ServerThread extends Thread {
     private ObjectOutputStream out_obj;
     private final Converters converters;
 
+    /**
+     * Initialization of socket ecc
+     * @param soc is the socket from the Class Server
+     * @param serverThreads is the list of "ServerThread" of other sockets (one for each client connected)
+     */
+
+
     public ServerThread(Socket soc, ArrayList<ServerThread> serverThreads) {
         this.socket = soc;
         this.serverThreads = serverThreads;
@@ -44,13 +51,29 @@ public class ServerThread extends Thread {
         }
     }
 
+    /**
+     * @return the name of the player associate to this ServerThread
+     */
+
     public String getPlayerBound() {
         return playerBound;
     }
 
+    /**
+     * Send the loss message
+     * @param message Message to send to che client
+     */
+
     public void lossMessage(String message) {
         sendString("loss-" + message);
     }
+
+    /**
+     * Send the "move" command to the client to start the "Moving phase", then send the position of the workers and the possible moves.
+     * @param possible_choice available cells to move
+     * @param positionWorkers positions of 2 workers
+     * @return the cell where the player wants to move (calculated automatically) which worker should move
+     */
 
     public int moveMessage(List<int[]>[] possible_choice, int[][] positionWorkers) {
         sendString("move");
@@ -59,16 +82,33 @@ public class ServerThread extends Thread {
         return receiveInteger();
     }
 
+    /**
+     * Send the "build" command to che client to start the Building Phase, then send the possible builds.
+     * @param possible_choice Possible cells where to build
+     * @return Return the cell where the player wants to build
+     */
+
     public int buildMessage(List<int[]> possible_choice) {
         sendString("build");
         sendPositionsList(converters.serializeListOfInts(possible_choice));
         return receiveInteger();
     }
 
+    /**
+     * Makes the user choose between a "yes/no" choice
+     * @param message is the message that should be print on video
+     * @return The choice of the user. (1=true/yes 0=false/no)
+     */
+
     public int specialChoice(String message) {
         sendString("spc-" + message);
         return receiveInteger();
     }
+
+    /**
+     * Ask the first player how much players are going to play
+     * @return Number of players
+     */
 
     public int numberOfPlayers() {
         int n;
@@ -76,6 +116,11 @@ public class ServerThread extends Thread {
         n = receiveInteger();
         return n;
     }
+
+    /**
+     * Ask the player to give his name and his birthday
+     * @return nickname and birthday (2 strings)
+     */
 
     public String[] nicknameBirthday() {
         String[] nick_birth = new String[2];
@@ -85,11 +130,22 @@ public class ServerThread extends Thread {
         return nick_birth;
     }
 
+    /**
+     * Ask the player to choose the position of his workers at the start of the game
+     * @param takenPositions Positions already taken
+     * @return Chosen positions
+     */
+
     public int[][] setWorkers(List<int[]> takenPositions) {
         sendString("workSet");
         sendPositionsList((converters.serializeListOfInts(takenPositions)));
         return converters.deserialize2DArrayOfInts(receivePositions());
     }
+
+    /**
+     * Ask the first player which DivinityCards will be played
+     * @return Chosen DivinityCards
+     */
 
     public GlobalVariables.DivinityCard[] divinityChoice() {
         sendString("dv_choice");
@@ -97,19 +153,39 @@ public class ServerThread extends Thread {
         return receiveCards();
     }
 
+    /**
+     * Ask the player which DivinityCard he wants to play
+     * @param divinityCards Available DivinityCards
+     * @return Chosen DivinityCard
+     */
+
     public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] divinityCards) {
         sendString("div_sel");
         sendCards(divinityCards);
         return receiveCards()[0];
     }
 
+    /**
+     * Send the command to make the client print the board on video
+     * @param board The current state of the game board
+     */
+
     public void sendBoard(char[] board) {
         sendString("pr-" + new String(board));
     }
 
+    /**
+     * @return Return the list of ServerThreads
+     */
+
     public List<ServerThread> getServerThreads() {
         return serverThreads;
     }
+
+    /**
+     * Receive an integer
+     * @return The received integer
+     */
 
     public int receiveInteger() {
         int n = -1;
@@ -121,12 +197,21 @@ public class ServerThread extends Thread {
         return n;
     }
 
+    /**
+     * Send a String and check that success of the operation
+     */
+
     public void sendString(String message) {
         writer.println(message);
         if (writer.checkError()) {
             disconnection();
         }
     }
+
+    /**
+     * Send an array of positions List (SerializedInteger=int[] but implements Serializable). Used for the moving phase
+     * @param list the list of Serialized Integer to send
+     */
 
     public void sendPositionsArray(List<SerializedInteger>[] list) {
         try {
@@ -137,6 +222,11 @@ public class ServerThread extends Thread {
         }
     }
 
+    /**
+     * send a list of Positions (SerializedInteger). Used for the building phase
+     * @param list
+     */
+
     public void sendPositionsList(List<SerializedInteger> list) {
         try {
             receiveInteger();
@@ -146,6 +236,11 @@ public class ServerThread extends Thread {
         }
     }
 
+    /**
+     * the positions of the 2 workers of the plyaer
+     * @param positionWorkers The 2 positions
+     */
+
     public void sendPositionWorkers(SerializedInteger[] positionWorkers) {
         try {
             receiveInteger();
@@ -154,6 +249,11 @@ public class ServerThread extends Thread {
             disconnection();
         }
     }
+
+    /**
+     * Receive a String
+     * @return Received String
+     */
 
     public String receiveString() {
         String n = null;
@@ -165,6 +265,11 @@ public class ServerThread extends Thread {
         return n;
     }
 
+    /**
+     * Receive the positions of 2 workers
+     * @return The positions
+     */
+
     public SerializedInteger[] receivePositions() {
         SerializedInteger[] pos = null;
         try {
@@ -174,6 +279,11 @@ public class ServerThread extends Thread {
         }
         return pos;
     }
+
+    /**
+     * Receive a list of DivinityCards
+     * @return The list of DivinityCards
+     */
 
     public GlobalVariables.DivinityCard[] receiveCards() {
         GlobalVariables.DivinityCard[] divinityCards = null;
@@ -185,6 +295,11 @@ public class ServerThread extends Thread {
         return divinityCards;
     }
 
+    /**
+     * Send an integer
+     * @param send integer to send
+     */
+
     public void sendInt(int send) {
         try {
             receiveInteger();
@@ -194,6 +309,11 @@ public class ServerThread extends Thread {
             disconnection();
         }
     }
+
+    /**
+     * Send an array of DivinityCard
+     * @param cards array to send
+     */
 
     public void sendCards(GlobalVariables.DivinityCard[] cards) {
         try {

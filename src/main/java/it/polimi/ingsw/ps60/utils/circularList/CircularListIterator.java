@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps60.utils.circularList;
 
+import it.polimi.ingsw.ps60.serverSide.model.Player;
+
 import java.io.Serializable;
 
 public class CircularListIterator<T> implements Serializable {
@@ -36,5 +38,9 @@ public class CircularListIterator<T> implements Serializable {
      */
     public T get(){
         return node.getValue();
+    }
+
+    public Node<T> getNode(){
+        return node;
     }
 }
