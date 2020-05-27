@@ -13,6 +13,10 @@ public class Launcher {
         firstSelections();
     }
 
+    /**
+     * Want to start a server or a client?
+     */
+
     public static void firstSelections(){
 
         System.out.println("Enter 0 for server, 1 for client");
@@ -29,6 +33,10 @@ public class Launcher {
                 firstSelections();
         }
     }
+
+    /**
+     * Is possible to choose if start the client in cli or gui
+     */
 
     private static void clientSelection(){
         System.out.println("Enter 0 for GUI, 1 for CLI");

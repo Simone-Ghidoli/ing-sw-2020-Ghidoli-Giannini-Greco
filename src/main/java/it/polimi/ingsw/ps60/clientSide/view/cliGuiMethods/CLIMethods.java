@@ -9,6 +9,11 @@ import java.util.Scanner;
 
 import static it.polimi.ingsw.ps60.utils.FlushInput.flushInput;
 
+/**
+ * This class contains all "cli methods". If the player choose to use the cli the software gonna call these methods
+ * Docs with explanations are in the interface
+ */
+
 public class CLIMethods implements ViewMethodSelection {
 
     private int turnNumber;

@@ -7,6 +7,11 @@ import java.util.List;
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class PrometheusTurnStrategy extends BaseTurnStrategy {
+
+    /**
+     * The player should be able to build with a worker one additional time before the moving phase, but the worker won`t be able to move up.
+     * @return A list of possible position to move. If the worker built in a cell yet, the upper level cells will be removed.
+     */
     @Override
     public List<int[]>[] baseMovement() {
         Player player = game.getPlayerInGame().get();

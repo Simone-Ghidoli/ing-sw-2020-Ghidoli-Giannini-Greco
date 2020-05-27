@@ -24,6 +24,13 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     final ViewMethodSelection methodSelection;
     private final Converters converters;
 
+    /**
+     * Constructor of the Parser
+     * @param sock is the socket
+     * @param messages List of string received from the server
+     * @param viewMethodSelection Starts method from Gui methods/ Cli methods
+     */
+
     public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection) {
         socket = sock;
         messagesFromServer = messages;
@@ -114,6 +121,10 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         sendInt(0);
     }
 
+    /**
+     * Close the socket after the game is stopped (for any reason)
+     */
+
     public void socketClose(){
         try {
             socket.close();
@@ -123,10 +134,20 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
     }
 
+    /**
+     * Show a video message to the player
+     * @param alert is the message to print
+     */
+
     public void alert(String alert){
         methodSelection.alert(alert);
         sendInt(0);
     }
+
+    /**
+     * Starts the move phase
+     * Receive the Possible moves and the positions of the workers
+     */
 
     public void movement() {
         sendInt(methodSelection.moveChoice(converters.deserializeArrayOfListOfInts(receiveListArray()), converters.deserialize2DArrayOfInts(receiveWorkers())));
@@ -213,6 +234,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
     }
 
+    /**
+     * Send and integer
+     * @param send integer to send
+     */
+
     public void sendInt(int send) {
         try {
             output.write(send);
@@ -221,6 +247,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
             disconnection("Communication error, logging out");
         }
     }
+
+    /**
+     * Receive a list of Serialized Integer=(int[]). Method for the movement phase
+     * @return
+     */
 
     public List<SerializedInteger>[] receiveListArray() {
         try {
@@ -235,6 +266,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         return null;
     }
 
+    /**
+     * Receive a list of Serialized Integer=(int[]). Method for building phase
+     * @return
+     */
+
     public List<SerializedInteger> receiveList() {
         try {
             sendInt(0);
@@ -248,6 +284,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         return null;
     }
 
+    /**
+     * Receive a list of Serialized Integer. Just for receive the positions of 2 workers
+     * @return
+     */
+
     public SerializedInteger[] receiveWorkers() {
         SerializedInteger[] positionWorkers = null;
         try {
@@ -259,11 +300,21 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         return positionWorkers;
     }
 
+    /**
+     * Send a String to the server
+     * @param toServer String to send
+     */
+
     public void sendString(String toServer) {
         pr.println(toServer);
         if (pr.checkError())
             disconnection("Communication error, logging out");
     }
+
+    /**
+     * Receive an integer
+     * @return integer received
+     */
 
     public int receiveInt() {
         int n = -1;
@@ -276,6 +327,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         return n;
     }
 
+    /**
+     * Send an array of DivinityCards
+     * @param cards Array to send
+     */
+
     public void sendCards(GlobalVariables.DivinityCard[] cards) {
         try {
             out_obj.writeObject(cards);
@@ -283,6 +339,11 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
             disconnection("Communication error, logging out");
         }
     }
+
+    /**
+     * Receive an array of cards.
+     * @return Received array
+     */
 
     public GlobalVariables.DivinityCard[] receiveCards() {
         GlobalVariables.DivinityCard[] divinityCards = null;

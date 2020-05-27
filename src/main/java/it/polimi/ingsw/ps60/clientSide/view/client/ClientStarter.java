@@ -22,6 +22,10 @@ public class ClientStarter {
     private final String ipAddress;
     private final ViewMethodSelection viewMethodSelection;
 
+    /**
+     * @param viewMethodSelection is used to call Gui methods or Cli methods based on player choice
+     */
+
     public ClientStarter(ViewMethodSelection viewMethodSelection) {
         String[] strings = viewMethodSelection.ipPortChoices();
         messagesFromServer = new ArrayList<>();
@@ -40,7 +44,7 @@ public class ClientStarter {
             try {
                 socket = new Socket(ipAddress, port);
             } catch (IOException e1) {
-                viewMethodSelection.alert("Failed to connect to the server. I`m trying again");
+                viewMethodSelection.alert("Waiting for server");
                 socket = null;
                 try {
                     TimeUnit.SECONDS.sleep(5);

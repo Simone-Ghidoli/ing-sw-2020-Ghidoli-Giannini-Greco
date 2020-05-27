@@ -9,6 +9,11 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class ArtemisTurnStrategy extends BaseTurnStrategy {
 
+    /**
+     * A player should be able to move 2 times in a row, but not back in the initial space
+     * @return the list of possible positions to move
+     */
+
     @Override
     public List<int[]>[] baseMovement() {
 

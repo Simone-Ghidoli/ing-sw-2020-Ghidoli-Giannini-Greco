@@ -4,6 +4,12 @@ import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
+
+/**
+ * A player should be able to build 2 times in a row on the same cell.
+ * A third int in the array is set to 1 if is possible to use the power on that cell
+ * @return a list of possible position to build
+ */
 public class HephaestusTurnStrategy extends BaseTurnStrategy {
     @Override
     public List<int[]> baseBuilding() {

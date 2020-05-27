@@ -7,6 +7,11 @@ import java.util.List;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
+/**
+ * The player should be able to move his worker again each time he moves into a perimeter cell
+ * @Return a list of possible position where to move
+ */
+
 public class TritonTurnStrategy extends BaseTurnStrategy {
     @Override
     public List<int[]>[] baseMovement() {
