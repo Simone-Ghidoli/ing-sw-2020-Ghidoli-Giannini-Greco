@@ -6,6 +6,8 @@ import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.utils.TestUtilities;
 import org.junit.Before;
 import org.junit.Test;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.game;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -15,10 +17,10 @@ import java.util.List;
 public class ZeusTurnStrategyTest {
     @Before
     public void setUp(){
-        GlobalVariables.game=new Board(new String[]{"Aldo","Giovanni","Giacomo"});
-        GlobalVariables.game.getPlayerInGame().get().getWorker(0).moveWorker(GlobalVariables.game.getCellByPosition(new int[]{0,0}));
-        GlobalVariables.game.getPlayerInGame().get().getWorker(1).moveWorker(GlobalVariables.game.getCellByPosition(new int[]{3,3}));
-        GlobalVariables.game.getPlayerInGame().get().setWorkerMoved(GlobalVariables.game.getPlayerInGame().get().getWorker(0));
+        game=new Board(new String[]{"Aldo","Giovanni","Giacomo"});
+        game.getPlayerInGame().get().getWorker(0).moveWorker(game.getCellByPosition(new int[]{0,0}));
+        game.getPlayerInGame().get().getWorker(1).moveWorker(game.getCellByPosition(new int[]{3,3}));
+        game.getPlayerInGame().get().setWorkerMoved(game.getPlayerInGame().get().getWorker(0));
     }
 
 

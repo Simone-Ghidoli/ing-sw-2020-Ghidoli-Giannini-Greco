@@ -17,6 +17,9 @@ public class PoseidonTurnController  extends BaseTurnController{
         endTurnSection();
     }
 
+    /**
+     * This method asks to to the player if with his not moved player he wants to build up to 3 times
+     */
     public void specialChoice() {
 
         int i = 0;

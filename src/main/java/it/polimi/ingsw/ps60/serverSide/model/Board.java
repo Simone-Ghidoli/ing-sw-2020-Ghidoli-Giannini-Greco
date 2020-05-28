@@ -20,9 +20,10 @@ public class Board implements Serializable {
      * It will contains all the cells of the board, all the players and all the workers
      * It has to be initialized only when the order of player will be established by the birthday.
      * playerInGame, that represents the player that is now playing, will be initialized as Player1
+     *
      * @param nicknames the nickname of the players
      */
-    public Board(String[] nicknames){
+    public Board(String[] nicknames) {
         this.playersNumber = nicknames.length;
         cellMatrix = new Cell[5][5];
         playerMatrix = new Player[playersNumber];
@@ -30,14 +31,14 @@ public class Board implements Serializable {
         playerWinner = null;
         cellToSend = new char[25];
 
-        for (int i = 0; i < 5; i++){
-            for (int j = 0; j < 5; j++){
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
                 cellMatrix[i][j] = new Cell(new int[]{i, j}, this);
-                cellToSend[i*5 + j] = '0';
+                cellToSend[i * 5 + j] = '0';
             }
         }
 
-        for (int i = 0; i< playersNumber; i++) {
+        for (int i = 0; i < playersNumber; i++) {
             playerMatrix[i] = new Player(nicknames[i]);
             playerList.addNode(playerMatrix[i]);
         }
@@ -47,7 +48,6 @@ public class Board implements Serializable {
     }
 
     /**
-     *
      * @return return the number of player in game
      */
     public int getPlayersNumber() {
@@ -55,7 +55,6 @@ public class Board implements Serializable {
     }
 
     /**
-     *
      * @param position represents the position of the cell in the 5 x 5 board
      * @return the cell in the position
      */
@@ -67,7 +66,6 @@ public class Board implements Serializable {
     }
 
     /**
-     *
      * @return return only the player in game
      */
     public CircularListIterator<Player> getPlayerInGame() {
@@ -78,16 +76,17 @@ public class Board implements Serializable {
     /**
      * This method will change the player that is currently playing
      */
-    public void changeTurn(){
+    public void changeTurn() {
         playerInGame.nextNode();
     }
 
     /**
      * This method will remove the worker of a player from the board and
      * the player himself from the list of player but not from the playerMatrix
+     *
      * @param player the player that lose
      */
-    public void lose(Player player){
+    public void lose(Player player) {
         playerList.removeNode(player);
         playersNumber = playerList.getSize();
 
@@ -96,15 +95,15 @@ public class Board implements Serializable {
     }
 
     /**
-     *
      * @param player is the winner of the game
      */
-    public void win(Player player){
+    public void win(Player player) {
         playerWinner = player;
     }
 
     /**
      * This method return the winner of the game
+     *
      * @return the winner, if none has won return null
      */
     public Player getPlayerWinner() {
@@ -113,6 +112,7 @@ public class Board implements Serializable {
 
     /**
      * This method returns all the chars associated to the cells to send to clients
+     *
      * @return all the chars associated to the cells to send to clients based on what there are on them
      */
     public char[] getCellToSend() {
@@ -121,6 +121,7 @@ public class Board implements Serializable {
 
     /**
      * This method returns the amount of complete towers on the board
+     *
      * @return the number of complete tower. A complete tower is a building with high = 3 and a dome
      */
     public int getCompleteTower() {
@@ -130,12 +131,13 @@ public class Board implements Serializable {
     /**
      * This method increase the amount of complete tower
      */
-    public void increaseCompleteTower(){
+    public void increaseCompleteTower() {
         completeTower++;
     }
 
     /**
      * This method returns if a player has wan the game
+     *
      * @return true if none has won the game, false otherwise
      */
     public boolean isNotWon() {
@@ -144,6 +146,7 @@ public class Board implements Serializable {
 
     /**
      * This method returns the matrix of players in the game
+     *
      * @return the matrix of players in game also if one of them have already lost
      */
     public Player[] getPlayerMatrix() {

@@ -40,8 +40,8 @@ public class SetupForTest {
                 game.getPlayerInGame().get().getWorker(j).moveWorker(game.getCellByPosition(posPlayers[i][j]));
             }
         }
-        player1 = GlobalVariables.game.getPlayerMatrix()[0];
-        player1 = GlobalVariables.game.getPlayerMatrix()[1];
-        player1 = GlobalVariables.game.getPlayerMatrix()[2];
+        player1 = game.getPlayerMatrix()[0];
+        player1 = game.getPlayerMatrix()[1];
+        player1 = game.getPlayerMatrix()[2];
     }
 }

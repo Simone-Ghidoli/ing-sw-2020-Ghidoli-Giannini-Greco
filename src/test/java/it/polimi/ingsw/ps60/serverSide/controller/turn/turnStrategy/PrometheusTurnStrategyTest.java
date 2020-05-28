@@ -6,6 +6,8 @@ import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.utils.TestUtilities;
 import org.junit.Before;
 import org.junit.Test;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.game;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -15,11 +17,11 @@ import java.util.List;
 public class PrometheusTurnStrategyTest {
     @Before
     public void setUp(){
-        GlobalVariables.game=new Board(new String[]{"Aldo","Giovanni","Giacomo"});
-        GlobalVariables.game.getCellByPosition(new int[]{1,1}).incrementBuildingLevel();
-        GlobalVariables.game.getPlayerInGame().get().getWorker(0).moveWorker(GlobalVariables.game.getCellByPosition(new int[]{0,0}));
-        GlobalVariables.game.getPlayerInGame().get().setBuildByWorker(true);
-        GlobalVariables.game.getPlayerInGame().get().getWorker(1).moveWorker(GlobalVariables.game.getCellByPosition(new int[]{4,4}));
+        game=new Board(new String[]{"Aldo","Giovanni","Giacomo"});
+        game.getCellByPosition(new int[]{1,1}).incrementBuildingLevel();
+        game.getPlayerInGame().get().getWorker(0).moveWorker(game.getCellByPosition(new int[]{0,0}));
+        game.getPlayerInGame().get().setBuildByWorker(true);
+        game.getPlayerInGame().get().getWorker(1).moveWorker(game.getCellByPosition(new int[]{4,4}));
     }
 
     @Test

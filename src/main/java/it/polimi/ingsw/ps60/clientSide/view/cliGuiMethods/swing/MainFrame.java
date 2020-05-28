@@ -6,6 +6,9 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * This class menage the main frame of the program
+ */
 public class MainFrame extends JPanel {
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final JButton[] jButtons = new JButton[25];
@@ -54,10 +57,22 @@ public class MainFrame extends JPanel {
         add(board);
     }
 
+    /**
+     * This method returns a jButton from the grid of jButtons
+     *
+     * @param i the number of button
+     * @return the jButton selected
+     */
     public JButton getButton(int i) {
         return jButtons[i];
     }
 
+    /**
+     * This method with a button returns his position of the grid
+     *
+     * @param jButton is the jButton of which do you want the position
+     * @return the coordinates of the button
+     */
     public int[] getButtonCoords(JButton jButton) {
         for (int i = 0; i < jButtons.length; i++) {
             if (jButtons[i].equals(jButton))
@@ -66,10 +81,21 @@ public class MainFrame extends JPanel {
         return null;
     }
 
+    /**
+     * This method returns the dimension of the screen
+     *
+     * @return the dimension of the screen
+     */
     public Dimension getScreenSize() {
         return screenSize;
     }
 
+    /**
+     * This method sets the images of divinity cards in the main frame
+     *
+     * @param divinityCards contains the number associated to all divinity cards of the players ordered by the player number
+     * @param turnNumber    is the player number of the player
+     */
     public void setDivinityCardImage(int[] divinityCards, int turnNumber) {
 
         JLabel divinityCardImage;
@@ -100,6 +126,9 @@ public class MainFrame extends JPanel {
         }
     }
 
+    /**
+     * This methods removes all the listeners from the jButtons
+     */
     public void resetButtons() {
         for (JButton button : jButtons) {
             for (ActionListener actionListener : button.getActionListeners()) {

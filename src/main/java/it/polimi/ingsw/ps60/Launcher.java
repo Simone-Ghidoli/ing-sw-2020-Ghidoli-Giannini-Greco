@@ -14,10 +14,9 @@ public class Launcher {
     }
 
     /**
-     * Want to start a server or a client?
+     * This method will makes able to select to run a client or a server
      */
-
-    public static void firstSelections(){
+    public static void firstSelections() {
 
         System.out.println("Enter 0 for server, 1 for client");
 
@@ -35,13 +34,12 @@ public class Launcher {
     }
 
     /**
-     * Is possible to choose if start the client in cli or gui
+     * This method makes the player able to choice if he wants to play in CLI or GUI
      */
-
-    private static void clientSelection(){
+    private static void clientSelection() {
         System.out.println("Enter 0 for GUI, 1 for CLI");
 
-        switch (new Scanner(System.in).nextLine()){
+        switch (new Scanner(System.in).nextLine()) {
             case "0":
                 new ClientStarter(new GUIMethods()).start();
                 break;

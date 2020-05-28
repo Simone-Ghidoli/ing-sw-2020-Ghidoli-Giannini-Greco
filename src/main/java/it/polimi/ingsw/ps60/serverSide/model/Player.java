@@ -16,10 +16,9 @@ public class Player implements Serializable {
     private transient ServerThread serverThread;
 
     /**
-     *
      * @param nickname the nickname of the player
      */
-    public Player(String nickname){
+    public Player(String nickname) {
         this.nickname = nickname;
         workers = new Worker[2];
         for (int x = 0; x < 2; x++) {
@@ -32,6 +31,7 @@ public class Player implements Serializable {
 
     /**
      * This method set the serverThread of the player
+     *
      * @param serverThread the serverThread of the player
      */
     public void setServerThread(ServerThread serverThread) {
@@ -39,7 +39,6 @@ public class Player implements Serializable {
     }
 
     /**
-     *
      * @return return the nickname of the player
      */
     public String getNickname() {
@@ -47,11 +46,10 @@ public class Player implements Serializable {
     }
 
     /**
-     *
      * @param divinityCard set the divinity card identified by his enumeration
      */
     public void setDivinityCard(GlobalVariables.DivinityCard divinityCard) {
-        for (int i = 0; i < GlobalVariables.DivinityCard.values().length; i++){
+        for (int i = 0; i < GlobalVariables.DivinityCard.values().length; i++) {
             if (divinityCard.equals(GlobalVariables.DivinityCard.values()[i])) {
                 this.divinityCard = i;
                 break;
@@ -60,7 +58,6 @@ public class Player implements Serializable {
     }
 
     /**
-     *
      * @return return the enumeration of the divinity card
      */
     public GlobalVariables.DivinityCard getDivinityCard() {
@@ -73,15 +70,17 @@ public class Player implements Serializable {
 
     /**
      * This method returns a specific player
+     *
      * @param workerNumber 0 for worker 1 and 1 for worker 2
      * @return The worker specified by parameter
      */
-    public Worker getWorker(int workerNumber){
+    public Worker getWorker(int workerNumber) {
         return workers[workerNumber];
     }
 
     /**
      * This method return the worker that has been moved in the turn
+     *
      * @return the worker that has been moved
      */
     public Worker getWorkerMoved() {
@@ -90,6 +89,7 @@ public class Player implements Serializable {
 
     /**
      * This method set the worker that has been moved in the turn
+     *
      * @param workerMoved the worker that has been moved in the turn
      */
     public void setWorkerMoved(Worker workerMoved) {
@@ -98,6 +98,7 @@ public class Player implements Serializable {
 
     /**
      * This method returns if worker has built in a turn
+     *
      * @return tre if has built, false otherwise
      */
     public boolean isBuildByWorker() {
@@ -106,14 +107,16 @@ public class Player implements Serializable {
 
     /**
      * This method set if a worker has built in a turn
+     *
      * @param i true if has built, false otherwise
      */
-    public void setBuildByWorker(boolean i){
+    public void setBuildByWorker(boolean i) {
         buildByWorker = i;
     }
 
     /**
      * This methods return a divinity strategy
+     *
      * @return the divinity strategy associated at the player's divinity card
      */
     public DivinityStrategy getDivinityStrategy() {
@@ -122,6 +125,7 @@ public class Player implements Serializable {
 
     /**
      * This method return the serverThread associated to the player
+     *
      * @return serverThread associated to the player
      */
     public ServerThread getServerThread() {

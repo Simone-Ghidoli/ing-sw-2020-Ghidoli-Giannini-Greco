@@ -490,6 +490,10 @@ public class GUIMethods implements ViewMethodSelection {
         santorini.setDivinityCardImage(divinityCards, turnNumber);
     }
 
+    /**
+     * This method asks to the user if he want to confirm what he choose or want to insert the input again
+     * @return true if he confirms, false otherwise
+     */
     private boolean confirmOrRetry() {
         final Object[] options = new Object[]{"YES", "NO"};
         final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);

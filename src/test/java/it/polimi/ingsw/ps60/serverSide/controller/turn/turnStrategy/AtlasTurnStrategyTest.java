@@ -3,9 +3,10 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
-import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import org.junit.Before;
 import org.junit.Test;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.game;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,20 +26,19 @@ public class AtlasTurnStrategyTest {
 
     @Before
     public void createBoard(){
-        GlobalVariables.game=new Board(new String[]{"Aldo","Giovanni","Giacomo"}){
-        };
-        GlobalVariables.game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{0,1}).buildDome();
-        GlobalVariables.game.getCellByPosition(new int[]{0,2}).buildDome();
-        GlobalVariables.game.getCellByPosition(new int[]{1,0}).buildDome();
-        GlobalVariables.game.getCellByPosition(new int[]{1,2}).buildDome();
-        GlobalVariables.game.getCellByPosition(new int[]{2,2}).buildDome();
-        GlobalVariables.game.getCellByPosition(new int[]{2,1}).buildDome();
-        GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(0).moveWorker(GlobalVariables.game.getCellByPosition(new int[]{1,1}));
-        GlobalVariables.game.getCellByPosition(new int[]{1,1}).setWorkerIn(GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(0));
-        GlobalVariables.game.getPlayerInGame().getNode().getValue().setWorkerMoved(GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(0));
+        game=new Board(new String[]{"Aldo","Giovanni","Giacomo"});
+        game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{0,1}).buildDome();
+        game.getCellByPosition(new int[]{0,2}).buildDome();
+        game.getCellByPosition(new int[]{1,0}).buildDome();
+        game.getCellByPosition(new int[]{1,2}).buildDome();
+        game.getCellByPosition(new int[]{2,2}).buildDome();
+        game.getCellByPosition(new int[]{2,1}).buildDome();
+        game.getPlayerInGame().get().getWorker(0).moveWorker(game.getCellByPosition(new int[]{1,1}));
+        game.getCellByPosition(new int[]{1,1}).setWorkerIn(game.getPlayerInGame().get().getWorker(0));
+        game.getPlayerInGame().get().setWorkerMoved(game.getPlayerInGame().get().getWorker(0));
     }
 
     /**
@@ -54,7 +54,7 @@ public class AtlasTurnStrategyTest {
         expected.add(new int[]{0,0,0});
         expected.add(new int[]{2,0,1});
         assertEquals(expected.size(),current.size());
-        assertTrue(current.get(0)[2]==0);
-        assertTrue(current.get(1)[2]==1);
+        assertEquals(0, current.get(0)[2]);
+        assertEquals(1, current.get(1)[2]);
     }
 }

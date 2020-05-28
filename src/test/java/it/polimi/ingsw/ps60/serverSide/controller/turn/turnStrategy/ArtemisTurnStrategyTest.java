@@ -8,6 +8,8 @@ import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.utils.TestUtilities;
 import org.junit.Before;
 import org.junit.Test;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.game;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -23,33 +25,32 @@ public class ArtemisTurnStrategyTest {
 
     @Before
     public void createBoard() {
-        GlobalVariables.game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"}) {
+        game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"}) {
         };
-        GlobalVariables.game.getCellByPosition(new int[]{0, 0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{0, 0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{0, 1}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{0, 1}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{0, 2}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{0, 2}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{1, 0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{1, 0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{1, 2}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{1, 2}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{2, 0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{2, 0}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{2, 2}).incrementBuildingLevel();
-        GlobalVariables.game.getCellByPosition(new int[]{2, 2}).incrementBuildingLevel();
-        GlobalVariables.game.getPlayerInGame().get().getWorker(0).moveWorker(new Cell(new int[]{1,1}, GlobalVariables.game));
-        GlobalVariables.game.getPlayerInGame().get().getWorker(1).moveWorker(new Cell(new int[]{4,4}, GlobalVariables.game));
-        GlobalVariables.game.getCellByPosition(new int[]{1,1}).setWorkerIn(GlobalVariables.game.getPlayerInGame().getNode().getValue().getWorker(0));
+        game.getCellByPosition(new int[]{0, 0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{0, 0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{0, 1}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{0, 1}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{0, 2}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{0, 2}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{1, 0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{1, 0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{1, 2}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{1, 2}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{2, 0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{2, 0}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{2, 2}).incrementBuildingLevel();
+        game.getCellByPosition(new int[]{2, 2}).incrementBuildingLevel();
+        game.getPlayerInGame().get().getWorker(0).moveWorker(new Cell(new int[]{1,1}, game));
+        game.getPlayerInGame().get().getWorker(1).moveWorker(new Cell(new int[]{4,4}, game));
+        game.getCellByPosition(new int[]{1,1}).setWorkerIn(game.getPlayerInGame().get().getWorker(0));
     }
 
     @Test
     public void moveTest(){
         TestUtilities utility=new TestUtilities();
-        Board board=GlobalVariables.game;
         DivinityStrategy div=new DivinityStrategy(GlobalVariables.DivinityCard.ARTEMIS);
-        List<int[]>[] current=new ArrayList[2];
+        List<int[]>[] current;
         List<int[]> expected=new ArrayList<>();
         expected.add(new int[]{2,1});
         expected.add(new int[]{3,0});

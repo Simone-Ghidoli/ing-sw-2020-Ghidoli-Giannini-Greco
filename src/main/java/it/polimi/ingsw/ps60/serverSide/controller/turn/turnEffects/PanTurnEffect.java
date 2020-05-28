@@ -5,6 +5,7 @@ import it.polimi.ingsw.ps60.serverSide.model.Player;
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class PanTurnEffect extends BaseTurnEffect {
+
     @Override
     public void winConditions() {
         super.winConditions();

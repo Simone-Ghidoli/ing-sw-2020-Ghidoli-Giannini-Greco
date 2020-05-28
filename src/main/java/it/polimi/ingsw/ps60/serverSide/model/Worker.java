@@ -56,10 +56,20 @@ public class Worker implements Serializable {
         return OldCell.getBuildingLevel() < cellPosition.getBuildingLevel();
     }
 
+    /**
+     * This method return the cell where the worker was during this turn before moving
+     *
+     * @return the previous cell where the worker was during this turn
+     */
     public Cell getOldCell() {
         return OldCell;
     }
 
+    /**
+     * This method sets the cell where the worker was before moving
+     *
+     * @param oldCell the cell where the worker was before moving
+     */
     public void setOldCell(Cell oldCell) {
         OldCell = oldCell;
     }

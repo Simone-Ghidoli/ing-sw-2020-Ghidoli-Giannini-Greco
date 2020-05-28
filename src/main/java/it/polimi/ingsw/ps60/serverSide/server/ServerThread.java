@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * This class contains some methods to communicate between server and client.
  */
-
 public class ServerThread extends Thread {
     private String playerBound;
     protected final Socket socket;
@@ -26,7 +25,8 @@ public class ServerThread extends Thread {
 
     /**
      * Initialization of socket ecc
-     * @param soc is the socket from the Class Server
+     *
+     * @param soc           is the socket from the Class Server
      * @param serverThreads is the list of "ServerThread" of other sockets (one for each client connected)
      */
 
@@ -61,6 +61,7 @@ public class ServerThread extends Thread {
 
     /**
      * Send the loss message
+     *
      * @param message Message to send to che client
      */
 
@@ -70,6 +71,7 @@ public class ServerThread extends Thread {
 
     /**
      * Send the "move" command to the client to start the "Moving phase", then send the position of the workers and the possible moves.
+     *
      * @param possible_choice available cells to move
      * @param positionWorkers positions of 2 workers
      * @return the cell where the player wants to move (calculated automatically) which worker should move
@@ -84,6 +86,7 @@ public class ServerThread extends Thread {
 
     /**
      * Send the "build" command to che client to start the Building Phase, then send the possible builds.
+     *
      * @param possible_choice Possible cells where to build
      * @return Return the cell where the player wants to build
      */
@@ -96,6 +99,7 @@ public class ServerThread extends Thread {
 
     /**
      * Makes the user choose between a "yes/no" choice
+     *
      * @param message is the message that should be print on video
      * @return The choice of the user. (1=true/yes 0=false/no)
      */
@@ -107,6 +111,7 @@ public class ServerThread extends Thread {
 
     /**
      * Ask the first player how much players are going to play
+     *
      * @return Number of players
      */
 
@@ -119,6 +124,7 @@ public class ServerThread extends Thread {
 
     /**
      * Ask the player to give his name and his birthday
+     *
      * @return nickname and birthday (2 strings)
      */
 
@@ -132,6 +138,7 @@ public class ServerThread extends Thread {
 
     /**
      * Ask the player to choose the position of his workers at the start of the game
+     *
      * @param takenPositions Positions already taken
      * @return Chosen positions
      */
@@ -144,6 +151,7 @@ public class ServerThread extends Thread {
 
     /**
      * Ask the first player which DivinityCards will be played
+     *
      * @return Chosen DivinityCards
      */
 
@@ -155,6 +163,7 @@ public class ServerThread extends Thread {
 
     /**
      * Ask the player which DivinityCard he wants to play
+     *
      * @param divinityCards Available DivinityCards
      * @return Chosen DivinityCard
      */
@@ -167,6 +176,7 @@ public class ServerThread extends Thread {
 
     /**
      * Send the command to make the client print the board on video
+     *
      * @param board The current state of the game board
      */
 
@@ -184,6 +194,7 @@ public class ServerThread extends Thread {
 
     /**
      * Receive an integer
+     *
      * @return The received integer
      */
 
@@ -210,6 +221,7 @@ public class ServerThread extends Thread {
 
     /**
      * Send an array of positions List (SerializedInteger=int[] but implements Serializable). Used for the moving phase
+     *
      * @param list the list of Serialized Integer to send
      */
 
@@ -224,6 +236,7 @@ public class ServerThread extends Thread {
 
     /**
      * send a list of Positions (SerializedInteger). Used for the building phase
+     *
      * @param list
      */
 
@@ -238,6 +251,7 @@ public class ServerThread extends Thread {
 
     /**
      * the positions of the 2 workers of the plyaer
+     *
      * @param positionWorkers The 2 positions
      */
 
@@ -252,6 +266,7 @@ public class ServerThread extends Thread {
 
     /**
      * Receive a String
+     *
      * @return Received String
      */
 
@@ -267,9 +282,9 @@ public class ServerThread extends Thread {
 
     /**
      * Receive the positions of 2 workers
+     *
      * @return The positions
      */
-
     public SerializedInteger[] receivePositions() {
         SerializedInteger[] pos = null;
         try {
@@ -282,9 +297,9 @@ public class ServerThread extends Thread {
 
     /**
      * Receive a list of DivinityCards
+     *
      * @return The list of DivinityCards
      */
-
     public GlobalVariables.DivinityCard[] receiveCards() {
         GlobalVariables.DivinityCard[] divinityCards = null;
         try {
@@ -297,9 +312,9 @@ public class ServerThread extends Thread {
 
     /**
      * Send an integer
+     *
      * @param send integer to send
      */
-
     public void sendInt(int send) {
         try {
             receiveInteger();
@@ -312,9 +327,9 @@ public class ServerThread extends Thread {
 
     /**
      * Send an array of DivinityCard
+     *
      * @param cards array to send
      */
-
     public void sendCards(GlobalVariables.DivinityCard[] cards) {
         try {
             receiveInteger();
@@ -334,7 +349,13 @@ public class ServerThread extends Thread {
         receiveInteger();
     }
 
-    public void sendStatus(int[] divinityCard, int turnNumber){
+    /**
+     * This method send to the client the divinity cards selected by all all player ordered by the player position in the turn sequence
+     *
+     * @param divinityCard is the list of divinity cards selected
+     * @param turnNumber   is the player position in the turn sequence
+     */
+    public void sendStatus(int[] divinityCard, int turnNumber) {
         StringBuilder stringToSend = new StringBuilder("st-");
 
         for (int i : divinityCard)

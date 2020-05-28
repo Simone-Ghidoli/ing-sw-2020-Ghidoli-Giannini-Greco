@@ -20,25 +20,22 @@ public class ClientReader implements Runnable {
 
     /**
      * Opens the buffered reader
-     * @param sock is the socket
+     *
+     * @param sock     is the socket
      * @param messages is the list where the commands will be saved
-     * @param method is the viewMethodSelection (CLI/GUI)
+     * @param method   is the viewMethodSelection (CLI/GUI)
      */
-
-
-    public ClientReader(Socket sock, List<String> messages,ViewMethodSelection method){
-        messagesFromServer=messages;
-        socket=sock;
-        methodSelection=method;
+    public ClientReader(Socket sock, List<String> messages, ViewMethodSelection method) {
+        messagesFromServer = messages;
+        socket = sock;
+        methodSelection = method;
         try {
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        }
-        catch(IOException e_0){
-            synchronized (socket){
-                try{
+        } catch (IOException e_0) {
+            synchronized (socket) {
+                try {
                     socket.close();
-                }
-                catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -49,24 +46,23 @@ public class ClientReader implements Runnable {
     /**
      * Just receive all text messages(Strings) from the server and stores them in the list
      */
-
     @Override
     public void run() {
         while (true) {
-                synchronized(socket) {
-                    if (socket.isClosed()) {
-                        return;
-                    }
+            synchronized (socket) {
+                if (socket.isClosed()) {
+                    return;
                 }
+            }
             try {
                 synchronized (socket) {
                     if (br.ready())
                         serverSays = br.readLine();
                 }
-                if(serverSays!=null) {
+                if (serverSays != null) {
                     synchronized (messagesFromServer) {
                         messagesFromServer.add(serverSays);
-                        serverSays=null;
+                        serverSays = null;
                     }
                 }
             } catch (IOException e) {

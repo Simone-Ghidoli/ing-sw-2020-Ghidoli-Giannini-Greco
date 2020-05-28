@@ -17,7 +17,7 @@ public class HephaestusTurnStrategy extends BaseTurnStrategy {
         int[] cellPosition;
         int c = 0;
 
-        while (c < positions.size()){
+        while (c < positions.size()) {
             cellPosition = positions.remove(0);
             if (game.getCellByPosition(cellPosition).getBuildingLevel() < 2)
                 positions.add(new int[]{cellPosition[0], cellPosition[1], 1});

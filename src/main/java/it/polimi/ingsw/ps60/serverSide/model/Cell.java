@@ -105,5 +105,4 @@ public class Cell implements Serializable {
         }
         board.getCellToSend()[position[0] * 5 + position[1]] = (char) i;
     }
-
 }

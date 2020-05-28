@@ -6,16 +6,15 @@ public class ListContains {
 
     private final List<int[]> list;
 
-    public ListContains(List<int[]> list){
+    public ListContains(List<int[]> list) {
         this.list = list;
     }
 
     /**
-     *
      * @param nodeToCheck is the node that will be checked if it is in the list
      * @return true if the node is present in the list, false otherwise.
      */
-    public boolean isContained(int[] nodeToCheck){
+    public boolean isContained(int[] nodeToCheck) {
         int length;
 
         for (int[] ints : list) {

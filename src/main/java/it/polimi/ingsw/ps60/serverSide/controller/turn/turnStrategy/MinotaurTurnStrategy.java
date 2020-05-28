@@ -11,6 +11,7 @@ public class MinotaurTurnStrategy extends BaseTurnStrategy {
 
     /**
      * A player should be able to move into an opponent's worker cell, if the opponent worker can be forced one space straight backwards to an unoccupied space at any level.
+     *
      * @return A list of possible position to move
      */
 

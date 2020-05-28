@@ -7,6 +7,7 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 
 public class BaseTurnEffect implements TurnEffect {
+
     public void move(int[][] move) {
         Player player = game.getPlayerInGame().get();
         player.getWorker(move[0][0]).moveWorker(game.getCellByPosition(move[1]));
@@ -14,7 +15,7 @@ public class BaseTurnEffect implements TurnEffect {
     }
 
 
-    public void build(int[] build){
+    public void build(int[] build) {
         Cell cell = game.getCellByPosition(build);
         if (cell.getBuildingLevel() == 3)
             cell.buildDome();
@@ -23,15 +24,14 @@ public class BaseTurnEffect implements TurnEffect {
         game.getPlayerInGame().get().setBuildByWorker(true);
     }
 
-    public void endTurn(){
+    public void endTurn() {
         Player player = game.getPlayerInGame().get();
-        if (player.getWorkerMoved()!= null && player.isBuildByWorker()) {
+        if (player.getWorkerMoved() != null && player.isBuildByWorker()) {
             winConditions();
             player.getWorkerMoved().setOldCell(null);
             player.setWorkerMoved(null);
             player.setBuildByWorker(false);
-        }
-        else {
+        } else {
             game.lose(player);
             if (game.getPlayersNumber() == 1) {
                 game.changeTurn();
@@ -42,8 +42,11 @@ public class BaseTurnEffect implements TurnEffect {
         game.changeTurn();
     }
 
-    public void winConditions(){
-        Player player =game.getPlayerInGame().get();
+    /**
+     * The win condition checks if a players has won the game during his turn
+     */
+    public void winConditions() {
+        Player player = game.getPlayerInGame().get();
         if (player.getWorkerMoved().isLeveledUp() && player.getWorkerMoved().getCellPosition().getBuildingLevel() == 3)
             game.win(player);
     }

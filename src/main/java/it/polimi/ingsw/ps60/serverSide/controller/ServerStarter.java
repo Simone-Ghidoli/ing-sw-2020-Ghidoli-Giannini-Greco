@@ -33,16 +33,15 @@ public class ServerStarter {
     /**
      * This method menage the sequence of steps to do in order to start the game
      */
-    public void start(){
+    public void start() {
         sort();
         boolean gameLoaded = loadGame();
         serverThreadBound();
         if (!gameLoaded) {
             selectWorkersPositions();
             selectDivinityCard();
-        }
-        else{
-            for (int i = 0; i < game.getPlayerMatrix().length; i++){
+        } else {
+            for (int i = 0; i < game.getPlayerMatrix().length; i++) {
                 game.getPlayerMatrix()[i].getServerThread().sendAlert("Game loaded from save. "
                         + "You are: " + GlobalVariables.IdPlayer.values()[i].getColour() +
                         ". Your divinity card is: " + game.getPlayerMatrix()[i].getDivinityCard().toString());
@@ -51,19 +50,24 @@ public class ServerStarter {
 
         int[] divinityNumbers = divinityNumber();
 
-        for (int i = 0; i < game.getPlayerMatrix().length; i++){
+        for (int i = 0; i < game.getPlayerMatrix().length; i++) {
             game.getPlayerMatrix()[i].getServerThread().sendStatus(divinityNumbers, i);
         }
 
         gameTurn();
     }
 
-    private int[] divinityNumber(){
+    /**
+     * This method returns an array of int associated to the divinity cards that has to be sent to the client
+     *
+     * @return an array of ints associated to the divinity cards ordered by the player number whom this divinity cards belong
+     */
+    private int[] divinityNumber() {
         int[] divinityNumbers = new int[game.getPlayersNumber()];
 
-        for (int j = 0; j < game.getPlayerMatrix().length; j++){
-            for (int i = 0; i < GlobalVariables.DivinityCard.values().length; i++){
-                if (GlobalVariables.DivinityCard.values()[i] == game.getPlayerMatrix()[j].getDivinityCard()){
+        for (int j = 0; j < game.getPlayerMatrix().length; j++) {
+            for (int i = 0; i < GlobalVariables.DivinityCard.values().length; i++) {
+                if (GlobalVariables.DivinityCard.values()[i] == game.getPlayerMatrix()[j].getDivinityCard()) {
                     divinityNumbers[j] = i;
                     break;
                 }
@@ -97,15 +101,16 @@ public class ServerStarter {
 
     /**
      * This method provide a port number checking if that port is free
+     *
      * @return the port number
      */
-    private int portSelection(){
+    private int portSelection() {
         Scanner input = new Scanner(System.in);
         String port = null;
 
         System.out.println("Enter the port number");
 
-        while (port == null){
+        while (port == null) {
             port = input.nextLine();
             if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port)) {
                 System.out.println("Wrong input");
@@ -119,7 +124,7 @@ public class ServerStarter {
     /**
      * Associate at each Player his serverThread
      */
-    private void serverThreadBound(){
+    private void serverThreadBound() {
         ArrayList<ServerThread> serverThreads = server.getSocketList();
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
 
@@ -134,7 +139,7 @@ public class ServerStarter {
     /**
      * This method menage the successions of turns
      */
-    private void gameTurn(){
+    private void gameTurn() {
 
         while (game.isNotWon()) {
             fileAccess.writer(game);
@@ -194,8 +199,8 @@ public class ServerStarter {
         int choice = game.getPlayerInGame().get().getServerThread().specialChoice("" +
                 "Do you want to play with divinity cards?");
 
-        if (choice == 0){
-            for (int i = 0; i < game.getPlayersNumber(); i++){
+        if (choice == 0) {
+            for (int i = 0; i < game.getPlayersNumber(); i++) {
                 game.getPlayerMatrix()[i].setDivinityCard(GlobalVariables.DivinityCard.NONE);
             }
             return;
@@ -209,7 +214,7 @@ public class ServerStarter {
         GlobalVariables.DivinityCard[] divinityCards1;
         int k;
 
-        for (int i = 0; i < game.getPlayersNumber(); i++){
+        for (int i = 0; i < game.getPlayersNumber(); i++) {
             selected = circularListIterator.get().getServerThread().divinitySelection(divinityCards);
             circularListIterator.get().setDivinityCard(selected);
 
@@ -235,7 +240,7 @@ public class ServerStarter {
 
         CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
 
-        for (int i = 0; i < game.getPlayersNumber(); i++){
+        for (int i = 0; i < game.getPlayersNumber(); i++) {
             positions[i] = circularListIterator.get().getServerThread().setWorkers(list);
 
             for (int j = 0; j < 2; j++)

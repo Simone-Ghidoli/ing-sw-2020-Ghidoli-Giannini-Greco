@@ -49,7 +49,6 @@ public class BaseTurnStrategy implements TurnStrategy {
                 }
             }
         }
-
         return positions;
     }
 
@@ -79,12 +78,11 @@ public class BaseTurnStrategy implements TurnStrategy {
     }
 
     /**
-     *
      * @param workerPosition the position where the worker actually is
      * @param targetPosition the position where the worker wants to move
      * @return false if no divinity disturbs the worker to move in the target position, true otherwise
      */
-    public boolean isNotDisturbedByDivinity(int[] workerPosition, int[] targetPosition){
+    public boolean isNotDisturbedByDivinity(int[] workerPosition, int[] targetPosition) {
 
         if (game.getPlayerInGame().get().getDivinityCard() != GlobalVariables.DivinityCard.ATHENA) {
 

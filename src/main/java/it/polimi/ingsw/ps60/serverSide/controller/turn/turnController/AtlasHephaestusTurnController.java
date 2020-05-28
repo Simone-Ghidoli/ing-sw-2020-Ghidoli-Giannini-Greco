@@ -18,12 +18,9 @@ public class AtlasHephaestusTurnController extends BaseTurnController {
                     player.getDivinityStrategy().setBuilding(new int[]{buildChoices.get(choice)[0], buildChoices.get(choice)[1], 0});
                 else
                     player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
-            }
-
-            else
-            player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
-        }
-        else {
+            } else
+                player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+        } else {
             player.getServerThread().lossMessage("Unable to move in any position");
             lost = true;
         }

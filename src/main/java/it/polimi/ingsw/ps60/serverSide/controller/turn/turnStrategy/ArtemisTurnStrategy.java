@@ -11,6 +11,7 @@ public class ArtemisTurnStrategy extends BaseTurnStrategy {
 
     /**
      * A player should be able to move 2 times in a row, but not back in the initial space
+     *
      * @return the list of possible positions to move
      */
 

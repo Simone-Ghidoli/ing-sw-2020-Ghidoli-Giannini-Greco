@@ -48,7 +48,7 @@ public class CLIMethods implements ViewMethodSelection {
                 System.out.print("\n" + ((i / 5) + 1) + "-  ");
             if (boardToPrint[i] < 52) {
                 System.out.print(boardToPrint[i]);
-            } else if(boardToPrint[i] < 56){
+            } else if (boardToPrint[i] < 56) {
                 System.out.print(GlobalVariables.Colour.YELLOW.getString());
                 System.out.print((char) (boardToPrint[i] - 4));
             } else if (boardToPrint[i] < 60) {
@@ -67,6 +67,13 @@ public class CLIMethods implements ViewMethodSelection {
         System.out.println("\n");
     }
 
+    /**
+     * This method prints all the the possible moves and counts how many they are
+     *
+     * @param moves            is the list of possible moves
+     * @param positionsWorkers is the position of the workers of the player
+     * @return the number of possible moves displayed
+     */
     public int printPossibleMoves(List<int[]>[] moves, int[][] positionsWorkers) {
         int choice = 0;
 
@@ -97,6 +104,12 @@ public class CLIMethods implements ViewMethodSelection {
         }
     }
 
+    /**
+     * This method prints all the the possible builds and counts how many they are
+     *
+     * @param moves is the list of possible builds
+     * @return the number of possible builds displayed
+     */
     public int printPossibleBuilds(List<int[]> moves) {
         int choice = 0;
 

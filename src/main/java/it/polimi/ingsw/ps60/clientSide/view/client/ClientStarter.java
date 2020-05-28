@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * This class is used to open the connection with the server and starts reader and parser tasks
  */
-
 public class ClientStarter {
     private final List<String> messagesFromServer;
     private final ExecutorService pool = Executors.newFixedThreadPool(2);
@@ -25,7 +24,6 @@ public class ClientStarter {
     /**
      * @param viewMethodSelection is used to call Gui methods or Cli methods based on player choice
      */
-
     public ClientStarter(ViewMethodSelection viewMethodSelection) {
         String[] strings = viewMethodSelection.ipPortChoices();
         messagesFromServer = new ArrayList<>();

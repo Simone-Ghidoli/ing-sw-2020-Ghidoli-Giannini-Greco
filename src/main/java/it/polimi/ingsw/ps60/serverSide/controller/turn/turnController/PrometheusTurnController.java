@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrometheusTurnController extends BaseTurnController {
+
     @Override
     public void movementSection() {
 
         int choice = -1;
 
         List<int[]>[] buildChoices = new List[2];
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             player.setWorkerMoved(player.getWorker(i));
             buildChoices[i] = player.getDivinityStrategy().getTurnStrategyBuilding();
         }
@@ -58,11 +59,9 @@ public class PrometheusTurnController extends BaseTurnController {
                 choice = choice - moveChoices[0].size();
                 player.getDivinityStrategy().setMovement(new int[][]{new int[]{1, 0}, moveChoices[1].get(choice)});
             }
-        }
-        else {
+        } else {
             player.getServerThread().lossMessage("Unable to move in any position");
             endTurnSection();
         }
     }
 }
-

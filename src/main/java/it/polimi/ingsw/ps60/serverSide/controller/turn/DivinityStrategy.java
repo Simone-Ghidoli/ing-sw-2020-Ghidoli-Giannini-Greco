@@ -18,9 +18,10 @@ public class DivinityStrategy {
 
     /**
      * This class implements the right methods based on which divinity card a player has
+     *
      * @param divinityCard is the divinity card that a player has
      */
-    public DivinityStrategy(GlobalVariables.DivinityCard divinityCard){
+    public DivinityStrategy(GlobalVariables.DivinityCard divinityCard) {
 
         bitException = false;
 
@@ -53,7 +54,7 @@ public class DivinityStrategy {
                 turnStrategy = new BaseTurnStrategy();
         }
 
-        switch (divinityCard){
+        switch (divinityCard) {
             case APOLLO:
                 turnEffect = new ApolloTurnEffect();
                 break;
@@ -80,7 +81,7 @@ public class DivinityStrategy {
                 break;
         }
 
-        switch (divinityCard){
+        switch (divinityCard) {
             case ATLAS:
                 specialChoice = "Do you want to build a dome on it?";
                 break;
@@ -101,7 +102,7 @@ public class DivinityStrategy {
                 specialChoice = null;
         }
 
-        switch (divinityCard){
+        switch (divinityCard) {
             case ATLAS:
             case HEPHAESTUS:
                 turnController = new AtlasHephaestusTurnController();
@@ -125,38 +126,81 @@ public class DivinityStrategy {
 
     }
 
+    /**
+     * This method return the strategy of building associated to a specific divinity card
+     *
+     * @return all the possible building of a player calculated from the server
+     */
     public List<int[]> getTurnStrategyBuilding() {
         return turnStrategy.baseBuilding();
     }
 
+    /**
+     * This method return the strategy of movement associated to a specific divinity card
+     *
+     * @return all the possible movements of a player calculated from the server
+     */
     public List<int[]>[] getTurnStrategyMovement() {
         return turnStrategy.baseMovement();
     }
 
-    public void setMovement(int[][] movement){
+    /**
+     * Using the specific divinity effect change the model with a movement
+     *
+     * @param movement is where and with which worker the player wants to move
+     */
+    public void setMovement(int[][] movement) {
         turnEffect.move(movement);
     }
 
-    public void setBuilding(int[] building){
+    /**
+     * Using the specific divinity effect change the model with a build
+     *
+     * @param building is where the player wants to build
+     */
+    public void setBuilding(int[] building) {
         turnEffect.build(building);
     }
 
-    public void setEndTurn(){
+    /**
+     * Using the specific divinity effect a player ends his turn
+     */
+    public void setEndTurn() {
         turnEffect.endTurn();
     }
 
+    /**
+     * Returns the string of special choice associated to the divinity card
+     *
+     * @return the string that a player will read in case of a special choice
+     */
     public String getSpecialChoice() {
         return specialChoice;
     }
 
+    /**
+     * This method return the turn controller that has all the sequence of the turn of a specific divinity card
+     *
+     * @return the turn controller associated to that divinity card
+     */
     public TurnController getTurnController() {
         return turnController;
     }
 
+    /**
+     * This method return true or false if the divinity card trows an exception in the turn of the other divinity cards
+     *
+     * @return the bit exception of the divinity card
+     */
     public boolean isBitException() {
         return bitException;
     }
 
+    /**
+     * This method set if the divinity card trows an exception in the turn of the other divinity cards
+     *
+     * @param bitException the bit exception of the divinity card
+     */
     public void setBitException(boolean bitException) {
         this.bitException = bitException;
     }

@@ -12,8 +12,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 /**
  * This class is the parser. Its function is to process server's commands and call the correct method to proceed in the game
  */
-
-    public class ClientParser implements Runnable{
+    public class ClientParser implements Runnable {
     private final List<String> messagesFromServer;
     private final Socket socket;
     InputStream input;
@@ -26,8 +25,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Constructor of the Parser
-     * @param sock is the socket
-     * @param messages List of string received from the server
+     *
+     * @param sock                is the socket
+     * @param messages            List of string received from the server
      * @param viewMethodSelection Starts method from Gui methods/ Cli methods
      */
 
@@ -107,12 +107,12 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         }
     }
 
-    public void status(String status){
+    public void status(String status) {
         char[] statusReturn = status.toCharArray();
 
-        int[] divinityNumbers = new int[statusReturn.length-1];
+        int[] divinityNumbers = new int[statusReturn.length - 1];
 
-        for (int i = 0; i < statusReturn.length-1; i++){
+        for (int i = 0; i < statusReturn.length - 1; i++) {
             divinityNumbers[i] = Integer.parseInt(String.valueOf(statusReturn[i]));
         }
 
@@ -125,21 +125,21 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      * Close the socket after the game is stopped (for any reason)
      */
 
-    public void socketClose(){
+    public void socketClose() {
         try {
             socket.close();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Show a video message to the player
+     *
      * @param alert is the message to print
      */
 
-    public void alert(String alert){
+    public void alert(String alert) {
         methodSelection.alert(alert);
         sendInt(0);
     }
@@ -194,6 +194,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Shot the actual state of the board to the player
+     *
      * @param board contains a stream of characters that will be used to build the correct board to print
      */
     public void printBoard(String board) {
@@ -236,6 +237,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Send and integer
+     *
      * @param send integer to send
      */
 
@@ -249,8 +251,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     /**
-     * Receive a list of Serialized Integer=(int[]). Method for the movement phase
-     * @return
+     * Receive an array of lists of Serialized Integer=(int[]). Method for the movement phase
+     *
+     * @return an array of lists of Serialized Integer=(int[])
      */
 
     public List<SerializedInteger>[] receiveListArray() {
@@ -260,7 +263,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
         } catch (IOException e) {
             disconnection("Communication error, logging out");
             System.out.println("Communication error, logging out");
-        } catch(ClassNotFoundException e_1){
+        } catch (ClassNotFoundException e_1) {
             System.out.println("Class not found");
         }
         return null;
@@ -268,7 +271,8 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Receive a list of Serialized Integer=(int[]). Method for building phase
-     * @return
+     *
+     * @return a list of Serialized Integer=(int[])
      */
 
     public List<SerializedInteger> receiveList() {
@@ -285,8 +289,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
     }
 
     /**
-     * Receive a list of Serialized Integer. Just for receive the positions of 2 workers
-     * @return
+     * Receive an array of Serialized Integer. Just for receive the positions of 2 workers
+     *
+     * @return an array of Serialized Integer
      */
 
     public SerializedInteger[] receiveWorkers() {
@@ -302,9 +307,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Send a String to the server
+     *
      * @param toServer String to send
      */
-
     public void sendString(String toServer) {
         pr.println(toServer);
         if (pr.checkError())
@@ -313,9 +318,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Receive an integer
+     *
      * @return integer received
      */
-
     public int receiveInt() {
         int n = -1;
         try {
@@ -329,9 +334,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Send an array of DivinityCards
+     *
      * @param cards Array to send
      */
-
     public void sendCards(GlobalVariables.DivinityCard[] cards) {
         try {
             out_obj.writeObject(cards);
@@ -342,9 +347,9 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 
     /**
      * Receive an array of cards.
+     *
      * @return Received array
      */
-
     public GlobalVariables.DivinityCard[] receiveCards() {
         GlobalVariables.DivinityCard[] divinityCards = null;
         try {

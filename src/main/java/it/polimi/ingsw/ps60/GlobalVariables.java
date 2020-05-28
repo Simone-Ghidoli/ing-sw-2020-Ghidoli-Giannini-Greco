@@ -69,7 +69,7 @@ public class GlobalVariables {
 
     public static Board game;
 
-    public enum StringPatterns{
+    public enum StringPatterns {
         IPv4("((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\\.)" +
                 "((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){2}" +
                 "(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])"),
@@ -91,7 +91,7 @@ public class GlobalVariables {
 
         private final String pattern;
 
-        StringPatterns(String pattern){
+        StringPatterns(String pattern) {
             this.pattern = pattern;
         }
 

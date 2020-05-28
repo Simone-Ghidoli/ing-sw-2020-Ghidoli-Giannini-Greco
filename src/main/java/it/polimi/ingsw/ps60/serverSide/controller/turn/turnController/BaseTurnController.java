@@ -11,7 +11,7 @@ public class BaseTurnController implements TurnController {
     Player player;
     boolean lost;
 
-    public void turn(){
+    public void turn() {
         player = game.getPlayerInGame().get();
         lost = false;
 
@@ -71,15 +71,15 @@ public class BaseTurnController implements TurnController {
     /**
      * This method is the sequence of actions in the end turn section
      */
-    public void endTurnSection(){
+    public void endTurnSection() {
         player.getDivinityStrategy().setEndTurn();
     }
 
     /**
      * This method will send the board to all the clients
      */
-    public void sendBoardToClient(){
-        for (ServerThread serverThread : game.getPlayerInGame().get().getServerThread().getServerThreads()){
+    public void sendBoardToClient() {
+        for (ServerThread serverThread : game.getPlayerInGame().get().getServerThread().getServerThreads()) {
             serverThread.sendBoard(game.getCellToSend());
         }
     }

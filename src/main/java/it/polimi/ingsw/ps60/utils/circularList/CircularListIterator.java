@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps60.utils.circularList;
 
-import it.polimi.ingsw.ps60.serverSide.model.Player;
-
 import java.io.Serializable;
 
 public class CircularListIterator<T> implements Serializable {
@@ -10,22 +8,24 @@ public class CircularListIterator<T> implements Serializable {
 
     /**
      * The iterator allow iterate in a list
+     *
      * @param list is the list in which iterate
      */
-    public CircularListIterator(CircularLinkedList<T> list){
+    public CircularListIterator(CircularLinkedList<T> list) {
         node = list.getHead();
-        this.list=list;
+        this.list = list;
     }
 
     /**
      * This method will get the next node of the list
      */
-    public void nextNode(){
+    public void nextNode() {
         node = node.nextNode;
     }
 
     /**
      * This method will return the list where the iterator is pointing
+     *
      * @return the list pointed by the iterator
      */
     public CircularLinkedList<T> getList() {
@@ -34,13 +34,10 @@ public class CircularListIterator<T> implements Serializable {
 
     /**
      * This method will return the value of the node where the iterator is pointing
+     *
      * @return the value of the node pointed by the iterator
      */
-    public T get(){
+    public T get() {
         return node.getValue();
-    }
-
-    public Node<T> getNode(){
-        return node;
     }
 }

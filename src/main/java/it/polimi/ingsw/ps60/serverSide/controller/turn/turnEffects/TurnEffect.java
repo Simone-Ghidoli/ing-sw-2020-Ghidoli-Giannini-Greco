@@ -4,12 +4,14 @@ public interface TurnEffect {
 
     /**
      * This method will change the model for a given move
+     *
      * @param move is the move selected by the player between all the moves provided by the strategy
      */
     void move(int[][] move);
 
     /**
      * This method will change the model for a given build
+     *
      * @param build is the build selected by the player between all the builds provided by the strategy
      */
     void build(int[] build);
