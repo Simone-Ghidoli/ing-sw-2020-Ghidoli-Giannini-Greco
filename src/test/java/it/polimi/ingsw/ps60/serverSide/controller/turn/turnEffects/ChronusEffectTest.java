@@ -15,9 +15,9 @@ public class ChronusEffectTest {
     @Before
     public void setUp() {
         game = new Board(new String[]{"PlayerToCheck", "PlaceHolder"});
-        game.getPlayerMatrix()[0].setDivinityCard(GlobalVariables.DivinityCard.CHRONUS);
+        game.getPlayerMatrix()[1].setDivinityCard(GlobalVariables.DivinityCard.CHRONUS);
         Cell cell1 = game.getCellByPosition(new int[]{1, 1});
-        Cell cell2 = game.getCellByPosition(new int[]{2, 0});
+        Cell cell2 = game.getCellByPosition(new int[]{5, 0});
         Cell cell3 = game.getCellByPosition(new int[]{2, 2});
         Cell cell4 = game.getCellByPosition(new int[]{3, 3});
         game.getPlayerMatrix()[0].getWorker(0).moveWorker(cell1);
@@ -33,7 +33,7 @@ public class ChronusEffectTest {
         testUtilities.buildDome(new int[]{3,1});
         testUtilities.buildsNTimes(new int[]{4, 0}, 3);
         testUtilities.buildDome(new int[]{4,0});
-        testUtilities.buildsNTimes(new int[]{2, 3}, 3);
+        testUtilities.buildsNTimes(new int[]{3, 0}, 3);
     }
     @Test
     public void checkChronusEffect(){
@@ -41,16 +41,17 @@ public class ChronusEffectTest {
         mossa1[0][0] = 0;
         mossa1[0][1] = 0;
         mossa1[1] = new int[]{0,1};
-        game.getPlayerMatrix()[1].getDivinityStrategy().setBuilding(new int[]{2,3});
-        game.getPlayerMatrix()[1].getDivinityStrategy().setEndTurn();
-        assertTrue(game.getCellByPosition(new int[]{2,3}).isDomed());
-        assertSame(5,game.getCompleteTower());
-
-        assertEquals(null,game.getPlayerWinner());
 
         game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(mossa1);
         game.getPlayerMatrix()[0].getDivinityStrategy().setBuilding(new int[]{1,0});
         game.getPlayerMatrix()[0].getDivinityStrategy().setEndTurn();
-        assertEquals(game.getPlayerMatrix()[0],game.getPlayerWinner());
+
+        assertNull(game.getPlayerWinner());
+
+        game.getPlayerMatrix()[1].getDivinityStrategy().setMovement(new int[][]{new int[]{0, 0}, new int[]{2, 0}});
+        game.getPlayerMatrix()[1].getDivinityStrategy().setBuilding(new int[]{3,0});
+        game.getPlayerMatrix()[1].getDivinityStrategy().setEndTurn();
+
+        assertEquals(game.getPlayerMatrix()[1],game.getPlayerWinner());
     }
 }

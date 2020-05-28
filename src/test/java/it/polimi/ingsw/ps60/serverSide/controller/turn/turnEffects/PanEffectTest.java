@@ -37,6 +37,7 @@ public class PanEffectTest {
         mossa1[0][1] = 0;
         mossa1[1] = new int[]{0,0};
         game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(mossa1);
+        game.getPlayerMatrix()[0].getDivinityStrategy().setBuilding(new int[]{4, 4});
         game.getPlayerMatrix()[0].getDivinityStrategy().setEndTurn();
         assertEquals(game.getPlayerMatrix()[0],game.getPlayerWinner());
     }

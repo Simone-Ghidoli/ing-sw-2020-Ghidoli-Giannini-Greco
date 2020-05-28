@@ -16,8 +16,8 @@ public class ApolloTurnEffect extends BaseTurnEffect {
             game.getCellByPosition(move[1]).getWorkerIn().moveWorker(player.getWorker(move[0][0]).getCellPosition());
             player.getWorker(move[0][0]).moveWorker(game.getCellByPosition(move[1]));
             player.getWorker(move[0][0]).getOldCell().setWorkerIn(worker);
+            player.setWorkerMoved(player.getWorker(move[0][0]));
         } else
-            player.getWorker(move[0][0]).moveWorker(game.getCellByPosition(move[1]));
-        player.setWorkerMoved(player.getWorker(move[0][0]));
+            super.move(move);
     }
 }

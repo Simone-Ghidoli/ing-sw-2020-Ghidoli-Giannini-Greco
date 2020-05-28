@@ -9,10 +9,10 @@ public class AtlasTurnEffect extends BaseTurnEffect {
     @Override
     public void build(int[] build) {
         Cell cell = game.getCellByPosition(build);
-        if (cell.getBuildingLevel() == 3 || build[2] == 1)
+        if (build[2] == 1) {
             cell.buildDome();
-        else
-            cell.incrementBuildingLevel();
-        game.getPlayerInGame().get().setBuildByWorker(true);
+            game.getPlayerInGame().get().setBuildByWorker(true);
+        } else
+            super.build(build);
     }
 }

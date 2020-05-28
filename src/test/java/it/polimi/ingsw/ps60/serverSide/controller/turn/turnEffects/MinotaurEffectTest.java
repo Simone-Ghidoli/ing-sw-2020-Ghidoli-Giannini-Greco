@@ -26,16 +26,16 @@ public class MinotaurEffectTest {
         game.getPlayerMatrix()[1].getWorker(0).moveWorker(cell3);
         game.getPlayerMatrix()[1].getWorker(1).moveWorker(cell4);
         testUtilities.buildsNTimes(new int[]{4, 0}, 3);
-
     }
+
     @Test
-    public void checkMinotaurEffect(){
+    public void checkMinotaurEffect() {
         int[][] mossa1 = new int[2][2];
-        mossa1[0][0] = 0;
+        mossa1[0][0] = 1;
         mossa1[0][1] = 0;
-        mossa1[1] = new int[]{3,0};
+        mossa1[1] = new int[]{3, 0};
         game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(mossa1);
-        assertEquals(game.getCellByPosition(new int[]{4,0}),game.getPlayerMatrix()[1].getWorker(1).getCellPosition());
-        assertEquals(game.getCellByPosition(new int[]{3,0}),game.getPlayerMatrix()[0].getWorker(0).getCellPosition());
+        assertEquals(game.getCellByPosition(new int[]{4, 0}), game.getPlayerMatrix()[1].getWorker(1).getCellPosition());
+        assertEquals(game.getCellByPosition(new int[]{3, 0}), game.getPlayerMatrix()[0].getWorker(1).getCellPosition());
     }
 }
