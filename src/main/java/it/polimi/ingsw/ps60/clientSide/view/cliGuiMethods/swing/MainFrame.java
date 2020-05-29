@@ -46,8 +46,6 @@ public class MainFrame extends JPanel {
         board.add(workers, BorderLayout.NORTH);
         board.add(info, BorderLayout.SOUTH);
 
-        setDivinityCardImage(new int[]{0, 1, 14}, 1);
-
         for (int i = 0; i < 25; i++) {
             jButtons[i] = new JButton();
             jButtons[i].setContentAreaFilled(false);
