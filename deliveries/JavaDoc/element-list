@@ -1,0 +1,13 @@
+it.polimi.ingsw.ps60
+it.polimi.ingsw.ps60.clientSide.view.client
+it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods
+it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing
+it.polimi.ingsw.ps60.serverSide.controller
+it.polimi.ingsw.ps60.serverSide.controller.turn
+it.polimi.ingsw.ps60.serverSide.controller.turn.turnController
+it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects
+it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy
+it.polimi.ingsw.ps60.serverSide.model
+it.polimi.ingsw.ps60.serverSide.server
+it.polimi.ingsw.ps60.utils
+it.polimi.ingsw.ps60.utils.circularList

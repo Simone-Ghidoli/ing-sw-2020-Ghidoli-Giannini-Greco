@@ -9,7 +9,6 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>PS60</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
@@ -28,7 +27,7 @@
       <dependency>
           <groupId>org.jetbrains</groupId>
           <artifactId>annotations-java5</artifactId>
-          <version>RELEASE</version>
+          <version>19.0.0</version>
           <scope>compile</scope>
       </dependency>
   </dependencies>
@@ -74,6 +73,26 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.2.1</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                <transformers>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <mainClass>it.polimi.ingsw.ps60.Launcher</mainClass>
+                  </transformer>
+                </transformers>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>

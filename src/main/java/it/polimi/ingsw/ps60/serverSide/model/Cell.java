@@ -16,6 +16,7 @@ public class Cell implements Serializable {
      * and it will not be with a dome on it (domed = false)
      *
      * @param position associate to the cell a position in the board
+     * @param board is the board associated to the cell
      */
     public Cell(int[] position, Board board) {
         this.position = position;

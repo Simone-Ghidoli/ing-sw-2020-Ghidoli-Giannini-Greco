@@ -88,6 +88,9 @@ public  class Server {
 
     /**
      * Check the uniqueness of the username
+     *
+     * @param current is the name that has to be tested
+     * @return true if there are no problems, false otherwise
      */
     public boolean nameProblem(String current) {
         for (String[] elem : nickBirth) {

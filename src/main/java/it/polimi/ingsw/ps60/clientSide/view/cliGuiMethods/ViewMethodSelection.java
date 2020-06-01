@@ -5,10 +5,7 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 import java.util.List;
 
 public interface ViewMethodSelection {
-
-    /**
-     * This method will only print the board
-     * These are the ascii (from #48 to #67) value in the string provided as parameter
+    /*
      * value   high    player  ascii
      * 0       0       no      #48
      * 1       1       no      #49
@@ -26,12 +23,17 @@ public interface ViewMethodSelection {
      * =       1       2       #61
      * >       2       2       #62
      * ?       3       2       #63
-     *
-     * @param board the 25 characters represents every position of the board as declared previously
-     * @ 0       3       #64
+     * @       0       3       #64
      * A       1       3       #65
      * B       2       3       #66
      * C       3       3       #67
+    */
+
+    /**
+     * This method will only print the board
+     * These are the ascii (from #48 to #67) value in the string provided as parameter
+     *
+     * @param board the 25 characters represents every position of the board as declared previously
      */
     void printBoard(String board);
 

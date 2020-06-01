@@ -210,8 +210,9 @@ public class ServerThread extends Thread {
 
     /**
      * Send a String and check that success of the operation
+     *
+     * @param message this is the message that will be sent to the client
      */
-
     public void sendString(String message) {
         writer.println(message);
         if (writer.checkError()) {
@@ -237,9 +238,8 @@ public class ServerThread extends Thread {
     /**
      * send a list of Positions (SerializedInteger). Used for the building phase
      *
-     * @param list
+     * @param list is the list of positions that has to be sent
      */
-
     public void sendPositionsList(List<SerializedInteger> list) {
         try {
             receiveInteger();
