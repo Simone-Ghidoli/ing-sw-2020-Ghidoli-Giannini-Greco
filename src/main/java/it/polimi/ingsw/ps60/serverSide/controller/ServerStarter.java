@@ -13,7 +13,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.input;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
@@ -105,12 +106,10 @@ public class ServerStarter {
      * @return the port number
      */
     private int portSelection() {
-        Scanner input = new Scanner(System.in);
         String port = null;
 
-        System.out.println("Enter the port number");
-
         while (port == null) {
+            System.out.println("Enter the port number");
             port = input.nextLine();
             if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port)) {
                 System.out.println("Wrong input");

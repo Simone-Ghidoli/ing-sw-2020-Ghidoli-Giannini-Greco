@@ -1,11 +1,11 @@
 package it.polimi.ingsw.ps60;
 
-import java.util.Scanner;
-
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.CLIMethods;
 import it.polimi.ingsw.ps60.clientSide.view.client.ClientStarter;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods;
 import it.polimi.ingsw.ps60.serverSide.controller.ServerStarter;
+
+import static it.polimi.ingsw.ps60.GlobalVariables.input;
 
 public class Launcher {
 
@@ -20,7 +20,7 @@ public class Launcher {
 
         System.out.println("Enter 0 for server, 1 for client");
 
-        switch (new Scanner(System.in).nextLine()) {
+        switch (input.nextLine()) {
             case "0":
                 new ServerStarter().start();
                 break;
@@ -39,7 +39,7 @@ public class Launcher {
     private static void clientSelection() {
         System.out.println("Enter 0 for GUI, 1 for CLI");
 
-        switch (new Scanner(System.in).nextLine()) {
+        switch (input.nextLine()) {
             case "0":
                 new ClientStarter(new GUIMethods()).start();
                 break;

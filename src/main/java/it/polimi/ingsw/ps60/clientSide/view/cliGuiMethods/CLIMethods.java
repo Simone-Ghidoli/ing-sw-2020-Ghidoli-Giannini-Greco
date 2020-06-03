@@ -5,15 +5,13 @@ import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
 import java.util.List;
-import java.util.Scanner;
 
-import static it.polimi.ingsw.ps60.utils.FlushInput.flushInput;
+import static it.polimi.ingsw.ps60.GlobalVariables.input;
 
 /**
  * This class contains all "cli methods". If the player choose to use the cli the software gonna call these methods
  * Docs with explanations are in the interface
  */
-
 public class CLIMethods implements ViewMethodSelection {
 
     private int turnNumber;
@@ -93,15 +91,7 @@ public class CLIMethods implements ViewMethodSelection {
     @Override
     public int moveChoice(List<int[]>[] moves, int[][] positionsWorkers) {
         int i = printPossibleMoves(moves, positionsWorkers);
-        flushInput();
-        int choice = new Scanner(System.in).nextInt();
-
-        if (choice > i) {
-            System.out.println("Wrong input");
-            return moveChoice(moves, positionsWorkers);
-        } else {
-            return choice - 1;
-        }
+        return input.nextInt(i, 1) - 1;
     }
 
     /**
@@ -124,14 +114,7 @@ public class CLIMethods implements ViewMethodSelection {
     @Override
     public int buildChoice(List<int[]> moves) {
         int i = printPossibleBuilds(moves);
-        flushInput();
-        int choice = new Scanner(System.in).nextInt();
-
-        if (choice > i) {
-            System.out.println("Wrong input");
-            return buildChoice(moves);
-        } else
-            return choice - 1;
+        return input.nextInt(i, 1);
     }
 
     @Override
@@ -140,8 +123,6 @@ public class CLIMethods implements ViewMethodSelection {
         String port = null;
 
         System.out.println("Enter the IP address of server");
-        Scanner input = new Scanner(System.in);
-        flushInput();
 
         while (ip == null) {
             ip = input.nextLine();
@@ -152,7 +133,6 @@ public class CLIMethods implements ViewMethodSelection {
         }
 
         System.out.println("Enter the port number");
-        flushInput();
 
         while (port == null) {
             port = input.nextLine();
@@ -170,9 +150,6 @@ public class CLIMethods implements ViewMethodSelection {
         String nickname = null;
         String birthday = null;
 
-        Scanner input = new Scanner(System.in);
-        flushInput();
-
         while (nickname == null) {
             System.out.println("Enter your nickname");
             nickname = input.nextLine();
@@ -181,7 +158,6 @@ public class CLIMethods implements ViewMethodSelection {
                 nickname = null;
             }
         }
-        flushInput();
 
         while (birthday == null) {
             System.out.println("Enter your birthday. [yyyy/MM/gg]");
@@ -209,14 +185,12 @@ public class CLIMethods implements ViewMethodSelection {
             System.out.println((i + 1) + "- " + allCards[i].toString());
         }
 
-        Scanner input = new Scanner(System.in);
         StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.DivinityCard.getPattern());
 
         for (int j = 0; j < playerNumber; j++) {
             System.out.println("Enter card number " + (j + 1));
 
             choice = null;
-            flushInput();
             while (choice == null) {
                 choice = input.nextLine();
                 if (!stringRegexValidation.isValid(choice)) {
@@ -231,26 +205,12 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card) {
-        String string = null;
-
         System.out.println("Select one card between:");
 
         for (int i = 0; i < card.length; i++)
             System.out.println((i + 1) + "- " + card[i].toString());
 
-        Scanner input = new Scanner(System.in);
-        StringRegexValidation stringRegexValidation = new StringRegexValidation("([1-" + card.length + "]){1}");
-
-        flushInput();
-        while (string == null) {
-            string = input.nextLine();
-            if (!stringRegexValidation.isValid(string)) {
-                string = null;
-                System.out.println("Wrong input");
-            }
-        }
-
-        return card[Integer.parseInt(string) - 1];
+        return card[input.nextInt(card.length, 1) - 1];
     }
 
     @Override
@@ -279,35 +239,17 @@ public class CLIMethods implements ViewMethodSelection {
             }
         }
 
-        Scanner input = new Scanner(System.in);
-        flushInput();
-
         for (int i = 0; i < 2; i++) {
             buffer = new int[2];
             while (choice[i] == null) {
                 System.out.println("\nEnter the position of the " + (i + 1) + " worker");
                 System.out.println("Enter the x coordinate");
 
-                while (buffer[0] == 0) {
-                    buffer[0] = input.nextInt();
-                    if (buffer[0] > 5 || buffer[0] < 1) {
-                        System.out.println("Wrong input");
-                        buffer[0] = 0;
-                    }
-                }
-
-                buffer[0] = buffer[0] - 1;
+                buffer[0] = input.nextInt(5, 1) - 1;
 
                 System.out.println("Enter the y coordinate");
-                while (buffer[1] == 0) {
-                    buffer[1] = input.nextInt();
-                    if (buffer[1] > 5 || buffer[1] < 1) {
-                        System.out.println("Wrong input");
-                        buffer[1] = 0;
-                    }
-                }
 
-                buffer[1] = buffer[1] - 1;
+                buffer[1] = input.nextInt(5, 1) - 1;
 
                 if (!listContains.isContained(buffer)) {
                     choice[i] = buffer;
@@ -326,11 +268,9 @@ public class CLIMethods implements ViewMethodSelection {
         System.out.println(string);
         System.out.println("Enter 1 for yes or 0 for no");
 
-        Scanner input = new Scanner(System.in);
         StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.Boolean1True0False.getPattern());
 
         choice = null;
-        flushInput();
         while (choice == null) {
             choice = input.nextLine();
             if (!stringRegexValidation.isValid(choice)) {
@@ -345,15 +285,14 @@ public class CLIMethods implements ViewMethodSelection {
     @Override
     public int numberOfPlayers() {
         String numberOfPlayers;
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter the number of player. [2 or 3]");
         StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.NumberOfPlayer.getPattern());
 
         numberOfPlayers = null;
-        flushInput();
+
         while (numberOfPlayers == null) {
-            numberOfPlayers = scanner.nextLine();
+            numberOfPlayers = input.nextLine();
             if (!stringRegexValidation.isValid(numberOfPlayers)) {
                 numberOfPlayers = null;
                 System.out.println("Wrong input");

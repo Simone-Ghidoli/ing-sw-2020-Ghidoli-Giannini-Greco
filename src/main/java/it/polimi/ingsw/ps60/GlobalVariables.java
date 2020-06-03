@@ -1,11 +1,14 @@
 package it.polimi.ingsw.ps60;
 
 import it.polimi.ingsw.ps60.serverSide.model.Board;
+import it.polimi.ingsw.ps60.utils.FlushedInput;
 
 import java.awt.*;
 import java.io.Serializable;
 
 public class GlobalVariables {
+
+    public static FlushedInput input = new FlushedInput();
 
     public enum IdPlayer {
         PLAYER1(Colour.RED, "Red "),
