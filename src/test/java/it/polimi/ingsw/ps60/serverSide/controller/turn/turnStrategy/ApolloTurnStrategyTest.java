@@ -43,7 +43,7 @@ public class ApolloTurnStrategyTest {
     @Test
     public void movementTest(){
         DivinityStrategy div=new DivinityStrategy(GlobalVariables.DivinityCard.APOLLO);
-        List<int[]>[] current=new ArrayList[2];
+        List<int[]>[] current;
         List<int[]> expected=new ArrayList<>();
         expected.add(new int[]{0,1});
         expected.add(new int[]{0,2});
