@@ -1,0 +1,68 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TurnStrategy</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TurnStrategy (it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">TurnStrategy</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.List;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public interface TurnStrategy {
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;    /**
+<i>8</i>&nbsp;     * This method will provide to the player all the possible moves allowed by all his workers
+<i>9</i>&nbsp;     *
+<i>10</i>&nbsp;     * @return an array of list of possible moves. In the first list there is the moves allowed for the worker 1,
+<i>11</i>&nbsp;     * in the second those of the second
+<i>12</i>&nbsp;     */
+<i>13</i>&nbsp;    List&lt;int[]&gt;[] baseMovement();
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * This method will provide to the player all the possible builds allowed by the worker that has moved
+<i>17</i>&nbsp;     *
+<i>18</i>&nbsp;     * @return a list of possible builds for the worker that has been moved
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    List&lt;int[]&gt; baseBuilding();
+<i>21</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Launcher</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Launcher (it.polimi.ingsw.ps60)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Launcher</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.CLIMethods;
+<i>4</i>&nbsp;import it.polimi.ingsw.ps60.clientSide.view.client.ClientStarter;
+<i>5</i>&nbsp;import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods;
+<i>6</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.controller.ServerStarter;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import static it.polimi.ingsw.ps60.GlobalVariables.input;
+<i>9</i>&nbsp;
+<b class="nc"><i>10</i>&nbsp;public class Launcher {</b>
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    public static void main(String[] args) {
+<b class="nc"><i>13</i>&nbsp;        firstSelections();</b>
+<i>14</i>&nbsp;    }
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * This method will makes able to select to run a client or a server
+<i>18</i>&nbsp;     */
+<i>19</i>&nbsp;    public static void firstSelections() {
+<i>20</i>&nbsp;
+<b class="nc"><i>21</i>&nbsp;        System.out.println(&quot;Enter 0 for server, 1 for client&quot;);</b>
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;        switch (input.nextLine()) {</b>
+<i>24</i>&nbsp;            case &quot;0&quot;:
+<b class="nc"><i>25</i>&nbsp;                new ServerStarter().start();</b>
+<b class="nc"><i>26</i>&nbsp;                break;</b>
+<i>27</i>&nbsp;            case &quot;1&quot;:
+<b class="nc"><i>28</i>&nbsp;                clientSelection();</b>
+<b class="nc"><i>29</i>&nbsp;                break;</b>
+<i>30</i>&nbsp;            default:
+<b class="nc"><i>31</i>&nbsp;                System.out.println(&quot;Wrong input&quot;);</b>
+<b class="nc"><i>32</i>&nbsp;                firstSelections();</b>
+<i>33</i>&nbsp;        }
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * This method makes the player able to choice if he wants to play in CLI or GUI
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    private static void clientSelection() {
+<b class="nc"><i>40</i>&nbsp;        System.out.println(&quot;Enter 0 for GUI, 1 for CLI&quot;);</b>
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;        switch (input.nextLine()) {</b>
+<i>43</i>&nbsp;            case &quot;0&quot;:
+<b class="nc"><i>44</i>&nbsp;                new ClientStarter(new GUIMethods()).start();</b>
+<b class="nc"><i>45</i>&nbsp;                break;</b>
+<i>46</i>&nbsp;            case &quot;1&quot;:
+<b class="nc"><i>47</i>&nbsp;                new ClientStarter(new CLIMethods()).start();</b>
+<b class="nc"><i>48</i>&nbsp;                break;</b>
+<i>49</i>&nbsp;            default:
+<b class="nc"><i>50</i>&nbsp;                System.out.println(&quot;Wrong input&quot;);</b>
+<b class="nc"><i>51</i>&nbsp;                clientSelection();</b>
+<i>52</i>&nbsp;        }
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

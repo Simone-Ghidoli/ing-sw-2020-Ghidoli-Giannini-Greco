@@ -1,0 +1,135 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ArtemisTurnStrategy</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ArtemisTurnStrategy (it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ArtemisTurnStrategy</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.model.Cell;
+<i>4</i>&nbsp;import it.polimi.ingsw.ps60.utils.ListContains;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import static it.polimi.ingsw.ps60.GlobalVariables.game;
+<i>9</i>&nbsp;
+<b class="fc"><i>10</i>&nbsp;public class ArtemisTurnStrategy extends BaseTurnStrategy {</b>
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    /**
+<i>13</i>&nbsp;     * A player should be able to move 2 times in a row, but not back in the initial space
+<i>14</i>&nbsp;     *
+<i>15</i>&nbsp;     * @return the list of possible positions to move
+<i>16</i>&nbsp;     */
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    @Override
+<i>19</i>&nbsp;    public List&lt;int[]&gt;[] baseMovement() {
+<i>20</i>&nbsp;
+<b class="fc"><i>21</i>&nbsp;        List&lt;int[]&gt;[] positions = super.baseMovement();</b>
+<i>22</i>&nbsp;        int numberOfIterations;
+<i>23</i>&nbsp;        int[] positionWorker;
+<i>24</i>&nbsp;        Cell cell;
+<b class="fc"><i>25</i>&nbsp;        Cell[] cellWorker = {game.getPlayerInGame().get().getWorkers()[0].getCellPosition(),</b>
+<b class="fc"><i>26</i>&nbsp;                game.getPlayerInGame().get().getWorkers()[1].getCellPosition()};</b>
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;        for (int k = 0; k &lt; 2; k++) {</b>
+<b class="fc"><i>29</i>&nbsp;            numberOfIterations = positions[k].size();</b>
+<b class="fc"><i>30</i>&nbsp;            for (int l = 0; l &lt; numberOfIterations; l++) {</b>
+<b class="fc"><i>31</i>&nbsp;                positionWorker = positions[k].get(l);</b>
+<b class="fc"><i>32</i>&nbsp;                for (int i = -1; i &lt; 2; i++) {</b>
+<b class="fc"><i>33</i>&nbsp;                    for (int j = -1; j &lt; 2; j++) {</b>
+<b class="fc"><i>34</i>&nbsp;                        if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null</b>
+<i>35</i>&nbsp;                                &amp;&amp; cell != cellWorker[k] &amp;&amp; !(i == 0 &amp;&amp; j == 0)) {
+<b class="fc"><i>36</i>&nbsp;                            if (cell.isFree()) {</b>
+<b class="fc"><i>37</i>&nbsp;                                if (cell.getBuildingLevel() &lt;= game.getCellByPosition(positionWorker).getBuildingLevel() + 1) {</b>
+<b class="fc"><i>38</i>&nbsp;                                    if (!cell.isDomed()) {</b>
+<b class="fc"><i>39</i>&nbsp;                                        if (isNotDisturbedByDivinity(cell.getPosition(), new int[]{positionWorker[0] + i, positionWorker[1] + j}))</b>
+<b class="fc"><i>40</i>&nbsp;                                            if (!new ListContains(positions[k]).isContained(cell.getPosition()))</b>
+<b class="fc"><i>41</i>&nbsp;                                                positions[k].add(cell.getPosition());</b>
+<i>42</i>&nbsp;                                    }
+<i>43</i>&nbsp;                                }
+<i>44</i>&nbsp;                            }
+<i>45</i>&nbsp;                        }
+<i>46</i>&nbsp;                    }
+<i>47</i>&nbsp;                }
+<i>48</i>&nbsp;            }
+<i>49</i>&nbsp;        }
+<b class="fc"><i>50</i>&nbsp;        return positions;</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,273 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GlobalVariables</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GlobalVariables (it.polimi.ingsw.ps60)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GlobalVariables</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GlobalVariables$Colour</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GlobalVariables$DivinityCard</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.9%
+  </span>
+  <span class="absValue">
+    (8/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GlobalVariables$IdPlayer</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GlobalVariables$StringPatterns</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    44.4%
+  </span>
+  <span class="absValue">
+    (8/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    53.7%
+  </span>
+  <span class="absValue">
+    (22/ 41)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.model.Board;
+<i>4</i>&nbsp;import it.polimi.ingsw.ps60.utils.FlushedInput;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.awt.*;
+<i>7</i>&nbsp;import java.io.Serializable;
+<i>8</i>&nbsp;
+<b class="nc"><i>9</i>&nbsp;public class GlobalVariables {</b>
+<i>10</i>&nbsp;
+<b class="fc"><i>11</i>&nbsp;    public static final FlushedInput input = new FlushedInput();</b>
+<i>12</i>&nbsp;
+<b class="fc"><i>13</i>&nbsp;    public static final ClassLoader classLoader = ClassLoader.getSystemClassLoader();</b>
+<i>14</i>&nbsp;
+<b class="nc"><i>15</i>&nbsp;    public enum IdPlayer {</b>
+<b class="nc"><i>16</i>&nbsp;        PLAYER1(Colour.RED, &quot;Red &quot;),</b>
+<b class="nc"><i>17</i>&nbsp;        PLAYER2(Colour.BLUE, &quot;Blue &quot;),</b>
+<b class="nc"><i>18</i>&nbsp;        PLAYER3(Colour.GREEN, &quot;Green &quot;);</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;        private final Colour colour;
+<i>21</i>&nbsp;        private final String sourcePawn;
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;        IdPlayer(Colour colour, String sourcePawn) {</b>
+<b class="nc"><i>24</i>&nbsp;            this.colour = colour;</b>
+<b class="nc"><i>25</i>&nbsp;            this.sourcePawn = &quot;board/&quot; + sourcePawn + &quot;pawn.png&quot;;</b>
+<i>26</i>&nbsp;        }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;        public Colour getColour() {
+<b class="nc"><i>29</i>&nbsp;            return colour;</b>
+<i>30</i>&nbsp;        }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;        public String getSourcePawn() {
+<b class="nc"><i>33</i>&nbsp;            return sourcePawn;</b>
+<i>34</i>&nbsp;        }
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<b class="fc"><i>37</i>&nbsp;    public enum DivinityCard implements Serializable {</b>
+<b class="fc"><i>38</i>&nbsp;        APOLLO(&quot;01&quot;), ARTEMIS(&quot;02&quot;), ATHENA(&quot;03&quot;),</b>
+<b class="fc"><i>39</i>&nbsp;        ATLAS(&quot;04&quot;), DEMETER(&quot;05&quot;), HEPHAESTUS(&quot;06&quot;), MINOTAUR(&quot;08&quot;),</b>
+<b class="fc"><i>40</i>&nbsp;        PAN(&quot;09&quot;), PROMETHEUS(&quot;10&quot;), ZEUS(&quot;30&quot;), TRITON(&quot;29&quot;),</b>
+<b class="fc"><i>41</i>&nbsp;        CHRONUS(&quot;16&quot;), HESTIA(&quot;21&quot;), POSEIDON(&quot;27&quot;), NONE(&quot;00&quot;);</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;        private final String sourcePosition;
+<i>44</i>&nbsp;
+<b class="fc"><i>45</i>&nbsp;        DivinityCard(String sourcePosition) {</b>
+<b class="fc"><i>46</i>&nbsp;            this.sourcePosition = &quot;godCards/&quot; + sourcePosition + &quot;.png&quot;;</b>
+<b class="fc"><i>47</i>&nbsp;        }</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;        public String getSourcePosition() {
+<b class="nc"><i>50</i>&nbsp;            return sourcePosition;</b>
+<i>51</i>&nbsp;        }
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<b class="nc"><i>54</i>&nbsp;    public enum Colour {</b>
+<b class="nc"><i>55</i>&nbsp;        RED(&quot;\033[0;31m&quot;, Color.RED), BLUE(&quot;\033[0;34m&quot;, Color.BLUE), GREEN(&quot;\033[0;32m&quot;, Color.GREEN),</b>
+<b class="nc"><i>56</i>&nbsp;        YELLOW(&quot;\033[0;33m&quot;, Color.YELLOW), RESET(&quot;\033[0m&quot;, Color.BLACK);</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;        private final String string;
+<i>59</i>&nbsp;        private final Color color;
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;        Colour(String code, Color color) {</b>
+<b class="nc"><i>62</i>&nbsp;            this.string = code;</b>
+<b class="nc"><i>63</i>&nbsp;            this.color = color;</b>
+<i>64</i>&nbsp;        }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;        public String getString() {
+<b class="nc"><i>67</i>&nbsp;            return string;</b>
+<i>68</i>&nbsp;        }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;        public Color getColor() {
+<b class="nc"><i>71</i>&nbsp;            return color;</b>
+<i>72</i>&nbsp;        }
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public static Board game;
+<i>76</i>&nbsp;
+<b class="fc"><i>77</i>&nbsp;    public enum StringPatterns {</b>
+<b class="fc"><i>78</i>&nbsp;        IPv4(&quot;((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\\.)&quot; +</b>
+<i>79</i>&nbsp;                &quot;((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){2}&quot; +
+<i>80</i>&nbsp;                &quot;(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])&quot;),
+<i>81</i>&nbsp;
+<b class="fc"><i>82</i>&nbsp;        PortNumber(&quot;(4915[2-9]|491[6-9][0-9]|49[2-9][0-9][0-9]|5[0-9][0-9][0-9][0-9]|6[0-4][0-9][0-9][0-9]|&quot; +</b>
+<i>83</i>&nbsp;                &quot;65[0-4][0-9][0-9]|655[0-2][0-9]|6553[0-5])&quot;),
+<i>84</i>&nbsp;
+<b class="fc"><i>85</i>&nbsp;        Nickname(&quot;([a-z|A-Z|0-9]){3,10}+&quot;),</b>
+<i>86</i>&nbsp;
+<b class="fc"><i>87</i>&nbsp;        NumberOfPlayer(&quot;[2-3]&quot;),</b>
+<i>88</i>&nbsp;
+<b class="fc"><i>89</i>&nbsp;        DivinityCard(&quot;([1-9]|1[0-4])&quot;),</b>
+<i>90</i>&nbsp;
+<b class="fc"><i>91</i>&nbsp;        Boolean1True0False(&quot;([0-1])&quot;),</b>
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;        Date(&quot;(19[0-9][0-9]|20[0-1][0-9]|2020])/(((01|03|05|07|08|10|12)/&quot; +</b>
+<i>94</i>&nbsp;                &quot;(0[1-9]|[1-2][0-9]|3[0-1]))|((04|06|09|11)/&quot; +
+<i>95</i>&nbsp;                &quot;(0[1-9]|[1-2][0-9]|30))|((02)/(0[1-9]|1[0-9]|2[0-9])))&quot;);
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;        private final String pattern;
+<i>98</i>&nbsp;
+<b class="fc"><i>99</i>&nbsp;        StringPatterns(String pattern) {</b>
+<b class="fc"><i>100</i>&nbsp;            this.pattern = pattern;</b>
+<b class="fc"><i>101</i>&nbsp;        }</b>
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;        public String getPattern() {
+<b class="fc"><i>104</i>&nbsp;            return pattern;</b>
+<i>105</i>&nbsp;        }
+<i>106</i>&nbsp;    }
+<i>107</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

@@ -46,6 +46,5 @@ public class BaseTurnEffectTest {
         game.getPlayerInGame().get().getDivinityStrategy().setBuilding(new int[]{4, 4});
         game.getPlayerInGame().get().getDivinityStrategy().setEndTurn();
         assertEquals(game.getPlayerMatrix()[1],game.getPlayerWinner());
-
     }
 }

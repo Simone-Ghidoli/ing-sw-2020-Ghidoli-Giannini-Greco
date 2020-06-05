@@ -1,0 +1,132 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ApolloTurnStrategy</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ApolloTurnStrategy (it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ApolloTurnStrategy</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/ 16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.model.Cell;
+<i>4</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.model.Player;
+<i>5</i>&nbsp;import static it.polimi.ingsw.ps60.GlobalVariables.game;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<b class="fc"><i>10</i>&nbsp;public class ApolloTurnStrategy extends BaseTurnStrategy {</b>
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    /**
+<i>13</i>&nbsp;     * A player can move his worker into an opponent&#39;s space forcing opponent&#39;s worker to the space the first one
+<i>14</i>&nbsp;     * just vacated.
+<i>15</i>&nbsp;     * Standard build phase
+<i>16</i>&nbsp;     *
+<i>17</i>&nbsp;     * @return A list containing all the possible moves
+<i>18</i>&nbsp;     */
+<i>19</i>&nbsp;    @Override
+<i>20</i>&nbsp;    public List&lt;int[]&gt;[] baseMovement() {
+<b class="fc"><i>21</i>&nbsp;        Player playerInGame = game.getPlayerInGame().get();</b>
+<b class="fc"><i>22</i>&nbsp;        Cell[] cellWorker = {playerInGame.getWorkers()[0].getCellPosition(), playerInGame.getWorkers()[1].getCellPosition()};</b>
+<b class="fc"><i>23</i>&nbsp;        List&lt;int[]&gt;[] positions = new ArrayList[2];</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;        int[] positionWorker;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;        Cell cell;
+<i>28</i>&nbsp;
+<b class="fc"><i>29</i>&nbsp;        for (int k = 0; k &lt; 2; k++) {</b>
+<b class="fc"><i>30</i>&nbsp;            positions[k] = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>31</i>&nbsp;            positionWorker = cellWorker[k].getPosition();</b>
+<b class="fc"><i>32</i>&nbsp;            for (int i = -1; i &lt; 2; i++) {</b>
+<b class="fc"><i>33</i>&nbsp;                for (int j = -1; j &lt; 2; j++) {</b>
+<b class="fc"><i>34</i>&nbsp;                    if ((cell = game.getCellByPosition(new int[]{positionWorker[0] + i, positionWorker[1] + j})) != null &amp;&amp; !(i == 0 &amp;&amp; j == 0)) {</b>
+<b class="fc"><i>35</i>&nbsp;                        if (cell.getBuildingLevel() &lt;= cellWorker[k].getBuildingLevel() + 1) {</b>
+<b class="fc"><i>36</i>&nbsp;                            if (cell.getWorkerIn() != playerInGame.getWorker(0) &amp;&amp; cell.getWorkerIn() != playerInGame.getWorker(1)) {</b>
+<b class="fc"><i>37</i>&nbsp;                                if (!cell.isDomed()) {</b>
+<b class="fc"><i>38</i>&nbsp;                                    if (isNotDisturbedByDivinity(positionWorker, new int[]{positionWorker[0] + i, positionWorker[1] + j}))</b>
+<b class="fc"><i>39</i>&nbsp;                                        positions[k].add(new int[]{positionWorker[0] + i, positionWorker[1] + j});</b>
+<i>40</i>&nbsp;                                }
+<i>41</i>&nbsp;                            }
+<i>42</i>&nbsp;                        }
+<i>43</i>&nbsp;                    }
+<i>44</i>&nbsp;                }
+<i>45</i>&nbsp;            }
+<i>46</i>&nbsp;        }
+<b class="fc"><i>47</i>&nbsp;        return positions;</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

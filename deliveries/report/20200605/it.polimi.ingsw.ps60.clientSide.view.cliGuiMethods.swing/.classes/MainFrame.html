@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MainFrame</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MainFrame (it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainFrame</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 71)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing;
+<i>2</i>&nbsp;import it.polimi.ingsw.ps60.GlobalVariables;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import javax.imageio.ImageIO;
+<i>5</i>&nbsp;import javax.swing.*;
+<i>6</i>&nbsp;import javax.swing.border.EtchedBorder;
+<i>7</i>&nbsp;import java.awt.*;
+<i>8</i>&nbsp;import java.awt.event.ActionListener;
+<i>9</i>&nbsp;import java.io.File;
+<i>10</i>&nbsp;import java.io.IOException;
+<i>11</i>&nbsp;import java.util.Objects;
+<i>12</i>&nbsp;import static it.polimi.ingsw.ps60.GlobalVariables.classLoader;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/**
+<i>15</i>&nbsp; * This class menage the main frame of the program
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class MainFrame extends JPanel {
+<i>18</i>&nbsp;
+<b class="nc"><i>19</i>&nbsp;    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();</b>
+<b class="nc"><i>20</i>&nbsp;    private final JButton[] jButtons = new JButton[25];</b>
+<b class="nc"><i>21</i>&nbsp;    final JPanel grid = new JPanel();</b>
+<b class="nc"><i>22</i>&nbsp;    final JPanel opponents = new JPanel();</b>
+<b class="nc"><i>23</i>&nbsp;    final JPanel divinityCard = new JPanel();</b>
+<b class="nc"><i>24</i>&nbsp;    final JPanel workers = new JPanel();</b>
+<b class="nc"><i>25</i>&nbsp;    final JPanel info = new JPanel();</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    public MainFrame() {
+<b class="nc"><i>29</i>&nbsp;        super();</b>
+<i>30</i>&nbsp;
+<b class="nc"><i>31</i>&nbsp;        JLabel board = new JLabel();</b>
+<i>32</i>&nbsp;        try {
+<b class="nc"><i>33</i>&nbsp;            board.setIcon(new ImageIcon(ImageIO.read(imageFileReader(&quot;board/SantoriniBoard.png&quot;)).getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH)));</b>
+<b class="nc"><i>34</i>&nbsp;        } catch (IOException e){</b>
+<b class="nc"><i>35</i>&nbsp;            System.out.println(&quot;Error in image reading&quot;);</b>
+<b class="nc"><i>36</i>&nbsp;        }</b>
+<i>37</i>&nbsp;
+<b class="nc"><i>38</i>&nbsp;        setLayout(new GridBagLayout());</b>
+<b class="nc"><i>39</i>&nbsp;        grid.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 47 / 64));</b>
+<b class="nc"><i>40</i>&nbsp;        grid.setLayout(new GridLayout(5, 5));</b>
+<b class="nc"><i>41</i>&nbsp;        grid.setOpaque(false);</b>
+<b class="nc"><i>42</i>&nbsp;        opponents.setPreferredSize(new Dimension(screenSize.width * 17 / 58, screenSize.height));</b>
+<b class="nc"><i>43</i>&nbsp;        opponents.setOpaque(false);</b>
+<b class="nc"><i>44</i>&nbsp;        opponents.setLayout(new GridBagLayout());</b>
+<b class="nc"><i>45</i>&nbsp;        divinityCard.setPreferredSize(new Dimension(screenSize.width * 17 / 58, screenSize.height));</b>
+<b class="nc"><i>46</i>&nbsp;        divinityCard.setOpaque(false);</b>
+<b class="nc"><i>47</i>&nbsp;        divinityCard.setLayout(new GridBagLayout());</b>
+<b class="nc"><i>48</i>&nbsp;        workers.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 7 / 55));</b>
+<b class="nc"><i>49</i>&nbsp;        workers.setOpaque(false);</b>
+<b class="nc"><i>50</i>&nbsp;        workers.setLayout(new FlowLayout());</b>
+<b class="nc"><i>51</i>&nbsp;        info.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 2 / 17));</b>
+<b class="nc"><i>52</i>&nbsp;        info.setOpaque(false);</b>
+<b class="nc"><i>53</i>&nbsp;        info.setLayout(new GridBagLayout());</b>
+<b class="nc"><i>54</i>&nbsp;        board.setLayout(new BorderLayout());</b>
+<b class="nc"><i>55</i>&nbsp;        board.add(grid, BorderLayout.CENTER);</b>
+<b class="nc"><i>56</i>&nbsp;        board.add(opponents, BorderLayout.WEST);</b>
+<b class="nc"><i>57</i>&nbsp;        board.add(divinityCard, BorderLayout.EAST);</b>
+<b class="nc"><i>58</i>&nbsp;        board.add(workers, BorderLayout.NORTH);</b>
+<b class="nc"><i>59</i>&nbsp;        board.add(info, BorderLayout.SOUTH);</b>
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;        for (int i = 0; i &lt; 25; i++) {</b>
+<b class="nc"><i>62</i>&nbsp;            jButtons[i] = new JButton();</b>
+<b class="nc"><i>63</i>&nbsp;            jButtons[i].setContentAreaFilled(false);</b>
+<b class="nc"><i>64</i>&nbsp;            jButtons[i].setOpaque(false);</b>
+<b class="nc"><i>65</i>&nbsp;            grid.add(jButtons[i]);</b>
+<i>66</i>&nbsp;        }
+<b class="nc"><i>67</i>&nbsp;        add(board);</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    /**
+<i>71</i>&nbsp;     * This method returns a jButton from the grid of jButtons
+<i>72</i>&nbsp;     *
+<i>73</i>&nbsp;     * @param i the number of button
+<i>74</i>&nbsp;     * @return the jButton selected
+<i>75</i>&nbsp;     */
+<i>76</i>&nbsp;    public JButton getButton(int i) {
+<b class="nc"><i>77</i>&nbsp;        return jButtons[i];</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    /**
+<i>81</i>&nbsp;     * This method with a button returns his position of the grid
+<i>82</i>&nbsp;     *
+<i>83</i>&nbsp;     * @param jButton is the jButton of which do you want the position
+<i>84</i>&nbsp;     * @return the coordinates of the button
+<i>85</i>&nbsp;     */
+<i>86</i>&nbsp;    public int[] getButtonCoords(JButton jButton) {
+<b class="nc"><i>87</i>&nbsp;        for (int i = 0; i &lt; jButtons.length; i++) {</b>
+<b class="nc"><i>88</i>&nbsp;            if (jButtons[i].equals(jButton))</b>
+<b class="nc"><i>89</i>&nbsp;                return new int[]{i / 5, i % 5};</b>
+<i>90</i>&nbsp;        }
+<b class="nc"><i>91</i>&nbsp;        return null;</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    /**
+<i>95</i>&nbsp;     * This method returns the dimension of the screen
+<i>96</i>&nbsp;     *
+<i>97</i>&nbsp;     * @return the dimension of the screen
+<i>98</i>&nbsp;     */
+<i>99</i>&nbsp;    public Dimension getScreenSize() {
+<b class="nc"><i>100</i>&nbsp;        return screenSize;</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    /**
+<i>104</i>&nbsp;     * This method sets the images of divinity cards in the main frame
+<i>105</i>&nbsp;     *
+<i>106</i>&nbsp;     * @param divinityCards contains the number associated to all divinity cards of the players ordered by the player number
+<i>107</i>&nbsp;     * @param turnNumber    is the player number of the player
+<i>108</i>&nbsp;     */
+<i>109</i>&nbsp;    public void setDivinityCardImage(int[] divinityCards, int turnNumber) {
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;        try {
+<i>112</i>&nbsp;        JLabel divinityCardImage;
+<b class="nc"><i>113</i>&nbsp;        for (int i = 0; i &lt; divinityCards.length; i++) {</b>
+<b class="nc"><i>114</i>&nbsp;            if (i == turnNumber) {</b>
+<i>115</i>&nbsp;
+<b class="nc"><i>116</i>&nbsp;                divinityCardImage = new JLabel(new ImageIcon(ImageIO.read(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition())).getScaledInstance(screenSize.width * 9 / 58, screenSize.height / 2, Image.SCALE_SMOOTH)));</b>
+<b class="nc"><i>117</i>&nbsp;                divinityCardImage.setBorder(</b>
+<b class="nc"><i>118</i>&nbsp;                        BorderFactory.createTitledBorder(</b>
+<b class="nc"><i>119</i>&nbsp;                                BorderFactory.createEtchedBorder(</b>
+<b class="nc"><i>120</i>&nbsp;                                        EtchedBorder.RAISED, GlobalVariables.Colour.values()[i].getColor(),</b>
+<b class="nc"><i>121</i>&nbsp;                                        GlobalVariables.Colour.values()[i].getColor()), &quot;You are player number &quot; + (i + 1)));</b>
+<b class="nc"><i>122</i>&nbsp;                divinityCard.add(divinityCardImage);</b>
+<i>123</i>&nbsp;            } else {
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;                divinityCardImage = new JLabel(new ImageIcon(ImageIO.read(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition())).getScaledInstance(screenSize.width * 9 / 116, screenSize.height / 4, Image.SCALE_SMOOTH)));</b>
+<b class="nc"><i>126</i>&nbsp;                divinityCardImage.setBorder(</b>
+<b class="nc"><i>127</i>&nbsp;                        BorderFactory.createTitledBorder(</b>
+<b class="nc"><i>128</i>&nbsp;                                BorderFactory.createEtchedBorder(</b>
+<b class="nc"><i>129</i>&nbsp;                                        EtchedBorder.RAISED, GlobalVariables.Colour.values()[i].getColor(),</b>
+<b class="nc"><i>130</i>&nbsp;                                        GlobalVariables.Colour.values()[i].getColor()), &quot;Player number &quot; + (i + 1)));</b>
+<b class="nc"><i>131</i>&nbsp;                opponents.add(divinityCardImage);</b>
+<i>132</i>&nbsp;            }
+<i>133</i>&nbsp;        }
+<b class="nc"><i>134</i>&nbsp;        } catch (IOException e){</b>
+<b class="nc"><i>135</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>136</i>&nbsp;        }</b>
+<i>137</i>&nbsp;    }
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;    /**
+<i>140</i>&nbsp;     * This methods removes all the listeners from the jButtons
+<i>141</i>&nbsp;     */
+<i>142</i>&nbsp;    public void resetButtons() {
+<b class="nc"><i>143</i>&nbsp;        for (JButton button : jButtons) {</b>
+<b class="nc"><i>144</i>&nbsp;            for (ActionListener actionListener : button.getActionListeners()) {</b>
+<b class="nc"><i>145</i>&nbsp;                button.removeActionListener(actionListener);</b>
+<i>146</i>&nbsp;            }
+<b class="nc"><i>147</i>&nbsp;            button.setEnabled(false);</b>
+<i>148</i>&nbsp;        }
+<i>149</i>&nbsp;    }
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;    public File imageFileReader(String pathToImage){
+<b class="nc"><i>152</i>&nbsp;        return new File(Objects.requireNonNull(classLoader.getResource(pathToImage)).getFile());</b>
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>
