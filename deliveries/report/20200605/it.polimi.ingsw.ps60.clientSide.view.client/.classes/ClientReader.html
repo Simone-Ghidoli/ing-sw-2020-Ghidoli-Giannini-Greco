@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ClientReader</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.clientSide.view.client</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ClientReader (it.polimi.ingsw.ps60.clientSide.view.client)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClientReader</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.clientSide.view.client;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.io.*;
+<i>6</i>&nbsp;import java.net.Socket;
+<i>7</i>&nbsp;import java.util.List;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * This class is used to read and store server&#39;s commands
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;public class ClientReader implements Runnable {
+<i>14</i>&nbsp;    private final List&lt;String&gt; messagesFromServer;
+<i>15</i>&nbsp;    final Socket socket;
+<i>16</i>&nbsp;    String serverSays;
+<i>17</i>&nbsp;    BufferedReader br;
+<i>18</i>&nbsp;    final ViewMethodSelection methodSelection;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Opens the buffered reader
+<i>23</i>&nbsp;     *
+<i>24</i>&nbsp;     * @param sock     is the socket
+<i>25</i>&nbsp;     * @param messages is the list where the commands will be saved
+<i>26</i>&nbsp;     * @param method   is the viewMethodSelection (CLI/GUI)
+<i>27</i>&nbsp;     */
+<b class="nc"><i>28</i>&nbsp;    public ClientReader(Socket sock, List&lt;String&gt; messages, ViewMethodSelection method) {</b>
+<b class="nc"><i>29</i>&nbsp;        messagesFromServer = messages;</b>
+<b class="nc"><i>30</i>&nbsp;        socket = sock;</b>
+<b class="nc"><i>31</i>&nbsp;        methodSelection = method;</b>
+<i>32</i>&nbsp;        try {
+<b class="nc"><i>33</i>&nbsp;            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));</b>
+<b class="nc"><i>34</i>&nbsp;        } catch (IOException e_0) {</b>
+<b class="nc"><i>35</i>&nbsp;            synchronized (socket) {</b>
+<i>36</i>&nbsp;                try {
+<b class="nc"><i>37</i>&nbsp;                    socket.close();</b>
+<b class="nc"><i>38</i>&nbsp;                } catch (IOException e) {</b>
+<b class="nc"><i>39</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>40</i>&nbsp;                }</b>
+<b class="nc"><i>41</i>&nbsp;            }</b>
+<b class="nc"><i>42</i>&nbsp;            methodSelection.alert(&quot;communication error, logging out&quot;);</b>
+<b class="nc"><i>43</i>&nbsp;        }</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    /**
+<i>47</i>&nbsp;     * Just receive all text messages(Strings) from the server and stores them in the list
+<i>48</i>&nbsp;     */
+<i>49</i>&nbsp;    @Override
+<i>50</i>&nbsp;    public void run() {
+<i>51</i>&nbsp;        while (true) {
+<b class="nc"><i>52</i>&nbsp;            synchronized (socket) {</b>
+<b class="nc"><i>53</i>&nbsp;                if (socket.isClosed()) {</b>
+<b class="nc"><i>54</i>&nbsp;                    return;</b>
+<i>55</i>&nbsp;                }
+<b class="nc"><i>56</i>&nbsp;            }</b>
+<i>57</i>&nbsp;            try {
+<b class="nc"><i>58</i>&nbsp;                synchronized (socket) {</b>
+<b class="nc"><i>59</i>&nbsp;                    if (br.ready())</b>
+<b class="nc"><i>60</i>&nbsp;                        serverSays = br.readLine();</b>
+<b class="nc"><i>61</i>&nbsp;                }</b>
+<b class="nc"><i>62</i>&nbsp;                if (serverSays != null) {</b>
+<b class="nc"><i>63</i>&nbsp;                    synchronized (messagesFromServer) {</b>
+<b class="nc"><i>64</i>&nbsp;                        messagesFromServer.add(serverSays);</b>
+<b class="nc"><i>65</i>&nbsp;                        serverSays = null;</b>
+<b class="nc"><i>66</i>&nbsp;                    }</b>
+<i>67</i>&nbsp;                }
+<b class="nc"><i>68</i>&nbsp;            } catch (IOException e) {</b>
+<i>69</i>&nbsp;                try {
+<b class="nc"><i>70</i>&nbsp;                    socket.close();</b>
+<b class="nc"><i>71</i>&nbsp;                } catch (IOException ex) {</b>
+<i>72</i>&nbsp;                    return;
+<b class="nc"><i>73</i>&nbsp;                }</b>
+<b class="nc"><i>74</i>&nbsp;            }</b>
+<i>75</i>&nbsp;        }
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

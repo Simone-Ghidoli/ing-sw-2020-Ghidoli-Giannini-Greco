@@ -11,13 +11,10 @@ public class FlushedInput {
      * This method will empty the buffer before an input in order to not read an input written for error by the player
      */
     private void flushInput() {
-        int out = 0;
         try {
-            out = System.in.read(new byte[System.in.available()]);
+            System.in.read(new byte[System.in.available()]);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            System.out.println("INFO: " + out + " lines are been flushed");
         }
     }
 

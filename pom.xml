@@ -9,7 +9,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>PS60</name>
-  <url>http://www.example.com</url>
+  <url>https://github.com/Simone-Ghidoli/ing-sw-2020-Ghidoli-Giannini-Greco</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,6 +40,7 @@
       </resource>
     </resources>
     <testSourceDirectory>src/test/java</testSourceDirectory>
+    <finalName>PS60</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
@@ -47,6 +48,7 @@
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
           <configuration>
+            <outputDirectory>deliveries/jar</outputDirectory>
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>

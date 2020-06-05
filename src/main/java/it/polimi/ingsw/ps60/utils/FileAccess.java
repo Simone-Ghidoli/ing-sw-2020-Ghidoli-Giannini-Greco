@@ -19,13 +19,13 @@ public class FileAccess {
     public void writer(Board board) {
 
         try {
-            outputStream = new FileOutputStream("src/resources/save");
+            outputStream = new FileOutputStream(new File(FileAccess.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath().replaceAll("PS60.jar", "save"));
             objectOutputStream = new ObjectOutputStream(outputStream);
             System.out.println("Saving...");
             objectOutputStream.writeObject(board);
             System.out.println("Items successfully written to file");
-        } catch (IOException e_1) {
-            e_1.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Writing failed");
         } finally {
             try {
@@ -50,10 +50,10 @@ public class FileAccess {
         Board board = null;
 
         try {
-            inputStream = new FileInputStream("src/resources/save");
+            inputStream = new FileInputStream(new File(FileAccess.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath().replaceAll("PS60.jar", "save"));
             objectInputStream = new ObjectInputStream(inputStream);
             board = (Board) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("Save not found");
         } finally {
             try {

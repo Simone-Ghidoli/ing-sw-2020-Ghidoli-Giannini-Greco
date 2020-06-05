@@ -1,0 +1,398 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CLIMethods</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CLIMethods (it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CLIMethods</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 152)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.ps60.GlobalVariables;
+<i>4</i>&nbsp;import it.polimi.ingsw.ps60.utils.ListContains;
+<i>5</i>&nbsp;import it.polimi.ingsw.ps60.utils.StringRegexValidation;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.List;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import static it.polimi.ingsw.ps60.GlobalVariables.input;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; * This class contains all &quot;cli methods&quot;. If the player choose to use the cli the software gonna call these methods
+<i>13</i>&nbsp; * Docs with explanations are in the interface
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public class CLIMethods implements ViewMethodSelection {
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    private int turnNumber;
+<i>18</i>&nbsp;    private int[] divinityCards;
+<i>19</i>&nbsp;
+<b class="nc"><i>20</i>&nbsp;    public CLIMethods() {</b>
+<b class="nc"><i>21</i>&nbsp;        divinityCards = new int[]{14, 14, 14};</b>
+<b class="nc"><i>22</i>&nbsp;        turnNumber = -1;</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    @Override
+<i>26</i>&nbsp;    public void printBoard(String board) {
+<i>27</i>&nbsp;
+<b class="nc"><i>28</i>&nbsp;        char[] boardToPrint = board.toCharArray();</b>
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;        if (turnNumber != 0)</b>
+<b class="nc"><i>31</i>&nbsp;            System.out.println(&quot;You are player number &quot; + (turnNumber + 1));</b>
+<b class="nc"><i>32</i>&nbsp;        System.out.println(&quot;Legend:&quot;);</b>
+<b class="nc"><i>33</i>&nbsp;        System.out.println(&quot;The number indicates the building level, the colour indicates the player&quot;);</b>
+<b class="nc"><i>34</i>&nbsp;        System.out.println(&quot;White: no player&quot;);</b>
+<b class="nc"><i>35</i>&nbsp;        System.out.println(&quot;Red: 1st player with &quot; + GlobalVariables.DivinityCard.values()[divinityCards[0]]);</b>
+<b class="nc"><i>36</i>&nbsp;        System.out.println(&quot;Blue: 2nd player with &quot; + GlobalVariables.DivinityCard.values()[divinityCards[1]]);</b>
+<b class="nc"><i>37</i>&nbsp;        if (divinityCards.length == 3)</b>
+<b class="nc"><i>38</i>&nbsp;            System.out.println(&quot;Green: 3rd player with &quot; + GlobalVariables.DivinityCard.values()[divinityCards[2]]);</b>
+<b class="nc"><i>39</i>&nbsp;        System.out.println(&quot;Yellow: Dome\n&quot;);</b>
+<i>40</i>&nbsp;
+<b class="nc"><i>41</i>&nbsp;        System.out.println(&quot;    1  2  3  4  5&quot;);</b>
+<b class="nc"><i>42</i>&nbsp;        System.out.print(&quot;    &#39;  &#39;  &#39;  &#39;  &#39;&quot;);</b>
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;        for (int i = 0; i &lt; 25; i++) {</b>
+<b class="nc"><i>45</i>&nbsp;            if (i % 5 == 0)</b>
+<b class="nc"><i>46</i>&nbsp;                System.out.print(&quot;\n&quot; + ((i / 5) + 1) + &quot;-  &quot;);</b>
+<b class="nc"><i>47</i>&nbsp;            if (boardToPrint[i] &lt; 52) {</b>
+<b class="nc"><i>48</i>&nbsp;                System.out.print(boardToPrint[i]);</b>
+<b class="nc"><i>49</i>&nbsp;            } else if (boardToPrint[i] &lt; 56) {</b>
+<b class="nc"><i>50</i>&nbsp;                System.out.print(GlobalVariables.Colour.YELLOW.getString());</b>
+<b class="nc"><i>51</i>&nbsp;                System.out.print((char) (boardToPrint[i] - 4));</b>
+<b class="nc"><i>52</i>&nbsp;            } else if (boardToPrint[i] &lt; 60) {</b>
+<b class="nc"><i>53</i>&nbsp;                System.out.print(GlobalVariables.IdPlayer.PLAYER1.getColour().getString());</b>
+<b class="nc"><i>54</i>&nbsp;                System.out.print((char) (boardToPrint[i] - 8));</b>
+<b class="nc"><i>55</i>&nbsp;            } else if (boardToPrint[i] &lt; 64) {</b>
+<b class="nc"><i>56</i>&nbsp;                System.out.print(GlobalVariables.IdPlayer.PLAYER2.getColour().getString());</b>
+<b class="nc"><i>57</i>&nbsp;                System.out.print((char) (boardToPrint[i] - 12));</b>
+<i>58</i>&nbsp;            } else {
+<b class="nc"><i>59</i>&nbsp;                System.out.print(GlobalVariables.IdPlayer.PLAYER3.getColour().getString());</b>
+<b class="nc"><i>60</i>&nbsp;                System.out.print((char) (boardToPrint[i] - 16));</b>
+<i>61</i>&nbsp;            }
+<b class="nc"><i>62</i>&nbsp;            System.out.print(GlobalVariables.Colour.RESET.getString());</b>
+<b class="nc"><i>63</i>&nbsp;            System.out.print(&quot;  &quot;);</b>
+<i>64</i>&nbsp;        }
+<b class="nc"><i>65</i>&nbsp;        System.out.println(&quot;\n&quot;);</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * This method prints all the the possible moves and counts how many they are
+<i>70</i>&nbsp;     *
+<i>71</i>&nbsp;     * @param moves            is the list of possible moves
+<i>72</i>&nbsp;     * @param positionsWorkers is the position of the workers of the player
+<i>73</i>&nbsp;     * @return the number of possible moves displayed
+<i>74</i>&nbsp;     */
+<i>75</i>&nbsp;    public int printPossibleMoves(List&lt;int[]&gt;[] moves, int[][] positionsWorkers) {
+<b class="nc"><i>76</i>&nbsp;        int choice = 0;</b>
+<i>77</i>&nbsp;
+<b class="nc"><i>78</i>&nbsp;        for (int i = 0; i &lt; moves.length; i++) {</b>
+<b class="nc"><i>79</i>&nbsp;            System.out.println(&quot;Worker &quot; + (i + 1) + &quot; is on &quot; + (positionsWorkers[i][0] + 1) + &quot;; &quot; + (positionsWorkers[i][1] + 1));</b>
+<b class="nc"><i>80</i>&nbsp;            System.out.println(&quot;Available choice for worker &quot; + (i + 1));</b>
+<b class="nc"><i>81</i>&nbsp;            for (int j = 0; j &lt; moves[i].size(); j++) {</b>
+<b class="nc"><i>82</i>&nbsp;                System.out.println(&quot;Press &quot; + (choice + 1) + &quot; in order to move in the cell: [&quot; +</b>
+<b class="nc"><i>83</i>&nbsp;                        (moves[i].get(j)[0] + 1) + &quot;, &quot; + (moves[i].get(j)[1] + 1) + &quot;]&quot;);</b>
+<b class="nc"><i>84</i>&nbsp;                choice++;</b>
+<i>85</i>&nbsp;            }
+<i>86</i>&nbsp;        }
+<i>87</i>&nbsp;
+<b class="nc"><i>88</i>&nbsp;        return choice;</b>
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    @Override
+<i>92</i>&nbsp;    public int moveChoice(List&lt;int[]&gt;[] moves, int[][] positionsWorkers) {
+<b class="nc"><i>93</i>&nbsp;        int i = printPossibleMoves(moves, positionsWorkers);</b>
+<b class="nc"><i>94</i>&nbsp;        return input.nextInt(i, 1) - 1;</b>
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    /**
+<i>98</i>&nbsp;     * This method prints all the the possible builds and counts how many they are
+<i>99</i>&nbsp;     *
+<i>100</i>&nbsp;     * @param moves is the list of possible builds
+<i>101</i>&nbsp;     * @return the number of possible builds displayed
+<i>102</i>&nbsp;     */
+<i>103</i>&nbsp;    public int printPossibleBuilds(List&lt;int[]&gt; moves) {
+<b class="nc"><i>104</i>&nbsp;        int choice = 0;</b>
+<i>105</i>&nbsp;
+<b class="nc"><i>106</i>&nbsp;        for (int[] move : moves) {</b>
+<b class="nc"><i>107</i>&nbsp;            System.out.println(&quot;Press &quot; + (choice + 1) + &quot; in order to build on the cell: [&quot; +</b>
+<i>108</i>&nbsp;                    (move[0] + 1) + &quot;, &quot; + (move[1] + 1) + &quot;]&quot;);
+<b class="nc"><i>109</i>&nbsp;            choice++;</b>
+<b class="nc"><i>110</i>&nbsp;        }</b>
+<b class="nc"><i>111</i>&nbsp;        return choice;</b>
+<i>112</i>&nbsp;    }
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;    @Override
+<i>115</i>&nbsp;    public int buildChoice(List&lt;int[]&gt; moves) {
+<b class="nc"><i>116</i>&nbsp;        int i = printPossibleBuilds(moves);</b>
+<b class="nc"><i>117</i>&nbsp;        return input.nextInt(i, 1);</b>
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    @Override
+<i>121</i>&nbsp;    public String[] ipPortChoices() {
+<b class="nc"><i>122</i>&nbsp;        String ip = null;</b>
+<b class="nc"><i>123</i>&nbsp;        String port = null;</b>
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        System.out.println(&quot;Enter the IP address of server&quot;);</b>
+<i>126</i>&nbsp;
+<b class="nc"><i>127</i>&nbsp;        while (ip == null) {</b>
+<b class="nc"><i>128</i>&nbsp;            ip = input.nextLine();</b>
+<b class="nc"><i>129</i>&nbsp;            if (!new StringRegexValidation(GlobalVariables.StringPatterns.IPv4.getPattern()).isValid(ip)) {</b>
+<b class="nc"><i>130</i>&nbsp;                System.out.println(&quot;Wrong input&quot;);</b>
+<b class="nc"><i>131</i>&nbsp;                ip = null;</b>
+<i>132</i>&nbsp;            }
+<i>133</i>&nbsp;        }
+<i>134</i>&nbsp;
+<b class="nc"><i>135</i>&nbsp;        System.out.println(&quot;Enter the port number&quot;);</b>
+<i>136</i>&nbsp;
+<b class="nc"><i>137</i>&nbsp;        while (port == null) {</b>
+<b class="nc"><i>138</i>&nbsp;            port = input.nextLine();</b>
+<b class="nc"><i>139</i>&nbsp;            if (!new StringRegexValidation(GlobalVariables.StringPatterns.PortNumber.getPattern()).isValid(port)) {</b>
+<b class="nc"><i>140</i>&nbsp;                System.out.println(&quot;Wrong input&quot;);</b>
+<b class="nc"><i>141</i>&nbsp;                port = null;</b>
+<i>142</i>&nbsp;            }
+<i>143</i>&nbsp;        }
+<i>144</i>&nbsp;
+<b class="nc"><i>145</i>&nbsp;        return new String[]{ip, port};</b>
+<i>146</i>&nbsp;    }
+<i>147</i>&nbsp;
+<i>148</i>&nbsp;    @Override
+<i>149</i>&nbsp;    public String[] nicknameBirthdayChoice() {
+<b class="nc"><i>150</i>&nbsp;        String nickname = null;</b>
+<b class="nc"><i>151</i>&nbsp;        String birthday = null;</b>
+<i>152</i>&nbsp;
+<b class="nc"><i>153</i>&nbsp;        while (nickname == null) {</b>
+<b class="nc"><i>154</i>&nbsp;            System.out.println(&quot;Enter your nickname&quot;);</b>
+<b class="nc"><i>155</i>&nbsp;            nickname = input.nextLine();</b>
+<b class="nc"><i>156</i>&nbsp;            if (!new StringRegexValidation(GlobalVariables.StringPatterns.Nickname.getPattern()).isValid(nickname)) {</b>
+<b class="nc"><i>157</i>&nbsp;                System.out.println(&quot;Wrong input&quot;);</b>
+<b class="nc"><i>158</i>&nbsp;                nickname = null;</b>
+<i>159</i>&nbsp;            }
+<i>160</i>&nbsp;        }
+<i>161</i>&nbsp;
+<b class="nc"><i>162</i>&nbsp;        while (birthday == null) {</b>
+<b class="nc"><i>163</i>&nbsp;            System.out.println(&quot;Enter your birthday. [yyyy/MM/gg]&quot;);</b>
+<b class="nc"><i>164</i>&nbsp;            birthday = input.nextLine();</b>
+<b class="nc"><i>165</i>&nbsp;            if (!new StringRegexValidation(GlobalVariables.StringPatterns.Date.getPattern()).isValid(birthday)) {</b>
+<b class="nc"><i>166</i>&nbsp;                System.out.println(&quot;Wrong input&quot;);</b>
+<b class="nc"><i>167</i>&nbsp;                birthday = null;</b>
+<i>168</i>&nbsp;            }
+<i>169</i>&nbsp;        }
+<i>170</i>&nbsp;
+<b class="nc"><i>171</i>&nbsp;        return new String[]{nickname, birthday};</b>
+<i>172</i>&nbsp;    }
+<i>173</i>&nbsp;
+<i>174</i>&nbsp;    @Override
+<i>175</i>&nbsp;    public GlobalVariables.DivinityCard[] cardChoices(int playerNumber) {
+<i>176</i>&nbsp;
+<b class="nc"><i>177</i>&nbsp;        GlobalVariables.DivinityCard[] allCards = GlobalVariables.DivinityCard.values();</b>
+<b class="nc"><i>178</i>&nbsp;        GlobalVariables.DivinityCard[] cards = new GlobalVariables.DivinityCard[playerNumber];</b>
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;        String choice;
+<i>181</i>&nbsp;
+<b class="nc"><i>182</i>&nbsp;        System.out.println(&quot;Select &quot; + playerNumber + &quot; cards between:&quot;);</b>
+<i>183</i>&nbsp;
+<b class="nc"><i>184</i>&nbsp;        for (int i = 0; i &lt; allCards.length - 1; i++) {</b>
+<b class="nc"><i>185</i>&nbsp;            System.out.println((i + 1) + &quot;- &quot; + allCards[i].toString());</b>
+<i>186</i>&nbsp;        }
+<i>187</i>&nbsp;
+<b class="nc"><i>188</i>&nbsp;        StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.DivinityCard.getPattern());</b>
+<i>189</i>&nbsp;
+<b class="nc"><i>190</i>&nbsp;        for (int j = 0; j &lt; playerNumber; j++) {</b>
+<b class="nc"><i>191</i>&nbsp;            System.out.println(&quot;Enter card number &quot; + (j + 1));</b>
+<i>192</i>&nbsp;
+<b class="nc"><i>193</i>&nbsp;            choice = null;</b>
+<b class="nc"><i>194</i>&nbsp;            while (choice == null) {</b>
+<b class="nc"><i>195</i>&nbsp;                choice = input.nextLine();</b>
+<b class="nc"><i>196</i>&nbsp;                if (!stringRegexValidation.isValid(choice)) {</b>
+<b class="nc"><i>197</i>&nbsp;                    choice = null;</b>
+<b class="nc"><i>198</i>&nbsp;                    System.out.println(&quot;Wrong input&quot;);</b>
+<i>199</i>&nbsp;                }
+<i>200</i>&nbsp;            }
+<b class="nc"><i>201</i>&nbsp;            cards[j] = allCards[Integer.parseInt(choice) - 1];</b>
+<i>202</i>&nbsp;        }
+<b class="nc"><i>203</i>&nbsp;        return cards;</b>
+<i>204</i>&nbsp;    }
+<i>205</i>&nbsp;
+<i>206</i>&nbsp;    @Override
+<i>207</i>&nbsp;    public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] card) {
+<b class="nc"><i>208</i>&nbsp;        System.out.println(&quot;Select one card between:&quot;);</b>
+<i>209</i>&nbsp;
+<b class="nc"><i>210</i>&nbsp;        for (int i = 0; i &lt; card.length; i++)</b>
+<b class="nc"><i>211</i>&nbsp;            System.out.println((i + 1) + &quot;- &quot; + card[i].toString());</b>
+<i>212</i>&nbsp;
+<b class="nc"><i>213</i>&nbsp;        return card[input.nextInt(card.length, 1) - 1];</b>
+<i>214</i>&nbsp;    }
+<i>215</i>&nbsp;
+<i>216</i>&nbsp;    @Override
+<i>217</i>&nbsp;    public int[][] firstSetWorkers(List&lt;int[]&gt; impossiblePositions) {
+<b class="nc"><i>218</i>&nbsp;        int[][] choice = new int[2][];</b>
+<i>219</i>&nbsp;        int[] buffer;
+<b class="nc"><i>220</i>&nbsp;        ListContains listContains = new ListContains(impossiblePositions);</b>
+<i>221</i>&nbsp;
+<b class="nc"><i>222</i>&nbsp;        System.out.println(&quot;Legend:&quot;);</b>
+<b class="nc"><i>223</i>&nbsp;        System.out.println(&quot;0 indicates a empty space, 1 indicates that there is already a worker in it&quot;);</b>
+<i>224</i>&nbsp;
+<b class="nc"><i>225</i>&nbsp;        System.out.println(&quot;\n    1  2  3  4  5&quot;);</b>
+<b class="nc"><i>226</i>&nbsp;        System.out.print(&quot;    &#39;  &#39;  &#39;  &#39;  &#39;&quot;);</b>
+<i>227</i>&nbsp;
+<b class="nc"><i>228</i>&nbsp;        for (int i = 0; i &lt; 5; i++) {</b>
+<b class="nc"><i>229</i>&nbsp;            System.out.print(&quot;\n&quot; + (i + 1) + &quot;-  &quot;);</b>
+<i>230</i>&nbsp;
+<b class="nc"><i>231</i>&nbsp;            for (int j = 0; j &lt; 5; j++) {</b>
+<i>232</i>&nbsp;
+<b class="nc"><i>233</i>&nbsp;                if (listContains.isContained(new int[]{i, j})) {</b>
+<b class="nc"><i>234</i>&nbsp;                    System.out.print(1);</b>
+<i>235</i>&nbsp;                } else {
+<b class="nc"><i>236</i>&nbsp;                    System.out.print(0);</b>
+<i>237</i>&nbsp;                }
+<b class="nc"><i>238</i>&nbsp;                System.out.print(&quot;  &quot;);</b>
+<i>239</i>&nbsp;            }
+<i>240</i>&nbsp;        }
+<i>241</i>&nbsp;
+<b class="nc"><i>242</i>&nbsp;        for (int i = 0; i &lt; 2; i++) {</b>
+<b class="nc"><i>243</i>&nbsp;            buffer = new int[2];</b>
+<b class="nc"><i>244</i>&nbsp;            while (choice[i] == null) {</b>
+<b class="nc"><i>245</i>&nbsp;                System.out.println(&quot;\nEnter the position of the &quot; + (i + 1) + &quot; worker&quot;);</b>
+<b class="nc"><i>246</i>&nbsp;                System.out.println(&quot;Enter the x coordinate&quot;);</b>
+<i>247</i>&nbsp;
+<b class="nc"><i>248</i>&nbsp;                buffer[0] = input.nextInt(5, 1) - 1;</b>
+<i>249</i>&nbsp;
+<b class="nc"><i>250</i>&nbsp;                System.out.println(&quot;Enter the y coordinate&quot;);</b>
+<i>251</i>&nbsp;
+<b class="nc"><i>252</i>&nbsp;                buffer[1] = input.nextInt(5, 1) - 1;</b>
+<i>253</i>&nbsp;
+<b class="nc"><i>254</i>&nbsp;                if (!listContains.isContained(buffer)) {</b>
+<b class="nc"><i>255</i>&nbsp;                    choice[i] = buffer;</b>
+<b class="nc"><i>256</i>&nbsp;                    impossiblePositions.add(buffer);</b>
+<i>257</i>&nbsp;                } else
+<b class="nc"><i>258</i>&nbsp;                    System.out.println(&quot;Position already taken&quot;);</b>
+<i>259</i>&nbsp;            }
+<i>260</i>&nbsp;        }
+<b class="nc"><i>261</i>&nbsp;        return choice;</b>
+<i>262</i>&nbsp;    }
+<i>263</i>&nbsp;
+<i>264</i>&nbsp;    @Override
+<i>265</i>&nbsp;    public boolean specialChoices(String string) {
+<i>266</i>&nbsp;        String choice;
+<i>267</i>&nbsp;
+<b class="nc"><i>268</i>&nbsp;        System.out.println(string);</b>
+<b class="nc"><i>269</i>&nbsp;        System.out.println(&quot;Enter 1 for yes or 0 for no&quot;);</b>
+<i>270</i>&nbsp;
+<b class="nc"><i>271</i>&nbsp;        StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.Boolean1True0False.getPattern());</b>
+<i>272</i>&nbsp;
+<b class="nc"><i>273</i>&nbsp;        choice = null;</b>
+<b class="nc"><i>274</i>&nbsp;        while (choice == null) {</b>
+<b class="nc"><i>275</i>&nbsp;            choice = input.nextLine();</b>
+<b class="nc"><i>276</i>&nbsp;            if (!stringRegexValidation.isValid(choice)) {</b>
+<b class="nc"><i>277</i>&nbsp;                choice = null;</b>
+<b class="nc"><i>278</i>&nbsp;                System.out.println(&quot;Wrong input&quot;);</b>
+<i>279</i>&nbsp;            }
+<i>280</i>&nbsp;        }
+<i>281</i>&nbsp;
+<b class="nc"><i>282</i>&nbsp;        return choice.equals(&quot;1&quot;);</b>
+<i>283</i>&nbsp;    }
+<i>284</i>&nbsp;
+<i>285</i>&nbsp;    @Override
+<i>286</i>&nbsp;    public int numberOfPlayers() {
+<i>287</i>&nbsp;        String numberOfPlayers;
+<i>288</i>&nbsp;
+<b class="nc"><i>289</i>&nbsp;        System.out.println(&quot;Enter the number of player. [2 or 3]&quot;);</b>
+<b class="nc"><i>290</i>&nbsp;        StringRegexValidation stringRegexValidation = new StringRegexValidation(GlobalVariables.StringPatterns.NumberOfPlayer.getPattern());</b>
+<i>291</i>&nbsp;
+<b class="nc"><i>292</i>&nbsp;        numberOfPlayers = null;</b>
+<i>293</i>&nbsp;
+<b class="nc"><i>294</i>&nbsp;        while (numberOfPlayers == null) {</b>
+<b class="nc"><i>295</i>&nbsp;            numberOfPlayers = input.nextLine();</b>
+<b class="nc"><i>296</i>&nbsp;            if (!stringRegexValidation.isValid(numberOfPlayers)) {</b>
+<b class="nc"><i>297</i>&nbsp;                numberOfPlayers = null;</b>
+<b class="nc"><i>298</i>&nbsp;                System.out.println(&quot;Wrong input&quot;);</b>
+<i>299</i>&nbsp;            }
+<i>300</i>&nbsp;        }
+<i>301</i>&nbsp;
+<b class="nc"><i>302</i>&nbsp;        return Integer.parseInt(numberOfPlayers);</b>
+<i>303</i>&nbsp;    }
+<i>304</i>&nbsp;
+<i>305</i>&nbsp;    @Override
+<i>306</i>&nbsp;    public void alert(String string) {
+<b class="nc"><i>307</i>&nbsp;        System.out.println(string);</b>
+<i>308</i>&nbsp;    }
+<i>309</i>&nbsp;
+<i>310</i>&nbsp;    @Override
+<i>311</i>&nbsp;    public void status(int[] divinityCards, int turnNumber) {
+<b class="nc"><i>312</i>&nbsp;        this.divinityCards = divinityCards;</b>
+<b class="nc"><i>313</i>&nbsp;        this.turnNumber = turnNumber;</b>
+<i>314</i>&nbsp;    }
+<i>315</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 21:10</div>
+</div>
+</body>
+</html>

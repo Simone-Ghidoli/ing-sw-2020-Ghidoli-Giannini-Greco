@@ -6,13 +6,10 @@ import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame;
 import it.polimi.ingsw.ps60.utils.ListContains;
 import it.polimi.ingsw.ps60.utils.StringRegexValidation;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,64 +41,59 @@ public class GUIMethods implements ViewMethodSelection {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    char[] boardToPrint = board.toCharArray();
-                    List<BufferedImage> imageToMerge;
-                    BufferedImage combined;
-                    Graphics g;
+                char[] boardToPrint = board.toCharArray();
+                List<BufferedImage> imageToMerge;
+                BufferedImage combined;
+                Graphics g;
 
-                    for (int i = 0; i < 25; i++) {
-                        imageToMerge = new ArrayList<>();
+                for (int i = 0; i < 25; i++) {
+                    imageToMerge = new ArrayList<>();
 
 
-                        switch (boardToPrint[i] % 4) {
-                            case 0:
-                                break;
-                            case 1:
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/1 floor.png")));
-                                break;
-                            case 2:
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/1 floor.png")));
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/2 floor.png")));
-                                break;
-                            case 3:
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/1 floor.png")));
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/2 floor.png")));
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/3 floor.png")));
-                                break;
-                        }
-
-                        switch ((boardToPrint[i] - 48) / 4) {
-                            case 0:
-                                break;
-                            case 1:
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/Dome.png")));
-                                break;
-                            case 2:
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER1.getSourcePawn())));
-                                break;
-                            case 3:
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER2.getSourcePawn())));
-                                break;
-                            case 4:
-                                imageToMerge.add(ImageIO.read(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER3.getSourcePawn())));
-                                break;
-                        }
-
-                        combined = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
-                        g = combined.getGraphics();
-
-                        for (BufferedImage bufferedImage : imageToMerge) {
-                            g.drawImage(bufferedImage, 0, 0, null);
-                        }
-
-                        g.dispose();
-                        santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
-                        santorini.getButton(i).setDisabledIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
-
+                    switch (boardToPrint[i] % 4) {
+                        case 0:
+                            break;
+                        case 1:
+                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/1 floor.png"));
+                            break;
+                        case 2:
+                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/1 floor.png"));
+                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/2 floor.png"));
+                            break;
+                        case 3:
+                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/1 floor.png"));
+                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/2 floor.png"));
+                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/3 floor.png"));
+                            break;
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                    switch ((boardToPrint[i] - 48) / 4) {
+                        case 0:
+                            break;
+                        case 1:
+                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/Dome.png"));
+                            break;
+                        case 2:
+                            imageToMerge.add(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER1.getSourcePawn()));
+                            break;
+                        case 3:
+                            imageToMerge.add(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER2.getSourcePawn()));
+                            break;
+                        case 4:
+                            imageToMerge.add(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER3.getSourcePawn()));
+                            break;
+                    }
+
+                    combined = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
+                    g = combined.getGraphics();
+
+                    for (BufferedImage bufferedImage : imageToMerge) {
+                        g.drawImage(bufferedImage, 0, 0, null);
+                    }
+
+                    g.dispose();
+                    santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
+                    santorini.getButton(i).setDisabledIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
                 }
             }
         });

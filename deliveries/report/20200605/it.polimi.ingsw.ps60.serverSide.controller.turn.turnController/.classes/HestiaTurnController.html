@@ -1,0 +1,109 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: HestiaTurnController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.controller.turn.turnController</a> ]
+</div>
+
+<h1>Coverage Summary for Class: HestiaTurnController (it.polimi.ingsw.ps60.serverSide.controller.turn.turnController)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HestiaTurnController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.controller.turn.turnController;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.List;
+<i>4</i>&nbsp;
+<b class="nc"><i>5</i>&nbsp;public class HestiaTurnController extends BaseTurnController {</b>
+<i>6</i>&nbsp;    @Override
+<i>7</i>&nbsp;    public void buildingSection() {
+<b class="nc"><i>8</i>&nbsp;        super.buildingSection();</b>
+<i>9</i>&nbsp;
+<b class="nc"><i>10</i>&nbsp;        sendBoardToClient();</b>
+<i>11</i>&nbsp;
+<b class="nc"><i>12</i>&nbsp;        List&lt;int[]&gt; buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();</b>
+<b class="nc"><i>13</i>&nbsp;        int i = 0;</b>
+<b class="nc"><i>14</i>&nbsp;        while (i &lt; buildChoices.size()) {</b>
+<b class="nc"><i>15</i>&nbsp;            if (buildChoices.get(i)[0] == 0 || buildChoices.get(i)[0] == 4 || buildChoices.get(i)[1] == 0 || buildChoices.get(i)[1] == 4)</b>
+<b class="nc"><i>16</i>&nbsp;                buildChoices.remove(i);</b>
+<i>17</i>&nbsp;            else
+<b class="nc"><i>18</i>&nbsp;                i++;</b>
+<i>19</i>&nbsp;        }
+<i>20</i>&nbsp;
+<b class="nc"><i>21</i>&nbsp;        if (buildChoices.size() &gt; 0) {</b>
+<b class="nc"><i>22</i>&nbsp;            if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice()) == 1)</b>
+<b class="nc"><i>23</i>&nbsp;                player.getDivinityStrategy().setBuilding(buildChoices.get(player.getServerThread().buildMessage(buildChoices)));</b>
+<i>24</i>&nbsp;        }
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

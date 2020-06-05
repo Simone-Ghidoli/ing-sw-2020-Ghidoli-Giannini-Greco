@@ -1,0 +1,112 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AtlasTurnStrategy</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AtlasTurnStrategy (it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AtlasTurnStrategy</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.List;
+<i>4</i>&nbsp;import static it.polimi.ingsw.ps60.GlobalVariables.game;
+<i>5</i>&nbsp;
+<b class="fc"><i>6</i>&nbsp;public class AtlasTurnStrategy extends BaseTurnStrategy {</b>
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;    /**
+<i>9</i>&nbsp;     * The player should be able to build a dome at any level of the cells
+<i>10</i>&nbsp;     *
+<i>11</i>&nbsp;     * @return List of possible cells where to build. In any cell a 3rd int in the array is set to 1 if is possible use god&#39;s power in that cell
+<i>12</i>&nbsp;     */
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    @Override
+<i>15</i>&nbsp;    public List&lt;int[]&gt; baseBuilding() {
+<b class="fc"><i>16</i>&nbsp;        List&lt;int[]&gt; list = super.baseBuilding();</b>
+<b class="fc"><i>17</i>&nbsp;        int k = 0;</b>
+<i>18</i>&nbsp;        int[] position;
+<i>19</i>&nbsp;
+<b class="fc"><i>20</i>&nbsp;        for (int i = 0; i &lt; list.size(); i++) {</b>
+<b class="fc"><i>21</i>&nbsp;            position = list.remove(k);</b>
+<b class="fc"><i>22</i>&nbsp;            if (game.getCellByPosition(position).getBuildingLevel() &lt; 3)</b>
+<b class="fc"><i>23</i>&nbsp;                list.add(new int[]{position[0], position[1], 1});</b>
+<i>24</i>&nbsp;            else
+<b class="fc"><i>25</i>&nbsp;                list.add(new int[]{position[0], position[1], 0});</b>
+<i>26</i>&nbsp;        }
+<b class="fc"><i>27</i>&nbsp;        return list;</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

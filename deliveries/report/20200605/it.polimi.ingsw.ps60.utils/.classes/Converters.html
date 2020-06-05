@@ -1,0 +1,171 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Converters</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.utils</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Converters (it.polimi.ingsw.ps60.utils)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Converters</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.utils;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;import java.util.List;
+<i>5</i>&nbsp;
+<b class="nc"><i>6</i>&nbsp;public class Converters {</b>
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;    /**
+<i>9</i>&nbsp;     * This method serialize a list of ints arrays
+<i>10</i>&nbsp;     *
+<i>11</i>&nbsp;     * @param listToSerialize is the list not serialized
+<i>12</i>&nbsp;     * @return is the list serialized
+<i>13</i>&nbsp;     */
+<i>14</i>&nbsp;    public List&lt;SerializedInteger&gt; serializeListOfInts(List&lt;int[]&gt; listToSerialize) {
+<b class="nc"><i>15</i>&nbsp;        List&lt;SerializedInteger&gt; serializedIntegerList = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>16</i>&nbsp;        for (int[] elem : listToSerialize)</b>
+<b class="nc"><i>17</i>&nbsp;            serializedIntegerList.add(new SerializedInteger(elem));</b>
+<b class="nc"><i>18</i>&nbsp;        return serializedIntegerList;</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * This method deserialize a list of ints arrays
+<i>23</i>&nbsp;     *
+<i>24</i>&nbsp;     * @param listToDeserialize is the list serialized
+<i>25</i>&nbsp;     * @return is the list serialized
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    public List&lt;int[]&gt; deserializeListOfInts(List&lt;SerializedInteger&gt; listToDeserialize) {
+<b class="nc"><i>28</i>&nbsp;        List&lt;int[]&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>29</i>&nbsp;        for (SerializedInteger position : listToDeserialize)</b>
+<b class="nc"><i>30</i>&nbsp;            list.add(position.serialized);</b>
+<b class="nc"><i>31</i>&nbsp;        return list;</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    /**
+<i>35</i>&nbsp;     * This method serialize an array of list of ints array
+<i>36</i>&nbsp;     *
+<i>37</i>&nbsp;     * @param arrayOfListsToSerialize is the array of lists not serialized
+<i>38</i>&nbsp;     * @return the array of list serialized
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;    public List&lt;SerializedInteger&gt;[] serializeArrayOfListOfInts(List&lt;int[]&gt;[] arrayOfListsToSerialize) {
+<b class="nc"><i>41</i>&nbsp;        List&lt;SerializedInteger&gt;[] listConverted = new ArrayList[arrayOfListsToSerialize.length];</b>
+<b class="nc"><i>42</i>&nbsp;        for (int i = 0; i &lt; arrayOfListsToSerialize.length; i++)</b>
+<b class="nc"><i>43</i>&nbsp;            listConverted[i] = serializeListOfInts(arrayOfListsToSerialize[i]);</b>
+<b class="nc"><i>44</i>&nbsp;        return listConverted;</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    /**
+<i>48</i>&nbsp;     * This method deserialize an array of list of serialized ints array
+<i>49</i>&nbsp;     *
+<i>50</i>&nbsp;     * @param arrayOfListsToDeserialize is the array of lists serialized
+<i>51</i>&nbsp;     * @return the array of list deserialize
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public List&lt;int[]&gt;[] deserializeArrayOfListOfInts(List&lt;SerializedInteger&gt;[] arrayOfListsToDeserialize) {
+<b class="nc"><i>54</i>&nbsp;        List&lt;int[]&gt;[] lists = new ArrayList[arrayOfListsToDeserialize.length];</b>
+<b class="nc"><i>55</i>&nbsp;        for (int i = 0; i &lt; arrayOfListsToDeserialize.length; i++) {</b>
+<b class="nc"><i>56</i>&nbsp;            lists[i] = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>57</i>&nbsp;            for (int k = 0; k &lt; arrayOfListsToDeserialize[i].size(); k++)</b>
+<b class="nc"><i>58</i>&nbsp;                lists[i].add(arrayOfListsToDeserialize[i].get(k).serialized);</b>
+<i>59</i>&nbsp;        }
+<b class="nc"><i>60</i>&nbsp;        return lists;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    /**
+<i>64</i>&nbsp;     * This method serialize an 2D array of ints
+<i>65</i>&nbsp;     *
+<i>66</i>&nbsp;     * @param ints is the 2D array to serialize
+<i>67</i>&nbsp;     * @return the serialized array
+<i>68</i>&nbsp;     */
+<i>69</i>&nbsp;    public SerializedInteger[] serialize2DArrayOfInt(int[][] ints) {
+<b class="nc"><i>70</i>&nbsp;        SerializedInteger[] serializedIntegers = new SerializedInteger[ints.length];</b>
+<b class="nc"><i>71</i>&nbsp;        for (int i = 0; i &lt; ints.length; i++)</b>
+<b class="nc"><i>72</i>&nbsp;            serializedIntegers[i] = new SerializedInteger(ints[i]);</b>
+<b class="nc"><i>73</i>&nbsp;        return serializedIntegers;</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    /**
+<i>77</i>&nbsp;     * This method deserialize an 2D array of serializedInteger
+<i>78</i>&nbsp;     *
+<i>79</i>&nbsp;     * @param serializedInteger is the 2D array to deserialize
+<i>80</i>&nbsp;     * @return the deserialize array
+<i>81</i>&nbsp;     */
+<i>82</i>&nbsp;    public int[][] deserialize2DArrayOfInts(SerializedInteger[] serializedInteger) {
+<b class="nc"><i>83</i>&nbsp;        int[][] ints = new int[serializedInteger.length][];</b>
+<b class="nc"><i>84</i>&nbsp;        for (int i = 0; i &lt; serializedInteger.length; i++)</b>
+<b class="nc"><i>85</i>&nbsp;            ints[i] = serializedInteger[i].serialized;</b>
+<b class="nc"><i>86</i>&nbsp;        return ints;</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 15:16</div>
+</div>
+</body>
+</html>

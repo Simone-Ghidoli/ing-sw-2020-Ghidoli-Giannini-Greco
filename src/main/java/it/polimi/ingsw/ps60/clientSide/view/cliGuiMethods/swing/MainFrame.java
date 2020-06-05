@@ -6,16 +6,14 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Objects;
-
 
 /**
  * This class menage the main frame of the program
  */
 public class MainFrame extends JPanel {
-    private final ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final JButton[] jButtons = new JButton[25];
     final JPanel grid = new JPanel();
@@ -28,12 +26,7 @@ public class MainFrame extends JPanel {
     public MainFrame() {
         super();
 
-        JLabel board = new JLabel();
-        try {
-            board.setIcon(new ImageIcon(ImageIO.read(imageFileReader("board/SantoriniBoard.png")).getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH)));
-        } catch (IOException e){
-            System.out.println("Error in image reading");
-        }
+        JLabel board = new JLabel(new ImageIcon(imageFileReader("/board/SantoriniBoard.png").getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH)));
 
         setLayout(new GridBagLayout());
         grid.setPreferredSize(new Dimension(screenSize.width * 12 / 29, screenSize.height * 47 / 64));
@@ -107,13 +100,11 @@ public class MainFrame extends JPanel {
      * @param turnNumber    is the player number of the player
      */
     public void setDivinityCardImage(int[] divinityCards, int turnNumber) {
-
-        try {
         JLabel divinityCardImage;
         for (int i = 0; i < divinityCards.length; i++) {
             if (i == turnNumber) {
 
-                divinityCardImage = new JLabel(new ImageIcon(ImageIO.read(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition())).getScaledInstance(screenSize.width * 9 / 58, screenSize.height / 2, Image.SCALE_SMOOTH)));
+                divinityCardImage = new JLabel(new ImageIcon(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition()).getScaledInstance(screenSize.width * 9 / 58, screenSize.height / 2, Image.SCALE_SMOOTH)));
                 divinityCardImage.setBorder(
                         BorderFactory.createTitledBorder(
                                 BorderFactory.createEtchedBorder(
@@ -122,7 +113,7 @@ public class MainFrame extends JPanel {
                 divinityCard.add(divinityCardImage);
             } else {
 
-                divinityCardImage = new JLabel(new ImageIcon(ImageIO.read(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition())).getScaledInstance(screenSize.width * 9 / 116, screenSize.height / 4, Image.SCALE_SMOOTH)));
+                divinityCardImage = new JLabel(new ImageIcon(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition()).getScaledInstance(screenSize.width * 9 / 116, screenSize.height / 4, Image.SCALE_SMOOTH)));
                 divinityCardImage.setBorder(
                         BorderFactory.createTitledBorder(
                                 BorderFactory.createEtchedBorder(
@@ -130,9 +121,6 @@ public class MainFrame extends JPanel {
                                         GlobalVariables.Colour.values()[i].getColor()), "Player number " + (i + 1)));
                 opponents.add(divinityCardImage);
             }
-        }
-        } catch (IOException e){
-            e.printStackTrace();
         }
     }
 
@@ -148,7 +136,15 @@ public class MainFrame extends JPanel {
         }
     }
 
-    public File imageFileReader(String pathToImage){
-        return new File(Objects.requireNonNull(classLoader.getResource(pathToImage)).getFile());
+    public BufferedImage imageFileReader(String pathToImage) {
+        BufferedImage buff;
+        try {
+            buff = ImageIO.read(getClass().getResourceAsStream(pathToImage));
+        } catch (IOException e) {
+            System.out.println("Error in reading image at " + pathToImage);
+            e.printStackTrace();
+            return null;
+        }
+        return buff;
     }
 }

@@ -20,7 +20,7 @@ public class GlobalVariables {
 
         IdPlayer(Colour colour, String sourcePawn) {
             this.colour = colour;
-            this.sourcePawn = "board/" + sourcePawn + "pawn.png";
+            this.sourcePawn = "/board/" + sourcePawn + "pawn.png";
         }
 
         public Colour getColour() {
@@ -41,7 +41,7 @@ public class GlobalVariables {
         private final String sourcePosition;
 
         DivinityCard(String sourcePosition) {
-            this.sourcePosition = "godCards/" + sourcePosition + ".png";
+            this.sourcePosition = "/godCards/" + sourcePosition + ".png";
         }
 
         public String getSourcePosition() {

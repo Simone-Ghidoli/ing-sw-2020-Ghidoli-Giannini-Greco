@@ -1,0 +1,106 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ApolloTurnEffect</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ApolloTurnEffect (it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ApolloTurnEffect</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.model.Player;
+<i>4</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.model.Worker;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import static it.polimi.ingsw.ps60.GlobalVariables.game;
+<i>7</i>&nbsp;
+<b class="fc"><i>8</i>&nbsp;public class ApolloTurnEffect extends BaseTurnEffect {</b>
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    @Override
+<i>11</i>&nbsp;    public void move(int[][] move) {
+<i>12</i>&nbsp;        Worker worker;
+<b class="fc"><i>13</i>&nbsp;        Player player = game.getPlayerInGame().get();</b>
+<b class="fc"><i>14</i>&nbsp;        if (!(game.getCellByPosition(move[1]).isFree())) {</b>
+<b class="fc"><i>15</i>&nbsp;            worker = game.getCellByPosition(move[1]).getWorkerIn();</b>
+<b class="fc"><i>16</i>&nbsp;            game.getCellByPosition(move[1]).getWorkerIn().moveWorker(player.getWorker(move[0][0]).getCellPosition());</b>
+<b class="fc"><i>17</i>&nbsp;            player.getWorker(move[0][0]).moveWorker(game.getCellByPosition(move[1]));</b>
+<b class="fc"><i>18</i>&nbsp;            player.getWorker(move[0][0]).getOldCell().setWorkerIn(worker);</b>
+<b class="fc"><i>19</i>&nbsp;            player.setWorkerMoved(player.getWorker(move[0][0]));</b>
+<i>20</i>&nbsp;        } else
+<b class="fc"><i>21</i>&nbsp;            super.move(move);</b>
+<b class="fc"><i>22</i>&nbsp;    }</b>
+<i>23</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-05 21:10</div>
+</div>
+</body>
+</html>
