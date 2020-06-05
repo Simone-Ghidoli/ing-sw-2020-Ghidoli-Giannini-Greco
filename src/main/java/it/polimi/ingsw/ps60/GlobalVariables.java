@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class GlobalVariables {
 
-    public static FlushedInput input = new FlushedInput();
+    public static final FlushedInput input = new FlushedInput();
 
     public enum IdPlayer {
         PLAYER1(Colour.RED, "Red "),
@@ -20,7 +20,7 @@ public class GlobalVariables {
 
         IdPlayer(Colour colour, String sourcePawn) {
             this.colour = colour;
-            this.sourcePawn = "src/resources/board/" + sourcePawn + "pawn.png";
+            this.sourcePawn = "board/" + sourcePawn + "pawn.png";
         }
 
         public Colour getColour() {
@@ -41,7 +41,7 @@ public class GlobalVariables {
         private final String sourcePosition;
 
         DivinityCard(String sourcePosition) {
-            this.sourcePosition = "src/resources/godCards/" + sourcePosition + ".png";
+            this.sourcePosition = "godCards/" + sourcePosition + ".png";
         }
 
         public String getSourcePosition() {
