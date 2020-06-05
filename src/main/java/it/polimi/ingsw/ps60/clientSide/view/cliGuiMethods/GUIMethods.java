@@ -58,33 +58,33 @@ public class GUIMethods implements ViewMethodSelection {
                             case 0:
                                 break;
                             case 1:
-                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/1 floor.png")));
                                 break;
                             case 2:
-                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/1 floor.png")));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/2 floor.png")));
                                 break;
                             case 3:
-                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/1 floor.png")));
-                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/2 floor.png")));
-                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/3 floor.png")));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/1 floor.png")));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/2 floor.png")));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/3 floor.png")));
                                 break;
                         }
 
-                        switch ((boardToPrint[i] - 48) / 4){
+                        switch ((boardToPrint[i] - 48) / 4) {
                             case 0:
                                 break;
                             case 1:
-                                imageToMerge.add(ImageIO.read(new File("src/resources/board/Buildings/Dome.png")));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader("board/Buildings/Dome.png")));
                                 break;
                             case 2:
-                                imageToMerge.add(ImageIO.read(new File(GlobalVariables.IdPlayer.PLAYER1.getSourcePawn())));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER1.getSourcePawn())));
                                 break;
                             case 3:
-                                imageToMerge.add(ImageIO.read(new File(GlobalVariables.IdPlayer.PLAYER2.getSourcePawn())));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER2.getSourcePawn())));
                                 break;
                             case 4:
-                                imageToMerge.add(ImageIO.read(new File(GlobalVariables.IdPlayer.PLAYER3.getSourcePawn())));
+                                imageToMerge.add(ImageIO.read(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER3.getSourcePawn())));
                                 break;
                         }
 
@@ -492,6 +492,7 @@ public class GUIMethods implements ViewMethodSelection {
 
     /**
      * This method asks to the user if he want to confirm what he choose or want to insert the input again
+     *
      * @return true if he confirms, false otherwise
      */
     private boolean confirmOrRetry() {
