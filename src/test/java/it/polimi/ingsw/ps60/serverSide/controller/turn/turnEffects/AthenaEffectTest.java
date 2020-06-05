@@ -33,11 +33,11 @@ public class AthenaEffectTest {
     }
     @Test
     public void checkAthenaEffect(){
-        int[][] mossa1 = new int[2][2];
-        mossa1[0][0] = 0;
-        mossa1[0][1] = 0;
-        mossa1[1] = new int[]{1,0};
-        game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(mossa1);
+        int[][] movement1 = new int[2][2];
+        movement1[0][0] = 0;
+        movement1[0][1] = 0;
+        movement1[1] = new int[]{1,0};
+        game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(movement1);
         ListContains listContains=new ListContains(game.getPlayerMatrix()[1].getDivinityStrategy().getTurnStrategyMovement()[0]);
         assertFalse(listContains.isContained(new int[]{2,3}));
 

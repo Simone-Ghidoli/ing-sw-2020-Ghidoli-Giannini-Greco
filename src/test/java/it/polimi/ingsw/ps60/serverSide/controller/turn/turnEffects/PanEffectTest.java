@@ -1,13 +1,12 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.utils.TestUtilities;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 public class PanEffectTest {
@@ -32,11 +31,11 @@ public class PanEffectTest {
     }
     @Test
     public void checkPanEffectTest(){
-        int[][] mossa1 = new int[2][2];
-        mossa1[0][0] = 0;
-        mossa1[0][1] = 0;
-        mossa1[1] = new int[]{0,0};
-        game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(mossa1);
+        int[][] movement1 = new int[2][2];
+        movement1[0][0] = 0;
+        movement1[0][1] = 0;
+        movement1[1] = new int[]{0,0};
+        game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(movement1);
         game.getPlayerMatrix()[0].getDivinityStrategy().setBuilding(new int[]{4, 4});
         game.getPlayerMatrix()[0].getDivinityStrategy().setEndTurn();
         assertEquals(game.getPlayerMatrix()[0],game.getPlayerWinner());
