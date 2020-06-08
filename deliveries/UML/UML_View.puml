@@ -1,0 +1,144 @@
+@startuml
+title PS60's view UML
+
+namespace it.polimi.ingsw.ps60.clientSide.view{
+            namespace client{
+                class it.polimi.ingsw.ps60.clientSide.view.client.ClientParser {
+                    ~ in_obj : ObjectInputStream
+                    ~ input : InputStream
+                    ~ out_obj : ObjectOutputStream
+                    ~ output : OutputStream
+                    ~pr : PrintWriter
+                    - messagesFromServer : List<String>
+                    - socket : Socket
+                    + ClientParser()
+                    + alert()
+                    + building()
+                    + disconnection()
+                    + divinityChoice()
+                    + divinitySelection()
+                    + movement()
+                    + nickname_birthday()
+                    + number_of_players()
+                    + printBoard()
+                    + receiveCards()
+                    + receiveInt()
+                    + receiveList()
+                    + receiveListArray()
+                    + receiveWorkers()
+                    + run()
+                    + sendCards()
+                    + sendInt()
+                    + sendPositions()
+                    + sendString()
+                    + setWorkers()
+                    + socketClose()
+                    + specialChoice()
+                    + status()
+                }
+
+                class it.polimi.ingsw.ps60.clientSide.view.client.ClientReader {
+                    ~ br : BufferedReader
+                    ~ serverSays : String
+                    ~ socket : Socket
+                    - messagesFromServer : List<String>
+                    + ClientReader()
+                    + run()
+                }
+
+                class it.polimi.ingsw.ps60.clientSide.view.client.ClientStarter {
+                    - ipAddress : String
+                    - messagesFromServer : List<String>
+                    - pool : ExecutorService
+                    - port : int
+                    - socket : Socket
+                    + ClientStarter()
+                    + start()
+                }
+            }
+            namespace cliGuiMethods{
+                namespace swing{
+                    class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame {
+                        ~ divinityCard : JPanel
+                        ~ grid : JPanel
+                        ~ info : JPanel
+                        ~ opponents : JPanel
+                        ~ workers : JPanel
+                        - jButtons : JButton[]
+                        - screenSize : Dimension
+                        + MainFrame()
+                        + getButton()
+                        + getButtonCoords()
+                        + getScreenSize()
+                        + imageFileReader()
+                        + resetButtons()
+                        + setDivinityCardImage()
+                    }
+                }
+
+                class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.CLIMethods {
+                    - divinityCards : int[]
+                    - turnNumber : int
+                    + CLIMethods()
+                    + alert()
+                    + buildChoice()
+                    + cardChoices()
+                    + divinitySelection()
+                    + firstSetWorkers()
+                    + ipPortChoices()
+                    + moveChoice()
+                    + nicknameBirthdayChoice()
+                    + numberOfPlayers()
+                    + printBoard()
+                    + printPossibleBuilds()
+                    + printPossibleMoves()
+                    + specialChoices()
+                    + status()
+                }
+
+                class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods {
+                    + GUIMethods()
+                    + alert()
+                    + buildChoice()
+                    + cardChoices()
+                    + divinitySelection()
+                    + firstSetWorkers()
+                    + ipPortChoices()
+                    + moveChoice()
+                    + nicknameBirthdayChoice()
+                    + numberOfPlayers()
+                    + printBoard()
+                    + specialChoices()
+                    + status()
+                    - confirmOrRetry()
+                }
+
+                interface it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection {
+                    {abstract} + alert()
+                    {abstract} + buildChoice()
+                    {abstract} + cardChoices()
+                    {abstract} + divinitySelection()
+                    {abstract} + firstSetWorkers()
+                    {abstract} + ipPortChoices()
+                    {abstract} + moveChoice()
+                    {abstract} + nicknameBirthdayChoice()
+                    {abstract} + numberOfPlayers()
+                    {abstract} + printBoard()
+                    {abstract} + specialChoices()
+                    {abstract} + status()
+                }
+            }
+        }
+
+        it.polimi.ingsw.ps60.clientSide.view.client.ClientParser .up.|> java.lang.Runnable
+        it.polimi.ingsw.ps60.clientSide.view.client.ClientParser o-- it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection : methodSelection
+        it.polimi.ingsw.ps60.clientSide.view.client.ClientParser o-- it.polimi.ingsw.ps60.utils.Converters : converters
+        it.polimi.ingsw.ps60.clientSide.view.client.ClientReader .up.|> java.lang.Runnable
+        it.polimi.ingsw.ps60.clientSide.view.client.ClientReader o-- it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection : methodSelection
+        it.polimi.ingsw.ps60.clientSide.view.client.ClientStarter o-- it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection : viewMethodSelection
+        it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.CLIMethods .up.|> it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection
+        it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods .up.|> it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection
+        it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods o-- it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame : santorini
+        it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame -up-|> javax.swing.JPanel
+
+@enduml

@@ -1,0 +1,618 @@
+@startuml
+title PS60's class diagram
+
+namespace it.polimi.ingsw.ps60{
+    namespace clientSide{
+        namespace view{
+            namespace client{
+                class it.polimi.ingsw.ps60.clientSide.view.client.ClientParser {
+                    ~ in_obj : ObjectInputStream
+                    ~ input : InputStream
+                    ~ out_obj : ObjectOutputStream
+                    ~ output : OutputStream
+                    ~pr : PrintWriter
+                    - messagesFromServer : List<String>
+                    - socket : Socket
+                    + ClientParser()
+                    + alert()
+                    + building()
+                    + disconnection()
+                    + divinityChoice()
+                    + divinitySelection()
+                    + movement()
+                    + nickname_birthday()
+                    + number_of_players()
+                    + printBoard()
+                    + receiveCards()
+                    + receiveInt()
+                    + receiveList()
+                    + receiveListArray()
+                    + receiveWorkers()
+                    + run()
+                    + sendCards()
+                    + sendInt()
+                    + sendPositions()
+                    + sendString()
+                    + setWorkers()
+                    + socketClose()
+                    + specialChoice()
+                    + status()
+                }
+
+                class it.polimi.ingsw.ps60.clientSide.view.client.ClientReader {
+                    ~ br : BufferedReader
+                    ~ serverSays : String
+                    ~ socket : Socket
+                    - messagesFromServer : List<String>
+                    + ClientReader()
+                    + run()
+                }
+
+                class it.polimi.ingsw.ps60.clientSide.view.client.ClientStarter {
+                    - ipAddress : String
+                    - messagesFromServer : List<String>
+                    - pool : ExecutorService
+                    - port : int
+                    - socket : Socket
+                    + ClientStarter()
+                    + start()
+                }
+            }
+            namespace cliGuiMethods{
+                namespace swing{
+                    class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame {
+                        ~ divinityCard : JPanel
+                        ~ grid : JPanel
+                        ~ info : JPanel
+                        ~ opponents : JPanel
+                        ~ workers : JPanel
+                        - jButtons : JButton[]
+                        - screenSize : Dimension
+                        + MainFrame()
+                        + getButton()
+                        + getButtonCoords()
+                        + getScreenSize()
+                        + imageFileReader()
+                        + resetButtons()
+                        + setDivinityCardImage()
+                    }
+                }
+
+                class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.CLIMethods {
+                    - divinityCards : int[]
+                    - turnNumber : int
+                    + CLIMethods()
+                    + alert()
+                    + buildChoice()
+                    + cardChoices()
+                    + divinitySelection()
+                    + firstSetWorkers()
+                    + ipPortChoices()
+                    + moveChoice()
+                    + nicknameBirthdayChoice()
+                    + numberOfPlayers()
+                    + printBoard()
+                    + printPossibleBuilds()
+                    + printPossibleMoves()
+                    + specialChoices()
+                    + status()
+                }
+
+                class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods {
+                    + GUIMethods()
+                    + alert()
+                    + buildChoice()
+                    + cardChoices()
+                    + divinitySelection()
+                    + firstSetWorkers()
+                    + ipPortChoices()
+                    + moveChoice()
+                    + nicknameBirthdayChoice()
+                    + numberOfPlayers()
+                    + printBoard()
+                    + specialChoices()
+                    + status()
+                    - confirmOrRetry()
+                }
+
+                interface it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection {
+                    {abstract} + alert()
+                    {abstract} + buildChoice()
+                    {abstract} + cardChoices()
+                    {abstract} + divinitySelection()
+                    {abstract} + firstSetWorkers()
+                    {abstract} + ipPortChoices()
+                    {abstract} + moveChoice()
+                    {abstract} + nicknameBirthdayChoice()
+                    {abstract} + numberOfPlayers()
+                    {abstract} + printBoard()
+                    {abstract} + specialChoices()
+                    {abstract} + status()
+                }
+            }
+        }
+    }
+    namespace serverSide{
+        namespace controller{
+            namespace turn{
+                namespace turnController{
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.AtlasHephaestusTurnController {
+                        + buildingSection()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController {
+                        ~ lost : boolean
+                        + buildingSection()
+                        + endTurnSection()
+                        + movementSection()
+                        + sendBoardToClient()
+                        + turn()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.DemeterTurnController {
+                        + buildingSection()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.HestiaTurnController {
+                        + buildingSection()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PoseidonTurnController {
+                        + specialChoice()
+                        + turn()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PrometheusTurnController {
+                        + movementSection()
+                    }
+
+                    interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController {
+                        {abstract} + turn()
+                    }
+                }
+                namespace turnEffects{
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ApolloTurnEffect {
+                        + move()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AthenaTurnEffect {
+                        + move()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AtlasTurnEffect {
+                        + build()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect {
+                        + build()
+                        + endTurn()
+                        + move()
+                        + winConditions()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ChronusTurnEffect {
+                        + winConditions()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.HephaestusTurnEffect {
+                        + build()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.MinotaurTurnEffect {
+                        + move()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.PanTurnEffect {
+                        + winConditions()
+                    }
+
+                    interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.TurnEffect {
+                        {abstract} + build()
+                        {abstract} + endTurn()
+                        {abstract} + move()
+                    }
+                }
+
+                namespace turnStrategy{
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ApolloTurnStrategy {
+                        + baseMovement()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ArtemisTurnStrategy {
+                        + baseMovement()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.AtlasTurnStrategy {
+                        + baseBuilding()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy {
+                        + baseBuilding()
+                        + baseMovement()
+                        + isNotDisturbedByDivinity()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.HephaestusTurnStrategy {
+                        + baseBuilding()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.MinotaurTurnStrategy {
+                        + baseMovement()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.PrometheusTurnStrategy {
+                        + baseMovement()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TritonTurnStrategy {
+                        + baseMovement()
+                    }
+
+                    interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TurnStrategy {
+                        {abstract} + baseBuilding()
+                        {abstract} + baseMovement()
+                    }
+
+                    class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ZeusTurnStrategy {
+                        + baseBuilding()
+                    }
+                }
+
+                class it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy {
+                    - bitException : boolean
+                    - specialChoice : String
+                    + DivinityStrategy()
+                    + getSpecialChoice()
+                    + getTurnController()
+                    + getTurnStrategyBuilding()
+                    + getTurnStrategyMovement()
+                    + isBitException()
+                    + setBitException()
+                    + setBuilding()
+                    + setEndTurn()
+                    + setMovement()
+                }
+            }
+            class it.polimi.ingsw.ps60.serverSide.controller.ServerStarter {
+                - nicknames : String[]
+                + ServerStarter()
+                + start()
+                - divinityNumber()
+                - gameTurn()
+                - loadGame()
+                - portSelection()
+                - selectDivinityCard()
+                - selectWorkersPositions()
+                - serverThreadBound()
+                - sort()
+            }
+        }
+
+        namespace model{
+            class it.polimi.ingsw.ps60.serverSide.model.Board {
+                - cellMatrix : Cell[][]
+                - cellToSend : char[]
+                - completeTower : int
+                - playerInGame : CircularListIterator<Player>
+                - playerList : CircularLinkedList<Player>
+                - playerMatrix : Player[]
+                - playersNumber : int
+                + Board()
+                + changeTurn()
+                + getCellByPosition()
+                + getCellToSend()
+                + getCompleteTower()
+                + getPlayerInGame()
+                + getPlayerMatrix()
+                + getPlayerWinner()
+                + getPlayersNumber()
+                + increaseCompleteTower()
+                + isNotWon()
+                + lose()
+                + win()
+            }
+
+            class it.polimi.ingsw.ps60.serverSide.model.Cell {
+                - buildingLevel : int
+                - dome : boolean
+                - position : int[]
+                + Cell()
+                + buildDome()
+                + getBuildingLevel()
+                + getPosition()
+                + getWorkerIn()
+                + incrementBuildingLevel()
+                + isDomed()
+                + isFree()
+                + setWorkerIn()
+                - updateCellToSend()
+            }
+
+            class it.polimi.ingsw.ps60.serverSide.model.Player {
+                - buildByWorker : boolean
+                - divinityCard : int
+                - nickname : String
+                - workers : Worker[]
+                + Player()
+                + getDivinityCard()
+                + getDivinityStrategy()
+                + getNickname()
+                + getServerThread()
+                + getWorker()
+                + getWorkerMoved()
+                + getWorkers()
+                + isBuildByWorker()
+                + setBuildByWorker()
+                + setDivinityCard()
+                + setServerThread()
+                + setWorkerMoved()
+            }
+
+            class it.polimi.ingsw.ps60.serverSide.model.Worker {
+                + Worker()
+                + getCellPosition()
+                + getOldCell()
+                + getOwner()
+                + isLeveledUp()
+                + moveWorker()
+                + setOldCell()
+            }
+        }
+
+        namespace server{
+            class it.polimi.ingsw.ps60.serverSide.server.Server {
+                - clientList : ArrayList<ServerThread>
+                - nickBirth : List<String[]>
+                - numberOfPlayers : int
+                - port : int
+                - serverSocket : ServerSocket
+                - socket : Socket
+                + Server()
+                + getNicknameAndBirthday()
+                + getSocketList()
+                + nameProblem()
+                - acceptClientConnection()
+                - serverStart()
+            }
+
+            class it.polimi.ingsw.ps60.serverSide.server.ServerThread {
+                # socket : Socket
+                - buffer : BufferedReader
+                - in : InputStream
+                - in_obj : ObjectInputStream
+                - out : OutputStream
+                - out_obj : ObjectOutputStream
+                - playerBound : String
+                - serverThreads : List<ServerThread>
+                - writer : PrintWriter
+                + ServerThread()
+                + buildMessage()
+                + disconnection()
+                + divinityChoice()
+                + divinitySelection()
+                + getPlayerBound()
+                + getServerThreads()
+                + lossMessage()
+                + moveMessage()
+                + nicknameBirthday()
+                + numberOfPlayers()
+                + receiveCards()
+                + receiveInteger()
+                + receivePositions()
+                + receiveString()
+                + sendAlert()
+                + sendBoard()
+                + sendCards()
+                + sendInt()
+                + sendPositionWorkers()
+                + sendPositionsArray()
+                + sendPositionsList()
+                + sendStatus()
+                + sendString()
+                + setPlayerBound()
+                + setWorkers()
+                + specialChoice()
+                + win()
+            }
+        }
+    }
+    namespace utils{
+        namespace circularList{
+            class it.polimi.ingsw.ps60.utils.circularList.CircularLinkedList {
+                - head : Node<T>
+                - size : int
+                - tail : Node<T>
+                + CircularLinkedList()
+                + addNode()
+                + getHead()
+                + getSize()
+                + removeNode()
+            }
+
+            class it.polimi.ingsw.ps60.utils.circularList.CircularListIterator {
+                - list : CircularLinkedList<T>
+                - node : Node<T>
+                + CircularListIterator()
+                + get()
+                + getList()
+                + nextNode()
+            }
+
+            class it.polimi.ingsw.ps60.utils.circularList.Node {
+                ~ nextNode : Node<T>
+                + Node()
+                + getValue()
+            }
+        }
+
+        class it.polimi.ingsw.ps60.utils.Converters {
+            + deserialize2DArrayOfInts()
+            + deserializeArrayOfListOfInts()
+            + deserializeListOfInts()
+            + serialize2DArrayOfInt()
+            + serializeArrayOfListOfInts()
+            + serializeListOfInts()
+        }
+
+        class it.polimi.ingsw.ps60.utils.FileAccess {
+            - inputStream : FileInputStream
+            - objectInputStream : ObjectInputStream
+            - objectOutputStream : ObjectOutputStream
+            - outputStream : FileOutputStream
+            + reader()
+            + writer()
+        }
+
+        class it.polimi.ingsw.ps60.utils.FlushedInput {
+            ~ input : Scanner
+            + nextInt()
+            + nextLine()
+            - flushInput()
+        }
+
+        class it.polimi.ingsw.ps60.utils.ListContains {
+            - list : List<int[]>
+            + ListContains()
+            + isContained()
+        }
+
+        class it.polimi.ingsw.ps60.utils.SerializedInteger {
+            + serialized : int[]
+            + SerializedInteger()
+        }
+
+        class it.polimi.ingsw.ps60.utils.StringRegexValidation {
+            - regex : Pattern
+            + StringRegexValidation()
+            + isValid()
+        }
+    }
+    class it.polimi.ingsw.ps60.GlobalVariables{
+        {static} + game : Board
+        {static} + input : FlushedInput
+    }
+
+    enum it.polimi.ingsw.ps60.GlobalVariables.Colour{
+        BLUE
+        GREEN
+        RED
+        RESET
+        YELLOW
+        - colour: Colour
+        - string: String
+        + getColor(): Colour
+        + getString(): String
+    }
+
+    enum it.polimi.ingsw.ps60.GlobalVariables.DivinityCard {
+        APOLLO
+        ARTEMIS
+        ATHENA
+        ATLAS
+        CHRONUS
+        DEMETER
+        HEPHAESTUS
+        HESTIA
+        MINOTAUR
+        NONE
+        PAN
+        POSEIDON
+        PROMETHEUS
+        TRITON
+        ZEUS
+        - sourcePosition: String
+        + getSourcePostition: String
+    }
+
+    enum it.polimi.ingsw.ps60.GlobalVariables.IdPlayer{
+        PLAYER1
+        PLAYER2
+        PLAYER3
+        - colour: Colour
+        - sourcePawn: String
+    }
+
+    enum it.polimi.ingsw.ps60.GlobalVariables.StringPatterns{
+        IPV4
+        PortNumber
+        Nickname
+        NumberOfPlayer
+        DivinityCard
+        Boolean1True0False
+        Date
+        - pattern: String
+        + getPattern(): String
+    }
+
+    class it.polimi.ingsw.ps60.Launcher{
+        {static} + main()
+        {static} - firstSelections()
+        {static} - clientSelection()
+    }
+
+    it.polimi.ingsw.ps60.utils.SerializedInteger .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.server.ServerThread o-- it.polimi.ingsw.ps60.utils.Converters : converters
+    it.polimi.ingsw.ps60.serverSide.model.Board .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.model.Board o-- it.polimi.ingsw.ps60.serverSide.model.Player : playerWinner
+    it.polimi.ingsw.ps60.serverSide.model.Cell .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.model.Cell o-- it.polimi.ingsw.ps60.serverSide.model.Board : board
+    it.polimi.ingsw.ps60.serverSide.model.Cell o-- it.polimi.ingsw.ps60.serverSide.model.Worker : workerIn
+    it.polimi.ingsw.ps60.serverSide.model.Player .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.model.Player o-- it.polimi.ingsw.ps60.serverSide.server.ServerThread : serverThread
+    it.polimi.ingsw.ps60.serverSide.model.Player o-- it.polimi.ingsw.ps60.serverSide.model.Worker : workerMoved
+    it.polimi.ingsw.ps60.serverSide.model.Worker .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.model.Worker o-- it.polimi.ingsw.ps60.serverSide.model.Cell : OldCell
+    it.polimi.ingsw.ps60.serverSide.model.Worker o-- it.polimi.ingsw.ps60.serverSide.model.Cell : cellPosition
+    it.polimi.ingsw.ps60.serverSide.model.Worker o-- it.polimi.ingsw.ps60.serverSide.model.Player : owner
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ApolloTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ArtemisTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.AtlasTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy .up.|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.HephaestusTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.MinotaurTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.PrometheusTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TritonTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ZeusTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ApolloTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AthenaTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AtlasTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect .up.|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.TurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ChronusTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.HephaestusTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.MinotaurTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.PanTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.AtlasHephaestusTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController .up.|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController o-- it.polimi.ingsw.ps60.serverSide.model.Player : player
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.DemeterTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.HestiaTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PoseidonTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PrometheusTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy o-- it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController : turnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy o-- it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.TurnEffect : turnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy o-- it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TurnStrategy : turnStrategy
+    it.polimi.ingsw.ps60.serverSide.controller.ServerStarter o-- it.polimi.ingsw.ps60.utils.FileAccess : fileAccess
+    it.polimi.ingsw.ps60.serverSide.controller.ServerStarter o-- it.polimi.ingsw.ps60.serverSide.server.Server : server
+    it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.CLIMethods .up.|> it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection
+    it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods .up.|> it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection
+    it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods o-- it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame : santorini
+    it.polimi.ingsw.ps60.clientSide.view.client.ClientParser .up.|> java.lang.Runnable
+    it.polimi.ingsw.ps60.clientSide.view.client.ClientParser o-- it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection : methodSelection
+    it.polimi.ingsw.ps60.clientSide.view.client.ClientParser o-- it.polimi.ingsw.ps60.utils.Converters : converters
+    it.polimi.ingsw.ps60.clientSide.view.client.ClientReader .up.|> java.lang.Runnable
+    it.polimi.ingsw.ps60.clientSide.view.client.ClientReader o-- it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection : methodSelection
+    it.polimi.ingsw.ps60.clientSide.view.client.ClientStarter o-- it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection : viewMethodSelection
+    it.polimi.ingsw.ps60.GlobalVariables +-down- it.polimi.ingsw.ps60.GlobalVariables.Colour
+    it.polimi.ingsw.ps60.GlobalVariables +-down- it.polimi.ingsw.ps60.GlobalVariables.DivinityCard
+    it.polimi.ingsw.ps60.GlobalVariables +-down- it.polimi.ingsw.ps60.GlobalVariables.IdPlayer
+    it.polimi.ingsw.ps60.GlobalVariables +-down- it.polimi.ingsw.ps60.GlobalVariables.StringPatterns
+    it.polimi.ingsw.ps60.GlobalVariables.DivinityCard .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.GlobalVariables.IdPlayer o-- it.polimi.ingsw.ps60.GlobalVariables.Colour : colour
+    it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame -up-|> javax.swing.JPanel
+    it.polimi.ingsw.ps60.utils.circularList.CircularLinkedList .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.utils.circularList.CircularListIterator .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.utils.circularList.Node .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.utils.circularList.Node o-- T : value
+
+}
+@enduml

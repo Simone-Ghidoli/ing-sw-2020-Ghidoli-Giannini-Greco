@@ -16,7 +16,7 @@ public class Launcher {
     /**
      * This method will makes able to select to run a client or a server
      */
-    public static void firstSelections() {
+    private static void firstSelections() {
 
         System.out.println("Enter 0 for server, 1 for client");
 

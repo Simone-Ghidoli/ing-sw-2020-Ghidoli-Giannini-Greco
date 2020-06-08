@@ -1,0 +1,87 @@
+@startuml
+title PS60's model UML
+
+namespace it.polimi.ingsw.ps60.serverSide.model{
+            class it.polimi.ingsw.ps60.serverSide.model.Board {
+                - cellMatrix : Cell[][]
+                - cellToSend : char[]
+                - completeTower : int
+                - playerInGame : CircularListIterator<Player>
+                - playerList : CircularLinkedList<Player>
+                - playerMatrix : Player[]
+                - playersNumber : int
+                + Board()
+                + changeTurn()
+                + getCellByPosition()
+                + getCellToSend()
+                + getCompleteTower()
+                + getPlayerInGame()
+                + getPlayerMatrix()
+                + getPlayerWinner()
+                + getPlayersNumber()
+                + increaseCompleteTower()
+                + isNotWon()
+                + lose()
+                + win()
+            }
+
+            class it.polimi.ingsw.ps60.serverSide.model.Cell {
+                - buildingLevel : int
+                - dome : boolean
+                - position : int[]
+                + Cell()
+                + buildDome()
+                + getBuildingLevel()
+                + getPosition()
+                + getWorkerIn()
+                + incrementBuildingLevel()
+                + isDomed()
+                + isFree()
+                + setWorkerIn()
+                - updateCellToSend()
+            }
+
+            class it.polimi.ingsw.ps60.serverSide.model.Player {
+                - buildByWorker : boolean
+                - divinityCard : int
+                - nickname : String
+                - workers : Worker[]
+                + Player()
+                + getDivinityCard()
+                + getDivinityStrategy()
+                + getNickname()
+                + getServerThread()
+                + getWorker()
+                + getWorkerMoved()
+                + getWorkers()
+                + isBuildByWorker()
+                + setBuildByWorker()
+                + setDivinityCard()
+                + setServerThread()
+                + setWorkerMoved()
+            }
+
+            class it.polimi.ingsw.ps60.serverSide.model.Worker {
+                + Worker()
+                + getCellPosition()
+                + getOldCell()
+                + getOwner()
+                + isLeveledUp()
+                + moveWorker()
+                + setOldCell()
+            }
+}
+
+    it.polimi.ingsw.ps60.serverSide.model.Board .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.model.Board o-- it.polimi.ingsw.ps60.serverSide.model.Player : playerWinner
+    it.polimi.ingsw.ps60.serverSide.model.Cell .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.model.Cell o-- it.polimi.ingsw.ps60.serverSide.model.Board : board
+    it.polimi.ingsw.ps60.serverSide.model.Cell o-- it.polimi.ingsw.ps60.serverSide.model.Worker : workerIn
+    it.polimi.ingsw.ps60.serverSide.model.Player .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.model.Player o-- it.polimi.ingsw.ps60.serverSide.server.ServerThread : serverThread
+    it.polimi.ingsw.ps60.serverSide.model.Player o-- it.polimi.ingsw.ps60.serverSide.model.Worker : workerMoved
+    it.polimi.ingsw.ps60.serverSide.model.Worker .up.|> java.io.Serializable
+    it.polimi.ingsw.ps60.serverSide.model.Worker o-- it.polimi.ingsw.ps60.serverSide.model.Cell : OldCell
+    it.polimi.ingsw.ps60.serverSide.model.Worker o-- it.polimi.ingsw.ps60.serverSide.model.Cell : cellPosition
+    it.polimi.ingsw.ps60.serverSide.model.Worker o-- it.polimi.ingsw.ps60.serverSide.model.Player : owner
+@enduml
