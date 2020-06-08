@@ -459,8 +459,6 @@ namespace it.polimi.ingsw.ps60{
             - objectInputStream : ObjectInputStream
             - objectOutputStream : ObjectOutputStream
             - outputStream : FileOutputStream
-            - path : String
-            + FileAccess()
             + reader()
             + writer()
         }

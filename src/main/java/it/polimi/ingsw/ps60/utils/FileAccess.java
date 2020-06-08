@@ -13,16 +13,6 @@ public class FileAccess {
     private ObjectOutputStream objectOutputStream = null;
     private FileInputStream inputStream = null;
     private ObjectInputStream objectInputStream = null;
-    private String path = "";
-
-    /**
-     * This constructor only determines the base directory of the project
-     */
-    public FileAccess() {
-        String[] strings = FileAccess.class.getProtectionDomain().getCodeSource().getLocation().getPath().split("/");
-        for (int i = 0; i < strings.length - 1; i++)
-            path = path.concat(strings[i]);
-    }
 
     /**
      * This method will write the board in a file
@@ -32,7 +22,7 @@ public class FileAccess {
     public void writer(Board board) {
 
         try {
-            outputStream = new FileOutputStream(path);
+            outputStream = new FileOutputStream("save");
             objectOutputStream = new ObjectOutputStream(outputStream);
             System.out.println("Saving...");
             objectOutputStream.writeObject(board);
@@ -63,9 +53,10 @@ public class FileAccess {
         Board board = null;
 
         try {
-            inputStream = new FileInputStream(path);
+            inputStream = new FileInputStream("save");
             objectInputStream = new ObjectInputStream(inputStream);
             board = (Board) objectInputStream.readObject();
+            System.out.println("Save found");
         } catch (Exception e) {
             System.out.println("Save not found");
         } finally {
