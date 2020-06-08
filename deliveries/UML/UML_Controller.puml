@@ -1,0 +1,192 @@
+@startuml
+title PS60's controller UML
+
+  namespace it.polimi.ingsw.ps60.serverSide {
+  namespace controller{
+              namespace turn{
+                  namespace turnController{
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.AtlasHephaestusTurnController {
+                          + buildingSection()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController {
+                          ~ lost : boolean
+                          + buildingSection()
+                          + endTurnSection()
+                          + movementSection()
+                          + sendBoardToClient()
+                          + turn()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.DemeterTurnController {
+                          + buildingSection()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.HestiaTurnController {
+                          + buildingSection()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PoseidonTurnController {
+                          + specialChoice()
+                          + turn()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PrometheusTurnController {
+                          + movementSection()
+                      }
+
+                      interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController {
+                          {abstract} + turn()
+                      }
+                  }
+                  namespace turnEffects{
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ApolloTurnEffect {
+                          + move()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AthenaTurnEffect {
+                          + move()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AtlasTurnEffect {
+                          + build()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect {
+                          + build()
+                          + endTurn()
+                          + move()
+                          + winConditions()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ChronusTurnEffect {
+                          + winConditions()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.HephaestusTurnEffect {
+                          + build()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.MinotaurTurnEffect {
+                          + move()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.PanTurnEffect {
+                          + winConditions()
+                      }
+
+                      interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.TurnEffect {
+                          {abstract} + build()
+                          {abstract} + endTurn()
+                          {abstract} + move()
+                      }
+                  }
+
+                  namespace turnStrategy{
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ApolloTurnStrategy {
+                          + baseMovement()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ArtemisTurnStrategy {
+                          + baseMovement()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.AtlasTurnStrategy {
+                          + baseBuilding()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy {
+                          + baseBuilding()
+                          + baseMovement()
+                          + isNotDisturbedByDivinity()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.HephaestusTurnStrategy {
+                          + baseBuilding()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.MinotaurTurnStrategy {
+                          + baseMovement()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.PrometheusTurnStrategy {
+                          + baseMovement()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TritonTurnStrategy {
+                          + baseMovement()
+                      }
+
+                      interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TurnStrategy {
+                          {abstract} + baseBuilding()
+                          {abstract} + baseMovement()
+                      }
+
+                      class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ZeusTurnStrategy {
+                          + baseBuilding()
+                      }
+                  }
+
+                  class it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy {
+                      - bitException : boolean
+                      - specialChoice : String
+                      + DivinityStrategy()
+                      + getSpecialChoice()
+                      + getTurnController()
+                      + getTurnStrategyBuilding()
+                      + getTurnStrategyMovement()
+                      + isBitException()
+                      + setBitException()
+                      + setBuilding()
+                      + setEndTurn()
+                      + setMovement()
+                  }
+              }
+              class it.polimi.ingsw.ps60.serverSide.controller.ServerStarter {
+                  - nicknames : String[]
+                  + ServerStarter()
+                  + start()
+                  - divinityNumber()
+                  - gameTurn()
+                  - loadGame()
+                  - portSelection()
+                  - selectDivinityCard()
+                  - selectWorkersPositions()
+                  - serverThreadBound()
+                  - sort()
+              }
+          }
+  }
+
+
+  it.polimi.ingsw.ps60.serverSide.controller.ServerStarter o-- it.polimi.ingsw.ps60.utils.FileAccess : fileAccess
+  it.polimi.ingsw.ps60.serverSide.controller.ServerStarter o-- it.polimi.ingsw.ps60.serverSide.server.Server : server
+    it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy o-- it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController : turnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy o-- it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.TurnEffect : turnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy o-- it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TurnStrategy : turnStrategy
+it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ApolloTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ArtemisTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.AtlasTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy .up.|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TurnStrategy
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.HephaestusTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.MinotaurTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.PrometheusTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TritonTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ZeusTurnStrategy -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy
+it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ApolloTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AthenaTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AtlasTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect .up.|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.TurnEffect
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ChronusTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.HephaestusTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.MinotaurTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+  it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.PanTurnEffect -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.AtlasHephaestusTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController .up.|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController o-- it.polimi.ingsw.ps60.serverSide.model.Player : player
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.DemeterTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.HestiaTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PoseidonTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+    it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PrometheusTurnController -up-|> it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController
+
+@enduml
