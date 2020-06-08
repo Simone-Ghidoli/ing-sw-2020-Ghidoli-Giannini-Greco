@@ -29,8 +29,6 @@ public class ServerThread extends Thread {
      * @param soc           is the socket from the Class Server
      * @param serverThreads is the list of "ServerThread" of other sockets (one for each client connected)
      */
-
-
     public ServerThread(Socket soc, ArrayList<ServerThread> serverThreads) {
         this.socket = soc;
         this.serverThreads = serverThreads;
@@ -54,7 +52,6 @@ public class ServerThread extends Thread {
     /**
      * @return the name of the player associate to this ServerThread
      */
-
     public String getPlayerBound() {
         return playerBound;
     }
@@ -64,7 +61,6 @@ public class ServerThread extends Thread {
      *
      * @param message Message to send to che client
      */
-
     public void lossMessage(String message) {
         sendString("loss-" + message);
     }
@@ -76,7 +72,6 @@ public class ServerThread extends Thread {
      * @param positionWorkers positions of 2 workers
      * @return the cell where the player wants to move (calculated automatically) which worker should move
      */
-
     public int moveMessage(List<int[]>[] possible_choice, int[][] positionWorkers) {
         sendString("move");
         sendPositionsArray(converters.serializeArrayOfListOfInts(possible_choice));
@@ -90,7 +85,6 @@ public class ServerThread extends Thread {
      * @param possible_choice Possible cells where to build
      * @return Return the cell where the player wants to build
      */
-
     public int buildMessage(List<int[]> possible_choice) {
         sendString("build");
         sendPositionsList(converters.serializeListOfInts(possible_choice));
@@ -103,7 +97,6 @@ public class ServerThread extends Thread {
      * @param message is the message that should be print on video
      * @return The choice of the user. (1=true/yes 0=false/no)
      */
-
     public int specialChoice(String message) {
         sendString("spc-" + message);
         return receiveInteger();
@@ -114,7 +107,6 @@ public class ServerThread extends Thread {
      *
      * @return Number of players
      */
-
     public int numberOfPlayers() {
         int n;
         sendString("nPlayers");
@@ -127,7 +119,6 @@ public class ServerThread extends Thread {
      *
      * @return nickname and birthday (2 strings)
      */
-
     public String[] nicknameBirthday() {
         String[] nick_birth = new String[2];
         sendString("nick_birth");
@@ -142,7 +133,6 @@ public class ServerThread extends Thread {
      * @param takenPositions Positions already taken
      * @return Chosen positions
      */
-
     public int[][] setWorkers(List<int[]> takenPositions) {
         sendString("workSet");
         sendPositionsList((converters.serializeListOfInts(takenPositions)));
@@ -154,7 +144,6 @@ public class ServerThread extends Thread {
      *
      * @return Chosen DivinityCards
      */
-
     public GlobalVariables.DivinityCard[] divinityChoice() {
         sendString("dv_choice");
         sendInt(serverThreads.size());
@@ -167,7 +156,6 @@ public class ServerThread extends Thread {
      * @param divinityCards Available DivinityCards
      * @return Chosen DivinityCard
      */
-
     public GlobalVariables.DivinityCard divinitySelection(GlobalVariables.DivinityCard[] divinityCards) {
         sendString("div_sel");
         sendCards(divinityCards);
@@ -179,7 +167,6 @@ public class ServerThread extends Thread {
      *
      * @param board The current state of the game board
      */
-
     public void sendBoard(char[] board) {
         sendString("pr-" + new String(board));
     }
@@ -187,7 +174,6 @@ public class ServerThread extends Thread {
     /**
      * @return Return the list of ServerThreads
      */
-
     public List<ServerThread> getServerThreads() {
         return serverThreads;
     }
@@ -197,7 +183,6 @@ public class ServerThread extends Thread {
      *
      * @return The received integer
      */
-
     public int receiveInteger() {
         int n = -1;
         try {
@@ -205,6 +190,10 @@ public class ServerThread extends Thread {
         } catch (IOException e) {
             disconnection();
         }
+
+        if (n == -1)
+            disconnection();
+
         return n;
     }
 
@@ -225,7 +214,6 @@ public class ServerThread extends Thread {
      *
      * @param list the list of Serialized Integer to send
      */
-
     public void sendPositionsArray(List<SerializedInteger>[] list) {
         try {
             receiveInteger();
@@ -250,11 +238,10 @@ public class ServerThread extends Thread {
     }
 
     /**
-     * the positions of the 2 workers of the plyaer
+     * the positions of the 2 workers of the player
      *
      * @param positionWorkers The 2 positions
      */
-
     public void sendPositionWorkers(SerializedInteger[] positionWorkers) {
         try {
             receiveInteger();
@@ -269,7 +256,6 @@ public class ServerThread extends Thread {
      *
      * @return Received String
      */
-
     public String receiveString() {
         String n = null;
         try {

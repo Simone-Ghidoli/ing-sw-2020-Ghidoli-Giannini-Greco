@@ -4,12 +4,25 @@ import it.polimi.ingsw.ps60.serverSide.model.Board;
 
 import java.io.*;
 
+/**
+ * This class access to the file for save
+ */
 public class FileAccess {
 
     private FileOutputStream outputStream = null;
     private ObjectOutputStream objectOutputStream = null;
     private FileInputStream inputStream = null;
     private ObjectInputStream objectInputStream = null;
+    private String path = "";
+
+    /**
+     * This constructor only determines the base directory of the project
+     */
+    public FileAccess() {
+        String[] strings = FileAccess.class.getProtectionDomain().getCodeSource().getLocation().getPath().split("/");
+        for (int i = 0; i < strings.length - 1; i++)
+            path = path.concat(strings[i]);
+    }
 
     /**
      * This method will write the board in a file
@@ -19,7 +32,7 @@ public class FileAccess {
     public void writer(Board board) {
 
         try {
-            outputStream = new FileOutputStream(new File(FileAccess.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath().replaceAll("PS60.jar", "save"));
+            outputStream = new FileOutputStream(path);
             objectOutputStream = new ObjectOutputStream(outputStream);
             System.out.println("Saving...");
             objectOutputStream.writeObject(board);
@@ -50,7 +63,7 @@ public class FileAccess {
         Board board = null;
 
         try {
-            inputStream = new FileInputStream(new File(FileAccess.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath().replaceAll("PS60.jar", "save"));
+            inputStream = new FileInputStream(path);
             objectInputStream = new ObjectInputStream(inputStream);
             board = (Board) objectInputStream.readObject();
         } catch (Exception e) {
