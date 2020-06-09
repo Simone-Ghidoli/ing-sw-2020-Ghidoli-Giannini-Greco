@@ -5,14 +5,16 @@ import java.util.Scanner;
 
 public class FlushedInput {
 
-    Scanner input = new Scanner(System.in);
+    private final Scanner input = new Scanner(System.in);
 
     /**
      * This method will empty the buffer before an input in order to not read an input written for error by the player
      */
     private void flushInput() {
         try {
-            System.in.read(new byte[System.in.available()]);
+            int i = System.in.read(new byte[System.in.available()]);
+            if (i > 0)
+                System.out.println(i + "chars are been ignored");
         } catch (IOException e) {
             e.printStackTrace();
         }
