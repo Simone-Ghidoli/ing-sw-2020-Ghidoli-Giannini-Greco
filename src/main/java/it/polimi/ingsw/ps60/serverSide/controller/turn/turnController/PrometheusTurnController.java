@@ -10,7 +10,7 @@ public class PrometheusTurnController extends BaseTurnController {
 
         int choice = -1;
 
-        List<int[]>[] buildChoices = new List[2];
+        List<int[]>[] buildChoices = new ArrayList[2];
         for (int i = 0; i < 2; i++) {
             player.setWorkerMoved(player.getWorker(i));
             buildChoices[i] = player.getDivinityStrategy().getTurnStrategyBuilding();
@@ -61,7 +61,7 @@ public class PrometheusTurnController extends BaseTurnController {
             }
         } else {
             player.getServerThread().lossMessage("Unable to move in any position");
-            endTurnSection();
+            lost = true;
         }
     }
 }

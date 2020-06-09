@@ -3,6 +3,9 @@ package it.polimi.ingsw.ps60.utils;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * This class is an upgrade of the classic scanner input
+ */
 public class FlushedInput {
 
     private final Scanner input = new Scanner(System.in);

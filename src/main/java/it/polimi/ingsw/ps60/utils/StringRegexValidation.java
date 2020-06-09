@@ -2,6 +2,9 @@ package it.polimi.ingsw.ps60.utils;
 
 import java.util.regex.Pattern;
 
+/**
+ * This class check if a string is valid using regular grammar
+ */
 public class StringRegexValidation {
 
     private final Pattern regex;

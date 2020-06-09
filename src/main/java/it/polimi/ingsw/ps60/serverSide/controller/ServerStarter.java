@@ -18,6 +18,9 @@ import static it.polimi.ingsw.ps60.GlobalVariables.input;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
+/**
+ * This class menage the logic of the game
+ */
 public class ServerStarter {
 
     private String[] nicknames;
@@ -79,6 +82,8 @@ public class ServerStarter {
 
     /**
      * This method check if there is a game saved and if the players can access to that save
+     *
+     * @return true if the game has benn loaded, false otherwise
      */
     private boolean loadGame() {
         game = fileAccess.reader();

@@ -2,6 +2,9 @@ package it.polimi.ingsw.ps60.serverSide.model;
 
 import java.io.Serializable;
 
+/**
+ * This class is a single cell of the board
+ */
 public class Cell implements Serializable {
 
     private final int[] position;

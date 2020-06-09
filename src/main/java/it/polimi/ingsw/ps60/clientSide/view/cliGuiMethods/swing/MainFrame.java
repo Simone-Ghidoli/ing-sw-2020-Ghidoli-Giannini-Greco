@@ -136,6 +136,11 @@ public class MainFrame extends JPanel {
         }
     }
 
+    /**
+     * This method simply read an image from the resources
+     * @param pathToImage is the path where to find the image
+     * @return the image (BufferedImage) specified by the path
+     */
     public BufferedImage imageFileReader(String pathToImage) {
         BufferedImage buff;
         try {

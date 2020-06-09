@@ -13,8 +13,7 @@ public class AtlasHephaestusTurnController extends BaseTurnController {
             int choice = player.getServerThread().buildMessage(buildChoices);
 
             if (buildChoices.get(choice)[2] == 1) {
-                int specialChoice = player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice());
-                if (specialChoice == 0)
+                if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice()) == 0)
                     player.getDivinityStrategy().setBuilding(new int[]{buildChoices.get(choice)[0], buildChoices.get(choice)[1], 0});
                 else
                     player.getDivinityStrategy().setBuilding(buildChoices.get(choice));

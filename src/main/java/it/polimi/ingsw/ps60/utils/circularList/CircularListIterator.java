@@ -2,6 +2,10 @@ package it.polimi.ingsw.ps60.utils.circularList;
 
 import java.io.Serializable;
 
+/**
+ * This is a standard iterator of a circularList
+ * @param <T> this is the type of the list where to iterate
+ */
 public class CircularListIterator<T> implements Serializable {
     private Node<T> node;
     private final CircularLinkedList<T> list;

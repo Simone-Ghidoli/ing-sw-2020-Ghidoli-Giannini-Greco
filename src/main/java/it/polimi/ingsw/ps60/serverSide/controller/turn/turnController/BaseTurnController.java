@@ -17,14 +17,11 @@ public class BaseTurnController implements TurnController {
 
         sendBoardToClient();
         movementSection();
-        if (!lost) {
-
-            sendBoardToClient();
+        sendBoardToClient();
+        if (!lost)
             buildingSection();
-        }
         if (!lost)
             sendBoardToClient();
-
         endTurnSection();
     }
 

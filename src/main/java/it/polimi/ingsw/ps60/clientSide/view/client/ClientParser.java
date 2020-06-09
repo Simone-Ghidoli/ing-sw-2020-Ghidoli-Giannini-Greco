@@ -12,7 +12,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
 /**
  * This class is the parser. Its function is to process server's commands and call the correct method to proceed in the game
  */
-    public class ClientParser implements Runnable {
+public class ClientParser implements Runnable {
     private final List<String> messagesFromServer;
     private final Socket socket;
     InputStream input;
@@ -30,7 +30,6 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
      * @param messages            List of string received from the server
      * @param viewMethodSelection Starts method from Gui methods/ Cli methods
      */
-
     public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection) {
         socket = sock;
         messagesFromServer = messages;

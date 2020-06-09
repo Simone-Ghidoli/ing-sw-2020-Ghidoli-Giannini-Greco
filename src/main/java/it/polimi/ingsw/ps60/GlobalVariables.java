@@ -6,10 +6,16 @@ import it.polimi.ingsw.ps60.utils.FlushedInput;
 import java.awt.*;
 import java.io.Serializable;
 
+/**
+ * This class stores all the global variables
+ */
 public class GlobalVariables {
 
     public static final FlushedInput input = new FlushedInput();
 
+    /**
+     * These are all the static properties associated to a given player
+     */
     public enum IdPlayer {
         PLAYER1(Colour.RED, "Red "),
         PLAYER2(Colour.BLUE, "Blue "),
@@ -32,6 +38,9 @@ public class GlobalVariables {
         }
     }
 
+    /**
+     * These are all the divinity cards implemented in the game with the source for the images
+     */
     public enum DivinityCard implements Serializable {
         APOLLO("01"), ARTEMIS("02"), ATHENA("03"),
         ATLAS("04"), DEMETER("05"), HEPHAESTUS("06"), MINOTAUR("08"),
@@ -49,6 +58,9 @@ public class GlobalVariables {
         }
     }
 
+    /**
+     * These are all the colour used in the game
+     */
     public enum Colour {
         RED("\033[0;31m", Color.RED), BLUE("\033[0;34m", Color.BLUE), GREEN("\033[0;32m", Color.GREEN),
         YELLOW("\033[0;33m", Color.YELLOW), RESET("\033[0m", Color.BLACK);
@@ -72,6 +84,9 @@ public class GlobalVariables {
 
     public static Board game;
 
+    /**
+     * These are all the pattern for a string that has to be checked
+     */
     public enum StringPatterns {
         IPv4("((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\\.)" +
                 "((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){2}" +

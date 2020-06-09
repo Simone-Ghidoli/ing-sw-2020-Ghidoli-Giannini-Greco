@@ -3,6 +3,9 @@ package it.polimi.ingsw.ps60.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class have all the converters to be able to send not serialized type through socket
+ */
 public class Converters {
 
     /**
