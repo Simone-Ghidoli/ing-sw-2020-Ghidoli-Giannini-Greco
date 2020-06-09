@@ -13,30 +13,30 @@ namespace it.polimi.ingsw.ps60{
                     ~pr : PrintWriter
                     - messagesFromServer : List<String>
                     - socket : Socket
-                    + ClientParser()
-                    + alert()
-                    + building()
-                    + disconnection()
-                    + divinityChoice()
-                    + divinitySelection()
-                    + movement()
-                    + nickname_birthday()
-                    + number_of_players()
-                    + printBoard()
-                    + receiveCards()
-                    + receiveInt()
-                    + receiveList()
-                    + receiveListArray()
-                    + receiveWorkers()
-                    + run()
-                    + sendCards()
-                    + sendInt()
-                    + sendPositions()
-                    + sendString()
-                    + setWorkers()
-                    + socketClose()
-                    + specialChoice()
-                    + status()
+                    + ClientParser(sock:Socket,messages:List<String>,viweMethodSelection:ViewMethodSelection)
+                    + run():void
+                    + alert(alert:String) : void
+                    + building():void
+                    + disconnection(s:String):void
+                    + divinityChoice():void
+                    + divinitySelection():void
+                    + movement():void
+                    + nickname_birthday():void
+                    + number_of_players():void
+                    + printBoard(board:String):void
+                    + receiveCards():GlobalVariables.DivinityCard[]
+                    + receiveInt():int
+                    + receiveList():List<SerializedInteger>
+                    + receiveListArray():List<SerializedInteger>[]
+                    + receiveWorkers():SerializedInteger[]
+                    + sendCards(cards:GlobalVariables.DivinityCard[]):void
+                    + sendInt(send:int):void
+                    + sendPositions(positions:SerializedInteger[]):void
+                    + sendString(toServer:String):void
+                    + setWorkers():void
+                    + socketClose():void
+                    + specialChoice(s:String):void
+                    + status(s:String):void
                 }
 
                 class it.polimi.ingsw.ps60.clientSide.view.client.ClientReader {
@@ -45,7 +45,7 @@ namespace it.polimi.ingsw.ps60{
                     ~ socket : Socket
                     - messagesFromServer : List<String>
                     + ClientReader()
-                    + run()
+                    + run():void
                 }
 
                 class it.polimi.ingsw.ps60.clientSide.view.client.ClientStarter {
@@ -55,7 +55,7 @@ namespace it.polimi.ingsw.ps60{
                     - port : int
                     - socket : Socket
                     + ClientStarter()
-                    + start()
+                    + start():void
                 }
             }
             namespace cliGuiMethods{
@@ -69,12 +69,12 @@ namespace it.polimi.ingsw.ps60{
                         - jButtons : JButton[]
                         - screenSize : Dimension
                         + MainFrame()
-                        + getButton()
-                        + getButtonCoords()
-                        + getScreenSize()
-                        + imageFileReader()
-                        + resetButtons()
-                        + setDivinityCardImage()
+                        + getButton(i:int):Jbutton
+                        + getButtonCoords(jbutton:Jbutton):int[]
+                        + getScreenSize():Dimension
+                        + imageFileReader(pathToImage:image):BufferedImage
+                        + resetButtons():void
+                        + setDivinityCardImage(divinityCards:int[],turnNumber:int):void
                     }
                 }
 
@@ -82,37 +82,37 @@ namespace it.polimi.ingsw.ps60{
                     - divinityCards : int[]
                     - turnNumber : int
                     + CLIMethods()
-                    + alert()
-                    + buildChoice()
-                    + cardChoices()
-                    + divinitySelection()
-                    + firstSetWorkers()
-                    + ipPortChoices()
-                    + moveChoice()
-                    + nicknameBirthdayChoice()
-                    + numberOfPlayers()
-                    + printBoard()
-                    + printPossibleBuilds()
-                    + printPossibleMoves()
-                    + specialChoices()
-                    + status()
+                    + alert(string:String):void
+                    + buildChoice(moves:List<int[]>):int
+                    + cardChoices(playerNumber:int):GlobalVariables.DivinityCard[]
+                    + divinitySelection(cards:GlobalVariables.DivinityCard[]):GlobalVariables.DivinityCard
+                    + firstSetWorkers(impossiblePositions:List<int[]>):int[][]
+                    + ipPortChoices():String[]
+                    + moveChoice(moves:List<int[]>[],positionWorkers:int[][]):int
+                    + nicknameBirthdayChoice():String[]
+                    + numberOfPlayers():int
+                    + printBoard(board:String):void
+                    + printPossibleBuilds(moves:List<int[]>):int
+                    + printPossibleMoves(moves:List<int[]>[],positionWorkers:int[][]):int
+                    + specialChoices(string:String):boolean
+                    + status(divinityCards:int[],turnNumber:int):void
                 }
 
                 class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods {
                     + GUIMethods()
-                    + alert()
-                    + buildChoice()
-                    + cardChoices()
-                    + divinitySelection()
-                    + firstSetWorkers()
-                    + ipPortChoices()
-                    + moveChoice()
-                    + nicknameBirthdayChoice()
-                    + numberOfPlayers()
-                    + printBoard()
-                    + specialChoices()
-                    + status()
-                    - confirmOrRetry()
+                    + alert(string:String):void
+                    + buildChoice(moves:List<int[]>):int
+                    + cardChoices(playerNumber:int):GlobalVariables.DivinityCard[]
+                    + divinitySelection(cards:GlobalVariables.DivinityCard[]):GlobalVariables.DivinityCard
+                    + firstSetWorkers(impossiblePositions:List<int[]>):int[][]
+                    + ipPortChoices():String[]
+                    + moveChoice(moves:List<int[]>[],positionWorkers:int[][]):int
+                    + nicknameBirthdayChoice():String[]
+                    + numberOfPlayers():int
+                    + printBoard(board:String):void
+                    + specialChoices(string:String):boolean
+                    + status(divinityCards:int[],turnNumber:int):void
+                    - confirmOrRetry():boolean
                 }
 
                 interface it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection {
@@ -137,33 +137,33 @@ namespace it.polimi.ingsw.ps60{
             namespace turn{
                 namespace turnController{
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.AtlasHephaestusTurnController {
-                        + buildingSection()
+                        + buildingSection():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController {
                         ~ lost : boolean
-                        + buildingSection()
-                        + endTurnSection()
-                        + movementSection()
-                        + sendBoardToClient()
-                        + turn()
+                        + buildingSection():void
+                        + endTurnSection():void
+                        + movementSection():void
+                        + sendBoardToClient():void
+                        + turn():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.DemeterTurnController {
-                        + buildingSection()
+                        + buildingSection():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.HestiaTurnController {
-                        + buildingSection()
+                        + buildingSection():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PoseidonTurnController {
-                        + specialChoice()
-                        + turn()
+                        + specialChoice():void
+                        + turn():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.PrometheusTurnController {
-                        + movementSection()
+                        + movementSection():void
                     }
 
                     interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.TurnController {
@@ -172,38 +172,38 @@ namespace it.polimi.ingsw.ps60{
                 }
                 namespace turnEffects{
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ApolloTurnEffect {
-                        + move()
+                        + move():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AthenaTurnEffect {
-                        + move()
+                        + move():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.AtlasTurnEffect {
-                        + build()
+                        + build():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.BaseTurnEffect {
-                        + build()
-                        + endTurn()
-                        + move()
-                        + winConditions()
+                        + build():void
+                        + endTurn():void
+                        + move():void
+                        + winConditions():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.ChronusTurnEffect {
-                        + winConditions()
+                        + winConditions():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.HephaestusTurnEffect {
-                        + build()
+                        + build():void:void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.MinotaurTurnEffect {
-                        + move()
+                        + move():void
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.PanTurnEffect {
-                        + winConditions()
+                        + winConditions():void
                     }
 
                     interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.TurnEffect {
@@ -215,37 +215,37 @@ namespace it.polimi.ingsw.ps60{
 
                 namespace turnStrategy{
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ApolloTurnStrategy {
-                        + baseMovement()
+                        + baseMovement():List<int[]>[]
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ArtemisTurnStrategy {
-                        + baseMovement()
+                        + baseMovement():List<int[]>
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.AtlasTurnStrategy {
-                        + baseBuilding()
+                        + baseBuilding():List<int[]>
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy {
-                        + baseBuilding()
-                        + baseMovement()
-                        + isNotDisturbedByDivinity()
+                        + baseBuilding():List<int[]>
+                        + baseMovement():List<int[]>[]
+                        + isNotDisturbedByDivinity(workerPositions:int[],targetPosition[]):boolean
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.HephaestusTurnStrategy {
-                        + baseBuilding()
+                        + baseBuilding():List<int[]>
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.MinotaurTurnStrategy {
-                        + baseMovement()
+                        + baseMovement():List<int[]>[]
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.PrometheusTurnStrategy {
-                        + baseMovement()
+                        + baseMovement():List<int[]>[]
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TritonTurnStrategy {
-                        + baseMovement()
+                        + baseMovement():List<int[]>[]
                     }
 
                     interface it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.TurnStrategy {
@@ -254,37 +254,37 @@ namespace it.polimi.ingsw.ps60{
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.ZeusTurnStrategy {
-                        + baseBuilding()
+                        + baseBuilding():List<int[]>
                     }
                 }
 
                 class it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy {
                     - bitException : boolean
                     - specialChoice : String
-                    + DivinityStrategy()
-                    + getSpecialChoice()
-                    + getTurnController()
-                    + getTurnStrategyBuilding()
-                    + getTurnStrategyMovement()
-                    + isBitException()
-                    + setBitException()
-                    + setBuilding()
-                    + setEndTurn()
-                    + setMovement()
+                    + DivinityStrategy(divinityCard:GlobalVariables.DivinityCard)
+                    + getSpecialChoice():String
+                    + getTurnController():TurnController
+                    + getTurnStrategyBuilding():List<int[]>
+                    + getTurnStrategyMovement():List<int[]>[]
+                    + isBitException():boolean
+                    + setBitException(bitException:boolean):void
+                    + setBuilding(building:int[]):void
+                    + setEndTurn():void
+                    + setMovement(movement:int[][]):void
                 }
             }
             class it.polimi.ingsw.ps60.serverSide.controller.ServerStarter {
                 - nicknames : String[]
-                + ServerStarter()
-                + start()
-                - divinityNumber()
-                - gameTurn()
-                - loadGame()
-                - portSelection()
-                - selectDivinityCard()
-                - selectWorkersPositions()
-                - serverThreadBound()
-                - sort()
+                + ServerStarter():void
+                + start():void
+                - divinityNumber():int[]
+                - gameTurn():void
+                - loadGame():void
+                - portSelection():int
+                - selectDivinityCard():void
+                - selectWorkersPositions():void
+                - serverThreadBound():void
+                - sort():void
             }
         }
 
@@ -297,35 +297,35 @@ namespace it.polimi.ingsw.ps60{
                 - playerList : CircularLinkedList<Player>
                 - playerMatrix : Player[]
                 - playersNumber : int
-                + Board()
-                + changeTurn()
-                + getCellByPosition()
-                + getCellToSend()
-                + getCompleteTower()
-                + getPlayerInGame()
-                + getPlayerMatrix()
-                + getPlayerWinner()
-                + getPlayersNumber()
-                + increaseCompleteTower()
-                + isNotWon()
-                + lose()
-                + win()
+                + Board(nicknames:String[]):void
+                + changeTurn():void
+                + getCellByPosition(position:int[]):Cell
+                + getCellToSend():char[]
+                + getCompleteTower():int
+                + getPlayerInGame():CircularListIterator<Player>
+                + getPlayerMatrix():Player[]
+                + getPlayerWinner():Player
+                + getPlayersNumber():int
+                + increaseCompleteTower():void
+                + isNotWon():boolean
+                + lose(player:Player):void
+                + win(player:Player):void
             }
 
             class it.polimi.ingsw.ps60.serverSide.model.Cell {
                 - buildingLevel : int
                 - dome : boolean
                 - position : int[]
-                + Cell()
-                + buildDome()
-                + getBuildingLevel()
-                + getPosition()
-                + getWorkerIn()
-                + incrementBuildingLevel()
-                + isDomed()
-                + isFree()
-                + setWorkerIn()
-                - updateCellToSend()
+                + Cell(position:int[],board:Board)
+                + buildDome():void
+                + getBuildingLevel():int
+                + getPosition():int[]
+                + getWorkerIn():boolean
+                + incrementBuildingLevel():void
+                + isDomed():boolean
+                + isFree():boolean
+                + setWorkerIn(workerIn:Worker):void
+                - updateCellToSend():void
             }
 
             class it.polimi.ingsw.ps60.serverSide.model.Player {
@@ -333,29 +333,29 @@ namespace it.polimi.ingsw.ps60{
                 - divinityCard : int
                 - nickname : String
                 - workers : Worker[]
-                + Player()
-                + getDivinityCard()
-                + getDivinityStrategy()
-                + getNickname()
-                + getServerThread()
-                + getWorker()
-                + getWorkerMoved()
-                + getWorkers()
-                + isBuildByWorker()
-                + setBuildByWorker()
-                + setDivinityCard()
-                + setServerThread()
-                + setWorkerMoved()
+                + Player(nickName:String)
+                + getDivinityCard():GlobalVariables.DivinityCard
+                + getDivinityStrategy():DivinityStrategy
+                + getNickname():String
+                + getServerThread():ServerThread
+                + getWorker(workerNumber:int):Worker
+                + getWorkerMoved():Worker
+                + getWorkers():Workers[]
+                + isBuildByWorker():boolean
+                + setBuildByWorker(i:boolean):void
+                + setDivinityCard(divinityCard:GlobalVariables.DivinityCard):void
+                + setServerThread(serverThread:ServerThread):void
+                + setWorkerMoved(workerMoved:Worker):void
             }
 
             class it.polimi.ingsw.ps60.serverSide.model.Worker {
-                + Worker()
-                + getCellPosition()
-                + getOldCell()
-                + getOwner()
-                + isLeveledUp()
-                + moveWorker()
-                + setOldCell()
+                + Worker(owner:Player)
+                + getCellPosition():Cell
+                + getOldCell():Cell
+                + getOwner():Player
+                + isLeveledUp():boolean
+                + moveWorker(cellNewPosition:Cell):void
+                + setOldCell(oldCell:Cell):void
             }
         }
 
@@ -367,12 +367,12 @@ namespace it.polimi.ingsw.ps60{
                 - port : int
                 - serverSocket : ServerSocket
                 - socket : Socket
-                + Server()
-                + getNicknameAndBirthday()
-                + getSocketList()
-                + nameProblem()
-                - acceptClientConnection()
-                - serverStart()
+                + Server(port:int)
+                + getNicknameAndBirthday():String[][]
+                + getSocketList():ArrayList<ServerThread>
+                + nameProblem(current:String):boolean
+                - acceptClientConnection():void
+                - serverStart():void
             }
 
             class it.polimi.ingsw.ps60.serverSide.server.ServerThread {
@@ -385,34 +385,34 @@ namespace it.polimi.ingsw.ps60{
                 - playerBound : String
                 - serverThreads : List<ServerThread>
                 - writer : PrintWriter
-                + ServerThread()
-                + buildMessage()
-                + disconnection()
-                + divinityChoice()
-                + divinitySelection()
-                + getPlayerBound()
-                + getServerThreads()
-                + lossMessage()
-                + moveMessage()
-                + nicknameBirthday()
-                + numberOfPlayers()
-                + receiveCards()
-                + receiveInteger()
-                + receivePositions()
-                + receiveString()
-                + sendAlert()
-                + sendBoard()
-                + sendCards()
-                + sendInt()
-                + sendPositionWorkers()
-                + sendPositionsArray()
-                + sendPositionsList()
-                + sendStatus()
-                + sendString()
-                + setPlayerBound()
-                + setWorkers()
-                + specialChoice()
-                + win()
+                + ServerThread(soc:Socket,serverThreads:ArrayList<ServerThread>)
+                + buildMessage(possible_choice:List<int[]>):int
+                + disconnection():void
+                + divinityChoice():GlobalVariables.DivinityCard[]
+                + divinitySelection(GlobalVariables.DivinityCard[]):GlobalVariables.DivinityCard
+                + getPlayerBound():String
+                + getServerThreads():List<ServerThreads>
+                + lossMessage(message:String):void
+                + moveMessage(possible_choice:List<int[]>,positionWorkers:int[][]):void
+                + nicknameBirthday():String[]
+                + numberOfPlayers():int
+                + receiveCards():GlobalVariables.DivinityCard[]
+                + receiveInteger():int
+                + receivePositions():List<SerializedInteger[]>
+                + receiveString():String
+                + sendAlert(string:String):void
+                + sendBoard(board:char[]):void
+                + sendCards(cards:GlobalVariables.DivinityCard[]):void
+                + sendInt(send:ind):void
+                + sendPositionWorkers(positionWorkers:SerializedInteger[]):void
+                + sendPositionsArray(list:List<SerializedInteger>):void
+                + sendPositionsList(list:List<SerializedInteger>[]):void
+                + sendStatus(divinityCard:int[],turnNumber:int):void
+                + sendString(message:String):void
+                + setPlayerBound(nickName:String):void
+                + setWorkers(takenPositions:List<int[]>):int[][]
+                + specialChoice(message:String):int
+                + win():void
             }
         }
     }
@@ -423,35 +423,35 @@ namespace it.polimi.ingsw.ps60{
                 - size : int
                 - tail : Node<T>
                 + CircularLinkedList()
-                + addNode()
-                + getHead()
-                + getSize()
-                + removeNode()
+                + addNode(value:T):void
+                + getHead():Node<T>
+                + getSize():int
+                + removeNode():void
             }
 
             class it.polimi.ingsw.ps60.utils.circularList.CircularListIterator {
                 - list : CircularLinkedList<T>
                 - node : Node<T>
-                + CircularListIterator()
-                + get()
-                + getList()
-                + nextNode()
+                + CircularListIterator(list:CircularLinkedList<T>)
+                + get():T
+                + getList():CircularLinkedList<T>
+                + nextNode():void
             }
 
             class it.polimi.ingsw.ps60.utils.circularList.Node {
                 ~ nextNode : Node<T>
-                + Node()
-                + getValue()
+                + Node(value:T)
+                + getValue():T
             }
         }
 
         class it.polimi.ingsw.ps60.utils.Converters {
-            + deserialize2DArrayOfInts()
-            + deserializeArrayOfListOfInts()
-            + deserializeListOfInts()
-            + serialize2DArrayOfInt()
-            + serializeArrayOfListOfInts()
-            + serializeListOfInts()
+            + deserialize2DArrayOfInts(serializedInteger:SerializedInteger[]):int[][]
+            + deserializeArrayOfListOfInts(arrayOfListToDeserialize:List<SerializedInteger>[]):List<int[]>[]
+            + deserializeListOfInts(listToDeserialize:List<SerializedInteger>):List<int[]>
+            + serialize2DArrayOfInt(ints:Int[][]):SerializedInteger[]
+            + serializeArrayOfListOfInts(arrayOfListToSerialize:List<int[]>[]):List<SerializedInteger>[]
+            + serializeListOfInts(listToSerialize:List<int[]>):List<SerializedInteger>
         }
 
         class it.polimi.ingsw.ps60.utils.FileAccess {
@@ -459,32 +459,32 @@ namespace it.polimi.ingsw.ps60{
             - objectInputStream : ObjectInputStream
             - objectOutputStream : ObjectOutputStream
             - outputStream : FileOutputStream
-            + reader()
-            + writer()
+            + reader():Board
+            + writer(board:Board):void
         }
 
         class it.polimi.ingsw.ps60.utils.FlushedInput {
             ~ input : Scanner
-            + nextInt()
-            + nextLine()
-            - flushInput()
+            + nextInt(upperLimit:int,lowerLimit:int):int
+            + nextLine():String
+            - flushInput():void
         }
 
         class it.polimi.ingsw.ps60.utils.ListContains {
             - list : List<int[]>
-            + ListContains()
-            + isContained()
+            + ListContains(list:List<int[]>)
+            + isContained(nodeToCheck:int[]):boolean
         }
 
         class it.polimi.ingsw.ps60.utils.SerializedInteger {
             + serialized : int[]
-            + SerializedInteger()
+            + SerializedInteger(vector:int[]):SerializedInteger
         }
 
         class it.polimi.ingsw.ps60.utils.StringRegexValidation {
             - regex : Pattern
-            + StringRegexValidation()
-            + isValid()
+            + StringRegexValidation(pattern:String)
+            + isValid(stringToCheck:String):boolean
         }
     }
     class it.polimi.ingsw.ps60.GlobalVariables{
