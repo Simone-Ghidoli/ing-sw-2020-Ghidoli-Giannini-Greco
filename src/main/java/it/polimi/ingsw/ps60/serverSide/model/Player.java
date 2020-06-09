@@ -6,6 +6,9 @@ import it.polimi.ingsw.ps60.serverSide.server.ServerThread;
 
 import java.io.Serializable;
 
+/**
+ * This class is the player with all his status and workers
+ */
 public class Player implements Serializable {
 
     private final String nickname;

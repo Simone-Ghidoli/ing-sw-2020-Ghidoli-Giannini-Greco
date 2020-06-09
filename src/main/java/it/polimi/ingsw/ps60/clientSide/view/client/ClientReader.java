@@ -6,7 +6,6 @@ import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
-
 /**
  * This class is used to read and store server's commands
  */
@@ -16,7 +15,6 @@ public class ClientReader implements Runnable {
     String serverSays;
     BufferedReader br;
     final ViewMethodSelection methodSelection;
-
 
     /**
      * Opens the buffered reader

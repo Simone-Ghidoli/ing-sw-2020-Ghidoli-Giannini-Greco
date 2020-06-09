@@ -13,8 +13,8 @@ namespace it.polimi.ingsw.ps60{
                     ~pr : PrintWriter
                     - messagesFromServer : List<String>
                     - socket : Socket
-                    + ClientParser()
-                    + alert()
+                    + ClientParser(sock : Socket, messages : List<String>, viewMethodSelection : ViewMethodSelection)
+                    + alert(alert : String) : void
                     + building()
                     + disconnection()
                     + divinityChoice()

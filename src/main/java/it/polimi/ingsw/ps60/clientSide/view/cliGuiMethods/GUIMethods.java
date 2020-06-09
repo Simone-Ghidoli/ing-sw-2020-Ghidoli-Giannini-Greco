@@ -13,10 +13,16 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class contains all "GUI methods". If the player choose to use the cli the software gonna call these methods
+ */
 public class GUIMethods implements ViewMethodSelection {
 
     private final MainFrame santorini = new MainFrame();
 
+    /**
+     * This constrictor create the JFrame in order to play in GUI
+     */
     public GUIMethods() {
 
         SwingUtilities.invokeLater(new Runnable() {

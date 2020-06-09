@@ -4,6 +4,9 @@ import it.polimi.ingsw.ps60.GlobalVariables;
 
 import java.util.List;
 
+/**
+ * This are all the methods that allows to play in Gui, CLI or whatever you implements
+ */
 public interface ViewMethodSelection {
     /*
      * value   high    player  ascii

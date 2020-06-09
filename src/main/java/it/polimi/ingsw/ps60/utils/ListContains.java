@@ -2,10 +2,17 @@ package it.polimi.ingsw.ps60.utils;
 
 import java.util.List;
 
+/**
+ * This class gives you the possibility to rapidly check if an int[] is contained in a list
+ */
 public class ListContains {
 
     private final List<int[]> list;
 
+    /**
+     * This constructor associate the list to this class in order to be used
+     * @param list is the list where to check if an int[] is contained
+     */
     public ListContains(List<int[]> list) {
         this.list = list;
     }

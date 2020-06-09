@@ -7,7 +7,9 @@ import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.*;
 
 import java.util.List;
 
-
+/**
+ * This class create an easy access to all the controller based on which divinity card the player has
+ */
 public class DivinityStrategy {
 
     private final TurnStrategy turnStrategy;

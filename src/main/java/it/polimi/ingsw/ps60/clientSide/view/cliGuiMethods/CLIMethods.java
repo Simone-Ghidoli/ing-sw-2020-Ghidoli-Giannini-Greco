@@ -10,13 +10,15 @@ import static it.polimi.ingsw.ps60.GlobalVariables.input;
 
 /**
  * This class contains all "cli methods". If the player choose to use the cli the software gonna call these methods
- * Docs with explanations are in the interface
  */
 public class CLIMethods implements ViewMethodSelection {
 
     private int turnNumber;
     private int[] divinityCards;
 
+    /**
+     * This constructor sets the basics status of the game
+     */
     public CLIMethods() {
         divinityCards = new int[]{14, 14, 14};
         turnNumber = -1;

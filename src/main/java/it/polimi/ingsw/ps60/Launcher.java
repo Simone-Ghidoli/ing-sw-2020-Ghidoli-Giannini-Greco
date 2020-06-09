@@ -7,6 +7,9 @@ import it.polimi.ingsw.ps60.serverSide.controller.ServerStarter;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.input;
 
+/**
+ * This class is the main. From here you can launch both server and client
+ */
 public class Launcher {
 
     public static void main(String[] args) {

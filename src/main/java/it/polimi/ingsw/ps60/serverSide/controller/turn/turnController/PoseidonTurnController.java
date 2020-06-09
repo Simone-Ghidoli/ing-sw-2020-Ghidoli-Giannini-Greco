@@ -1,31 +1,23 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnController;
 
+import javax.swing.*;
+
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class PoseidonTurnController  extends BaseTurnController{
+
     @Override
-    public void turn() {
-        player = game.getPlayerInGame().get();
+    public void buildingSection() {
+        super.buildingSection();
 
         sendBoardToClient();
-        movementSection();
-        sendBoardToClient();
-        buildingSection();
-        sendBoardToClient();
-        specialChoice();
-        sendBoardToClient();
-        endTurnSection();
-    }
 
-    /**
-     * This method asks to to the player if with his not moved player he wants to build up to 3 times
-     */
-    public void specialChoice() {
-
-        int i = 0;
+        int i;
 
         if (player.getWorkers()[0] == player.getWorkerMoved())
             i = 1;
+        else
+            i = 0;
 
         if (player.getWorker(i).getCellPosition().getBuildingLevel() != 0)
             return;
@@ -43,6 +35,5 @@ public class PoseidonTurnController  extends BaseTurnController{
             player.setWorkerMoved(player.getWorker(1));
         else
             player.setWorkerMoved(player.getWorker(0));
-
     }
 }

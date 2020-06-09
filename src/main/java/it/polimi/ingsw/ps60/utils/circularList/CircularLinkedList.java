@@ -2,6 +2,10 @@ package it.polimi.ingsw.ps60.utils.circularList;
 
 import java.io.Serializable;
 
+/**
+ * This is a simple list with the property to be circular (the tail is also the head)
+ * @param <T> this can be all type
+ */
 public class CircularLinkedList<T> implements Serializable {
     private Node<T> head;
     private Node<T> tail;

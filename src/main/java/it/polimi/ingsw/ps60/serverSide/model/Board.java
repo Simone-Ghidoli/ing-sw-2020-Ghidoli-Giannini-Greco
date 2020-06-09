@@ -5,6 +5,9 @@ import it.polimi.ingsw.ps60.utils.circularList.CircularListIterator;
 
 import java.io.Serializable;
 
+/**
+ * This class is the board of the game with all the player, workers. It stores the status also
+ */
 public class Board implements Serializable {
     private final CircularListIterator<Player> playerInGame;
     private int playersNumber;

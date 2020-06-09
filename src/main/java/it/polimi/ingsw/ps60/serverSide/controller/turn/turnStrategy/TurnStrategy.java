@@ -2,6 +2,9 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
 
 import java.util.List;
 
+/**
+ * This class gives all the possible move and build that the player can do with his workers in specifics positions
+ */
 public interface TurnStrategy {
 
     /**

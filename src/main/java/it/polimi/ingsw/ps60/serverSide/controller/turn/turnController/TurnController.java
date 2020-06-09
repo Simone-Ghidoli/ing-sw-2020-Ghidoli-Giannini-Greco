@@ -1,5 +1,8 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnController;
 
+/**
+ * This class menage the logic of a player's turn
+ */
 public interface TurnController {
 
     /**
