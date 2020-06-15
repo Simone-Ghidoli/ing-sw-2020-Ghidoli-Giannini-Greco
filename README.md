@@ -2,9 +2,40 @@
 
 This is an implementation of a board game called Santorini
 
-## How to compile
+## What we have achieved
 
-In order to create the jar file you simply have to package the project with maven using the code "mvn package"
+1.	4 UML are been written (not generated) with plantUML
+		*	A complete UML with fully written methods
+		*	A high-level simplified UML for each of model, view and controller
+
+2.	The complete robles are been implemented
+
+3.	The GUI of the client-side are been implemented with Swing
+
+4.	Two advanced functionality are been implemented
+		1.	5 advanced god are available:
+				1.	Zeus
+				2.	Triton
+				3.	Chronus
+				4.	Hestia
+				5.	Poseidon
+		2.	Persistence are been implemented
+		
+5.  The tests are been done only for the game logic as suggested
+
+## How to build and start the game
+
+In order to create the jar file you simply have to package the project with maven using 
+```shell script
+mvn package
+```
+The jar file will be created in the directory of the deliveries in a subfolder called jar.
+In order to run the jar once created simply do:
+```shell script
+cd deliveries/jar
+java -jar PS60.jar
+```
+Maven and java is requested in order to build and run this application
 
 ## How to play
 
