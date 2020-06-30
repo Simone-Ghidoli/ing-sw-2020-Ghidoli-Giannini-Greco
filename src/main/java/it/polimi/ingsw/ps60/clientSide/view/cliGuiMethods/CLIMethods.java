@@ -86,7 +86,6 @@ public class CLIMethods implements ViewMethodSelection {
                 choice++;
             }
         }
-
         return choice;
     }
 
