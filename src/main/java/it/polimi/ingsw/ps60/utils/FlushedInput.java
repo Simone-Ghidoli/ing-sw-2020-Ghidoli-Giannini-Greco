@@ -41,7 +41,7 @@ public class FlushedInput {
      * @return is the int read from input
      */
     public int nextInt(int upperLimit, int lowerLimit) {
-        if ((upperLimit <= lowerLimit)) throw new AssertionError();
+        if ((upperLimit < lowerLimit)) throw new AssertionError();
         Integer integer = null;
 
         while (integer == null) {

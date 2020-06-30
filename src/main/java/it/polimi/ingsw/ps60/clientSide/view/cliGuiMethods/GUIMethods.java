@@ -295,7 +295,7 @@ public class GUIMethods implements ViewMethodSelection {
         for (int i = 0; i < godButtons.length; i++) {
             godButtons[i] = new JButton();
             godButtons[i].setSize(santorini.getScreenSize().width / 20, santorini.getScreenSize().height / 8);
-            godButtons[i].setIcon(new ImageIcon(new ImageIcon(GlobalVariables.DivinityCard.values()[i].getSourcePosition()).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
+            godButtons[i].setIcon(new ImageIcon(new ImageIcon(santorini.imageFileReader(GlobalVariables.DivinityCard.values()[i].getSourcePosition())).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
         }
 
         final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, godButtons, godButtons[0]);
@@ -346,7 +346,7 @@ public class GUIMethods implements ViewMethodSelection {
         for (int i = 0; i < godButtons.length; i++) {
             godButtons[i] = new JButton();
             godButtons[i].setSize(santorini.getScreenSize().width / 20, santorini.getScreenSize().height / 8);
-            godButtons[i].setIcon(new ImageIcon(new ImageIcon(card[i].getSourcePosition()).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
+            godButtons[i].setIcon(new ImageIcon(new ImageIcon(santorini.imageFileReader(card[i].getSourcePosition())).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
         }
 
         final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, godButtons, godButtons[0]);
@@ -405,7 +405,7 @@ public class GUIMethods implements ViewMethodSelection {
                         if (workersPositions[i] == null) {
                             jButton.setEnabled(false);
                             workersPositions[i] = santorini.getButtonCoords(jButton);
-                            jButton.setIcon(new ImageIcon(new ImageIcon(GlobalVariables.IdPlayer.values()[0].getSourcePawn()).getImage().getScaledInstance(jButton.getWidth() / 2, jButton.getHeight() / 2, Image.SCALE_SMOOTH)));
+                            jButton.setIcon(new ImageIcon(new ImageIcon(santorini.imageFileReader(GlobalVariables.IdPlayer.values()[0].getSourcePawn())).getImage().getScaledInstance(jButton.getWidth() / 2, jButton.getHeight() / 2, Image.SCALE_SMOOTH)));
                             if (i == 0)
                                 break;
                             else
@@ -418,7 +418,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         for (int i = 0; i < 25; i++) {
             if (listContains.isContained(santorini.getButtonCoords(santorini.getButton(i)))) {
-                ImageIcon imagineWorker = new ImageIcon(GlobalVariables.IdPlayer.values()[0].getSourcePawn());
+                ImageIcon imagineWorker = new ImageIcon(santorini.imageFileReader(GlobalVariables.IdPlayer.values()[0].getSourcePawn()));
                 Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH);
                 santorini.getButton(i).setIcon(new ImageIcon(scaleImageWorker));
                 santorini.getButton(i).setEnabled(false);

@@ -91,8 +91,7 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public int moveChoice(List<int[]>[] moves, int[][] positionsWorkers) {
-        int i = printPossibleMoves(moves, positionsWorkers);
-        return input.nextInt(i, 1) - 1;
+        return input.nextInt(printPossibleMoves(moves, positionsWorkers), 1) - 1;
     }
 
     /**
@@ -114,8 +113,7 @@ public class CLIMethods implements ViewMethodSelection {
 
     @Override
     public int buildChoice(List<int[]> moves) {
-        int i = printPossibleBuilds(moves);
-        return input.nextInt(i, 1);
+        return input.nextInt(printPossibleBuilds(moves), 1) - 1;
     }
 
     @Override
@@ -179,6 +177,7 @@ public class CLIMethods implements ViewMethodSelection {
         GlobalVariables.DivinityCard[] cards = new GlobalVariables.DivinityCard[playerNumber];
 
         String choice;
+        String[] previousChoices = new String[playerNumber];
 
         System.out.println("Select " + playerNumber + " cards between:");
 
@@ -198,7 +197,15 @@ public class CLIMethods implements ViewMethodSelection {
                     choice = null;
                     System.out.println("Wrong input");
                 }
+                for (String check : previousChoices){
+                    if (check.equals(choice)){
+                        choice = null;
+                        System.out.println("Card already chosen");
+                        break;
+                    }
+                }
             }
+            previousChoices[j] = choice;
             cards[j] = allCards[Integer.parseInt(choice) - 1];
         }
         return cards;
