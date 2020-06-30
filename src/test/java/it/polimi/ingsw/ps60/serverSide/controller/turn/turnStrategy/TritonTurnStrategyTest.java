@@ -17,8 +17,8 @@ import java.util.List;
 
 public class TritonTurnStrategyTest {
     /**
-     * Setup of the board
-     * 2 Players and 3 workers (2 for the 1st player and 1 for the 2nd player)
+     * There are 2 workers for the Player1: one in the cell[0,0], one in the cell [4,4].
+     * There are 7 domes on the board. (the domes are in [2,1][3,1][1,1][1,2][1,3][1,4][4,1]).
      */
 
     @Before
@@ -37,7 +37,7 @@ public class TritonTurnStrategyTest {
     }
 
     /**
-     * Check taht Triton should be able to move until he moves on a not-perimeter cell.
+     * Each time a worker moves into a perimeter space he can immediately move again.
      */
     @Test
     public void movementTest(){

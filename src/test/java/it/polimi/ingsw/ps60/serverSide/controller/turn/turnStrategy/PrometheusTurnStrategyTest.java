@@ -15,6 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrometheusTurnStrategyTest {
+
+    /**
+     * There are 2 worker for the player 1: one in the cell[0,0] and one in the cell[4,4]
+     * The worker in [0,0] is the "building worker".
+     * There's a level 1 tower in the cell [1,1].
+     */
+
     @Before
     public void setUp() {
         game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"});
@@ -23,6 +30,11 @@ public class PrometheusTurnStrategyTest {
         game.getPlayerInGame().get().setBuildByWorker(true);
         game.getPlayerInGame().get().getWorker(1).moveWorker(game.getCellByPosition(new int[]{4, 4}));
     }
+
+    /**
+     * If the worker does not move up, he may build both before and after moving.
+     * The test check that he should't be able to move into the cell [1,1] (assuming he has already built).
+     */
 
     @Test
     public void strategyTest() {

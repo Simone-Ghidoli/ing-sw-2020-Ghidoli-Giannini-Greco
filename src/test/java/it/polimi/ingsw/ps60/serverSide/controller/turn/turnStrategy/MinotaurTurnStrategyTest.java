@@ -14,6 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MinotaurTurnStrategyTest {
+
+    /**
+     * There are 2 workers for the player 1: one in the cell[0,0] and one in the cell [4,4].
+     * There are 2 workers for the player 2: one in the cell[0,1] and one in the cell [1,0].
+     * There are 2 domes: one in the cell [1,1] and one in the cell[0,2].
+     */
+
     @Before
     public void setUp() {
         game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"});
@@ -27,6 +34,11 @@ public class MinotaurTurnStrategyTest {
         game.getCellByPosition(new int[]{1, 1}).buildDome();
         game.getCellByPosition(new int[]{0, 2}).buildDome();
     }
+
+    /**
+     * The worker in [1,1] may move into an opponent Worker's space, if that worker can be forced one space straight
+     * backwards to an unoccupied space at any level.
+     */
 
     @Test
     public void strategyTest() {
