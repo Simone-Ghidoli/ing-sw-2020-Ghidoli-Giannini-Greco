@@ -36,7 +36,7 @@ public class ApolloTurnStrategyTest {
     }
 
     /**
-     * Should be possible to move the worker in enemy worker's cell.
+     * Should be possible swaps position with opponent worker.
      * The test is only for the worker in [1,1]. He should be able to move in 6 different cells
      */
 

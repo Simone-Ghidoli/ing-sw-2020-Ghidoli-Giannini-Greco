@@ -36,6 +36,9 @@ public class HephaestusEffectTest {
         testUtilities.buildsNTimes(new int[]{2, 3}, 3);
     }
 
+    /**
+     * check that Hephaustus can build two times in the same cell but not a dome
+     */
     @Test
     public void checkHephaestusEffect() {
         game.getPlayerMatrix()[0].getDivinityStrategy().setBuilding(new int[]{1, 0, 1});

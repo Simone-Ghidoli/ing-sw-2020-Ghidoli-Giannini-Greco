@@ -26,7 +26,7 @@ public class AtlasTurnStrategyTest {
 
     @Before
     public void createBoard(){
-        game=new Board(new String[]{"Aldo","Giovanni","Giacomo"});
+        game=new Board(new String[]{"Player1","Player2","Player3"});
         game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
         game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
         game.getCellByPosition(new int[]{0,0}).incrementBuildingLevel();
@@ -42,7 +42,7 @@ public class AtlasTurnStrategyTest {
     }
 
     /**
-     * Same as baseBuilding. Tested because it returns a different type of List
+     *  in according to 3rd int in the array the player should be able to build a dome
      */
 
     @Test

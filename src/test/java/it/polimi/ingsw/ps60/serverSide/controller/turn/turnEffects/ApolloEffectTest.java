@@ -32,6 +32,11 @@ public class ApolloEffectTest {
         testUtilities.buildDome(new int[]{0, 0});
     }
 
+    /**
+     *test the worker's movement by Apollo worker in another cell occupied by another worker,
+     *workers have to swap positions
+     */
+
     @Test
     public void testApolloEffect() {
         int[][] movement1 = new int[2][2];

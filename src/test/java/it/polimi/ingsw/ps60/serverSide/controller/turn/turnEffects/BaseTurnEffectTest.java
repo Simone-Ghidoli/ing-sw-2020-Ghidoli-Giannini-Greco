@@ -28,6 +28,11 @@ public class BaseTurnEffectTest {
         testUtilities.buildsNTimes(new int[]{3, 3}, 2);
         testUtilities.buildDome(new int[]{0, 0});
     }
+
+    /**
+     * this test tests the base effects, check workers positions, building level and winner condition;
+     *
+     */
     @Test
     public void checkBaseTest(){
         int[][] movement1 = new int[2][2];
@@ -37,6 +42,7 @@ public class BaseTurnEffectTest {
         game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(movement1);
         game.getPlayerMatrix()[0].getDivinityStrategy().setBuilding(new int[]{3, 3});
         game.getPlayerMatrix()[0].getDivinityStrategy().setEndTurn();
+        assertEquals(game.getCellByPosition(new int[]{3, 3}).getBuildingLevel(),3);
         assertEquals(game.getPlayerInGame().get(),game.getPlayerMatrix()[1]);
         int[][] movement2 = new int[2][2];
         movement2[0][0] = 0;
@@ -44,7 +50,9 @@ public class BaseTurnEffectTest {
         movement2[1] = new int[]{3, 3};
         game.getPlayerInGame().get().getDivinityStrategy().setMovement(movement2);
         game.getPlayerInGame().get().getDivinityStrategy().setBuilding(new int[]{4, 4});
+        assertEquals(game.getPlayerInGame().get().getWorkers()[0].getCellPosition(),game.getCellByPosition(new int[]{3, 3}));
         game.getPlayerInGame().get().getDivinityStrategy().setEndTurn();
+
         assertEquals(game.getPlayerMatrix()[1],game.getPlayerWinner());
     }
 }

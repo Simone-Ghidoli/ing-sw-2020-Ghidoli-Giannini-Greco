@@ -24,10 +24,15 @@ public class AtlasEffectTest {
         game.getPlayerMatrix()[0].getWorker(1).moveWorker(cell2);
         game.getPlayerMatrix()[1].getWorker(0).moveWorker(cell3);
         game.getPlayerMatrix()[1].getWorker(1).moveWorker(cell4);
-        testUtilities.buildsNTimes(new int[]{1, 0}, 2);
+        testUtilities.buildsNTimes(new int[]{1, 0}, 1);
         testUtilities.buildsNTimes(new int[]{2, 1}, 2);
         testUtilities.buildsNTimes(new int[]{0, 0}, 3);
     }
+
+    /**
+     * Atlas worker can build a dome on any level, if the bit is 1 he builds a dome, if the bit is 0 he builds according to base effect build;
+     *
+     */
     @Test
     public void checkAtlasEffect(){
         game.getPlayerMatrix()[0].getDivinityStrategy().setBuilding(new int[]{1,0,1});

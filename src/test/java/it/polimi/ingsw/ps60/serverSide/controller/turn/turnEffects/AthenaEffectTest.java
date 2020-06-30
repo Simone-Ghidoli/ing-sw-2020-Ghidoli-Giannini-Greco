@@ -31,6 +31,10 @@ public class AthenaEffectTest {
         testUtilities.buildsNTimes(new int[]{1, 0}, 1);
         testUtilities.buildsNTimes(new int[]{2, 3}, 1);
     }
+
+    /**
+     * test athena power, her worker goes up one level, the opposing workers can't level up for one turn
+     */
     @Test
     public void checkAthenaEffect(){
         int[][] movement1 = new int[2][2];

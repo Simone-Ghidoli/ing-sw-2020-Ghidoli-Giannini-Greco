@@ -38,7 +38,7 @@ public class TritonTurnStrategyTest {
     }
 
     /**
-     * Should be able to move until he moves on a not-perimetral cell.
+     * Check taht Triton should be able to move until he moves on a not-perimeter cell.
      */
     @Test
     public void movementTest(){

@@ -29,13 +29,20 @@ public class MinotaurEffectTest {
     }
 
     @Test
+    /**
+     * check Minotaur power; his worker moves into an opponent worker’s space who is forced one space straight backwards at any level
+     * if a worker is pushed to the third level by minotaur he doesn't win
+     */
     public void checkMinotaurEffect() {
         int[][] movement1 = new int[2][2];
         movement1[0][0] = 1;
         movement1[0][1] = 0;
         movement1[1] = new int[]{3, 0};
         game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(movement1);
+        game.getPlayerMatrix()[0].getDivinityStrategy().setBuilding(new int[]{3, 1});
+        game.getPlayerMatrix()[0].getDivinityStrategy().setEndTurn();
         assertEquals(game.getCellByPosition(new int[]{4, 0}), game.getPlayerMatrix()[1].getWorker(1).getCellPosition());
         assertEquals(game.getCellByPosition(new int[]{3, 0}), game.getPlayerMatrix()[0].getWorker(1).getCellPosition());
+        assertNull(game.getPlayerWinner());
     }
 }

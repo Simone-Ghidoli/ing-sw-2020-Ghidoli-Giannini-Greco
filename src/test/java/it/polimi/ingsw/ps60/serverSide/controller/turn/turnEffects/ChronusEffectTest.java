@@ -35,6 +35,12 @@ public class ChronusEffectTest {
         testUtilities.buildDome(new int[]{4,0});
         testUtilities.buildsNTimes(new int[]{3, 0}, 3);
     }
+
+    /**
+     * test Chronus winner conditions
+     * the first player builds a dome and increases the complete tower number to five but Chronus can win only if it is his turn
+     *
+     */
     @Test
     public void checkChronusEffect(){
         int[][] movement1 = new int[2][2];

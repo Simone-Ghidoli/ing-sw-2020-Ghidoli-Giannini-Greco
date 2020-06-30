@@ -29,6 +29,10 @@ public class PanEffectTest {
 
 
     }
+
+    /**
+     * check winner condition of Pan moving down her worker two or more levels
+     */
     @Test
     public void checkPanEffectTest(){
         int[][] movement1 = new int[2][2];

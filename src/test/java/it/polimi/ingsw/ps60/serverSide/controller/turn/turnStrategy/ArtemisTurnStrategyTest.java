@@ -46,6 +46,10 @@ public class ArtemisTurnStrategyTest {
         game.getCellByPosition(new int[]{1,1}).setWorkerIn(game.getPlayerInGame().get().getWorker(0));
     }
 
+    /**
+     * This test tests the possibility to move 2 times in the turn, but not in the initial cell.
+     */
+
     @Test
     public void moveTest(){
         TestUtilities utility=new TestUtilities();
