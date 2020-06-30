@@ -23,7 +23,6 @@ public class AtlasTurnStrategyTest {
      * Setup of the board
      * 2 Players and 3 workers (2 for the 1st player and 1 for the 2nd player)
      */
-
     @Before
     public void createBoard(){
         game=new Board(new String[]{"Player1","Player2","Player3"});
@@ -44,16 +43,15 @@ public class AtlasTurnStrategyTest {
     /**
      *  in according to 3rd int in the array the player should be able to build a dome
      */
-
     @Test
-    public void buildingTest(){
-        DivinityStrategy div=new DivinityStrategy(GlobalVariables.DivinityCard.ATLAS);
-        List<int[]> current,expected;
-        expected=new ArrayList<>();
-        current=div.getTurnStrategyBuilding();
-        expected.add(new int[]{0,0,0});
-        expected.add(new int[]{2,0,1});
-        assertEquals(expected.size(),current.size());
+    public void buildingTest() {
+        DivinityStrategy div = new DivinityStrategy(GlobalVariables.DivinityCard.ATLAS);
+        List<int[]> current, expected;
+        expected = new ArrayList<>();
+        current = div.getTurnStrategyBuilding();
+        expected.add(new int[]{0, 0, 0});
+        expected.add(new int[]{2, 0, 1});
+        assertEquals(expected.size(), current.size());
         assertEquals(0, current.get(0)[2]);
         assertEquals(1, current.get(1)[2]);
     }

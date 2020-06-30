@@ -23,8 +23,7 @@ public class TritonTurnStrategyTest {
 
     @Before
     public void createBoard(){
-        game=new Board(new String[]{"poldo","franco","giacomo"}){
-        };
+        game=new Board(new String[]{"poldo","franco","giacomo"});
         game.getPlayerInGame().get().getWorker(0).moveWorker(game.getCellByPosition(new int[]{0,0}));
         game.getPlayerInGame().get().getWorker(1).moveWorker(game.getCellByPosition(new int[]{4,4}));
         game.getCellByPosition(new int[]{0,0}).setWorkerIn(game.getPlayerInGame().get().getWorker(0));
@@ -56,8 +55,7 @@ public class TritonTurnStrategyTest {
         expected.add(new int[]{4,0});
         current=div.getTurnStrategyMovement();
         assertEquals(current[0].size(),expected.size());
-        for (int[] ints : expected) {
+        for (int[] ints : expected)
             assertTrue(test.checkNodes(current[0], ints));
-        }
     }
 }

@@ -16,27 +16,27 @@ import java.util.List;
 
 public class ZeusTurnStrategyTest {
     @Before
-    public void setUp(){
-        game=new Board(new String[]{"Aldo","Giovanni","Giacomo"});
-        game.getPlayerInGame().get().getWorker(0).moveWorker(game.getCellByPosition(new int[]{0,0}));
-        game.getPlayerInGame().get().getWorker(1).moveWorker(game.getCellByPosition(new int[]{3,3}));
+    public void setUp() {
+        game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"});
+        game.getPlayerInGame().get().getWorker(0).moveWorker(game.getCellByPosition(new int[]{0, 0}));
+        game.getPlayerInGame().get().getWorker(1).moveWorker(game.getCellByPosition(new int[]{3, 3}));
         game.getPlayerInGame().get().setWorkerMoved(game.getPlayerInGame().get().getWorker(0));
     }
 
 
     @Test
-    public void strategyTest(){
-        DivinityStrategy div=new DivinityStrategy(GlobalVariables.DivinityCard.ZEUS);
-        TestUtilities test=new TestUtilities();
-        List<int[]> current,expected=new ArrayList<>();
-        current=div.getTurnStrategyBuilding();
-        expected.add(new int[]{0,1});
-        expected.add(new int[]{1,1});
-        expected.add(new int[]{1,0});
-        expected.add(new int[]{0,0});
-        assertEquals(current.size(),expected.size());
-        for(int i=0;i<current.size();i++){
-            assertTrue(test.checkNodes(current,expected.get(i)));
+    public void strategyTest() {
+        DivinityStrategy div = new DivinityStrategy(GlobalVariables.DivinityCard.ZEUS);
+        TestUtilities test = new TestUtilities();
+        List<int[]> current, expected = new ArrayList<>();
+        current = div.getTurnStrategyBuilding();
+        expected.add(new int[]{0, 1});
+        expected.add(new int[]{1, 1});
+        expected.add(new int[]{1, 0});
+        expected.add(new int[]{0, 0});
+        assertEquals(current.size(), expected.size());
+        for (int i = 0; i < current.size(); i++) {
+            assertTrue(test.checkNodes(current, expected.get(i)));
         }
     }
 }

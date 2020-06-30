@@ -25,8 +25,7 @@ public class ArtemisTurnStrategyTest {
 
     @Before
     public void createBoard() {
-        game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"}) {
-        };
+        game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"});
         game.getCellByPosition(new int[]{0, 0}).incrementBuildingLevel();
         game.getCellByPosition(new int[]{0, 0}).incrementBuildingLevel();
         game.getCellByPosition(new int[]{0, 1}).incrementBuildingLevel();
@@ -41,9 +40,9 @@ public class ArtemisTurnStrategyTest {
         game.getCellByPosition(new int[]{2, 0}).incrementBuildingLevel();
         game.getCellByPosition(new int[]{2, 2}).incrementBuildingLevel();
         game.getCellByPosition(new int[]{2, 2}).incrementBuildingLevel();
-        game.getPlayerInGame().get().getWorker(0).moveWorker(new Cell(new int[]{1,1}, game));
-        game.getPlayerInGame().get().getWorker(1).moveWorker(new Cell(new int[]{4,4}, game));
-        game.getCellByPosition(new int[]{1,1}).setWorkerIn(game.getPlayerInGame().get().getWorker(0));
+        game.getPlayerInGame().get().getWorker(0).moveWorker(new Cell(new int[]{1, 1}, game));
+        game.getPlayerInGame().get().getWorker(1).moveWorker(new Cell(new int[]{4, 4}, game));
+        game.getCellByPosition(new int[]{1, 1}).setWorkerIn(game.getPlayerInGame().get().getWorker(0));
     }
 
     /**
@@ -51,19 +50,19 @@ public class ArtemisTurnStrategyTest {
      */
 
     @Test
-    public void moveTest(){
-        TestUtilities utility=new TestUtilities();
-        DivinityStrategy div=new DivinityStrategy(GlobalVariables.DivinityCard.ARTEMIS);
-        List<int[]>[] current;
-        List<int[]> expected=new ArrayList<>();
-        expected.add(new int[]{2,1});
-        expected.add(new int[]{3,0});
-        expected.add(new int[]{3,1});
-        expected.add(new int[]{3,2});
-        current=div.getTurnStrategyMovement();
-        assertEquals(current[0].size(),expected.size());
-        for(int i=0;i<current[0].size();i++){
-            assertTrue(utility.checkNodes(current[0],expected.get(i)));
+    public void moveTest() {
+        TestUtilities utility = new TestUtilities();
+        DivinityStrategy div = new DivinityStrategy(GlobalVariables.DivinityCard.ARTEMIS);
+        List<int[]> current;
+        List<int[]> expected = new ArrayList<>();
+        expected.add(new int[]{2, 1});
+        expected.add(new int[]{3, 0});
+        expected.add(new int[]{3, 1});
+        expected.add(new int[]{3, 2});
+        current = div.getTurnStrategyMovement()[0];
+        assertEquals(current.size(), expected.size());
+        for (int i = 0; i < current.size(); i++) {
+            assertTrue(utility.checkNodes(current, expected.get(i)));
         }
     }
 }
