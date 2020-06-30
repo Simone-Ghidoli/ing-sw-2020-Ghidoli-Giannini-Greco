@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZeusTurnStrategyTest {
+
+    /**
+     * There are 2 workers for the Player 1: one in the cell [0,0] and one in the cell [3,3]
+     * The worker in the cell [0,0] is the "moved worker".
+     */
+
     @Before
     public void setUp() {
         game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"});
@@ -23,6 +29,10 @@ public class ZeusTurnStrategyTest {
         game.getPlayerInGame().get().setWorkerMoved(game.getPlayerInGame().get().getWorker(0));
     }
 
+
+    /**
+     * The "building worker" may build a block under himself.
+     */
 
     @Test
     public void strategyTest() {

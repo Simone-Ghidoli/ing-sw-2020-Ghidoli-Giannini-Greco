@@ -16,6 +16,12 @@ import java.util.List;
 
 public class HephaestusTurnStrategyTest {
 
+    /**
+     * Setup of the board. 2 Workers on the board, 1 in the cell [1,1] (worker to check) and 1 in the cell [4,4];
+     * There are 5 domes around the worker's cell (in [0,0][0,1][0,2][1,0][1,2]. One level 1 tower in [2,0] and one
+     * level 2 tower in [2,1].
+     **/
+
     @Before
     public void setUp() {
         game = new Board(new String[]{"Aldo", "Giovanni", "Giacomo"});
@@ -32,6 +38,10 @@ public class HephaestusTurnStrategyTest {
         game.getCellByPosition(new int[]{2, 0}).incrementBuildingLevel();
         game.getCellByPosition(new int[]{2, 1}).incrementBuildingLevel();
     }
+
+    /**
+     * The worker in [1,1] may build one additional block (not a dome) on the top of the first block.
+     */
 
     @Test
     public void strategyTest() {
