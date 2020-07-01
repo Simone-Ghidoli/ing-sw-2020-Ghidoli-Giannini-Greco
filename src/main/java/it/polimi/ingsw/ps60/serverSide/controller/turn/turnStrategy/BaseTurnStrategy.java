@@ -80,18 +80,20 @@ public class BaseTurnStrategy implements TurnStrategy {
     /**
      * @param workerPosition the position where the worker actually is
      * @param targetPosition the position where the worker wants to move
-     * @return false if no divinity disturbs the worker to move in the target position, true otherwise
+     * @return true if no divinity disturbs the worker to move in the target position, false otherwise
      */
     public boolean isNotDisturbedByDivinity(int[] workerPosition, int[] targetPosition) {
 
         if (game.getPlayerInGame().get().getDivinityCard() != GlobalVariables.DivinityCard.ATHENA) {
+            Player playerAthena;
 
-            CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
-
-            for (int i = 0; i < game.getPlayersNumber(); i++) {
-                if (circularListIterator.get().getDivinityStrategy().isBitException() && circularListIterator.get().getDivinityCard() == GlobalVariables.DivinityCard.ATHENA)
-                    return game.getCellByPosition(workerPosition).getBuildingLevel() >= game.getCellByPosition(targetPosition).getBuildingLevel();
-                circularListIterator.nextNode();
+            for (int i = 0; i < game.getPlayerMatrix().length; i++) {
+                playerAthena = game.getPlayerMatrix()[i];
+                if (playerAthena.getDivinityCard() == GlobalVariables.DivinityCard.ATHENA) {
+                    if (!playerAthena.getDivinityStrategy().isBitException()) {
+                        return game.getCellByPosition(targetPosition).getBuildingLevel() <= game.getCellByPosition(workerPosition).getBuildingLevel();
+                    } else return true;
+                }
             }
         }
         return true;
