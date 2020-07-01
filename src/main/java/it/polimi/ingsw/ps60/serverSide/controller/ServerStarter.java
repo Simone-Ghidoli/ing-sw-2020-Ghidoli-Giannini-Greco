@@ -42,6 +42,7 @@ public class ServerStarter {
         boolean gameLoaded = loadGame();
         serverThreadBound();
         if (!gameLoaded) {
+            System.out.println("Game has't been loaded");
             selectWorkersPositions();
             selectDivinityCard();
         } else {
@@ -130,13 +131,13 @@ public class ServerStarter {
      */
     private void serverThreadBound() {
         ArrayList<ServerThread> serverThreads = server.getSocketList();
-        CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
+        int j;
 
         for (int i = 0; i < nicknames.length; i++) {
-            while (!serverThreads.get(i).getPlayerBound().equals(circularListIterator.get().getNickname()))
-                circularListIterator.nextNode();
-            circularListIterator.get().setServerThread(serverThreads.get(i));
-            circularListIterator.nextNode();
+            j = 0;
+            while (!serverThreads.get(i).getPlayerBound().equals(game.getPlayerMatrix()[j].getNickname()))
+                j++;
+            game.getPlayerMatrix()[j].setServerThread(serverThreads.get(i));
         }
     }
 
