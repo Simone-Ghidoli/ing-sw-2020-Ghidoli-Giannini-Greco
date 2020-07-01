@@ -345,7 +345,7 @@ public class ServerThread extends Thread {
         StringBuilder stringToSend = new StringBuilder("st-");
 
         for (int i : divinityCard)
-            stringToSend.append(i);
+            stringToSend.append(i).append(" ");
 
         stringToSend.append(turnNumber);
 

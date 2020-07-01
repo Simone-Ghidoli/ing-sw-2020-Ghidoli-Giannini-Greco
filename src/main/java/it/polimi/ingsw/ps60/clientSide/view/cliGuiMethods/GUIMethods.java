@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class GUIMethods implements ViewMethodSelection {
 
-    private final MainFrame santorini = new MainFrame();
+    private final MainFrame mainFrame = new MainFrame();
 
     /**
      * This constrictor create the JFrame in order to play in GUI
@@ -34,7 +34,7 @@ public class GUIMethods implements ViewMethodSelection {
                 boardWindow.setLocationRelativeTo(null);
                 boardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 Container c = boardWindow.getContentPane();
-                c.add(santorini);
+                c.add(mainFrame);
                 boardWindow.setVisible(true);
             }
         });
@@ -43,7 +43,7 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public void printBoard(final String board) {
 
-        santorini.resetButtons();
+        mainFrame.resetButtons();
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -60,16 +60,16 @@ public class GUIMethods implements ViewMethodSelection {
                         case 0:
                             break;
                         case 1:
-                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/1 floor.png"));
+                            imageToMerge.add(mainFrame.imageFileReader("/board/Buildings/1 floor.png"));
                             break;
                         case 2:
-                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/1 floor.png"));
-                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/2 floor.png"));
+                            imageToMerge.add(mainFrame.imageFileReader("/board/Buildings/1 floor.png"));
+                            imageToMerge.add(mainFrame.imageFileReader("/board/Buildings/2 floor.png"));
                             break;
                         case 3:
-                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/1 floor.png"));
-                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/2 floor.png"));
-                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/3 floor.png"));
+                            imageToMerge.add(mainFrame.imageFileReader("/board/Buildings/1 floor.png"));
+                            imageToMerge.add(mainFrame.imageFileReader("/board/Buildings/2 floor.png"));
+                            imageToMerge.add(mainFrame.imageFileReader("/board/Buildings/3 floor.png"));
                             break;
                     }
 
@@ -77,16 +77,16 @@ public class GUIMethods implements ViewMethodSelection {
                         case 0:
                             break;
                         case 1:
-                            imageToMerge.add(santorini.imageFileReader("/board/Buildings/Dome.png"));
+                            imageToMerge.add(mainFrame.imageFileReader("/board/Buildings/Dome.png"));
                             break;
                         case 2:
-                            imageToMerge.add(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER1.getSourcePawn()));
+                            imageToMerge.add(mainFrame.imageFileReader(GlobalVariables.IdPlayer.PLAYER1.getSourcePawn()));
                             break;
                         case 3:
-                            imageToMerge.add(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER2.getSourcePawn()));
+                            imageToMerge.add(mainFrame.imageFileReader(GlobalVariables.IdPlayer.PLAYER2.getSourcePawn()));
                             break;
                         case 4:
-                            imageToMerge.add(santorini.imageFileReader(GlobalVariables.IdPlayer.PLAYER3.getSourcePawn()));
+                            imageToMerge.add(mainFrame.imageFileReader(GlobalVariables.IdPlayer.PLAYER3.getSourcePawn()));
                             break;
                     }
 
@@ -98,8 +98,8 @@ public class GUIMethods implements ViewMethodSelection {
                     }
 
                     g.dispose();
-                    santorini.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
-                    santorini.getButton(i).setDisabledIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
+                    mainFrame.getButton(i).setIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(mainFrame.getButton(i).getWidth() / 2, mainFrame.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
+                    mainFrame.getButton(i).setDisabledIcon(new ImageIcon(new ImageIcon(combined).getImage().getScaledInstance(mainFrame.getButton(i).getWidth() / 2, mainFrame.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH)));
                 }
             }
         });
@@ -108,7 +108,7 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public int moveChoice(final List<int[]>[] moves, int[][] positionsWorkers) {
 
-        santorini.resetButtons();
+        mainFrame.resetButtons();
 
         final int[] choiceToReturn = new int[1];
         final JButton[] buttonWorkers = new JButton[2];
@@ -144,7 +144,7 @@ public class GUIMethods implements ViewMethodSelection {
                 buttonWorkers[1].setEnabled(false);
                 JButton button;
                 for (int i = 0; i < moves[workerNumber].size(); i++) {
-                    button = santorini.getButton(moves[workerNumber].get(i)[0] * 5 + moves[workerNumber].get(i)[1]);
+                    button = mainFrame.getButton(moves[workerNumber].get(i)[0] * 5 + moves[workerNumber].get(i)[1]);
                     button.addActionListener(new ReturnListener(workerNumber * moves[0].size() + i));
                     button.setEnabled(true);
                 }
@@ -152,7 +152,7 @@ public class GUIMethods implements ViewMethodSelection {
         }
 
         for (int i = 0; i < 2; i++) {
-            buttonWorkers[i] = santorini.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
+            buttonWorkers[i] = mainFrame.getButton(positionsWorkers[i][0] * 5 + positionsWorkers[i][1]);
             if (moves[i].size() > 0) {
                 buttonWorkers[i].addActionListener(new Listener(i));
                 buttonWorkers[i].setEnabled(true);
@@ -167,7 +167,7 @@ public class GUIMethods implements ViewMethodSelection {
             }
         }
 
-        santorini.resetButtons();
+        mainFrame.resetButtons();
 
         if (confirmOrRetry())
             return choiceToReturn[0];
@@ -178,7 +178,7 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public int buildChoice(List<int[]> moves) {
 
-        santorini.resetButtons();
+        mainFrame.resetButtons();
 
         final int[] choiceToReturn = new int[1];
 
@@ -200,11 +200,11 @@ public class GUIMethods implements ViewMethodSelection {
         }
 
         for (int i = 0; i < 25; i++)
-            santorini.getButton(i).setEnabled(false);
+            mainFrame.getButton(i).setEnabled(false);
 
         JButton button;
         for (int i = 0; i < moves.size(); i++) {
-            button = santorini.getButton(moves.get(i)[0] * 5 + moves.get(i)[1]);
+            button = mainFrame.getButton(moves.get(i)[0] * 5 + moves.get(i)[1]);
             button.addActionListener(new Listener(i));
             button.setEnabled(true);
         }
@@ -217,7 +217,7 @@ public class GUIMethods implements ViewMethodSelection {
             }
         }
 
-        santorini.resetButtons();
+        mainFrame.resetButtons();
 
         if (confirmOrRetry())
             return choiceToReturn[0];
@@ -294,8 +294,8 @@ public class GUIMethods implements ViewMethodSelection {
 
         for (int i = 0; i < godButtons.length; i++) {
             godButtons[i] = new JButton();
-            godButtons[i].setSize(santorini.getScreenSize().width / 20, santorini.getScreenSize().height / 8);
-            godButtons[i].setIcon(new ImageIcon(new ImageIcon(santorini.imageFileReader(GlobalVariables.DivinityCard.values()[i].getSourcePosition())).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
+            godButtons[i].setSize(mainFrame.getScreenSize().width / 20, mainFrame.getScreenSize().height / 8);
+            godButtons[i].setIcon(new ImageIcon(new ImageIcon(mainFrame.imageFileReader(GlobalVariables.DivinityCard.values()[i].getSourcePosition())).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
         }
 
         final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, godButtons, godButtons[0]);
@@ -345,8 +345,8 @@ public class GUIMethods implements ViewMethodSelection {
 
         for (int i = 0; i < godButtons.length; i++) {
             godButtons[i] = new JButton();
-            godButtons[i].setSize(santorini.getScreenSize().width / 20, santorini.getScreenSize().height / 8);
-            godButtons[i].setIcon(new ImageIcon(new ImageIcon(santorini.imageFileReader(card[i].getSourcePosition())).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
+            godButtons[i].setSize(mainFrame.getScreenSize().width / 20, mainFrame.getScreenSize().height / 8);
+            godButtons[i].setIcon(new ImageIcon(new ImageIcon(mainFrame.imageFileReader(card[i].getSourcePosition())).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
         }
 
         final JOptionPane pane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, godButtons, godButtons[0]);
@@ -383,7 +383,7 @@ public class GUIMethods implements ViewMethodSelection {
     @Override
     public int[][] firstSetWorkers(List<int[]> impossiblePositions) {
 
-        santorini.resetButtons();
+        mainFrame.resetButtons();
 
         alert("Select positions of yours workers. Only free positions are allowed");
 
@@ -404,8 +404,8 @@ public class GUIMethods implements ViewMethodSelection {
                     for (int i = 0; i < 2; i++) {
                         if (workersPositions[i] == null) {
                             jButton.setEnabled(false);
-                            workersPositions[i] = santorini.getButtonCoords(jButton);
-                            jButton.setIcon(new ImageIcon(new ImageIcon(santorini.imageFileReader(GlobalVariables.IdPlayer.values()[0].getSourcePawn())).getImage().getScaledInstance(jButton.getWidth() / 2, jButton.getHeight() / 2, Image.SCALE_SMOOTH)));
+                            workersPositions[i] = mainFrame.getButtonCoords(jButton);
+                            jButton.setIcon(new ImageIcon(new ImageIcon(mainFrame.imageFileReader(GlobalVariables.IdPlayer.values()[0].getSourcePawn())).getImage().getScaledInstance(jButton.getWidth() / 2, jButton.getHeight() / 2, Image.SCALE_SMOOTH)));
                             if (i == 0)
                                 break;
                             else
@@ -417,15 +417,15 @@ public class GUIMethods implements ViewMethodSelection {
         }
 
         for (int i = 0; i < 25; i++) {
-            if (listContains.isContained(santorini.getButtonCoords(santorini.getButton(i)))) {
-                ImageIcon imagineWorker = new ImageIcon(santorini.imageFileReader(GlobalVariables.IdPlayer.values()[0].getSourcePawn()));
-                Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(santorini.getButton(i).getWidth() / 2, santorini.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH);
-                santorini.getButton(i).setIcon(new ImageIcon(scaleImageWorker));
-                santorini.getButton(i).setEnabled(false);
+            if (listContains.isContained(mainFrame.getButtonCoords(mainFrame.getButton(i)))) {
+                ImageIcon imagineWorker = new ImageIcon(mainFrame.imageFileReader(GlobalVariables.IdPlayer.values()[0].getSourcePawn()));
+                Image scaleImageWorker = imagineWorker.getImage().getScaledInstance(mainFrame.getButton(i).getWidth() / 2, mainFrame.getButton(i).getHeight() / 2, Image.SCALE_SMOOTH);
+                mainFrame.getButton(i).setIcon(new ImageIcon(scaleImageWorker));
+                mainFrame.getButton(i).setEnabled(false);
             } else {
-                santorini.getButton(i).setIcon(null);
-                santorini.getButton(i).addActionListener(new Listener(santorini.getButton(i)));
-                santorini.getButton(i).setEnabled(true);
+                mainFrame.getButton(i).setIcon(null);
+                mainFrame.getButton(i).addActionListener(new Listener(mainFrame.getButton(i)));
+                mainFrame.getButton(i).setEnabled(true);
             }
         }
 
@@ -437,7 +437,7 @@ public class GUIMethods implements ViewMethodSelection {
             }
         }
 
-        santorini.resetButtons();
+        mainFrame.resetButtons();
 
         if (confirmOrRetry())
             return workersPositions;
@@ -485,7 +485,7 @@ public class GUIMethods implements ViewMethodSelection {
 
     @Override
     public void status(int[] divinityCards, int turnNumber) {
-        santorini.setDivinityCardImage(divinityCards, turnNumber);
+        mainFrame.setDivinityCardImage(divinityCards, turnNumber);
     }
 
     /**
