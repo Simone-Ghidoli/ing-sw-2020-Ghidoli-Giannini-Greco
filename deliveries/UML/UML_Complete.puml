@@ -259,15 +259,12 @@ namespace it.polimi.ingsw.ps60{
                 }
 
                 class it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy {
-                    - bitException : boolean
                     - specialChoice : String
                     + DivinityStrategy (divinityCard : GlobalVariables.DivinityCard)
                     + getSpecialChoice () : String
                     + getTurnController () : TurnController
                     + getTurnStrategyBuilding () : List<int[]>
                     + getTurnStrategyMovement () : List<int[]>[]
-                    + isBitException () : boolean
-                    + setBitException (bitException : boolean) : void
                     + setBuilding (building : int[]) : void
                     + setEndTurn () : void
                     + setMovement (movement : int[][]) : void
@@ -333,6 +330,7 @@ namespace it.polimi.ingsw.ps60{
                 - divinityCard : int
                 - nickname : String
                 - workers : Worker[]
+                - bitException : boolean
                 + Player (nickName : String)
                 + getDivinityCard () : GlobalVariables.DivinityCard
                 + getDivinityStrategy () : DivinityStrategy
@@ -346,6 +344,8 @@ namespace it.polimi.ingsw.ps60{
                 + setDivinityCard (divinityCard : GlobalVariables.DivinityCard) : void
                 + setServerThread (serverThread : ServerThread) : void
                 + setWorkerMoved (workerMoved : Worker) : void
+                + isBitException () : boolean
+                + setBitException (bitException : boolean) : void
             }
 
             class it.polimi.ingsw.ps60.serverSide.model.Worker {

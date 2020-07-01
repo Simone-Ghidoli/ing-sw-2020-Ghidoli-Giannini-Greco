@@ -46,6 +46,7 @@ namespace it.polimi.ingsw.ps60.serverSide.model{
                 - divinityCard : int
                 - nickname : String
                 - workers : Worker[]
+                - bitException : boolean
                 + Player()
                 + getDivinityCard()
                 + getDivinityStrategy()
@@ -59,6 +60,8 @@ namespace it.polimi.ingsw.ps60.serverSide.model{
                 + setDivinityCard()
                 + setServerThread()
                 + setWorkerMoved()
+                + isBitException () : boolean
+                + setBitException (bitException : boolean) : void
             }
 
             class it.polimi.ingsw.ps60.serverSide.model.Worker {
