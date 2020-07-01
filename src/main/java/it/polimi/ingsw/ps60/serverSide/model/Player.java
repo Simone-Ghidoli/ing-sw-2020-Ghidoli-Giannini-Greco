@@ -17,6 +17,7 @@ public class Player implements Serializable {
     private Worker workerMoved;
     private boolean buildByWorker;
     private transient ServerThread serverThread;
+    private boolean bitException;
 
     /**
      * @param nickname the nickname of the player
@@ -29,7 +30,7 @@ public class Player implements Serializable {
         }
         buildByWorker = false;
         serverThread = null;
-
+        bitException = false;
     }
 
     /**
@@ -133,5 +134,23 @@ public class Player implements Serializable {
      */
     public ServerThread getServerThread() {
         return serverThread;
+    }
+
+    /**
+     * This method return true or false if the divinity card trows an exception in the turn of the other divinity cards
+     *
+     * @return the bit exception of the divinity card
+     */
+    public boolean isBitException() {
+        return bitException;
+    }
+
+    /**
+     * This method set if the divinity card trows an exception in the turn of the other divinity cards
+     *
+     * @param bitException the bit exception of the divinity card
+     */
+    public void setBitException(boolean bitException) {
+        this.bitException = bitException;
     }
 }

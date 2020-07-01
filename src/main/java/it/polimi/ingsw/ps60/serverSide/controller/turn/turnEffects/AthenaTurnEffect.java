@@ -10,6 +10,6 @@ public class AthenaTurnEffect extends BaseTurnEffect {
     public void move(int[][] move) {
         super.move(move);
         Worker worker = game.getPlayerInGame().get().getWorkerMoved();
-        game.getPlayerInGame().get().getDivinityStrategy().setBitException(worker.getOldCell().getBuildingLevel() < worker.getCellPosition().getBuildingLevel());
+        game.getPlayerInGame().get().setBitException(worker.getOldCell().getBuildingLevel() < worker.getCellPosition().getBuildingLevel());
     }
 }

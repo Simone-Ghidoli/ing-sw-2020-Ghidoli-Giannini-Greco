@@ -16,7 +16,6 @@ public class DivinityStrategy {
     private final TurnEffect turnEffect;
     private final String specialChoice;
     private final TurnController turnController;
-    private boolean bitException;
 
     /**
      * This class implements the right methods based on which divinity card a player has
@@ -24,8 +23,6 @@ public class DivinityStrategy {
      * @param divinityCard is the divinity card that a player has
      */
     public DivinityStrategy(GlobalVariables.DivinityCard divinityCard) {
-
-        bitException = false;
 
         switch (divinityCard) {
             case APOLLO:
@@ -187,23 +184,5 @@ public class DivinityStrategy {
      */
     public TurnController getTurnController() {
         return turnController;
-    }
-
-    /**
-     * This method return true or false if the divinity card trows an exception in the turn of the other divinity cards
-     *
-     * @return the bit exception of the divinity card
-     */
-    public boolean isBitException() {
-        return bitException;
-    }
-
-    /**
-     * This method set if the divinity card trows an exception in the turn of the other divinity cards
-     *
-     * @param bitException the bit exception of the divinity card
-     */
-    public void setBitException(boolean bitException) {
-        this.bitException = bitException;
     }
 }

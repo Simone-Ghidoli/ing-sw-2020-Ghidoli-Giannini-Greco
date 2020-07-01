@@ -43,7 +43,7 @@ public class AthenaEffectTest {
         movement1[1] = new int[]{1,0};
         game.getPlayerMatrix()[0].getDivinityStrategy().setMovement(movement1);
         ListContains listContains=new ListContains(game.getPlayerMatrix()[1].getDivinityStrategy().getTurnStrategyMovement()[0]);
+        assertTrue(game.getPlayerInGame().get().isBitException());
         assertFalse(listContains.isContained(new int[]{2,3}));
-
     }
 }
