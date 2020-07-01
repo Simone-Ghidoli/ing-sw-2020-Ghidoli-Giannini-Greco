@@ -16,8 +16,8 @@ import static org.junit.Assert.assertTrue;
 
 public class BaseTurnStrategyTest {
 
-    TestUtilities testUtilities = new TestUtilities();
-    BaseTurnStrategy base = new BaseTurnStrategy();
+    final TestUtilities testUtilities = new TestUtilities();
+    final BaseTurnStrategy base = new BaseTurnStrategy();
 
     @Before
     public void setUp() {

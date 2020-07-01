@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class AtlasEffectTest {
-    TestUtilities testUtilities = new TestUtilities();
+    final TestUtilities testUtilities = new TestUtilities();
     @Before
     public void setUp() {
         game = new Board(new String[]{"PlayerToCheck", "PlaceHolder"});

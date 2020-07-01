@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class MinotaurEffectTest {
-    TestUtilities testUtilities = new TestUtilities();
+    final TestUtilities testUtilities = new TestUtilities();
 
     @Before
     public void setUp() {
@@ -28,11 +28,11 @@ public class MinotaurEffectTest {
         testUtilities.buildsNTimes(new int[]{4, 0}, 3);
     }
 
-    @Test
     /**
-     * check Minotaur power; his worker moves into an opponent worker’s space who is forced one space straight backwards at any level
+     * Check Minotaur power; his worker moves into an opponent worker’s space who is forced one space straight backwards at any level
      * if a worker is pushed to the third level by minotaur he doesn't win
      */
+    @Test
     public void checkMinotaurEffect() {
         int[][] movement1 = new int[2][2];
         movement1[0][0] = 1;

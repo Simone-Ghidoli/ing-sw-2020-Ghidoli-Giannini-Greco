@@ -3,13 +3,11 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy;
 import it.polimi.ingsw.ps60.GlobalVariables;
 import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
-import it.polimi.ingsw.ps60.utils.TestUtilities;
 import org.junit.Before;
 import org.junit.Test;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;

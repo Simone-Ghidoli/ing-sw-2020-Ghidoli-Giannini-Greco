@@ -1,19 +1,15 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.DivinityStrategy;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
-import it.polimi.ingsw.ps60.utils.ListContains;
-import it.polimi.ingsw.ps60.utils.SetupForTest;
 import it.polimi.ingsw.ps60.utils.TestUtilities;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 import static org.junit.Assert.*;
 public class HephaestusEffectTest {
-    TestUtilities testUtilities = new TestUtilities();
+    final TestUtilities testUtilities = new TestUtilities();
 
     @Before
     public void setUp() {
@@ -37,7 +33,7 @@ public class HephaestusEffectTest {
     }
 
     /**
-     * check that Hephaustus can build two times in the same cell but not a dome
+     * Check that Hephaestus can build two times in the same cell but not a dome
      */
     @Test
     public void checkHephaestusEffect() {

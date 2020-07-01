@@ -7,9 +7,9 @@ import static it.polimi.ingsw.ps60.GlobalVariables.game;
 public class TestUtilities {
 
     public boolean checkNodes(List<int[]> current, int[] expected) {
-        for (int i = 0; i < current.size(); i++) {
-            if (expected[0] == current.get(i)[0]) {
-                if (expected[1] == current.get(i)[1]) {
+        for (int[] ints : current) {
+            if (expected[0] == ints[0]) {
+                if (expected[1] == ints[1]) {
                     return true;
                 }
             }

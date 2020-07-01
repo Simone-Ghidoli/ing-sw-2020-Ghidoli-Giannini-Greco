@@ -1,19 +1,17 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects;
 
 import it.polimi.ingsw.ps60.GlobalVariables;
-import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.BaseTurnStrategy;
 import it.polimi.ingsw.ps60.serverSide.model.Board;
 import it.polimi.ingsw.ps60.serverSide.model.Cell;
 import it.polimi.ingsw.ps60.utils.TestUtilities;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class ApolloEffectTest {
-    TestUtilities testUtilities = new TestUtilities();
+    final TestUtilities testUtilities = new TestUtilities();
 
     @Before
     public void setUp() {

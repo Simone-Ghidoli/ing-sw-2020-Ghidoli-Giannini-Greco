@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 public class PanEffectTest {
-    TestUtilities testUtilities = new TestUtilities();
+    final TestUtilities testUtilities = new TestUtilities();
 
     @Before
     public void setUp() {
