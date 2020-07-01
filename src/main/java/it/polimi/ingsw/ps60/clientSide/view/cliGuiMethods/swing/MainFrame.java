@@ -112,7 +112,6 @@ public class MainFrame extends JPanel {
                                         GlobalVariables.Colour.values()[i].getColor()), "You are player number " + (i + 1)));
                 divinityCard.add(divinityCardImage);
             } else {
-
                 divinityCardImage = new JLabel(new ImageIcon(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition()).getScaledInstance(screenSize.width * 9 / 116, screenSize.height / 4, Image.SCALE_SMOOTH)));
                 divinityCardImage.setBorder(
                         BorderFactory.createTitledBorder(

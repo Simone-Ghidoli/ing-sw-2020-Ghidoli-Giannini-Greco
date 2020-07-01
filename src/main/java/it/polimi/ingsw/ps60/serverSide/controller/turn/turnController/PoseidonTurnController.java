@@ -2,9 +2,11 @@ package it.polimi.ingsw.ps60.serverSide.controller.turn.turnController;
 
 import javax.swing.*;
 
+import java.util.List;
+
 import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
-public class PoseidonTurnController  extends BaseTurnController{
+public class PoseidonTurnController  extends BaseTurnController {
 
     @Override
     public void buildingSection() {
@@ -24,11 +26,21 @@ public class PoseidonTurnController  extends BaseTurnController{
 
         player.setWorkerMoved(player.getWorker(i));
 
-        for (int j = 0; j < 3; j++){
+        for (int j = 0; j < 3; j++) {
+
+            List<int[]> buildChoices = player.getDivinityStrategy().getTurnStrategyBuilding();
+
+            if (buildChoices.size() > 0) {
+
             if (player.getServerThread().specialChoice(player.getDivinityStrategy().getSpecialChoice()) == 0)
                 break;
-            if (player.getDivinityStrategy().getTurnStrategyBuilding().size() > 0)
-                buildingSection();
+
+                player.getServerThread().sendAlert("Select where to build");
+
+                int choice = player.getServerThread().buildMessage(buildChoices);
+                player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+            } else
+                break;
         }
 
         if (i == 0)

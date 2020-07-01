@@ -29,7 +29,7 @@ public class CLIMethods implements ViewMethodSelection {
 
         char[] boardToPrint = board.toCharArray();
 
-        if (turnNumber != 0)
+        if (turnNumber != -1)
             System.out.println("You are player number " + (turnNumber + 1));
         System.out.println("Legend:");
         System.out.println("The number indicates the building level, the colour indicates the player");
@@ -196,14 +196,16 @@ public class CLIMethods implements ViewMethodSelection {
                 if (!stringRegexValidation.isValid(choice)) {
                     choice = null;
                     System.out.println("Wrong input");
-                }
-                for (String check : previousChoices){
-                    if (check.equals(choice)){
-                        choice = null;
-                        System.out.println("Card already chosen");
-                        break;
+                } else
+                    for (String check : previousChoices) {
+                        if (check == null)
+                            break;
+                        if (check.equals(choice)) {
+                            choice = null;
+                            System.out.println("Card already chosen");
+                            break;
+                        }
                     }
-                }
             }
             previousChoices[j] = choice;
             cards[j] = allCards[Integer.parseInt(choice) - 1];
