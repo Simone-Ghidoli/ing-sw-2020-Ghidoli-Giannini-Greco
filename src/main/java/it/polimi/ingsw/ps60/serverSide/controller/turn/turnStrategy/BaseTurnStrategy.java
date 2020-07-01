@@ -86,14 +86,16 @@ public class BaseTurnStrategy implements TurnStrategy {
 
         if (game.getPlayerInGame().get().getDivinityCard() != GlobalVariables.DivinityCard.ATHENA) {
             Player playerAthena;
+            CircularListIterator<Player> circularListIterator = new CircularListIterator<>(game.getPlayerInGame().getList());
 
-            for (int i = 0; i < game.getPlayerMatrix().length; i++) {
-                playerAthena = game.getPlayerMatrix()[i];
+            for (int i = 0; i < game.getPlayerInGame().getList().getSize(); i++) {
+                playerAthena = circularListIterator.get();
                 if (playerAthena.getDivinityCard() == GlobalVariables.DivinityCard.ATHENA) {
                     if (!playerAthena.getDivinityStrategy().isBitException()) {
                         return game.getCellByPosition(targetPosition).getBuildingLevel() <= game.getCellByPosition(workerPosition).getBuildingLevel();
                     } else return true;
                 }
+                circularListIterator.nextNode();
             }
         }
         return true;
