@@ -107,11 +107,12 @@ public class ClientParser implements Runnable {
     }
 
     public void status(String status) {
+        System.out.println(status);
         String[] statusToParse = status.split(" ");
 
         int[] divinityNumbers = new int[statusToParse.length - 1];
 
-        for (int i = 0; i < divinityNumbers.length - 1; i++) {
+        for (int i = 0; i < divinityNumbers.length; i++) {
             divinityNumbers[i] = Integer.parseInt(statusToParse[i]);
         }
 

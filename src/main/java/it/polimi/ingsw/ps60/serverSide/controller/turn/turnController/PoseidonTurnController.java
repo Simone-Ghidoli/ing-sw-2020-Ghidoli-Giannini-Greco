@@ -1,10 +1,6 @@
 package it.polimi.ingsw.ps60.serverSide.controller.turn.turnController;
 
-import javax.swing.*;
-
 import java.util.List;
-
-import static it.polimi.ingsw.ps60.GlobalVariables.game;
 
 public class PoseidonTurnController  extends BaseTurnController {
 
@@ -39,6 +35,7 @@ public class PoseidonTurnController  extends BaseTurnController {
 
                 int choice = player.getServerThread().buildMessage(buildChoices);
                 player.getDivinityStrategy().setBuilding(buildChoices.get(choice));
+                sendBoardToClient();
             } else
                 break;
         }
