@@ -5,7 +5,6 @@ import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This class is used to read and store server's commands
@@ -22,7 +21,7 @@ public class ClientReader implements Runnable {
      *
      * @param sock     is the socket
      * @param messages is the list where the commands will be saved
-     * m@param method   is the viewMethodSelection (CLI/GUI)
+     * @param method   is the viewMethodSelection (CLI/GUI)
      */
     public ClientReader(Socket sock, List<String> messages, ViewMethodSelection method) {
         messagesFromServer = messages;
@@ -59,12 +58,13 @@ public class ClientReader implements Runnable {
                         serverSays = null;
                     }
                 } catch (IOException e) {
-                    System.out.println("coglione");//todo togliere
+                    methodSelection.alert("Server has been disconnected");
                     try {
                         socket.close();
                     } catch (IOException ex) {
                         return;
                     }
+                    System.exit(-1);
                 }
                 try {
                     socket.wait();
