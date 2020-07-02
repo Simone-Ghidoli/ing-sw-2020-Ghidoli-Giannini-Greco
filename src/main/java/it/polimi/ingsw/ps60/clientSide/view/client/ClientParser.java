@@ -58,64 +58,58 @@ public class ClientParser implements Runnable {
     public void run() {
         String message;
         while (true) {
-            while (messagesFromServer.size() != 0) {
-                synchronized (socket) {
-                    if (socket.isClosed())
-                        return;
+            synchronized (messagesFromServer) {
+                while (messagesFromServer.size() != 0) {
+                    synchronized (socket) {
+                        if (socket.isClosed())
+                            return;
 
-                    message = messagesFromServer.remove(0);
-                    socket.notifyAll();
+                        socket.notify();
 
-                    if (message.equals("move"))
-                        movement();
-                    else if (message.equals("build"))
-                        building();
-                    else if (message.contains("spc-"))
-                        specialChoice(message.split("spc-", 2)[1]);
-                    else if (message.equals("nPlayers"))
-                        number_of_players();
-                    else if (message.equals("nick_birth"))
-                        nickname_birthday();
-                    else if (message.equals("workSet"))
-                        setWorkers();
-                    else if (message.contains("pr-"))
-                        printBoard(message.split("pr-", 2)[1]);
-                    else if (message.equals("dv_choice"))
-                        divinityChoice();
-                    else if (message.equals("div_sel"))
-                        divinitySelection();
-                    else if (message.contains("al-"))
-                        alert(message.split("al-", 2)[1]);
-                    else if (message.contains("loss-"))
-                        alert(message.split("loss-", 2)[1]);
-                    else if (message.contains("st-"))
-                        status(message.split("st-", 2)[1]);
-                    else if (message.contains("win-")) {
-                        methodSelection.alert(message.split("win-", 2)[1]);
-                        socketClose();
-                        return;
-                    } else if (message.contains("disc-")) {
-                        disconnection(message.split("disc-", 2)[1]);
-                        return;
-                    }
-                }
-                synchronized (socket) {
-                    try {
-                        socket.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        message = messagesFromServer.get(0);
+
+                        if (message.equals("move"))
+                            movement();
+                        else if (message.equals("build"))
+                            building();
+                        else if (message.contains("spc-"))
+                            specialChoice(message.split("spc-", 2)[1]);
+                        else if (message.equals("nPlayers"))
+                            number_of_players();
+                        else if (message.equals("nick_birth"))
+                            nickname_birthday();
+                        else if (message.equals("workSet"))
+                            setWorkers();
+                        else if (message.contains("pr-"))
+                            printBoard(message.split("pr-", 2)[1]);
+                        else if (message.equals("dv_choice"))
+                            divinityChoice();
+                        else if (message.equals("div_sel"))
+                            divinitySelection();
+                        else if (message.contains("al-"))
+                            alert(message.split("al-", 2)[1]);
+                        else if (message.contains("loss-"))
+                            alert(message.split("loss-", 2)[1]);
+                        else if (message.contains("st-"))
+                            status(message.split("st-", 2)[1]);
+                        else if (message.contains("win-")) {
+                            methodSelection.alert(message.split("win-", 2)[1]);
+                            socketClose();
+                            return;
+                        } else if (message.contains("disc-")) {
+                            disconnection(message.split("disc-", 2)[1]);
+                            return;
+                        }
+
+                        messagesFromServer.remove(0);
                     }
                 }
             }
         }
     }
 
-    /**
-     * This method receive the status of the game once for game
-     *
-     * @param status contains the divinity cards and the turn number of the player
-     */
     public void status(String status) {
+        System.out.println(status);
         String[] statusToParse = status.split(" ");
 
         int[] divinityNumbers = new int[statusToParse.length - 1];
@@ -125,12 +119,14 @@ public class ClientParser implements Runnable {
         }
 
         methodSelection.status(divinityNumbers, Integer.parseInt(statusToParse[statusToParse.length - 1]));
+
         sendInt(0);
     }
 
     /**
      * Close the socket after the game is stopped (for any reason)
      */
+
     public void socketClose() {
         try {
             socket.close();
@@ -144,6 +140,7 @@ public class ClientParser implements Runnable {
      *
      * @param alert is the message to print
      */
+
     public void alert(String alert) {
         methodSelection.alert(alert);
         sendInt(0);
@@ -153,6 +150,7 @@ public class ClientParser implements Runnable {
      * Starts the move phase
      * Receive the Possible moves and the positions of the workers
      */
+
     public void movement() {
         sendInt(methodSelection.moveChoice(converters.deserializeArrayOfListOfInts(receiveListArray()), converters.deserialize2DArrayOfInts(receiveWorkers())));
     }
@@ -261,6 +259,7 @@ public class ClientParser implements Runnable {
      *
      * @return an array of lists of Serialized Integer=(int[])
      */
+
     public List<SerializedInteger>[] receiveListArray() {
         try {
             sendInt(0);
