@@ -108,8 +108,12 @@ public class ClientParser implements Runnable {
         }
     }
 
+    /**
+     * This method receive the status of the game once for game
+     *
+     * @param status contains the divinity cards and the turn number of the player
+     */
     public void status(String status) {
-        System.out.println(status);
         String[] statusToParse = status.split(" ");
 
         int[] divinityNumbers = new int[statusToParse.length - 1];
@@ -119,14 +123,12 @@ public class ClientParser implements Runnable {
         }
 
         methodSelection.status(divinityNumbers, Integer.parseInt(statusToParse[statusToParse.length - 1]));
-
         sendInt(0);
     }
 
     /**
      * Close the socket after the game is stopped (for any reason)
      */
-
     public void socketClose() {
         try {
             socket.close();
@@ -140,7 +142,6 @@ public class ClientParser implements Runnable {
      *
      * @param alert is the message to print
      */
-
     public void alert(String alert) {
         methodSelection.alert(alert);
         sendInt(0);
@@ -150,7 +151,6 @@ public class ClientParser implements Runnable {
      * Starts the move phase
      * Receive the Possible moves and the positions of the workers
      */
-
     public void movement() {
         sendInt(methodSelection.moveChoice(converters.deserializeArrayOfListOfInts(receiveListArray()), converters.deserialize2DArrayOfInts(receiveWorkers())));
     }
@@ -259,7 +259,6 @@ public class ClientParser implements Runnable {
      *
      * @return an array of lists of Serialized Integer=(int[])
      */
-
     public List<SerializedInteger>[] receiveListArray() {
         try {
             sendInt(0);

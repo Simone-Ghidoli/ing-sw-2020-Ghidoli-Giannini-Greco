@@ -17,7 +17,7 @@ public class FlushedInput {
         try {
             int i = System.in.read(new byte[System.in.available()]);
             if (i > 0)
-                System.out.println(i + "chars are been ignored");
+                System.out.println(i + " chars are been ignored");
         } catch (IOException e) {
             e.printStackTrace();
         }
