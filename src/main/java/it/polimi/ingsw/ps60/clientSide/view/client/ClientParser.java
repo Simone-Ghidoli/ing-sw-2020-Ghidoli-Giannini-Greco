@@ -99,10 +99,12 @@ public class ClientParser implements Runnable {
                         return;
                     }
                 }
-                try {
-                    socket.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                synchronized (socket) {
+                    try {
+                        socket.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
