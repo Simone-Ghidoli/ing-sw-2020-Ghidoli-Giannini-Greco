@@ -44,6 +44,9 @@ public class ServerStarter {
         if (!gameLoaded) {
             System.out.println("Game has't been loaded");
             selectWorkersPositions();
+            for (ServerThread serverThread : server.getSocketList()){
+                serverThread.sendBoard(game.getCellToSend());
+            }
             selectDivinityCard();
         } else {
             for (int i = 0; i < game.getPlayerMatrix().length; i++) {
@@ -68,7 +71,7 @@ public class ServerStarter {
      * @return an array of ints associated to the divinity cards ordered by the player number whom this divinity cards belong
      */
     private int[] divinityNumber() {
-        int[] divinityNumbers = new int[game.getPlayersNumber()];
+        int[] divinityNumbers = new int[game.getPlayerMatrix().length];
 
         for (int j = 0; j < game.getPlayerMatrix().length; j++) {
             for (int i = 0; i < GlobalVariables.DivinityCard.values().length; i++) {

@@ -66,12 +66,13 @@ public class ClientReader implements Runnable {
                     }
                     System.exit(-1);
                 }
-                try {
-                    socket.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } //interrompo l'esecuzione fino a quando il parser non entra
+                socket.notifyAll();
             }
+            try {
+                socket.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } //interrompo l'esecuzione fino a quando il parser non entra
         }
     }
 }

@@ -58,51 +58,51 @@ public class ClientParser implements Runnable {
     public void run() {
         String message;
         while (true) {
-            synchronized (messagesFromServer) {
-                while (messagesFromServer.size() != 0) {
-                    synchronized (socket) {
-                        if (socket.isClosed())
-                            return;
+            while (messagesFromServer.size() != 0) {
+                synchronized (socket) {
+                    if (socket.isClosed())
+                        return;
 
-                        socket.notify();
+                    message = messagesFromServer.remove(0);
+                    socket.notifyAll();
 
-                        message = messagesFromServer.get(0);
-
-                        if (message.equals("move"))
-                            movement();
-                        else if (message.equals("build"))
-                            building();
-                        else if (message.contains("spc-"))
-                            specialChoice(message.split("spc-", 2)[1]);
-                        else if (message.equals("nPlayers"))
-                            number_of_players();
-                        else if (message.equals("nick_birth"))
-                            nickname_birthday();
-                        else if (message.equals("workSet"))
-                            setWorkers();
-                        else if (message.contains("pr-"))
-                            printBoard(message.split("pr-", 2)[1]);
-                        else if (message.equals("dv_choice"))
-                            divinityChoice();
-                        else if (message.equals("div_sel"))
-                            divinitySelection();
-                        else if (message.contains("al-"))
-                            alert(message.split("al-", 2)[1]);
-                        else if (message.contains("loss-"))
-                            alert(message.split("loss-", 2)[1]);
-                        else if (message.contains("st-"))
-                            status(message.split("st-", 2)[1]);
-                        else if (message.contains("win-")) {
-                            methodSelection.alert(message.split("win-", 2)[1]);
-                            socketClose();
-                            return;
-                        } else if (message.contains("disc-")) {
-                            disconnection(message.split("disc-", 2)[1]);
-                            return;
-                        }
-
-                        messagesFromServer.remove(0);
+                    if (message.equals("move"))
+                        movement();
+                    else if (message.equals("build"))
+                        building();
+                    else if (message.contains("spc-"))
+                        specialChoice(message.split("spc-", 2)[1]);
+                    else if (message.equals("nPlayers"))
+                        number_of_players();
+                    else if (message.equals("nick_birth"))
+                        nickname_birthday();
+                    else if (message.equals("workSet"))
+                        setWorkers();
+                    else if (message.contains("pr-"))
+                        printBoard(message.split("pr-", 2)[1]);
+                    else if (message.equals("dv_choice"))
+                        divinityChoice();
+                    else if (message.equals("div_sel"))
+                        divinitySelection();
+                    else if (message.contains("al-"))
+                        alert(message.split("al-", 2)[1]);
+                    else if (message.contains("loss-"))
+                        alert(message.split("loss-", 2)[1]);
+                    else if (message.contains("st-"))
+                        status(message.split("st-", 2)[1]);
+                    else if (message.contains("win-")) {
+                        methodSelection.alert(message.split("win-", 2)[1]);
+                        socketClose();
+                        return;
+                    } else if (message.contains("disc-")) {
+                        disconnection(message.split("disc-", 2)[1]);
+                        return;
                     }
+                }
+                try {
+                    socket.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
