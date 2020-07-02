@@ -17,7 +17,6 @@ public class ClientParser implements Runnable {
     private final Socket socket;
     InputStream input;
     OutputStream output;
-    PrintWriter pr;
     ObjectInputStream in_obj;
     ObjectOutputStream out_obj;
     final ViewMethodSelection methodSelection;
@@ -40,7 +39,6 @@ public class ClientParser implements Runnable {
             output = socket.getOutputStream();
             out_obj = new ObjectOutputStream(output);
             in_obj = new ObjectInputStream(input);
-            pr = new PrintWriter(output, true);
 
         } catch (IOException e) {
             try {
@@ -315,9 +313,11 @@ public class ClientParser implements Runnable {
      * @param toServer String to send
      */
     public void sendString(String toServer) {
-        pr.println(toServer);
-        if (pr.checkError())
+        try {
+            out_obj.writeObject(toServer);
+        } catch (IOException e) {
             disconnection("Communication error, logging out");
+        }
     }
 
     /**

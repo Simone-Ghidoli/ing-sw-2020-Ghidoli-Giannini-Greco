@@ -14,7 +14,7 @@ public class ClientReader implements Runnable {
     private final List<String> messagesFromServer;
     final Socket socket;
     String serverSays;
-    BufferedReader br;
+    ObjectInputStream in_obj;
     final ViewMethodSelection methodSelection;
 
     /**
@@ -29,7 +29,7 @@ public class ClientReader implements Runnable {
         socket = sock;
         methodSelection = method;
         try {
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            in_obj=new ObjectInputStream(socket.getInputStream());
         } catch (IOException e_0) {
             synchronized (socket) {
                 try {
@@ -53,12 +53,12 @@ public class ClientReader implements Runnable {
                     return;
                 }
                 try {
-                    serverSays = br.readLine();
+                    serverSays = (String) in_obj.readObject();
                     if (serverSays != null) {
                         messagesFromServer.add(serverSays);
                         serverSays = null;
                     }
-                } catch (IOException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     methodSelection.alert("Server has disconnected");
                     System.exit(0);
                     try {
