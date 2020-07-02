@@ -15,7 +15,6 @@ public class ClientReader implements Runnable {
     final Socket socket;
     String serverSays;
     ObjectInputStream in_obj;
-    InputStream in;
     final ViewMethodSelection methodSelection;
 
     /**
@@ -25,12 +24,12 @@ public class ClientReader implements Runnable {
      * @param messages is the list where the commands will be saved
      * @param method   is the viewMethodSelection (CLI/GUI)
      */
-    public ClientReader(Socket sock, List<String> messages, ViewMethodSelection method, ObjectInputStream inob) {
+    public ClientReader(Socket sock, List<String> messages, ViewMethodSelection method, ObjectInputStream in_obj) {
         messagesFromServer = messages;
         socket = sock;
         methodSelection = method;
         synchronized (socket) {
-            in_obj = inob;
+            this.in_obj = in_obj;
         }
     }
 
@@ -41,9 +40,8 @@ public class ClientReader implements Runnable {
     public void run() {
         while (true) {
             synchronized (socket) {
-                if (socket.isClosed()) {
+                if (socket.isClosed())
                     return;
-                }
                 try {
                     serverSays = (String) in_obj.readObject();
                     if (serverSays != null) {
@@ -57,6 +55,7 @@ public class ClientReader implements Runnable {
                     } catch (IOException ex) {
                         return;
                     }
+                    return;
                 }
                 try {
                     socket.wait();
