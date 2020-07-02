@@ -17,8 +17,6 @@ public class ServerThread extends Thread {
     private final List<ServerThread> serverThreads;
     private InputStream in;
     private OutputStream out;
-    private BufferedReader buffer;
-    private PrintWriter writer;
     private ObjectInputStream in_obj;
     private ObjectOutputStream out_obj;
     private final Converters converters;
@@ -36,8 +34,6 @@ public class ServerThread extends Thread {
         try {
             in = socket.getInputStream();
             out = socket.getOutputStream();
-            buffer = new BufferedReader(new InputStreamReader(in));
-            writer = new PrintWriter(out, true);
             out_obj = new ObjectOutputStream(out);
             in_obj = new ObjectInputStream(in);
         } catch (IOException e) {
@@ -203,8 +199,10 @@ public class ServerThread extends Thread {
      * @param message this is the message that will be sent to the client
      */
     public void sendString(String message) {
-        writer.println(message);
-        if (writer.checkError()) {
+        try {
+            out_obj.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
             disconnection();
         }
     }
@@ -259,8 +257,8 @@ public class ServerThread extends Thread {
     public String receiveString() {
         String n = null;
         try {
-            n = buffer.readLine();
-        } catch (IOException e) {
+            n = (String) in_obj.readObject();
+        } catch (IOException | ClassNotFoundException e) {
             disconnection();
         }
         return n;
@@ -377,7 +375,11 @@ public class ServerThread extends Thread {
      */
     public void disconnection() {
         for (ServerThread elem : serverThreads) {
-            elem.writer.println("disc-User " + playerBound + " left the game. The match is over.");
+            try {
+                elem.out_obj.writeObject("disc-User " + playerBound + " left the game. The match is over.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         System.out.println("Communication error. Exit...");
         System.exit(0);

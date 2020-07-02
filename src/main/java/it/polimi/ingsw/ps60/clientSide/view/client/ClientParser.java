@@ -39,7 +39,6 @@ public class ClientParser implements Runnable {
             output = socket.getOutputStream();
             out_obj = new ObjectOutputStream(output);
             in_obj = new ObjectInputStream(input);
-
         } catch (IOException e) {
             try {
                 socket.close();
@@ -107,7 +106,6 @@ public class ClientParser implements Runnable {
     }
 
     public void status(String status) {
-        System.out.println(status);
         String[] statusToParse = status.split(" ");
 
         int[] divinityNumbers = new int[statusToParse.length - 1];
@@ -316,8 +314,12 @@ public class ClientParser implements Runnable {
         try {
             out_obj.writeObject(toServer);
         } catch (IOException e) {
+            e.printStackTrace();
             disconnection("Communication error, logging out");
         }
+        /*pr.println(toServer);
+        if (pr.checkError())
+            disconnection("Communication error, logging out");*/
     }
 
     /**
