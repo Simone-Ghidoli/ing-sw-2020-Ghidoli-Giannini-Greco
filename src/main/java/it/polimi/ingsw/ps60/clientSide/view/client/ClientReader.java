@@ -10,10 +10,12 @@ import java.util.List;
  * This class is used to read and store server's commands
  */
 public class ClientReader implements Runnable {
+
     private final List<String> messagesFromServer;
     final Socket socket;
     String serverSays;
     ObjectInputStream in_obj;
+    InputStream in;
     final ViewMethodSelection methodSelection;
 
     /**
@@ -23,21 +25,12 @@ public class ClientReader implements Runnable {
      * @param messages is the list where the commands will be saved
      * @param method   is the viewMethodSelection (CLI/GUI)
      */
-    public ClientReader(Socket sock, List<String> messages, ViewMethodSelection method) {
+    public ClientReader(Socket sock, List<String> messages, ViewMethodSelection method, ObjectInputStream inob) {
         messagesFromServer = messages;
         socket = sock;
         methodSelection = method;
-        try {
-            in_obj=new ObjectInputStream(socket.getInputStream());
-        } catch (IOException e_0) {
-            synchronized (socket) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            methodSelection.alert("communication error, logging out");
+        synchronized (socket) {
+            in_obj = inob;
         }
     }
 

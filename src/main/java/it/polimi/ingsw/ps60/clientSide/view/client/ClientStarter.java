@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps60.clientSide.view.client;
 import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
  * This class is used to open the connection with the server and starts reader and parser tasks
  */
 public class ClientStarter {
+    private ObjectInputStream in_obj;
     private final List<String> messagesFromServer;
     private final ExecutorService pool = Executors.newFixedThreadPool(2);
     private Socket socket;
@@ -41,6 +43,7 @@ public class ClientStarter {
         while (socket == null) {
             try {
                 socket = new Socket(ipAddress, port);
+                in_obj=new ObjectInputStream(socket.getInputStream());
             } catch (IOException e1) {
                 viewMethodSelection.alert("Waiting for server");
                 socket = null;
@@ -51,15 +54,15 @@ public class ClientStarter {
                 }
             }
         }
-        ClientReader reader = new ClientReader(socket, messagesFromServer, viewMethodSelection);
-        ClientParser parser = new ClientParser(socket, messagesFromServer, viewMethodSelection);
+        ClientParser parser = new ClientParser(socket, messagesFromServer, viewMethodSelection,in_obj);
+        ClientReader reader = new ClientReader(socket, messagesFromServer, viewMethodSelection,in_obj);
         pool.execute(reader);
         pool.execute(parser);
-        pool.shutdown();
+        /*pool.shutdown();
         try{
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
         }catch(InterruptedException e){
             e.printStackTrace();
-        }
+        }*/
     }
 }

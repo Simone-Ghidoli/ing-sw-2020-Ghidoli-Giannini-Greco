@@ -29,23 +29,25 @@ public class ClientParser implements Runnable {
      * @param messages            List of string received from the server
      * @param viewMethodSelection Starts method from Gui methods/ Cli methods
      */
-    public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection) {
+    public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection, ObjectInputStream inob) {
         socket = sock;
         messagesFromServer = messages;
         methodSelection = viewMethodSelection;
         converters = new Converters();
-        try {
-            input = socket.getInputStream();
-            output = socket.getOutputStream();
-            out_obj = new ObjectOutputStream(output);
-            in_obj = new ObjectInputStream(input);
-        } catch (IOException e) {
+        synchronized (socket) {
             try {
-                socket.close();
-            } catch (IOException e_0) {
-                //e.printStackTrace();
+                input = socket.getInputStream();
+                output = socket.getOutputStream();
+                out_obj = new ObjectOutputStream(output);
+                in_obj = inob;
+            } catch (IOException e) {
+                try {
+                    socket.close();
+                } catch (IOException e_0) {
+                    //e.printStackTrace();
+                }
+                disconnection("Communication error, logging out");
             }
-            disconnection("Communication error, logging out");
         }
     }
 
