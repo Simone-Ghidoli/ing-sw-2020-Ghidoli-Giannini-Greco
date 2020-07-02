@@ -14,6 +14,7 @@ import it.polimi.ingsw.ps60.utils.SerializedInteger;
  */
 public class ClientParser implements Runnable {
     private final List<String> messagesFromServer;
+    private boolean exit;
     private final Socket socket;
     InputStream input;
     OutputStream output;
@@ -31,6 +32,7 @@ public class ClientParser implements Runnable {
      */
     public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection, ObjectInputStream inob) {
         socket = sock;
+        exit=false;
         messagesFromServer = messages;
         methodSelection = viewMethodSelection;
         converters = new Converters();
@@ -56,12 +58,14 @@ public class ClientParser implements Runnable {
      */
     public void run() {
         String message;
-        while (true) {
+        while (!exit) {
             synchronized (messagesFromServer) {
+                synchronized (socket) {
+                    if (socket.isClosed()) {
+                        socket.notify();
+                        exit = true;
+                    }
                 while (messagesFromServer.size() != 0) {
-                    synchronized (socket) {
-                        if (socket.isClosed())
-                            return;
 
                         socket.notify();
 
@@ -376,11 +380,11 @@ public class ClientParser implements Runnable {
      */
     public void disconnection(String s) {
         methodSelection.alert(s);
+        exit=true;
         try {
             socket.close();
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
-        Thread.currentThread().interrupt();
     }
 }

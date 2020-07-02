@@ -52,7 +52,6 @@ public class ClientReader implements Runnable {
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     methodSelection.alert("Server has disconnected");
-                    System.exit(0);
                     try {
                         socket.close();
                     } catch (IOException ex) {
