@@ -375,10 +375,12 @@ public class ServerThread extends Thread {
      */
     public void disconnection() {
         for (ServerThread elem : serverThreads) {
-            try {
-                elem.out_obj.writeObject("disc-User " + playerBound + " left the game. The match is over.");
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (elem != this) {
+                try {
+                    elem.out_obj.writeObject("disc-User " + playerBound + " left the game. The match is over.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         System.out.println("Communication error. Exit...");
