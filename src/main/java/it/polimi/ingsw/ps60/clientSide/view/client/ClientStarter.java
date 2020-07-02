@@ -58,11 +58,11 @@ public class ClientStarter {
         ClientReader reader = new ClientReader(socket, messagesFromServer, viewMethodSelection,in_obj);
         pool.execute(reader);
         pool.execute(parser);
-        /*pool.shutdown();
+        pool.shutdown();
         try{
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
         }catch(InterruptedException e){
             e.printStackTrace();
-        }*/
+        }
     }
 }
