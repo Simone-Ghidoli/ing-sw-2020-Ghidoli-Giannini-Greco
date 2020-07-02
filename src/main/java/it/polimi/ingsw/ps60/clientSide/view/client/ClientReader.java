@@ -5,6 +5,7 @@ import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is used to read and store server's commands
@@ -21,7 +22,7 @@ public class ClientReader implements Runnable {
      *
      * @param sock     is the socket
      * @param messages is the list where the commands will be saved
-     * @param method   is the viewMethodSelection (CLI/GUI)
+     * m@param method   is the viewMethodSelection (CLI/GUI)
      */
     public ClientReader(Socket sock, List<String> messages, ViewMethodSelection method) {
         messagesFromServer = messages;
@@ -51,24 +52,25 @@ public class ClientReader implements Runnable {
                 if (socket.isClosed()) {
                     return;
                 }
-            }
-            try {
-                synchronized (socket) {
-                    if (br.ready())
-                        serverSays = br.readLine();
-                }
-                if (serverSays != null) {
-                    synchronized (messagesFromServer) {
+                try {
+                    serverSays = br.readLine();
+                    if (serverSays != null) {
                         messagesFromServer.add(serverSays);
                         serverSays = null;
                     }
+                } catch (IOException e) {
+                    System.out.println("coglione");//todo togliere
+                    try {
+                        socket.close();
+                    } catch (IOException ex) {
+                        return;
+                    }
                 }
-            } catch (IOException e) {
                 try {
-                    socket.close();
-                } catch (IOException ex) {
-                    return;
-                }
+                    socket.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } //interrompo l'esecuzione fino a quando il parser non entra
             }
         }
     }

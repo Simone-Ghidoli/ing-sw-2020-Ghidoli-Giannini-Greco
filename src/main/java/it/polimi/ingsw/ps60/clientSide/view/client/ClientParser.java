@@ -64,6 +64,8 @@ public class ClientParser implements Runnable {
                         if (socket.isClosed())
                             return;
 
+                        socket.notify();
+
                         message = messagesFromServer.get(0);
 
                         if (message.equals("move"))

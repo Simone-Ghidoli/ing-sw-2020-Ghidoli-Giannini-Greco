@@ -56,9 +56,9 @@ public class ClientStarter {
         pool.execute(reader);
         pool.execute(parser);
         pool.shutdown();
-        try {
+        try{
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
+        }catch(InterruptedException e){
             e.printStackTrace();
         }
     }
