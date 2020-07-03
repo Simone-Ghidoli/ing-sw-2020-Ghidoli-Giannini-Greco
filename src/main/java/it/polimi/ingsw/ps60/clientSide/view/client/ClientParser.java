@@ -29,6 +29,7 @@ public class ClientParser implements Runnable {
      * @param sock                is the socket
      * @param messages            List of string received from the server
      * @param viewMethodSelection Starts method from Gui methods/ Cli methods
+     * @param in_obj              is the objectInputStream shared between parser and reader
      */
     public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection, ObjectInputStream in_obj) {
         socket = sock;

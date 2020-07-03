@@ -1,0 +1,482 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ClientParser</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.clientSide.view.client</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ClientParser (it.polimi.ingsw.ps60.clientSide.view.client)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClientParser</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 154)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.clientSide.view.client;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.*;
+<i>4</i>&nbsp;import java.net.Socket;
+<i>5</i>&nbsp;import java.util.*;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import it.polimi.ingsw.ps60.GlobalVariables;
+<i>8</i>&nbsp;import it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.ViewMethodSelection;
+<i>9</i>&nbsp;import it.polimi.ingsw.ps60.utils.Converters;
+<i>10</i>&nbsp;import it.polimi.ingsw.ps60.utils.SerializedInteger;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * This class is the parser. Its function is to process server&#39;s commands and call the correct method to proceed in the game
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public class ClientParser implements Runnable {
+<i>16</i>&nbsp;    private final List&lt;String&gt; messagesFromServer;
+<i>17</i>&nbsp;    private boolean exit;
+<i>18</i>&nbsp;    private final Socket socket;
+<i>19</i>&nbsp;    InputStream input;
+<i>20</i>&nbsp;    OutputStream output;
+<i>21</i>&nbsp;    ObjectInputStream in_obj;
+<i>22</i>&nbsp;    ObjectOutputStream out_obj;
+<i>23</i>&nbsp;    final ViewMethodSelection methodSelection;
+<i>24</i>&nbsp;    private final Converters converters;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     * Constructor of the Parser
+<i>28</i>&nbsp;     *
+<i>29</i>&nbsp;     * @param sock                is the socket
+<i>30</i>&nbsp;     * @param messages            List of string received from the server
+<i>31</i>&nbsp;     * @param viewMethodSelection Starts method from Gui methods/ Cli methods
+<i>32</i>&nbsp;     * @param in_obj              is the objectInputStream shared between parser and reader
+<i>33</i>&nbsp;     */
+<b class="nc"><i>34</i>&nbsp;    public ClientParser(Socket sock, List&lt;String&gt; messages, ViewMethodSelection viewMethodSelection, ObjectInputStream in_obj) {</b>
+<b class="nc"><i>35</i>&nbsp;        socket = sock;</b>
+<b class="nc"><i>36</i>&nbsp;        exit=false;</b>
+<b class="nc"><i>37</i>&nbsp;        messagesFromServer = messages;</b>
+<b class="nc"><i>38</i>&nbsp;        methodSelection = viewMethodSelection;</b>
+<b class="nc"><i>39</i>&nbsp;        converters = new Converters();</b>
+<b class="nc"><i>40</i>&nbsp;        synchronized (socket) {</b>
+<i>41</i>&nbsp;            try {
+<b class="nc"><i>42</i>&nbsp;                input = socket.getInputStream();</b>
+<b class="nc"><i>43</i>&nbsp;                output = socket.getOutputStream();</b>
+<b class="nc"><i>44</i>&nbsp;                out_obj = new ObjectOutputStream(output);</b>
+<b class="nc"><i>45</i>&nbsp;                this.in_obj = in_obj;</b>
+<b class="nc"><i>46</i>&nbsp;            } catch (IOException e) {</b>
+<i>47</i>&nbsp;                try {
+<b class="nc"><i>48</i>&nbsp;                    socket.close();</b>
+<b class="nc"><i>49</i>&nbsp;                } catch (IOException e_0) {</b>
+<i>50</i>&nbsp;                    //e.printStackTrace();
+<b class="nc"><i>51</i>&nbsp;                }</b>
+<b class="nc"><i>52</i>&nbsp;                disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>53</i>&nbsp;            }</b>
+<b class="nc"><i>54</i>&nbsp;        }</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * List of comparisons between server&#39;s messages and known commands
+<i>59</i>&nbsp;     */
+<i>60</i>&nbsp;    public void run() {
+<i>61</i>&nbsp;        String message;
+<b class="nc"><i>62</i>&nbsp;        while (!exit) {</b>
+<b class="nc"><i>63</i>&nbsp;            synchronized (messagesFromServer) {</b>
+<b class="nc"><i>64</i>&nbsp;                synchronized (socket) {</b>
+<b class="nc"><i>65</i>&nbsp;                    if (socket.isClosed()) {</b>
+<b class="nc"><i>66</i>&nbsp;                        socket.notify();</b>
+<b class="nc"><i>67</i>&nbsp;                        exit = true;</b>
+<i>68</i>&nbsp;                    }
+<b class="nc"><i>69</i>&nbsp;                while (messagesFromServer.size() != 0) {</b>
+<i>70</i>&nbsp;
+<b class="nc"><i>71</i>&nbsp;                        socket.notify();</b>
+<i>72</i>&nbsp;
+<b class="nc"><i>73</i>&nbsp;                        message = messagesFromServer.get(0);</b>
+<i>74</i>&nbsp;
+<b class="nc"><i>75</i>&nbsp;                        if (message.equals(&quot;move&quot;))</b>
+<b class="nc"><i>76</i>&nbsp;                            movement();</b>
+<b class="nc"><i>77</i>&nbsp;                        else if (message.equals(&quot;build&quot;))</b>
+<b class="nc"><i>78</i>&nbsp;                            building();</b>
+<b class="nc"><i>79</i>&nbsp;                        else if (message.contains(&quot;spc-&quot;))</b>
+<b class="nc"><i>80</i>&nbsp;                            specialChoice(message.split(&quot;spc-&quot;, 2)[1]);</b>
+<b class="nc"><i>81</i>&nbsp;                        else if (message.equals(&quot;nPlayers&quot;))</b>
+<b class="nc"><i>82</i>&nbsp;                            number_of_players();</b>
+<b class="nc"><i>83</i>&nbsp;                        else if (message.equals(&quot;nick_birth&quot;))</b>
+<b class="nc"><i>84</i>&nbsp;                            nickname_birthday();</b>
+<b class="nc"><i>85</i>&nbsp;                        else if (message.equals(&quot;workSet&quot;))</b>
+<b class="nc"><i>86</i>&nbsp;                            setWorkers();</b>
+<b class="nc"><i>87</i>&nbsp;                        else if (message.contains(&quot;pr-&quot;))</b>
+<b class="nc"><i>88</i>&nbsp;                            printBoard(message.split(&quot;pr-&quot;, 2)[1]);</b>
+<b class="nc"><i>89</i>&nbsp;                        else if (message.equals(&quot;dv_choice&quot;))</b>
+<b class="nc"><i>90</i>&nbsp;                            divinityChoice();</b>
+<b class="nc"><i>91</i>&nbsp;                        else if (message.equals(&quot;div_sel&quot;))</b>
+<b class="nc"><i>92</i>&nbsp;                            divinitySelection();</b>
+<b class="nc"><i>93</i>&nbsp;                        else if (message.contains(&quot;al-&quot;))</b>
+<b class="nc"><i>94</i>&nbsp;                            alert(message.split(&quot;al-&quot;, 2)[1]);</b>
+<b class="nc"><i>95</i>&nbsp;                        else if (message.contains(&quot;loss-&quot;))</b>
+<b class="nc"><i>96</i>&nbsp;                            alert(message.split(&quot;loss-&quot;, 2)[1]);</b>
+<b class="nc"><i>97</i>&nbsp;                        else if (message.contains(&quot;st-&quot;))</b>
+<b class="nc"><i>98</i>&nbsp;                            status(message.split(&quot;st-&quot;, 2)[1]);</b>
+<b class="nc"><i>99</i>&nbsp;                        else if (message.contains(&quot;win-&quot;)) {</b>
+<b class="nc"><i>100</i>&nbsp;                            methodSelection.alert(message.split(&quot;win-&quot;, 2)[1]);</b>
+<b class="nc"><i>101</i>&nbsp;                            socketClose();</b>
+<b class="nc"><i>102</i>&nbsp;                            return;</b>
+<b class="nc"><i>103</i>&nbsp;                        } else if (message.contains(&quot;disc-&quot;)) {</b>
+<b class="nc"><i>104</i>&nbsp;                            disconnection(message.split(&quot;disc-&quot;, 2)[1]);</b>
+<b class="nc"><i>105</i>&nbsp;                            return;</b>
+<i>106</i>&nbsp;                        }
+<i>107</i>&nbsp;
+<b class="nc"><i>108</i>&nbsp;                        messagesFromServer.remove(0);</b>
+<i>109</i>&nbsp;                    }
+<b class="nc"><i>110</i>&nbsp;                }</b>
+<b class="nc"><i>111</i>&nbsp;            }</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    /**
+<i>116</i>&nbsp;     * This method receive the status of the players from the server
+<i>117</i>&nbsp;     * @param status contains nicknames, divinity cards and the player turn number
+<i>118</i>&nbsp;     */
+<i>119</i>&nbsp;    public void status(String status) {
+<b class="nc"><i>120</i>&nbsp;        String[] statusToParse = status.split(&quot; &quot;);</b>
+<i>121</i>&nbsp;
+<b class="nc"><i>122</i>&nbsp;        int[] divinityNumbers = new int[(statusToParse.length - 1)/2];</b>
+<b class="nc"><i>123</i>&nbsp;        String[] nicknames = new String[divinityNumbers.length];</b>
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        for (int i = 0; i &lt; divinityNumbers.length; i++) {</b>
+<b class="nc"><i>126</i>&nbsp;            divinityNumbers[i] = Integer.parseInt(statusToParse[i*2]);</b>
+<i>127</i>&nbsp;        }
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        for(int i=0;i &lt; divinityNumbers.length;i++){</b>
+<b class="nc"><i>130</i>&nbsp;            nicknames[i] = statusToParse[(i*2)+1];</b>
+<i>131</i>&nbsp;        }
+<i>132</i>&nbsp;
+<b class="nc"><i>133</i>&nbsp;        methodSelection.status(divinityNumbers, Integer.parseInt(statusToParse[statusToParse.length - 1]), nicknames);</b>
+<i>134</i>&nbsp;
+<b class="nc"><i>135</i>&nbsp;        sendInt(0);</b>
+<i>136</i>&nbsp;    }
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;    /**
+<i>139</i>&nbsp;     * Close the socket after the game is stopped (for any reason)
+<i>140</i>&nbsp;     */
+<i>141</i>&nbsp;    public void socketClose() {
+<i>142</i>&nbsp;        try {
+<b class="nc"><i>143</i>&nbsp;            socket.close();</b>
+<b class="nc"><i>144</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>145</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>146</i>&nbsp;        }</b>
+<i>147</i>&nbsp;    }
+<i>148</i>&nbsp;
+<i>149</i>&nbsp;    /**
+<i>150</i>&nbsp;     * Show a video message to the player
+<i>151</i>&nbsp;     *
+<i>152</i>&nbsp;     * @param alert is the message to print
+<i>153</i>&nbsp;     */
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;    public void alert(String alert) {
+<b class="nc"><i>156</i>&nbsp;        methodSelection.alert(alert);</b>
+<b class="nc"><i>157</i>&nbsp;        sendInt(0);</b>
+<i>158</i>&nbsp;    }
+<i>159</i>&nbsp;
+<i>160</i>&nbsp;    /**
+<i>161</i>&nbsp;     * Starts the move phase
+<i>162</i>&nbsp;     * Receive the Possible moves and the positions of the workers
+<i>163</i>&nbsp;     */
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    public void movement() {
+<b class="nc"><i>166</i>&nbsp;        sendInt(methodSelection.moveChoice(converters.deserializeArrayOfListOfInts(receiveListArray()), converters.deserialize2DArrayOfInts(receiveWorkers())));</b>
+<i>167</i>&nbsp;    }
+<i>168</i>&nbsp;
+<i>169</i>&nbsp;    /**
+<i>170</i>&nbsp;     * method used for building
+<i>171</i>&nbsp;     */
+<i>172</i>&nbsp;    public void building() {
+<b class="nc"><i>173</i>&nbsp;        sendInt(methodSelection.buildChoice(converters.deserializeListOfInts(receiveList())));</b>
+<i>174</i>&nbsp;    }
+<i>175</i>&nbsp;
+<i>176</i>&nbsp;    /**
+<i>177</i>&nbsp;     * method used for special choices
+<i>178</i>&nbsp;     *
+<i>179</i>&nbsp;     * @param s contains the message that users will see to know what are they choosing
+<i>180</i>&nbsp;     */
+<i>181</i>&nbsp;    public void specialChoice(String s) {
+<b class="nc"><i>182</i>&nbsp;        boolean n = methodSelection.specialChoices(s);</b>
+<i>183</i>&nbsp;        int choice;
+<b class="nc"><i>184</i>&nbsp;        if (n)</b>
+<b class="nc"><i>185</i>&nbsp;            choice = 1;</b>
+<i>186</i>&nbsp;        else
+<b class="nc"><i>187</i>&nbsp;            choice = 0;</b>
+<b class="nc"><i>188</i>&nbsp;        sendInt(choice);</b>
+<i>189</i>&nbsp;    }
+<i>190</i>&nbsp;
+<i>191</i>&nbsp;    /**
+<i>192</i>&nbsp;     * How much players gonna to play?
+<i>193</i>&nbsp;     */
+<i>194</i>&nbsp;    public void number_of_players() {
+<b class="nc"><i>195</i>&nbsp;        sendInt(methodSelection.numberOfPlayers());</b>
+<i>196</i>&nbsp;    }
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;    /**
+<i>199</i>&nbsp;     * Players&#39; names and birthdays
+<i>200</i>&nbsp;     */
+<i>201</i>&nbsp;    public void nickname_birthday() {
+<i>202</i>&nbsp;        String[] inputs;
+<b class="nc"><i>203</i>&nbsp;        inputs = methodSelection.nicknameBirthdayChoice();</b>
+<b class="nc"><i>204</i>&nbsp;        sendString(inputs[0]);//NickName</b>
+<b class="nc"><i>205</i>&nbsp;        sendString(inputs[1]);//Birthday</b>
+<i>206</i>&nbsp;    }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;    /**
+<i>209</i>&nbsp;     * Shot the actual state of the board to the player
+<i>210</i>&nbsp;     *
+<i>211</i>&nbsp;     * @param board contains a stream of characters that will be used to build the correct board to print
+<i>212</i>&nbsp;     */
+<i>213</i>&nbsp;    public void printBoard(String board) {
+<b class="nc"><i>214</i>&nbsp;        methodSelection.printBoard(board);</b>
+<i>215</i>&nbsp;    }
+<i>216</i>&nbsp;
+<i>217</i>&nbsp;    /**
+<i>218</i>&nbsp;     * Set the workers&#39; position at the start of the game
+<i>219</i>&nbsp;     */
+<i>220</i>&nbsp;    public void setWorkers() {
+<b class="nc"><i>221</i>&nbsp;        sendPositions(converters.serialize2DArrayOfInt(methodSelection.firstSetWorkers(converters.deserializeListOfInts(receiveList()))));</b>
+<i>222</i>&nbsp;    }
+<i>223</i>&nbsp;
+<i>224</i>&nbsp;    /**
+<i>225</i>&nbsp;     * The first player needs to choose in-game cards
+<i>226</i>&nbsp;     */
+<i>227</i>&nbsp;    public void divinityChoice() {
+<b class="nc"><i>228</i>&nbsp;        sendCards(methodSelection.cardChoices(receiveInt()));</b>
+<i>229</i>&nbsp;    }
+<i>230</i>&nbsp;
+<i>231</i>&nbsp;    /**
+<i>232</i>&nbsp;     * Card pick between available cards
+<i>233</i>&nbsp;     */
+<i>234</i>&nbsp;    public void divinitySelection() {
+<b class="nc"><i>235</i>&nbsp;        sendCards(new GlobalVariables.DivinityCard[]{methodSelection.divinitySelection(receiveCards())});</b>
+<i>236</i>&nbsp;    }
+<i>237</i>&nbsp;
+<i>238</i>&nbsp;
+<i>239</i>&nbsp;    /**
+<i>240</i>&nbsp;     * Some methods for Client-Server communication. Methods can send/receive string, integers or special objects
+<i>241</i>&nbsp;     * Some methods are used to convert normal types to serializable types and the other way around
+<i>242</i>&nbsp;     *
+<i>243</i>&nbsp;     * @param positions are the positions selected by the client
+<i>244</i>&nbsp;     */
+<i>245</i>&nbsp;    public void sendPositions(SerializedInteger[] positions) {
+<i>246</i>&nbsp;        try {
+<b class="nc"><i>247</i>&nbsp;            out_obj.writeObject(positions);</b>
+<b class="nc"><i>248</i>&nbsp;        } catch (IOException e_0) {</b>
+<b class="nc"><i>249</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>250</i>&nbsp;        }</b>
+<i>251</i>&nbsp;    }
+<i>252</i>&nbsp;
+<i>253</i>&nbsp;    /**
+<i>254</i>&nbsp;     * Send and integer
+<i>255</i>&nbsp;     *
+<i>256</i>&nbsp;     * @param send integer to send
+<i>257</i>&nbsp;     */
+<i>258</i>&nbsp;
+<i>259</i>&nbsp;    public void sendInt(int send) {
+<i>260</i>&nbsp;        try {
+<b class="nc"><i>261</i>&nbsp;            output.write(send);</b>
+<b class="nc"><i>262</i>&nbsp;            output.flush();</b>
+<b class="nc"><i>263</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>264</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>265</i>&nbsp;        }</b>
+<i>266</i>&nbsp;    }
+<i>267</i>&nbsp;
+<i>268</i>&nbsp;    /**
+<i>269</i>&nbsp;     * Receive an array of lists of Serialized Integer=(int[]). Method for the movement phase
+<i>270</i>&nbsp;     *
+<i>271</i>&nbsp;     * @return an array of lists of Serialized Integer=(int[])
+<i>272</i>&nbsp;     */
+<i>273</i>&nbsp;
+<i>274</i>&nbsp;    public List&lt;SerializedInteger&gt;[] receiveListArray() {
+<i>275</i>&nbsp;        try {
+<b class="nc"><i>276</i>&nbsp;            sendInt(0);</b>
+<b class="nc"><i>277</i>&nbsp;            return (List&lt;SerializedInteger&gt;[]) in_obj.readObject();</b>
+<b class="nc"><i>278</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>279</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>280</i>&nbsp;            System.out.println(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>281</i>&nbsp;        } catch (ClassNotFoundException e_1) {</b>
+<b class="nc"><i>282</i>&nbsp;            System.out.println(&quot;Class not found&quot;);</b>
+<b class="nc"><i>283</i>&nbsp;        }</b>
+<b class="nc"><i>284</i>&nbsp;        return null;</b>
+<i>285</i>&nbsp;    }
+<i>286</i>&nbsp;
+<i>287</i>&nbsp;    /**
+<i>288</i>&nbsp;     * Receive a list of Serialized Integer=(int[]). Method for building phase
+<i>289</i>&nbsp;     *
+<i>290</i>&nbsp;     * @return a list of Serialized Integer=(int[])
+<i>291</i>&nbsp;     */
+<i>292</i>&nbsp;
+<i>293</i>&nbsp;    public List&lt;SerializedInteger&gt; receiveList() {
+<i>294</i>&nbsp;        try {
+<b class="nc"><i>295</i>&nbsp;            sendInt(0);</b>
+<b class="nc"><i>296</i>&nbsp;            return (List&lt;SerializedInteger&gt;) in_obj.readObject();</b>
+<b class="nc"><i>297</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>298</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>299</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>300</i>&nbsp;        } catch (ClassNotFoundException e_1) {</b>
+<b class="nc"><i>301</i>&nbsp;            e_1.printStackTrace();</b>
+<b class="nc"><i>302</i>&nbsp;        }</b>
+<b class="nc"><i>303</i>&nbsp;        return null;</b>
+<i>304</i>&nbsp;    }
+<i>305</i>&nbsp;
+<i>306</i>&nbsp;    /**
+<i>307</i>&nbsp;     * Receive an array of Serialized Integer. Just for receive the positions of 2 workers
+<i>308</i>&nbsp;     *
+<i>309</i>&nbsp;     * @return an array of Serialized Integer
+<i>310</i>&nbsp;     */
+<i>311</i>&nbsp;
+<i>312</i>&nbsp;    public SerializedInteger[] receiveWorkers() {
+<b class="nc"><i>313</i>&nbsp;        SerializedInteger[] positionWorkers = null;</b>
+<i>314</i>&nbsp;        try {
+<b class="nc"><i>315</i>&nbsp;            sendInt(0);</b>
+<b class="nc"><i>316</i>&nbsp;            positionWorkers = (SerializedInteger[]) in_obj.readObject();</b>
+<b class="nc"><i>317</i>&nbsp;        } catch (IOException | ClassNotFoundException e) {</b>
+<b class="nc"><i>318</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>319</i>&nbsp;        }</b>
+<b class="nc"><i>320</i>&nbsp;        return positionWorkers;</b>
+<i>321</i>&nbsp;    }
+<i>322</i>&nbsp;
+<i>323</i>&nbsp;    /**
+<i>324</i>&nbsp;     * Send a String to the server
+<i>325</i>&nbsp;     *
+<i>326</i>&nbsp;     * @param toServer String to send
+<i>327</i>&nbsp;     */
+<i>328</i>&nbsp;    public void sendString(String toServer) {
+<i>329</i>&nbsp;        try {
+<b class="nc"><i>330</i>&nbsp;            out_obj.writeObject(toServer);</b>
+<b class="nc"><i>331</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>332</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>333</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>334</i>&nbsp;        }</b>
+<i>335</i>&nbsp;        /*pr.println(toServer);
+<i>336</i>&nbsp;        if (pr.checkError())
+<i>337</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);*/
+<i>338</i>&nbsp;    }
+<i>339</i>&nbsp;
+<i>340</i>&nbsp;    /**
+<i>341</i>&nbsp;     * Receive an integer
+<i>342</i>&nbsp;     *
+<i>343</i>&nbsp;     * @return integer received
+<i>344</i>&nbsp;     */
+<i>345</i>&nbsp;    public int receiveInt() {
+<b class="nc"><i>346</i>&nbsp;        int n = -1;</b>
+<i>347</i>&nbsp;        try {
+<b class="nc"><i>348</i>&nbsp;            sendInt(0);</b>
+<b class="nc"><i>349</i>&nbsp;            n = input.read();</b>
+<b class="nc"><i>350</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>351</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>352</i>&nbsp;        }</b>
+<b class="nc"><i>353</i>&nbsp;        return n;</b>
+<i>354</i>&nbsp;    }
+<i>355</i>&nbsp;
+<i>356</i>&nbsp;    /**
+<i>357</i>&nbsp;     * Send an array of DivinityCards
+<i>358</i>&nbsp;     *
+<i>359</i>&nbsp;     * @param cards Array to send
+<i>360</i>&nbsp;     */
+<i>361</i>&nbsp;    public void sendCards(GlobalVariables.DivinityCard[] cards) {
+<i>362</i>&nbsp;        try {
+<b class="nc"><i>363</i>&nbsp;            out_obj.writeObject(cards);</b>
+<b class="nc"><i>364</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>365</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>366</i>&nbsp;        }</b>
+<i>367</i>&nbsp;    }
+<i>368</i>&nbsp;
+<i>369</i>&nbsp;    /**
+<i>370</i>&nbsp;     * Receive an array of cards.
+<i>371</i>&nbsp;     *
+<i>372</i>&nbsp;     * @return Received array
+<i>373</i>&nbsp;     */
+<i>374</i>&nbsp;    public GlobalVariables.DivinityCard[] receiveCards() {
+<b class="nc"><i>375</i>&nbsp;        GlobalVariables.DivinityCard[] divinityCards = null;</b>
+<i>376</i>&nbsp;        try {
+<b class="nc"><i>377</i>&nbsp;            sendInt(0);</b>
+<b class="nc"><i>378</i>&nbsp;            divinityCards = (GlobalVariables.DivinityCard[]) in_obj.readObject();</b>
+<b class="nc"><i>379</i>&nbsp;        } catch (IOException | ClassNotFoundException e) {</b>
+<b class="nc"><i>380</i>&nbsp;            disconnection(&quot;Communication error, logging out&quot;);</b>
+<b class="nc"><i>381</i>&nbsp;        }</b>
+<b class="nc"><i>382</i>&nbsp;        return divinityCards;</b>
+<i>383</i>&nbsp;    }
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;    /**
+<i>386</i>&nbsp;     * disconnection
+<i>387</i>&nbsp;     *
+<i>388</i>&nbsp;     * @param s contains the message to print before disconnection
+<i>389</i>&nbsp;     */
+<i>390</i>&nbsp;    public void disconnection(String s) {
+<b class="nc"><i>391</i>&nbsp;        methodSelection.alert(s);</b>
+<b class="nc"><i>392</i>&nbsp;        exit=true;</b>
+<i>393</i>&nbsp;        try {
+<b class="nc"><i>394</i>&nbsp;            socket.close();</b>
+<b class="nc"><i>395</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>396</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>397</i>&nbsp;        }</b>
+<i>398</i>&nbsp;    }
+<i>399</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 19:08</div>
+</div>
+</body>
+</html>

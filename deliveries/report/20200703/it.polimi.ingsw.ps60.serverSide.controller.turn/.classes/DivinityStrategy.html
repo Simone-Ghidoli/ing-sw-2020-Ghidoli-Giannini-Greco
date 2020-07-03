@@ -1,0 +1,297 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DivinityStrategy</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.controller.turn</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DivinityStrategy (it.polimi.ingsw.ps60.serverSide.controller.turn)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DivinityStrategy</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (6/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    82.9%
+  </span>
+  <span class="absValue">
+    (58/ 70)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DivinityStrategy$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    77.8%
+  </span>
+  <span class="absValue">
+    (7/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.1%
+  </span>
+  <span class="absValue">
+    (59/ 71)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.controller.turn;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.ps60.GlobalVariables;
+<i>4</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.*;
+<i>5</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.controller.turn.turnEffects.*;
+<i>6</i>&nbsp;import it.polimi.ingsw.ps60.serverSide.controller.turn.turnStrategy.*;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * This class create an easy access to all the controller based on which divinity card the player has
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;public class DivinityStrategy {
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    private final TurnStrategy turnStrategy;
+<i>16</i>&nbsp;    private final TurnEffect turnEffect;
+<i>17</i>&nbsp;    private final String specialChoice;
+<i>18</i>&nbsp;    private final TurnController turnController;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     * This class implements the right methods based on which divinity card a player has
+<i>22</i>&nbsp;     *
+<i>23</i>&nbsp;     * @param divinityCard is the divinity card that a player has
+<i>24</i>&nbsp;     */
+<b class="fc"><i>25</i>&nbsp;    public DivinityStrategy(GlobalVariables.DivinityCard divinityCard) {</b>
+<i>26</i>&nbsp;
+<b class="fc"><i>27</i>&nbsp;        switch (divinityCard) {</b>
+<i>28</i>&nbsp;            case APOLLO:
+<b class="fc"><i>29</i>&nbsp;                turnStrategy = new ApolloTurnStrategy();</b>
+<b class="fc"><i>30</i>&nbsp;                break;</b>
+<i>31</i>&nbsp;            case ARTEMIS:
+<b class="fc"><i>32</i>&nbsp;                turnStrategy = new ArtemisTurnStrategy();</b>
+<b class="fc"><i>33</i>&nbsp;                break;</b>
+<i>34</i>&nbsp;            case ATLAS:
+<b class="fc"><i>35</i>&nbsp;                turnStrategy = new AtlasTurnStrategy();</b>
+<b class="fc"><i>36</i>&nbsp;                break;</b>
+<i>37</i>&nbsp;            case HEPHAESTUS:
+<b class="fc"><i>38</i>&nbsp;                turnStrategy = new HephaestusTurnStrategy();</b>
+<b class="fc"><i>39</i>&nbsp;                break;</b>
+<i>40</i>&nbsp;            case MINOTAUR:
+<b class="fc"><i>41</i>&nbsp;                turnStrategy = new MinotaurTurnStrategy();</b>
+<b class="fc"><i>42</i>&nbsp;                break;</b>
+<i>43</i>&nbsp;            case PROMETHEUS:
+<b class="fc"><i>44</i>&nbsp;                turnStrategy = new PrometheusTurnStrategy();</b>
+<b class="fc"><i>45</i>&nbsp;                break;</b>
+<i>46</i>&nbsp;            case TRITON:
+<b class="fc"><i>47</i>&nbsp;                turnStrategy = new TritonTurnStrategy();</b>
+<b class="fc"><i>48</i>&nbsp;                break;</b>
+<i>49</i>&nbsp;            case ZEUS:
+<b class="fc"><i>50</i>&nbsp;                turnStrategy = new ZeusTurnStrategy();</b>
+<b class="fc"><i>51</i>&nbsp;                break;</b>
+<i>52</i>&nbsp;            default:
+<b class="fc"><i>53</i>&nbsp;                turnStrategy = new BaseTurnStrategy();</b>
+<i>54</i>&nbsp;        }
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;        switch (divinityCard) {</b>
+<i>57</i>&nbsp;            case APOLLO:
+<b class="fc"><i>58</i>&nbsp;                turnEffect = new ApolloTurnEffect();</b>
+<b class="fc"><i>59</i>&nbsp;                break;</b>
+<i>60</i>&nbsp;            case ATHENA:
+<b class="fc"><i>61</i>&nbsp;                turnEffect = new AthenaTurnEffect();</b>
+<b class="fc"><i>62</i>&nbsp;                break;</b>
+<i>63</i>&nbsp;            case ATLAS:
+<b class="fc"><i>64</i>&nbsp;                turnEffect = new AtlasTurnEffect();</b>
+<b class="fc"><i>65</i>&nbsp;                break;</b>
+<i>66</i>&nbsp;            case CHRONUS:
+<b class="fc"><i>67</i>&nbsp;                turnEffect = new ChronusTurnEffect();</b>
+<b class="fc"><i>68</i>&nbsp;                break;</b>
+<i>69</i>&nbsp;            case HEPHAESTUS:
+<b class="fc"><i>70</i>&nbsp;                turnEffect = new HephaestusTurnEffect();</b>
+<b class="fc"><i>71</i>&nbsp;                break;</b>
+<i>72</i>&nbsp;            case MINOTAUR:
+<b class="fc"><i>73</i>&nbsp;                turnEffect = new MinotaurTurnEffect();</b>
+<b class="fc"><i>74</i>&nbsp;                break;</b>
+<i>75</i>&nbsp;            case PAN:
+<b class="fc"><i>76</i>&nbsp;                turnEffect = new PanTurnEffect();</b>
+<b class="fc"><i>77</i>&nbsp;                break;</b>
+<i>78</i>&nbsp;            default:
+<b class="fc"><i>79</i>&nbsp;                turnEffect = new BaseTurnEffect();</b>
+<i>80</i>&nbsp;                break;
+<i>81</i>&nbsp;        }
+<i>82</i>&nbsp;
+<b class="fc"><i>83</i>&nbsp;        switch (divinityCard) {</b>
+<i>84</i>&nbsp;            case ATLAS:
+<b class="fc"><i>85</i>&nbsp;                specialChoice = &quot;Do you want to build a dome on it?&quot;;</b>
+<b class="fc"><i>86</i>&nbsp;                break;</b>
+<i>87</i>&nbsp;            case DEMETER:
+<i>88</i>&nbsp;            case HESTIA:
+<b class="nc"><i>89</i>&nbsp;                specialChoice = &quot;Do you want to build again?&quot;;</b>
+<b class="nc"><i>90</i>&nbsp;                break;</b>
+<i>91</i>&nbsp;            case HEPHAESTUS:
+<b class="fc"><i>92</i>&nbsp;                specialChoice = &quot;Do you want to build again on it?&quot;;</b>
+<b class="fc"><i>93</i>&nbsp;                break;</b>
+<i>94</i>&nbsp;            case PROMETHEUS:
+<b class="fc"><i>95</i>&nbsp;                specialChoice = &quot;Do you want to build also before moving?\nSelect where to build&quot;;</b>
+<b class="fc"><i>96</i>&nbsp;                break;</b>
+<i>97</i>&nbsp;            case POSEIDON:
+<b class="nc"><i>98</i>&nbsp;                specialChoice = &quot;Do you want to build again with your unmoved worker?&quot;;</b>
+<b class="nc"><i>99</i>&nbsp;                break;</b>
+<i>100</i>&nbsp;            default:
+<b class="fc"><i>101</i>&nbsp;                specialChoice = null;</b>
+<i>102</i>&nbsp;        }
+<i>103</i>&nbsp;
+<b class="fc"><i>104</i>&nbsp;        switch (divinityCard) {</b>
+<i>105</i>&nbsp;            case ATLAS:
+<i>106</i>&nbsp;            case HEPHAESTUS:
+<b class="fc"><i>107</i>&nbsp;                turnController = new AtlasHephaestusTurnController();</b>
+<b class="fc"><i>108</i>&nbsp;                break;</b>
+<i>109</i>&nbsp;            case DEMETER:
+<b class="nc"><i>110</i>&nbsp;                turnController = new DemeterTurnController();</b>
+<b class="nc"><i>111</i>&nbsp;                break;</b>
+<i>112</i>&nbsp;            case PROMETHEUS:
+<b class="fc"><i>113</i>&nbsp;                turnController = new PrometheusTurnController();</b>
+<b class="fc"><i>114</i>&nbsp;                break;</b>
+<i>115</i>&nbsp;            case HESTIA:
+<b class="nc"><i>116</i>&nbsp;                turnController = new HestiaTurnController();</b>
+<b class="nc"><i>117</i>&nbsp;                break;</b>
+<i>118</i>&nbsp;            case POSEIDON:
+<b class="nc"><i>119</i>&nbsp;                turnController = new PoseidonTurnController();</b>
+<b class="nc"><i>120</i>&nbsp;                break;</b>
+<i>121</i>&nbsp;            default:
+<b class="fc"><i>122</i>&nbsp;                turnController = new BaseTurnController();</b>
+<i>123</i>&nbsp;        }
+<i>124</i>&nbsp;
+<i>125</i>&nbsp;
+<b class="fc"><i>126</i>&nbsp;    }</b>
+<i>127</i>&nbsp;
+<i>128</i>&nbsp;    /**
+<i>129</i>&nbsp;     * This method return the strategy of building associated to a specific divinity card
+<i>130</i>&nbsp;     *
+<i>131</i>&nbsp;     * @return all the possible building of a player calculated from the server
+<i>132</i>&nbsp;     */
+<i>133</i>&nbsp;    public List&lt;int[]&gt; getTurnStrategyBuilding() {
+<b class="fc"><i>134</i>&nbsp;        return turnStrategy.baseBuilding();</b>
+<i>135</i>&nbsp;    }
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    /**
+<i>138</i>&nbsp;     * This method return the strategy of movement associated to a specific divinity card
+<i>139</i>&nbsp;     *
+<i>140</i>&nbsp;     * @return all the possible movements of a player calculated from the server
+<i>141</i>&nbsp;     */
+<i>142</i>&nbsp;    public List&lt;int[]&gt;[] getTurnStrategyMovement() {
+<b class="fc"><i>143</i>&nbsp;        return turnStrategy.baseMovement();</b>
+<i>144</i>&nbsp;    }
+<i>145</i>&nbsp;
+<i>146</i>&nbsp;    /**
+<i>147</i>&nbsp;     * Using the specific divinity effect change the model with a movement
+<i>148</i>&nbsp;     *
+<i>149</i>&nbsp;     * @param movement is where and with which worker the player wants to move
+<i>150</i>&nbsp;     */
+<i>151</i>&nbsp;    public void setMovement(int[][] movement) {
+<b class="fc"><i>152</i>&nbsp;        turnEffect.move(movement);</b>
+<b class="fc"><i>153</i>&nbsp;    }</b>
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;    /**
+<i>156</i>&nbsp;     * Using the specific divinity effect change the model with a build
+<i>157</i>&nbsp;     *
+<i>158</i>&nbsp;     * @param building is where the player wants to build
+<i>159</i>&nbsp;     */
+<i>160</i>&nbsp;    public void setBuilding(int[] building) {
+<b class="fc"><i>161</i>&nbsp;        turnEffect.build(building);</b>
+<b class="fc"><i>162</i>&nbsp;    }</b>
+<i>163</i>&nbsp;
+<i>164</i>&nbsp;    /**
+<i>165</i>&nbsp;     * Using the specific divinity effect a player ends his turn
+<i>166</i>&nbsp;     */
+<i>167</i>&nbsp;    public void setEndTurn() {
+<b class="fc"><i>168</i>&nbsp;        turnEffect.endTurn();</b>
+<b class="fc"><i>169</i>&nbsp;    }</b>
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    /**
+<i>172</i>&nbsp;     * Returns the string of special choice associated to the divinity card
+<i>173</i>&nbsp;     *
+<i>174</i>&nbsp;     * @return the string that a player will read in case of a special choice
+<i>175</i>&nbsp;     */
+<i>176</i>&nbsp;    public String getSpecialChoice() {
+<b class="nc"><i>177</i>&nbsp;        return specialChoice;</b>
+<i>178</i>&nbsp;    }
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    /**
+<i>181</i>&nbsp;     * This method return the turn controller that has all the sequence of the turn of a specific divinity card
+<i>182</i>&nbsp;     *
+<i>183</i>&nbsp;     * @return the turn controller associated to that divinity card
+<i>184</i>&nbsp;     */
+<i>185</i>&nbsp;    public TurnController getTurnController() {
+<b class="nc"><i>186</i>&nbsp;        return turnController;</b>
+<i>187</i>&nbsp;    }
+<i>188</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 19:08</div>
+</div>
+</body>
+</html>

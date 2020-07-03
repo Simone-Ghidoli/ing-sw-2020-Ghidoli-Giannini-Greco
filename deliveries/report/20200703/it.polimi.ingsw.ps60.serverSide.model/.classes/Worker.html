@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Worker</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.ps60.serverSide.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Worker (it.polimi.ingsw.ps60.serverSide.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Worker</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.ps60.serverSide.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.Serializable;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * This class is the worker with his status
+<i>7</i>&nbsp; */
+<i>8</i>&nbsp;public class Worker implements Serializable {
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    private Cell cellPosition;
+<i>11</i>&nbsp;    private final Player owner;
+<i>12</i>&nbsp;    private Cell OldCell;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * @param owner associate to the worker his player
+<i>16</i>&nbsp;     */
+<b class="fc"><i>17</i>&nbsp;    public Worker(Player owner) {</b>
+<b class="fc"><i>18</i>&nbsp;        this.owner = owner;</b>
+<b class="fc"><i>19</i>&nbsp;        cellPosition = null;</b>
+<b class="fc"><i>20</i>&nbsp;    }</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * @return return the cell where the worker is
+<i>24</i>&nbsp;     */
+<i>25</i>&nbsp;    public Cell getCellPosition() {
+<b class="fc"><i>26</i>&nbsp;        return cellPosition;</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * @return return the owner of the worker
+<i>31</i>&nbsp;     */
+<i>32</i>&nbsp;    public Player getOwner() {
+<b class="fc"><i>33</i>&nbsp;        return owner;</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * This method will update the cell making it aware that the player is now on it and
+<i>38</i>&nbsp;     * it will also make the previous cell aware that the player is&#39;not on it,
+<i>39</i>&nbsp;     * but it will conserve his pointer in OldCell
+<i>40</i>&nbsp;     *
+<i>41</i>&nbsp;     * @param cellNewPosition set the cell where the worker is
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    public void moveWorker(Cell cellNewPosition) {
+<b class="fc"><i>44</i>&nbsp;        if (cellPosition != null) {</b>
+<b class="fc"><i>45</i>&nbsp;            cellPosition.setWorkerIn(null);</b>
+<b class="fc"><i>46</i>&nbsp;            OldCell = cellPosition;</b>
+<i>47</i>&nbsp;        }
+<b class="fc"><i>48</i>&nbsp;        if (cellNewPosition != null)</b>
+<b class="fc"><i>49</i>&nbsp;            cellNewPosition.setWorkerIn(this);</b>
+<b class="fc"><i>50</i>&nbsp;        cellPosition = cellNewPosition;</b>
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    /**
+<i>54</i>&nbsp;     * Method to verify if a worker level up last turn
+<i>55</i>&nbsp;     *
+<i>56</i>&nbsp;     * @return True if it happened, false otherwise
+<i>57</i>&nbsp;     */
+<i>58</i>&nbsp;    public boolean isLeveledUp() {
+<b class="fc"><i>59</i>&nbsp;        return OldCell.getBuildingLevel() &lt; cellPosition.getBuildingLevel();</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    /**
+<i>63</i>&nbsp;     * This method return the cell where the worker was during this turn before moving
+<i>64</i>&nbsp;     *
+<i>65</i>&nbsp;     * @return the previous cell where the worker was during this turn
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    public Cell getOldCell() {
+<b class="fc"><i>68</i>&nbsp;        return OldCell;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    /**
+<i>72</i>&nbsp;     * This method sets the cell where the worker was before moving
+<i>73</i>&nbsp;     *
+<i>74</i>&nbsp;     * @param oldCell the cell where the worker was before moving
+<i>75</i>&nbsp;     */
+<i>76</i>&nbsp;    public void setOldCell(Cell oldCell) {
+<b class="fc"><i>77</i>&nbsp;        OldCell = oldCell;</b>
+<b class="fc"><i>78</i>&nbsp;    }</b>
+<i>79</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 19:08</div>
+</div>
+</body>
+</html>

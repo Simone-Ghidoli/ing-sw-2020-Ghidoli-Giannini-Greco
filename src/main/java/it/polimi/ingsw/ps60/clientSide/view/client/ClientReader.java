@@ -23,6 +23,7 @@ public class ClientReader implements Runnable {
      * @param sock     is the socket
      * @param messages is the list where the commands will be saved
      * @param method   is the viewMethodSelection (CLI/GUI)
+     * @param in_obj              is the objectInputStream shared between parser and reader
      */
     public ClientReader(Socket sock, List<String> messages, ViewMethodSelection method, ObjectInputStream in_obj) {
         messagesFromServer = messages;

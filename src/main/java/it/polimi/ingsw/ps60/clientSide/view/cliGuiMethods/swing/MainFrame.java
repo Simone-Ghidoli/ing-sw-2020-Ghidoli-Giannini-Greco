@@ -98,6 +98,7 @@ public class MainFrame extends JPanel {
      *
      * @param divinityCards contains the number associated to all divinity cards of the players ordered by the player number
      * @param turnNumber    is the player number of the player
+     * @param nicknames     contains the nicknames of the players
      */
     public void setDivinityCardImage(int[] divinityCards, int turnNumber, String[] nicknames) {
         JLabel divinityCardImage;
