@@ -122,9 +122,11 @@ public class ClientParser implements Runnable {
         String[] nicknames = new String[divinityNumbers.length];
 
         for (int i = 0; i < divinityNumbers.length; i++) {
-            divinityNumbers[i] = Integer.parseInt(statusToParse[i]);
-            nicknames[i] = statusToParse[i + 1];
-            i++;
+            divinityNumbers[i] = Integer.parseInt(statusToParse[i*2]);
+        }
+
+        for(int i=0;i < divinityNumbers.length;i++){
+            nicknames[i] = statusToParse[(i*2)+1];
         }
 
         methodSelection.status(divinityNumbers, Integer.parseInt(statusToParse[statusToParse.length - 1]), nicknames);
