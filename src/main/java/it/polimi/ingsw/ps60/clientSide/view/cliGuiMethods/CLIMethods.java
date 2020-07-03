@@ -15,6 +15,7 @@ public class CLIMethods implements ViewMethodSelection {
 
     private int turnNumber;
     private int[] divinityCards;
+    private String[] nicknames;
 
     /**
      * This constructor sets the basics status of the game
@@ -22,6 +23,7 @@ public class CLIMethods implements ViewMethodSelection {
     public CLIMethods() {
         divinityCards = new int[]{14, 14, 14};
         turnNumber = -1;
+        nicknames = new String[]{"", "", ""};
     }
 
     @Override
@@ -34,10 +36,10 @@ public class CLIMethods implements ViewMethodSelection {
         System.out.println("Legend:");
         System.out.println("The number indicates the building level, the colour indicates the player");
         System.out.println("White: no player");
-        System.out.println("Red: 1st player with " + GlobalVariables.DivinityCard.values()[divinityCards[0]]);
-        System.out.println("Blue: 2nd player with " + GlobalVariables.DivinityCard.values()[divinityCards[1]]);
+        System.out.println(nicknames[0] + " is red: (1st player with " + GlobalVariables.DivinityCard.values()[divinityCards[0]] + ")");
+        System.out.println(nicknames[1] + " is blue: (2nd player with " + GlobalVariables.DivinityCard.values()[divinityCards[1]] + ")");
         if (divinityCards.length == 3)
-            System.out.println("Green: 3rd player with " + GlobalVariables.DivinityCard.values()[divinityCards[2]]);
+            System.out.println(nicknames[2] + " is green: 3rd player with " + GlobalVariables.DivinityCard.values()[divinityCards[2]] + ")");
         System.out.println("Yellow: Dome\n");
 
         System.out.println("    1  2  3  4  5");
@@ -318,8 +320,9 @@ public class CLIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public void status(int[] divinityCards, int turnNumber) {
+    public void status(int[] divinityCards, int turnNumber, String[] nicknames) {
         this.divinityCards = divinityCards;
         this.turnNumber = turnNumber;
+        this.nicknames = nicknames;
     }
 }

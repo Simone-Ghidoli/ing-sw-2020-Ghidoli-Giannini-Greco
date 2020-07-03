@@ -44,7 +44,7 @@ public class ServerStarter {
         if (!gameLoaded) {
             System.out.println("Game has't been loaded");
             selectWorkersPositions();
-            for (ServerThread serverThread : server.getSocketList()){
+            for (ServerThread serverThread : server.getSocketList()) {
                 serverThread.sendBoard(game.getCellToSend());
             }
             selectDivinityCard();
@@ -56,10 +56,11 @@ public class ServerStarter {
             }
         }
 
-        int[] divinityNumbers = divinityNumber();
+        String[][] playersStatus = playersStatus();
+
 
         for (int i = 0; i < game.getPlayerMatrix().length; i++) {
-            game.getPlayerMatrix()[i].getServerThread().sendStatus(divinityNumbers, i);
+            game.getPlayerMatrix()[i].getServerThread().sendStatus(playersStatus, i);
         }
 
         gameTurn();
@@ -70,16 +71,17 @@ public class ServerStarter {
      *
      * @return an array of ints associated to the divinity cards ordered by the player number whom this divinity cards belong
      */
-    private int[] divinityNumber() {
-        int[] divinityNumbers = new int[game.getPlayerMatrix().length];
+    private String[][] playersStatus() {
+        String[][] divinityNumbers = new String[game.getPlayerMatrix().length][2];
 
         for (int j = 0; j < game.getPlayerMatrix().length; j++) {
             for (int i = 0; i < GlobalVariables.DivinityCard.values().length; i++) {
                 if (GlobalVariables.DivinityCard.values()[i] == game.getPlayerMatrix()[j].getDivinityCard()) {
-                    divinityNumbers[j] = i;
+                    divinityNumbers[j][0] = String.valueOf(i);
                     break;
                 }
             }
+            divinityNumbers[j][1] = game.getPlayerMatrix()[j].getNickname();
         }
         return divinityNumbers;
     }

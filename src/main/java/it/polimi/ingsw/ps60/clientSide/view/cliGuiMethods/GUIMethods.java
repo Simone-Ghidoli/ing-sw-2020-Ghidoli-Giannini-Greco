@@ -484,8 +484,8 @@ public class GUIMethods implements ViewMethodSelection {
     }
 
     @Override
-    public void status(int[] divinityCards, int turnNumber) {
-        mainFrame.setDivinityCardImage(divinityCards, turnNumber);
+    public void status(int[] divinityCards, int turnNumber, String[] nicknames) {
+        mainFrame.setDivinityCardImage(divinityCards, turnNumber, nicknames);
     }
 
     /**

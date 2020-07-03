@@ -8,7 +8,7 @@ import java.util.List;
  * This are all the methods that allows to play in Gui, CLI or whatever you implements
  */
 public interface ViewMethodSelection {
-    /*
+    /**
      * value   high    player  ascii
      * 0       0       no      #48
      * 1       1       no      #49
@@ -30,9 +30,7 @@ public interface ViewMethodSelection {
      * A       1       3       #65
      * B       2       3       #66
      * C       3       3       #67
-    */
-
-    /**
+     *
      * This method will only print the board
      * These are the ascii (from #48 to #67) value in the string provided as parameter
      *
@@ -122,6 +120,7 @@ public interface ViewMethodSelection {
      *
      * @param divinityCards are the divinity card of all players
      * @param turnNumber    is your turn number
+     * @param nicknames     are the nicknames of the players
      */
-    void status(int[] divinityCards, int turnNumber);
+    void status(int[] divinityCards, int turnNumber, String[] nicknames);
 }

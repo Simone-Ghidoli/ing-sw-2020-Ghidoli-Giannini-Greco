@@ -14,7 +14,7 @@ public class ClientReader implements Runnable {
     private final List<String> messagesFromServer;
     final Socket socket;
     String serverSays;
-    ObjectInputStream in_obj;
+    final ObjectInputStream in_obj;
     final ViewMethodSelection methodSelection;
 
     /**

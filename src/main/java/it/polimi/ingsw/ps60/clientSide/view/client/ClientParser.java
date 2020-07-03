@@ -30,7 +30,7 @@ public class ClientParser implements Runnable {
      * @param messages            List of string received from the server
      * @param viewMethodSelection Starts method from Gui methods/ Cli methods
      */
-    public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection, ObjectInputStream inob) {
+    public ClientParser(Socket sock, List<String> messages, ViewMethodSelection viewMethodSelection, ObjectInputStream in_obj) {
         socket = sock;
         exit=false;
         messagesFromServer = messages;
@@ -41,7 +41,7 @@ public class ClientParser implements Runnable {
                 input = socket.getInputStream();
                 output = socket.getOutputStream();
                 out_obj = new ObjectOutputStream(output);
-                in_obj = inob;
+                this.in_obj = in_obj;
             } catch (IOException e) {
                 try {
                     socket.close();
@@ -111,16 +111,22 @@ public class ClientParser implements Runnable {
         }
     }
 
+    /**
+     * This method receive the status of the players from the server
+     * @param status contains nicknames, divinity cards and the player turn number
+     */
     public void status(String status) {
         String[] statusToParse = status.split(" ");
 
-        int[] divinityNumbers = new int[statusToParse.length - 1];
+        int[] divinityNumbers = new int[(statusToParse.length - 1)/2];
+        String[] nicknames = new String[divinityNumbers.length];
 
         for (int i = 0; i < divinityNumbers.length; i++) {
             divinityNumbers[i] = Integer.parseInt(statusToParse[i]);
+            nicknames[i] = statusToParse[i++];
         }
 
-        methodSelection.status(divinityNumbers, Integer.parseInt(statusToParse[statusToParse.length - 1]));
+        methodSelection.status(divinityNumbers, Integer.parseInt(statusToParse[statusToParse.length - 1]), nicknames);
 
         sendInt(0);
     }
@@ -128,7 +134,6 @@ public class ClientParser implements Runnable {
     /**
      * Close the socket after the game is stopped (for any reason)
      */
-
     public void socketClose() {
         try {
             socket.close();

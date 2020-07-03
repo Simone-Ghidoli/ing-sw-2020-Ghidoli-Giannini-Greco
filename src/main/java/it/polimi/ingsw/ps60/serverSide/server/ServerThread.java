@@ -333,16 +333,17 @@ public class ServerThread extends Thread {
     }
 
     /**
-     * This method send to the client the divinity cards selected by all all player ordered by the player position in the turn sequence
+     * This method send to the client the status of all player ordered by the player position in the turn sequence
      *
-     * @param divinityCard is the list of divinity cards selected
+     * @param playersStatus is the list of status
      * @param turnNumber   is the player position in the turn sequence
      */
-    public void sendStatus(int[] divinityCard, int turnNumber) {
+    public void sendStatus(String[][] playersStatus, int turnNumber) {
         StringBuilder stringToSend = new StringBuilder("st-");
 
-        for (int i : divinityCard)
-            stringToSend.append(i).append(" ");
+        for (String[] playerStatus : playersStatus)
+            for (String status : playerStatus)
+                stringToSend.append(status).append(" ");
 
         stringToSend.append(turnNumber);
 
