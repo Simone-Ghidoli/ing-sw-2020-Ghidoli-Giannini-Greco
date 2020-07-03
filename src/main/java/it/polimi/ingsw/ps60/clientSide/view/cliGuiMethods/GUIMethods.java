@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class GUIMethods implements ViewMethodSelection {
 
-    private final MainFrame mainFrame = new MainFrame();
+    private final MainFrame mainFrame=new MainFrame();
 
     /**
      * This constrictor create the JFrame in order to play in GUI
@@ -294,7 +294,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         for (int i = 0; i < godButtons.length; i++) {
             godButtons[i] = new JButton();
-            godButtons[i].setSize(mainFrame.getScreenSize().width / 20, mainFrame.getScreenSize().height / 8);
+            godButtons[i].setSize(mainFrame.getScreenSize().width / 25, mainFrame.getScreenSize().height / 9);
             godButtons[i].setIcon(new ImageIcon(new ImageIcon(mainFrame.imageFileReader(GlobalVariables.DivinityCard.values()[i].getSourcePosition())).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
         }
 
@@ -345,7 +345,7 @@ public class GUIMethods implements ViewMethodSelection {
 
         for (int i = 0; i < godButtons.length; i++) {
             godButtons[i] = new JButton();
-            godButtons[i].setSize(mainFrame.getScreenSize().width / 20, mainFrame.getScreenSize().height / 8);
+            godButtons[i].setSize(mainFrame.getScreenSize().width / 15, mainFrame.getScreenSize().height / 6);
             godButtons[i].setIcon(new ImageIcon(new ImageIcon(mainFrame.imageFileReader(card[i].getSourcePosition())).getImage().getScaledInstance(godButtons[i].getWidth(), godButtons[i].getHeight(), Image.SCALE_SMOOTH)));
         }
 

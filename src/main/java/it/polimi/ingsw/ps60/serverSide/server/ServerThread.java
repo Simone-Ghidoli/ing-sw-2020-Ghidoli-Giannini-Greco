@@ -202,7 +202,6 @@ public class ServerThread extends Thread {
         try {
             out_obj.writeObject(message);
         } catch (IOException e) {
-            e.printStackTrace();
             disconnection();
         }
     }

@@ -99,29 +99,31 @@ public class MainFrame extends JPanel {
      * @param divinityCards contains the number associated to all divinity cards of the players ordered by the player number
      * @param turnNumber    is the player number of the player
      */
-    public void setDivinityCardImage(int[] divinityCards, int turnNumber) {
-        JLabel divinityCardImage;
-        for (int i = 0; i < divinityCards.length; i++) {
-            if (i == turnNumber) {
+    public void setDivinityCardImage(final int[] divinityCards, final int turnNumber) {
+                JLabel divinityCardImage;
+                for (int i = 0; i < divinityCards.length; i++) {
+                    if (i == turnNumber) {
 
-                divinityCardImage = new JLabel(new ImageIcon(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition()).getScaledInstance(screenSize.width * 9 / 58, screenSize.height / 2, Image.SCALE_SMOOTH)));
-                divinityCardImage.setBorder(
-                        BorderFactory.createTitledBorder(
-                                BorderFactory.createEtchedBorder(
-                                        EtchedBorder.RAISED, GlobalVariables.Colour.values()[i].getColor(),
-                                        GlobalVariables.Colour.values()[i].getColor()), "You are player number " + (i + 1)));
-                divinityCard.add(divinityCardImage);
-            } else {
-                divinityCardImage = new JLabel(new ImageIcon(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition()).getScaledInstance(screenSize.width * 9 / 116, screenSize.height / 4, Image.SCALE_SMOOTH)));
-                divinityCardImage.setBorder(
-                        BorderFactory.createTitledBorder(
-                                BorderFactory.createEtchedBorder(
-                                        EtchedBorder.RAISED, GlobalVariables.Colour.values()[i].getColor(),
-                                        GlobalVariables.Colour.values()[i].getColor()), "Player number " + (i + 1)));
-                opponents.add(divinityCardImage);
+                        divinityCardImage = new JLabel(new ImageIcon(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition()).getScaledInstance(screenSize.width * 9 / 58, screenSize.height / 2, Image.SCALE_SMOOTH)));
+                        divinityCardImage.setBorder(
+                                BorderFactory.createTitledBorder(
+                                        BorderFactory.createEtchedBorder(
+                                                EtchedBorder.RAISED, GlobalVariables.Colour.values()[i].getColor(),
+                                                GlobalVariables.Colour.values()[i].getColor()), "You are player number " + (i + 1)));
+                        divinityCard.add(divinityCardImage);
+                        divinityCard.validate();
+                    } else {
+                        divinityCardImage = new JLabel(new ImageIcon(imageFileReader(GlobalVariables.DivinityCard.values()[divinityCards[i]].getSourcePosition()).getScaledInstance(screenSize.width * 9 / 116, screenSize.height / 4, Image.SCALE_SMOOTH)));
+                        divinityCardImage.setBorder(
+                                BorderFactory.createTitledBorder(
+                                        BorderFactory.createEtchedBorder(
+                                                EtchedBorder.RAISED, GlobalVariables.Colour.values()[i].getColor(),
+                                                GlobalVariables.Colour.values()[i].getColor()), "Player number " + (i + 1)));
+                        opponents.add(divinityCardImage);
+                        opponents.validate();
+                    }
+                }
             }
-        }
-    }
 
     /**
      * This methods removes all the listeners from the jButtons
