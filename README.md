@@ -26,22 +26,37 @@ This is an implementation of the board game "Santorini" created by group #60 of 
 ## How to build and start the game
 
 In order to create the jar file you simply have to package the project with maven using 
+
 ```shell script
 mvn package
 ```
+
 The jar file will be created in the directory of the deliveries in a subfolder called jar.
-In order to run the jar once created simply open a terminal and run the following commands:
+In order to run the jar, once created, open a terminal and run the following commands:
+
 ```shell script
 cd deliveries/jar
 java -jar PS60.jar
 ```
+
+In order to automatize this process in the folder scripts there are 2 kinds of starters:
+
+*   One for a UNIX based systems (Linux and macOS basically). In order to start it simply open a terminal and run the commands:
+
+```shell script
+cd scripts
+chmod +rw UNIX.sh
+./UNIX.sh
+```
+
+*   One for an MS-DOS based systems (Windows basically). In order to start double-click it.
 
 ## How to play
 
 In order to start to play you have to run a server and 2 or 3 clients.
 As you run the jar file press 0 to run server and 1 to run one client.
 If you have chosen to run the client you have to select between CLI (press 1) and GUI (press 0).
-As the game starts you will enter your nickname and birthday.
+As the game starts you have to enter your nickname and birthday.
 You will not have the chance to do an illegal move.
 You only have to select the move that you want to do from a range of possible moves calculated by the server.
 A wrong input will only involve in a new attempt to enter a right input.

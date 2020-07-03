@@ -54,8 +54,8 @@ public class ClientStarter {
                 }
             }
         }
-        ClientParser parser = new ClientParser(socket, messagesFromServer, viewMethodSelection,in_obj);
-        ClientReader reader = new ClientReader(socket, messagesFromServer, viewMethodSelection,in_obj);
+        ClientParser parser = new ClientParser(socket, messagesFromServer, viewMethodSelection, in_obj);
+        ClientReader reader = new ClientReader(socket, messagesFromServer, viewMethodSelection, in_obj);
         pool.execute(reader);
         pool.execute(parser);
         pool.shutdown();
