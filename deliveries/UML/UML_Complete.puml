@@ -12,7 +12,7 @@ namespace it.polimi.ingsw.ps60{
                     - output : OutputStream
                     - messagesFromServer : List<String>
                     - socket : Socket
-                    + ClientParser (sock : Socket, messages : List<String>, viewMethodSelection : ViewMethodSelection, inob:ObjectInputStream)
+                    + ClientParser (sock : Socket, messages : List<String>, viewMethodSelection : ViewMethodSelection, in_obj : ObjectInputStream)
                     + run () : void
                     + alert (alert : String) : void
                     + building () : void
@@ -74,7 +74,7 @@ namespace it.polimi.ingsw.ps60{
                         + getScreenSize () : Dimension
                         + imageFileReader (pathToImage : image) : BufferedImage
                         + resetButtons () : void
-                        + setDivinityCardImage (divinityCards : int[], turnNumber : int) : void
+                        + setDivinityCardImage (divinityCards : int[], turnNumber : int, nicknames: String[]) : void
                     }
                 }
 
@@ -95,7 +95,7 @@ namespace it.polimi.ingsw.ps60{
                     + printPossibleBuilds (moves : List<int[]>) : int
                     + printPossibleMoves (moves : List<int[]>[], positionWorkers : int[][]) : int
                     + specialChoices (string : String) : boolean
-                    + status (divinityCards : int[], turnNumber : int) : void
+                    + status (divinityCards : int[], turnNumber : int, nicknames : String[]) : void
                 }
 
                 class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.GUIMethods {
@@ -111,7 +111,7 @@ namespace it.polimi.ingsw.ps60{
                     + numberOfPlayers () : int
                     + printBoard (board : String) : void
                     + specialChoices (string : String) : boolean
-                    + status (divinityCards : int[], turnNumber : int) : void
+                    + status (divinityCards : int[], turnNumber : int, nicknames : String[]) : void
                     - confirmOrRetry () : boolean
                 }
 
@@ -274,7 +274,7 @@ namespace it.polimi.ingsw.ps60{
                 - nicknames : String[]
                 + ServerStarter () : void
                 + start () : void
-                - divinityNumber () : int[]
+                - playersStatus () : status[]
                 - gameTurn () : void
                 - loadGame () : void
                 - portSelection () : int
@@ -405,7 +405,7 @@ namespace it.polimi.ingsw.ps60{
                 + sendPositionWorkers (positionWorkers : SerializedInteger[]) : void
                 + sendPositionsArray (list : List<SerializedInteger>) : void
                 + sendPositionsList (list : List<SerializedInteger>[]) : void
-                + sendStatus (divinityCard : int[], turnNumber : int) : void
+                + sendStatus (playersStatus : int[], turnNumber : int) : void
                 + sendString (message : String) : void
                 + setPlayerBound (nickName : String) : void
                 + setWorkers (takenPositions : List<int[]>) : int[][]
