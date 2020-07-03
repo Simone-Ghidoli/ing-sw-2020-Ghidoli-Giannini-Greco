@@ -6,14 +6,13 @@ namespace it.polimi.ingsw.ps60{
         namespace view{
             namespace client{
                 class it.polimi.ingsw.ps60.clientSide.view.client.ClientParser {
-                    ~ in_obj : ObjectInputStream
-                    ~ input : InputStream
-                    ~ out_obj : ObjectOutputStream
-                    ~ output : OutputStream
-                    ~pr : PrintWriter
+                    - in_obj : ObjectInputStream
+                    - input : InputStream
+                    - out_obj : ObjectOutputStream
+                    - output : OutputStream
                     - messagesFromServer : List<String>
                     - socket : Socket
-                    + ClientParser (sock : Socket, messages : List<String>, viewMethodSelection : ViewMethodSelection)
+                    + ClientParser (sock : Socket, messages : List<String>, viewMethodSelection : ViewMethodSelection, inob:ObjectInputStream)
                     + run () : void
                     + alert (alert : String) : void
                     + building () : void
@@ -40,11 +39,11 @@ namespace it.polimi.ingsw.ps60{
                 }
 
                 class it.polimi.ingsw.ps60.clientSide.view.client.ClientReader {
-                    ~ br : BufferedReader
-                    ~ serverSays : String
-                    ~ socket : Socket
+                    - serverSays : String
+                    - socket : Socket
                     - messagesFromServer : List<String>
-                    + ClientReader ()
+                    - in_obj : ObjectInputStream
+                    + ClientReader (sock:Socket,messages:List<String>,method:ViewMethodSelection,inob:ObjectInputStream)
                     + run () : void
                 }
 
@@ -54,18 +53,19 @@ namespace it.polimi.ingsw.ps60{
                     - pool : ExecutorService
                     - port : int
                     - socket : Socket
-                    + ClientStarter ()
+                    - in_obj : ObjectInputStream
+                    + ClientStarter (viewMethodSelection : ViewMethodSelection)
                     + start () : void
                 }
             }
             namespace cliGuiMethods{
                 namespace swing{
                     class it.polimi.ingsw.ps60.clientSide.view.cliGuiMethods.swing.MainFrame {
-                        ~ divinityCard : JPanel
-                        ~ grid : JPanel
-                        ~ info : JPanel
-                        ~ opponents : JPanel
-                        ~ workers : JPanel
+                        - divinityCard : JPanel
+                        - grid : JPanel
+                        - info : JPanel
+                        - opponents : JPanel
+                        - workers : JPanel
                         - jButtons : JButton[]
                         - screenSize : Dimension
                         + MainFrame ()
@@ -141,7 +141,7 @@ namespace it.polimi.ingsw.ps60{
                     }
 
                     class it.polimi.ingsw.ps60.serverSide.controller.turn.turnController.BaseTurnController {
-                        ~ lost : boolean
+                        - lost : boolean
                         + buildingSection () : void
                         + endTurnSection () : void
                         + movementSection () : void
@@ -377,14 +377,12 @@ namespace it.polimi.ingsw.ps60{
 
             class it.polimi.ingsw.ps60.serverSide.server.ServerThread {
                 # socket : Socket
-                - buffer : BufferedReader
                 - in : InputStream
                 - in_obj : ObjectInputStream
                 - out : OutputStream
                 - out_obj : ObjectOutputStream
                 - playerBound : String
                 - serverThreads : List<ServerThread>
-                - writer : PrintWriter
                 + ServerThread (soc : Socket, serverThreads : ArrayList<ServerThread>)
                 + buildMessage (possible_choice : List<int[]>) : int
                 + disconnection () : void
@@ -439,7 +437,7 @@ namespace it.polimi.ingsw.ps60{
             }
 
             class it.polimi.ingsw.ps60.utils.circularList.Node {
-                ~ nextNode : Node<T>
+                - nextNode : Node<T>
                 + Node (value : T)
                 + getValue () : T
             }
@@ -464,7 +462,7 @@ namespace it.polimi.ingsw.ps60{
         }
 
         class it.polimi.ingsw.ps60.utils.FlushedInput {
-            ~ input : Scanner
+            - input : Scanner
             + nextInt (upperLimit : int, lowerLimit : int) : int
             + nextLine () : String
             - flushInput () : void
